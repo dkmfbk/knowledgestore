@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<title>KnowledgeStore UI</title>
+<link rel="shortcut icon" href="static/favicon.ico">
+<link href="static/bootstrap.min.css" rel="stylesheet">
+<link href="static/ks.css" rel="stylesheet">
+</head>
+<body>
+<div class="container-fluid">
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="ui">KnowledgeStore UI</a>
+  </div>
+  <div class="collapse navbar-collapse">
+    <ul class="nav navbar-nav navbar-right">
+      <li {{#tabLookup}}class="active"{{/tabLookup}}><a href="ui?action=lookup">Lookup</a></li>
+      <li {{#tabSparql}}class="active"{{/tabSparql}}><a href="ui?action=sparql">SPARQL query</a></li>
+    </ul>
+  </div>
+</div>
+
+{{$content}}default{{/content}}
+  
+{{#error}}
+<div class="row">
+<div class="col-md-12">
+<pre class="error">
+{{error}}
+</pre>
+</div>
+</div>
+{{/error}}
+  
+</div>
+
+<div id="uriMenu" class="dropdown clearfix">
+  <ul class="dropdown-menu"  style="display:block;position:static;margin-bottom:5px;">
+    <!-- <li id="uriMenuURI" class="dropdown-header">URI XYZ</li> -->
+    <!-- <li class="divider"></li> -->
+    <li><a id="uriMenuLookup" href="#">Lookup in KS</a></li>
+    <li><a id="uriMenuLookupNewTab" href="#" target="_blank">Lookup in KS (new tab)</a></li>
+    <li><a id="uriMenuDereference" href="#" target="_blank">Dereference URI (new tab)</a></li>
+  </ul>
+</div>
+
+<script src="static/jquery-1.11.0.min.js"></script>
+<script src="static/jquery.tablesorter.min.js"></script>
+<script src="static/bootstrap.min.js"></script>
+<script src="static/prettify.js"></script>
+<script src="static/ks.js"></script>
+
+</body>
+</html>

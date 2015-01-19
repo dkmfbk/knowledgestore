@@ -1,0 +1,299 @@
+<?xml version="1.0"?>
+<project
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>eu.fbk.knowledgestore</groupId>
+    <artifactId>ks</artifactId>
+    <version>1.2-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+
+  <groupId>eu.fbk.knowledgestore</groupId>
+  <artifactId>ks-server-http</artifactId>
+  <packaging>jar</packaging>
+
+  <name>ks-server-http</name>
+  <description>
+    The HTTP server module (ks-server-http) implements the Web API of 
+    the KnowledgeStore, which includes the two CRUD and SPARQL endpoints. 
+    The CRUD Endpoint supports the retrieval and manipulation of 
+    semi-structured data about resource, mention, entity and axiom records 
+    (encoded in RDF, possibly using JSONLD), and the upload / download of 
+    resource representation. The SPARQL Endpoint supports SPARQL SELECT, 
+    CONSTRUCT, DESCRIBE and ASK queries according to the W3C SPARQL 
+    protocol. The two endpoints are implemented on top of a component 
+    implementing the KnowledgeStore Java API (the Store interface), which 
+    can be either the the KnowledgeStore frontend (ks-frontend) or the Java 
+    Client. The implementation of the module is based on the Jetty Web sever 
+    (run in embedded mode) and the Jersey JAX-RS implementation. Reference 
+    documentation of the Web API is automatically generated using the 
+    Enunciate tool. 
+  </description>
+  <url>http://www.fbk.eu</url>
+
+  <distributionManagement>
+    <site>
+      <id>siteks</id>
+      <url>${site-path}/ks-server-http/</url>
+    </site>
+  </distributionManagement>
+
+  <scm>
+    <connection>scm:svn:https://newsreader.fbk.eu/svn/Code/KnowledgeStore/trunk/ks-server-http</connection>
+    <developerConnection>scm:svn:https://newsreader.fbk.eu/svn/Code/KnowledgeStore/trunk/ks-server-http</developerConnection>
+    <tag>HEAD</tag>
+    <url>https://newsreader.fbk.eu/trac/browser/newsreader/Code/KnowledgeStore/trunk/ks-server-http</url>
+  </scm>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.google.code.findbugs</groupId>
+      <artifactId>jsr305</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.codehaus.enunciate</groupId>
+      <artifactId>enunciate-core-annotations</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.openrdf.sesame</groupId>
+      <artifactId>sesame-model</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-server</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-jmx</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-webapp</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-security</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-util</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-servlets</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>javax.ws.rs</groupId>
+      <artifactId>javax.ws.rs-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jersey.core</groupId>
+      <artifactId>jersey-server</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jersey.core</groupId>
+      <artifactId>jersey-common</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jersey.containers</groupId>
+      <artifactId>jersey-container-servlet</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jersey.media</groupId>
+      <artifactId>jersey-media-multipart</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jersey.ext</groupId>
+      <artifactId>jersey-mvc</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jersey.ext</groupId>
+      <artifactId>jersey-mvc-mustache</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jersey.test-framework</groupId>
+      <artifactId>jersey-test-framework-core</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jersey.test-framework.providers</groupId>
+      <artifactId>jersey-test-framework-provider-jetty</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.ebaysf.web</groupId>
+      <artifactId>cors-filter</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jolokia</groupId>
+      <artifactId>jolokia-core</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-access</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.openrdf.sesame</groupId>
+      <artifactId>sesame-rio-binary</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.openrdf.sesame</groupId>
+      <artifactId>sesame-rio-n3</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.openrdf.sesame</groupId>
+      <artifactId>sesame-rio-nquads</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.openrdf.sesame</groupId>
+      <artifactId>sesame-rio-ntriples</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.openrdf.sesame</groupId>
+      <artifactId>sesame-rio-rdfjson</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.openrdf.sesame</groupId>
+      <artifactId>sesame-rio-rdfxml</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.openrdf.sesame</groupId>
+      <artifactId>sesame-rio-trig</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.openrdf.sesame</groupId>
+      <artifactId>sesame-rio-trix</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.openrdf.sesame</groupId>
+      <artifactId>sesame-rio-turtle</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.semarglproject</groupId>
+      <artifactId>semargl-jsonld</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.openrdf.sesame</groupId>
+      <artifactId>sesame-query</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.openrdf.sesame</groupId>
+      <artifactId>sesame-queryresultio-binary</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.openrdf.sesame</groupId>
+      <artifactId>sesame-queryresultio-sparqljson</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.openrdf.sesame</groupId>
+      <artifactId>sesame-queryresultio-sparqlxml</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.openrdf.sesame</groupId>
+      <artifactId>sesame-queryresultio-text</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>eu.fbk.knowledgestore</groupId>
+      <artifactId>ks-core</artifactId>
+    </dependency>
+    <!-- <dependency> -->
+    <!-- <groupId>eu.fbk.knowledgestore</groupId> -->
+    <!-- <artifactId>ks-core</artifactId> -->
+    <!-- <classifier>sources</classifier> -->
+    <!-- <scope>compile</scope> -->
+    <!-- <optional>true</optional> -->
+    <!-- </dependency> -->
+    <dependency>
+      <groupId>eu.fbk.knowledgestore</groupId>
+      <artifactId>ks-core</artifactId>
+      <type>test-jar</type>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>eu.fbk.knowledgestore</groupId>
+      <artifactId>ks-server</artifactId>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.enunciate</groupId>
+        <artifactId>maven-enunciate-plugin</artifactId>
+        <configuration>
+          <configFile>enunciate.xml</configFile>
+          <docsSubdir>webdocs</docsSubdir>
+          <indexPageName>webdocs.html</indexPageName>
+          <!-- <copyright>2014 FBK-irst</copyright> -->
+          <!-- <title>KnowledgeStore Web API reference</title> -->
+          <!-- <splashPackage>eu.fbk.knowledgestore.endpoint.resources</splashPackage> -->
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.enunciate</groupId>
+        <artifactId>maven-enunciate-plugin</artifactId>
+        <configuration>
+          <configFile>enunciate.xml</configFile>
+          <docsSubdir>webdocs</docsSubdir>
+          <indexPageName>webdocs.html</indexPageName>
+          <!-- <copyright>2014 FBK-irst</copyright> -->
+          <!-- <title>KnowledgeStore Web API reference</title> -->
+          <!-- <splashPackage>eu.fbk.knowledgestore.endpoint.jaxrs</splashPackage> -->
+        </configuration>
+      </plugin>
+    </plugins>
+  </reporting>
+
+  <properties>
+    <parent-path>..</parent-path>
+    <aggregate>false</aggregate>
+  </properties>
+
+</project>

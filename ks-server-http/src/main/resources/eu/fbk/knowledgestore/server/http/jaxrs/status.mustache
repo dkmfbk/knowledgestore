@@ -1,0 +1,31 @@
+{{<eu/fbk/knowledgestore/server/http/jaxrs/template}}
+{{$content}}
+
+<h1>KnowledgeStore/{{version}}</h1>
+<p>This is the entry point of the KnowledgeStore Web API.</p>
+<p>Please refer to the <a href="https://knowledgestore.fbk.eu/">KnowledgeStore Web site</a> and, in particular, to the <a href="https://knowledgestore.fbk.eu/ks-server-http/webdocs/webdocs.html">Web API reference documentation</a> for information on how to invoke it; an automatically generated <a href="application.wadl?detail=true">WADL descriptor</a> is also available.</p>
+<p>A small UI can be used to explore the contents in the KnowledgeStore, either by <a href="ui?action=lookup">looking up specific URIs</a> or by <a href="ui?action=sparql">evaluating SPARQL queries</a> (refer to upper right menu).</p>
+<br/>
+<p><small>System status: {{status}}</small></p>
+
+{{#disabled}}
+<br/>
+<br/>
+<div> 
+Test news deployed on kermadec: <span style="color: red">(temporary!)</span>
+<ul>
+<li><a href="ui?action=lookup&id=http://www.newsreader-project.eu/data/cars/2013/4/30/58B2-1JT1-DYTM-9159.xml">http://www.newsreader-project.eu/data/cars/2013/4/30/58B2-1JT1-DYTM-9159.xml</a></li>
+<li><a href="ui?action=lookup&id=http://www.newsreader-project.eu/data/cars/2013/4/30/589F-S2Y1-JD34-V1MC.xml">http://www.newsreader-project.eu/data/cars/2013/4/30/589F-S2Y1-JD34-V1MC.xml</a></li>
+<li><a href="ui?action=lookup&id=http://www.newsreader-project.eu/data/cars/2013/4/30/58B2-1JT1-DYTM-916F.xml">http://www.newsreader-project.eu/data/cars/2013/4/30/58B2-1JT1-DYTM-916F.xml</a></li>
+</ul>
+Test NAF deployed on kermadec: <span style="color: red">(temporary!)</span>
+<ul>
+<li><a href="ui?action=lookup&id=http://www.newsreader-project.eu/data/cars/2013/4/30/58B2-1JT1-DYTM-9159.naf">http://www.newsreader-project.eu/data/cars/2013/4/30/58B2-1JT1-DYTM-9159.naf</a></li>
+<li><a href="ui?action=lookup&id=http://www.newsreader-project.eu/data/cars/2013/4/30/589F-S2Y1-JD34-V1MC.naf">http://www.newsreader-project.eu/data/cars/2013/4/30/589F-S2Y1-JD34-V1MC.naf</a></li>
+<li><a href="ui?action=lookup&id=http://www.newsreader-project.eu/data/cars/2013/4/30/58B2-1JT1-DYTM-916F.naf">http://www.newsreader-project.eu/data/cars/2013/4/30/58B2-1JT1-DYTM-916F.naf</a></li>
+</ul>
+</div>
+{{/disabled}}
+
+{{/content}}
+{{/eu/fbk/knowledgestore/server/http/jaxrs/template}}

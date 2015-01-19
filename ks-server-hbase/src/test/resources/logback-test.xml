@@ -1,0 +1,56 @@
+<configuration>
+
+  <conversionRule
+    conversionWord="bold"
+    converterClass="eu.fbk.knowledgestore.internal.Logging$BoldConverter" />
+
+  <conversionRule
+    conversionWord="normal"
+    converterClass="eu.fbk.knowledgestore.internal.Logging$NormalConverter" />
+
+  <conversionRule
+    conversionWord="context"
+    converterClass="eu.fbk.knowledgestore.internal.Logging$ContextConverter" />
+
+  <appender
+    name="STDOUT"
+    class="ch.qos.logback.core.ConsoleAppender">
+    <withJansi>true</withJansi>
+    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+      <level>DEBUG</level>
+    </filter>
+    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+      <pattern>%d{HH:mm:ss}\(%.-1level\)  %context%msg %n%rEx{full}</pattern>
+    </encoder>
+  </appender>
+
+  <appender
+    name="FILE"
+    class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>log/ks-datastore-hbase-%d{yyyy-MM-dd}.log</fileNamePattern>
+      <maxHistory>30</maxHistory>
+    </rollingPolicy>
+    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+      <pattern>%d{HH:mm:ss}\(%.-1level\)  %context%msg %n%rEx{full}</pattern>
+    </encoder>
+  </appender>
+
+  <root level="ERROR">
+    <appender-ref ref="FILE" />
+    <appender-ref ref="STDOUT" />
+  </root>
+
+  <logger
+    name="org"
+    level="ERROR" />
+
+  <logger
+    name="eu.fbk.knowledgestore"
+    level="INFO" />
+
+  <logger
+    name="eu.fbk.knowledgestore.populator.naf"
+    level="INFO" />
+
+</configuration>

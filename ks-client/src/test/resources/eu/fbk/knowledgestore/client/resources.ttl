@@ -1,0 +1,152 @@
+@prefix ks: <http://dkm.fbk.eu/ontologies/knowledgestore#> .
+@prefix nwr: <http://dkm.fbk.eu/ontologies/newsreader#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix nfo: <http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xs: <http://www.w3.org/2001/XMLSchema#> .
+@prefix lexvo: <http://lexvo.org/id/iso639-3/> .
+@prefix dct: <http://purl.org/dc/terms/> .
+
+<http://www.newsreader-project.eu/2013/4/30/589F-S2Y1-JD34-V1MC.xml> a ks:Resource , nwr:News ;
+    nwr:annotatedWith <http://www.newsreader-project.eu/2013/4/30/589F-S2Y1-JD34-V1MC.naf> ;
+    dct:created "2013-04-30"^^xs:string ;
+    dct:language lexvo:eng .
+
+<http://www.newsreader-project.eu/2013/4/30/58B2-1JT1-DYTM-9159.xml> a ks:Resource , nwr:News ;
+    nwr:annotatedWith <http://www.newsreader-project.eu/2013/4/30/58B2-1JT1-DYTM-9159.naf> ;
+    dct:created "2013-04-30"^^xs:string ;
+    dct:language lexvo:eng .
+
+<http://www.newsreader-project.eu/2013/4/30/58B2-1JT1-DYTM-916F.xml> a ks:Resource , nwr:News ;
+    nwr:annotatedWith <http://www.newsreader-project.eu/2013/4/30/58B2-1JT1-DYTM-916F.naf> ;
+    dct:created "2013-04-30"^^xs:string ;
+    dct:language lexvo:eng .
+    
+<http://www.newsreader-project.eu/2013/4/30/589F-S2Y1-JD34-V1MC.naf> a ks:Resource , nwr:NAFDocument ;
+    nwr:annotationOf <http://www.newsreader-project.eu/2013/4/30/589F-S2Y1-JD34-V1MC.xml> ;
+    nwr:layer nwr:layer_coreferences, nwr:layer_deps, nwr:layer_entities, nwr:layer_factuality, nwr:layer_srl, nwr:layer_terms, nwr:layer_text ;
+    nwr:version "v3"^^xs:string ;
+    dct:identifier "589F-S2Y1-JD34-V1MC"^^xs:string ;
+    dct:creator [
+        nwr:version "2.0"^^xs:string ;
+        dct:title "TimePro"^^xs:string
+    ] , [
+        nwr:version "8nov2013_1.1"^^xs:string ;
+        dct:title "VUA opinion miner. CRF deluxe"^^xs:string
+    ] , [
+        nwr:version "8nov2013_v1.0"^^xs:string;
+        dct:title "VUA-DSC-WSD"^^xs:string 
+    ] , [
+        nwr:version "1.0"^^xs:string;
+        dct:title "ixa-pipe-nerc-en"^^xs:string
+    ] , [
+        nwr:version "1.0"^^xs:string;
+        dct:title "ixa-pipe-pos-en"^^xs:string
+    ] , [
+        nwr:version "1.0"^^xs:string;
+        dct:title "ixa-pipe-spotlight"^^xs:string
+    ] , [
+        nwr:version "1.0"^^xs:string;
+        dct:title "ixa-pipe-srl-en"^^xs:string
+    ] , [
+        nwr:version "1.0"^^xs:string;
+        dct:title "ixa-pipe-tok-en"^^xs:string
+    ] , [
+        nwr:version "1.0"^^xs:string;
+        dct:title "vua-entity-coref-intradoc-reference-baseline"^^xs:string
+    ] , [
+        nwr:version "1.0"^^xs:string;
+        dct:title "vua-event-coref-intradoc-lemma-baseline"^^xs:string
+    ] , [
+        nwr:version "1.0"^^xs:string;
+        dct:title "vua-factuality"^^xs:string
+    ] , [
+        nwr:version "1.0"^^xs:string;
+        dct:title "vua-multiword-tagger"^^xs:string
+    ] .
+
+<http://www.newsreader-project.eu/2013/4/30/58B2-1JT1-DYTM-9159.naf> a ks:Resource , nwr:NAFDocument ;
+    nwr:annotationOf <http://www.newsreader-project.eu/2013/4/30/58B2-1JT1-DYTM-9159.xml> ;
+    nwr:layer nwr:layer_coreferences , nwr:layer_deps , nwr:layer_entities , nwr:layer_factuality , nwr:layer_srl , nwr:layer_terms , nwr:layer_text ;
+    nwr:version "v3"^^xs:string ;
+    dct:identifier "58B2-1JT1-DYTM-9159"^^xs:string ;
+    dct:creator [
+        nwr:version "2.0"^^xs:string;
+        dct:title "TimePro"^^xs:string
+    ] , [
+        nwr:version "8nov2013_1.1"^^xs:string;
+        dct:title "VUA opinion miner. CRF deluxe"^^xs:string
+    ] , [
+        nwr:version "8nov2013_v1.0"^^xs:string;
+        dct:title "VUA-DSC-WSD"^^xs:string
+    ] , [
+        nwr:version "1.0"^^xs:string;
+        dct:title "ixa-pipe-nerc-en"^^xs:string
+    ] , [
+        nwr:version "1.0"^^xs:string;
+        dct:title "ixa-pipe-pos-en"^^xs:string
+    ] , [
+        nwr:version "1.0"^^xs:string;
+        dct:title "ixa-pipe-spotlight"^^xs:string
+    ] , [
+        nwr:version "1.0"^^xs:string;
+        dct:title "ixa-pipe-srl-en"^^xs:string
+    ] , [
+        nwr:version "1.0"^^xs:string;
+        dct:title "ixa-pipe-tok-en"^^xs:string
+    ] , [
+        nwr:version "1.0"^^xs:string;
+        dct:title "vua-entity-coref-intradoc-reference-baseline"^^xs:string
+    ] , [
+        nwr:version "1.0"^^xs:string;
+        dct:title "vua-event-coref-intradoc-lemma-baseline"^^xs:string
+    ] , [
+        nwr:version "1.0"^^xs:string;
+        dct:title "vua-factuality"^^xs:string
+    ] , [
+        nwr:version "1.0"^^xs:string;
+        dct:title "vua-multiword-tagger"^^xs:string
+    ] .
+  
+<http://www.newsreader-project.eu/2013/4/30/58B2-1JT1-DYTM-916F.naf> a ks:Resource , nwr:NAFDocument ;
+    nwr:annotationOf <http://www.newsreader-project.eu/2013/4/30/58B2-1JT1-DYTM-916F.xml> ;
+    nwr:layer nwr:layer_coreferences , nwr:layer_deps , nwr:layer_entities , nwr:layer_factuality , nwr:layer_srl , nwr:layer_terms , nwr:layer_text ;
+    nwr:version "v3"^^xs:string ;
+    dct:identifier "58B2-1JT1-DYTM-916F"^^xs:string ;
+    dct:creator [
+        nwr:version "2.0"^^xs:string;
+        dct:title "TimePro"^^xs:string
+    ] , [
+        nwr:version "8nov2013_1.1"^^xs:string;
+        dct:title "VUA opinion miner. CRF deluxe"^^xs:string
+    ] , [
+        nwr:version "8nov2013_v1.0"^^xs:string;
+        dct:title "VUA-DSC-WSD"^^xs:string
+    ] , [
+        nwr:version "1.0"^^xs:string;
+        dct:title "ixa-pipe-nerc-en"^^xs:string
+    ] , [
+        nwr:version "1.0"^^xs:string;
+        dct:title "ixa-pipe-pos-en"^^xs:string
+    ] , [
+        nwr:version "1.0"^^xs:string;
+        dct:title "ixa-pipe-spotlight"^^xs:string
+    ] , [
+        nwr:version "1.0"^^xs:string;
+        dct:title "ixa-pipe-srl-en"^^xs:string
+    ] , [
+        nwr:version "1.0"^^xs:string;
+        dct:title "ixa-pipe-tok-en"^^xs:string
+    ] , [
+        nwr:version "1.0"^^xs:string;
+        dct:title "vua-entity-coref-intradoc-reference-baseline"^^xs:string
+    ] , [
+        nwr:version "1.0"^^xs:string;
+        dct:title "vua-event-coref-intradoc-lemma-baseline"^^xs:string
+    ] , [
+        nwr:version "1.0"^^xs:string;
+        dct:title "vua-factuality"^^xs:string
+    ] , [
+        nwr:version "1.0"^^xs:string;
+        dct:title "vua-multiword-tagger"^^xs:string
+    ] .

@@ -1,0 +1,44 @@
+<server
+  impl="eu.fbk.knowledgestore.endpoint.HttpStore"
+  httpLogSettings="/eu/fbk/knowledgestore/endpoint/HttpStoreRunner.logback.xml"
+  httpPort="8080"
+  httpsPort="8443"
+  keystore="eu/fbk/knowledgestore/endpoint/HttpStoreRunner.keystore"
+  keystorePassword="kspass"
+  realm="KnowledgeStore"
+  userdb="eu/fbk/knowledgestore/endpoint/HttpStoreRunner.userdb"
+  anonymousRoles="downloader,crud_reader"
+  debug="true">
+
+  <filesystem
+    inherit="true"
+    filesystem="hdfs://localhost:54310/" />
+
+  <store impl="eu.fbk.knowledgestore.frontend.Frontend">
+
+    <filestore
+      impl="eu.fbk.knowledgestore.filestore.hadoop.HadoopFileStore"
+      cluster.ip-address="localhost"
+      cluster.port="54310" />
+
+    <datastore
+      impl="eu.fbk.knowledgestore.datastore.helper.SynchronizedDataStore"
+      readKey="datastore.lock"
+      writeKey="datastore.lock">
+      <datastore
+        impl="eu.fbk.knowledgestore.datastore.hbase.HBaseDataStore"
+        uris.dictionary="uri.dic" />
+    </datastore>
+
+    <triplestore
+      impl="eu.fbk.knowledgestore.triplestore.virtuoso.VirtuosoTripleStore"
+      host="localhost"
+      port="1111"
+      username="dba"
+      password="dba"
+      pooling="false" />
+
+  </store>
+
+</server>
+

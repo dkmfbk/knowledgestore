@@ -1,0 +1,21 @@
+<config>
+  <components>
+    <component>
+      <property>p1</property>
+      <impl>eu.fbk.knowledgestore.runtime.FactoryTest$ComponentImpl</impl>
+    </component>
+    <component>
+      <property>p2</property>
+      <impl>eu.fbk.knowledgestore.runtime.FactoryTest.createComponent
+      </impl>
+    </component>
+  </components>
+  <bean>
+    <name>n</name>
+    <!-- no impl: should use factory bound to eu.fbk.knowledgestore.runtime.FactoryTest.Bean -->
+  </bean>
+  <string>
+    <!-- this is the value of a string created via a custom factory method bound to java.lang.string -->
+    <value>s</value>
+  </string>
+</config>

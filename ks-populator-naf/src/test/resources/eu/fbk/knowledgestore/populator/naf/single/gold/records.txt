@@ -1,0 +1,330 @@
+Record <http://www.newsreader-project.eu/data/cars/2009/1/6/4V9S-7G40-TX4S-W0M9.xml> {
+  nwr:annotatedWith = <http://www.newsreader-project.eu/data/cars/2009/1/6/4V9S-7G40-TX4S-W0M9.naf>;
+  dct:created = "2009-01-06"^^xs:string;
+  dct:language = lexvo:eng;
+  rdf:type = nwr:News }
+Record <http://www.newsreader-project.eu/data/cars/2009/1/6/4V9S-7G40-TX4S-W0M9.naf> {
+  nwr:annotationOf = <http://www.newsreader-project.eu/data/cars/2009/1/6/4V9S-7G40-TX4S-W0M9.xml>;
+  nwr:layer = 
+    nwr:layer_coreferences,
+    nwr:layer_deps,
+    nwr:layer_entities,
+    nwr:layer_factuality,
+    nwr:layer_srl,
+    nwr:layer_terms,
+    nwr:layer_text;
+  nwr:version = "v3"^^xs:string;
+  dct:creator = 
+    Record <http://www.newsreader-project.eu/data/cars/lp/TimePro/2.0> {
+      nwr:version = "2.0"^^xs:string;
+      dct:title = "TimePro"^^xs:string },
+    Record <http://www.newsreader-project.eu/data/cars/lp/VUA+opinion+miner.+CRF+deluxe/8nov2013_1.1> {
+      nwr:version = "8nov2013_1.1"^^xs:string;
+      dct:title = "VUA opinion miner. CRF deluxe"^^xs:string },
+    Record <http://www.newsreader-project.eu/data/cars/lp/VUA-DSC-WSD/8nov2013_v1.0> {
+      nwr:version = "8nov2013_v1.0"^^xs:string;
+      dct:title = "VUA-DSC-WSD"^^xs:string },
+    Record <http://www.newsreader-project.eu/data/cars/lp/ixa-pipe-nerc-en/1.0> {
+      nwr:version = "1.0"^^xs:string;
+      dct:title = "ixa-pipe-nerc-en"^^xs:string },
+    Record <http://www.newsreader-project.eu/data/cars/lp/ixa-pipe-pos-en/1.0> {
+      nwr:version = "1.0"^^xs:string;
+      dct:title = "ixa-pipe-pos-en"^^xs:string },
+    Record <http://www.newsreader-project.eu/data/cars/lp/ixa-pipe-spotlight/1.0> {
+      nwr:version = "1.0"^^xs:string;
+      dct:title = "ixa-pipe-spotlight"^^xs:string },
+    Record <http://www.newsreader-project.eu/data/cars/lp/ixa-pipe-srl-en/1.0> {
+      nwr:version = "1.0"^^xs:string;
+      dct:title = "ixa-pipe-srl-en"^^xs:string },
+    Record <http://www.newsreader-project.eu/data/cars/lp/ixa-pipe-tok-en/1.0> {
+      nwr:version = "1.0"^^xs:string;
+      dct:title = "ixa-pipe-tok-en"^^xs:string },
+    Record <http://www.newsreader-project.eu/data/cars/lp/vua-event-coref-intradoc-lemma-baseline/1.0> {
+      nwr:version = "1.0"^^xs:string;
+      dct:title = "vua-event-coref-intradoc-lemma-baseline"^^xs:string },
+    Record <http://www.newsreader-project.eu/data/cars/lp/vua-factuality/1.0> {
+      nwr:version = "1.0"^^xs:string;
+      dct:title = "vua-factuality"^^xs:string },
+    Record <http://www.newsreader-project.eu/data/cars/lp/vua-multiword-tagger/1.0> {
+      nwr:version = "1.0"^^xs:string;
+      dct:title = "vua-multiword-tagger"^^xs:string };
+  dct:identifier = "4V9S-7G40-TX4S-W0M9"^^xs:string;
+  rdf:type = nwr:NAFDocument }
+Record <http://www.newsreader-project.eu/data/cars/2009/1/6/4V9S-7G40-TX4S-W0M9.xml#char=133,136&word=w24> {
+  nwr:factualityConfidence = "0.9293444920042415"^^xs:string;
+  nif:beginIndex = "133"^^xs:string;
+  nif:endIndex = "136"^^xs:int;
+  rdf:type = 
+    ks:Mention,
+    nwr:EntityMention,
+    nwr:EventMention,
+    nwr:TimeOrEventMention }
+Record <http://www.newsreader-project.eu/data/cars/2009/1/6/4V9S-7G40-TX4S-W0M9.xml#char=1019,1023&word=w202&term=t202> {
+  ks:mentionOf = <http://www.newsreader-project.eu/data/cars/2009/1/6/4V9S-7G40-TX4S-W0M9.xml>;
+  nwr:localCorefID = "coe8"^^xs:string;
+  nwr:pos = nwr:pos_verb;
+  nwr:pred = "say"^^xs:string;
+  nif:beginIndex = "1019"^^xs:string;
+  nif:endIndex = "1023"^^xs:int;
+  rdf:type = 
+    ks:Mention,
+    nwr:EntityMention,
+    nwr:EventMention,
+    nwr:TimeOrEventMention }
+Record <http://www.newsreader-project.eu/data/cars/2009/1/6/4V9S-7G40-TX4S-W0M9.xml#char=16,21&word=w4&term=t4> {
+  ks:mentionOf = <http://www.newsreader-project.eu/data/cars/2009/1/6/4V9S-7G40-TX4S-W0M9.xml>;
+  nwr:entityType = nwr:entity_type_per;
+  nif:beginIndex = "16"^^xs:string;
+  nif:endIndex = "21"^^xs:int;
+  rdf:type = 
+    ks:Mention,
+    nwr:EntityMention,
+    nwr:ObjectMention }
+Record <http://www.newsreader-project.eu/data/cars/2009/1/6/4V9S-7G40-TX4S-W0M9.xml#char=31,107&word=w7,w20&term=t7,t20> {
+  nwr:framenetRef = <http://www.newsreader-project.eu/framenet/Assistance#Helper>;
+  nwr:source = "http://www.newsreader-project.eu/data/cars/2009/1/6/4V9S-7G40-TX4S-W0M9.xml#char=31,35&word=w7&term=t7"^^xs:string;
+  nwr:syntacticHead = "t20"^^xs:string;
+  nwr:thematicRole = "A0"^^xs:string;
+  nwr:verbnetRef = <http://www.newsreader-project.eu/verbnet/help-72#Agent>;
+  nif:beginIndex = "31"^^xs:string;
+  nif:endIndex = "107"^^xs:int;
+  rdf:type = 
+    ks:Mention,
+    nwr:Participation,
+    nwr:RelationMention }
+Record <http://www.newsreader-project.eu/data/cars/2009/1/6/4V9S-7G40-TX4S-W0M9.xml#char=513,514&word=w100> {
+  nif:beginIndex = "513"^^xs:string;
+  nif:endIndex = "514"^^xs:int;
+  rdf:type = 
+    ks:Mention,
+    nwr:EntityMention,
+    nwr:TimeMention,
+    nwr:TimeOrEventMention }
+Record <http://www.newsreader-project.eu/data/cars/2009/1/6/4V9S-7G40-TX4S-W0M9.xml#char=16,27&word=w4,w5&term=t4,t5> {
+  nwr:source = "http://www.newsreader-project.eu/data/cars/2009/1/6/4V9S-7G40-TX4S-W0M9.xml#char=22,27&word=w5&term=t5"^^xs:string;
+  nwr:syntacticHead = "t4"^^xs:string;
+  nwr:thematicRole = "AM-TMP"^^xs:string;
+  nif:beginIndex = "16"^^xs:string;
+  nif:endIndex = "27"^^xs:int;
+  rdf:type = 
+    ks:Mention,
+    nwr:Participation,
+    nwr:RelationMention }
+Record <http://www.newsreader-project.eu/data/cars/2009/1/6/4V9S-7G40-TX4S-W0M9.xml#char=307,313&word=w55> {
+  nwr:factualityConfidence = "0.49052073498064114"^^xs:string;
+  nif:beginIndex = "307"^^xs:string;
+  nif:endIndex = "313"^^xs:int;
+  rdf:type = 
+    ks:Mention,
+    nwr:EntityMention,
+    nwr:EventMention,
+    nwr:TimeOrEventMention }
+Record <http://www.newsreader-project.eu/data/cars/2009/1/6/4V9S-7G40-TX4S-W0M9.xml#char=31,35&word=w7&term=t7> {
+  ks:mentionOf = <http://www.newsreader-project.eu/data/cars/2009/1/6/4V9S-7G40-TX4S-W0M9.xml>;
+  nwr:eventClass = nwr:event_grammatical;
+  nwr:factualityConfidence = "0.7367051089334559"^^xs:string;
+  nwr:framenetRef = framenet:Assistance;
+  nwr:pos = nwr:pos_verb;
+  nwr:pred = "help"^^xs:string;
+  nwr:propbankRef = <http://www.newsreader-project.eu/propbank/help.01>;
+  nwr:verbnetRef = 
+    <http://www.newsreader-project.eu/verbnet/help-72>,
+    <http://www.newsreader-project.eu/verbnet/help-72-1>;
+  nif:beginIndex = "31"^^xs:string;
+  nif:endIndex = "35"^^xs:int;
+  rdf:type = 
+    ks:Mention,
+    nwr:EntityMention,
+    nwr:EventMention,
+    nwr:TimeOrEventMention }
+Record <http://www.newsreader-project.eu/data/cars/2009/1/6/4V9S-7G40-TX4S-W0M9.xml#char=858,862&word=w168&term=t168> {
+  ks:mentionOf = <http://www.newsreader-project.eu/data/cars/2009/1/6/4V9S-7G40-TX4S-W0M9.xml>;
+  nwr:pos = nwr:pos_verb;
+  nwr:pred = "make"^^xs:string;
+  nif:beginIndex = "858"^^xs:string;
+  nif:endIndex = "862"^^xs:int;
+  rdf:type = 
+    ks:Mention,
+    nwr:EntityMention,
+    nwr:EventMention,
+    nwr:TimeOrEventMention }
+Record <http://www.newsreader-project.eu/data/cars/2009/1/6/4V9S-7G40-TX4S-W0M9.xml#char=392,396&word=w71&term=t71> {
+  ks:mentionOf = <http://www.newsreader-project.eu/data/cars/2009/1/6/4V9S-7G40-TX4S-W0M9.xml>;
+  nwr:localCorefID = "coe8"^^xs:string;
+  nwr:pos = nwr:pos_verb;
+  nwr:pred = "say"^^xs:string;
+  nif:beginIndex = "392"^^xs:string;
+  nif:endIndex = "396"^^xs:int;
+  rdf:type = 
+    ks:Mention,
+    nwr:EntityMention,
+    nwr:EventMention,
+    nwr:TimeOrEventMention }
+Record <http://www.newsreader-project.eu/data/cars/2009/1/6/4V9S-7G40-TX4S-W0M9.xml#char=166,173&word=w31> {
+  nwr:factualityConfidence = "0.5572075389422826"^^xs:string;
+  nif:beginIndex = "166"^^xs:string;
+  nif:endIndex = "173"^^xs:int;
+  rdf:type = 
+    ks:Mention,
+    nwr:EntityMention,
+    nwr:EventMention,
+    nwr:TimeOrEventMention }
+Record <http://www.newsreader-project.eu/data/cars/2009/1/6/4V9S-7G40-TX4S-W0M9.xml#char=1112,1116&word=w225> {
+  nif:beginIndex = "1112"^^xs:string;
+  nif:endIndex = "1116"^^xs:int;
+  rdf:type = 
+    ks:Mention,
+    nwr:EntityMention,
+    nwr:TimeMention,
+    nwr:TimeOrEventMention }
+Record <http://www.newsreader-project.eu/data/cars/2009/1/6/4V9S-7G40-TX4S-W0M9.xml#char=554,563&word=w109&term=t109> {
+  ks:mentionOf = <http://www.newsreader-project.eu/data/cars/2009/1/6/4V9S-7G40-TX4S-W0M9.xml>;
+  nwr:pos = nwr:pos_verb;
+  nwr:pred = "underpin"^^xs:string;
+  nif:beginIndex = "554"^^xs:string;
+  nif:endIndex = "563"^^xs:int;
+  rdf:type = 
+    ks:Mention,
+    nwr:EntityMention,
+    nwr:EventMention,
+    nwr:TimeOrEventMention }
+Record <http://www.newsreader-project.eu/data/cars/2009/1/6/4V9S-7G40-TX4S-W0M9.xml#char=1141,1144&word=w230&term=t230> {
+  ks:mentionOf = <http://www.newsreader-project.eu/data/cars/2009/1/6/4V9S-7G40-TX4S-W0M9.xml>;
+  nwr:localCorefID = "coe8"^^xs:string;
+  nwr:pos = nwr:pos_verb;
+  nwr:pred = "say"^^xs:string;
+  nif:beginIndex = "1141"^^xs:string;
+  nif:endIndex = "1144"^^xs:int;
+  rdf:type = 
+    ks:Mention,
+    nwr:EntityMention,
+    nwr:EventMention,
+    nwr:TimeOrEventMention }
+Record <http://www.newsreader-project.eu/data/cars/2009/1/6/4V9S-7G40-TX4S-W0M9.xml#char=137,142&word=w25> {
+  nwr:eventClass = nwr:event_speech_cognitive;
+  nwr:factualityConfidence = "0.950017669262504"^^xs:string;
+  nwr:framenetRef = 
+    framenet:Attempt_suasion,
+    framenet:Request;
+  nwr:pos = nwr:pos_verb;
+  nwr:pred = "urge"^^xs:string;
+  nwr:propbankRef = <http://www.newsreader-project.eu/propbank/urge.01>;
+  nwr:verbnetRef = <http://www.newsreader-project.eu/verbnet/urge-58.1>;
+  nif:beginIndex = "137"^^xs:string;
+  nif:endIndex = "142"^^xs:int;
+  rdf:type = 
+    ks:Mention,
+    nwr:EntityMention,
+    nwr:EventMention,
+    nwr:TimeOrEventMention }
+Record <http://www.newsreader-project.eu/data/cars/2009/1/6/4V9S-7G40-TX4S-W0M9.xml#char=31,53&word=w7,w8,w9,w10&term=t7,t8,t9,t10> {
+  ks:mentionOf = <http://www.newsreader-project.eu/data/cars/2009/1/6/4V9S-7G40-TX4S-W0M9.xml>;
+  nwr:entityType = nwr:entity_type_org;
+  nif:beginIndex = "31"^^xs:string;
+  nif:endIndex = "53"^^xs:int;
+  rdf:type = 
+    ks:Mention,
+    nwr:EntityMention,
+    nwr:ObjectMention }
+Record <http://www.newsreader-project.eu/data/cars/2009/1/6/4V9S-7G40-TX4S-W0M9.xml#char=226,235&word=w43> {
+  nwr:factualityConfidence = "0.9714654056549034"^^xs:string;
+  nif:beginIndex = "226"^^xs:string;
+  nif:endIndex = "235"^^xs:int;
+  rdf:type = 
+    ks:Mention,
+    nwr:EntityMention,
+    nwr:EventMention,
+    nwr:TimeOrEventMention }
+Record <http://www.newsreader-project.eu/data/cars/2009/1/6/4V9S-7G40-TX4S-W0M9.xml#char=73,80&word=w16&term=t16> {
+  ks:mentionOf = <http://www.newsreader-project.eu/data/cars/2009/1/6/4V9S-7G40-TX4S-W0M9.xml>;
+  ks:refersTo = dbpedia:Country_music;
+  nif:beginIndex = "73"^^xs:string;
+  nif:endIndex = "80"^^xs:int;
+  rdf:type = 
+    ks:Mention,
+    nwr:EntityMention,
+    nwr:ObjectMention }
+Record <http://www.newsreader-project.eu/data/cars/2009/1/6/4V9S-7G40-TX4S-W0M9.xml#char=1422,1427&word=w283&term=t283> {
+  ks:mentionOf = <http://www.newsreader-project.eu/data/cars/2009/1/6/4V9S-7G40-TX4S-W0M9.xml>;
+  nwr:pos = nwr:pos_verb;
+  nwr:pred = "own"^^xs:string;
+  nif:beginIndex = "1422"^^xs:string;
+  nif:endIndex = "1427"^^xs:int;
+  rdf:type = 
+    ks:Mention,
+    nwr:EntityMention,
+    nwr:EventMention,
+    nwr:TimeOrEventMention }
+Record <http://www.newsreader-project.eu/data/cars/2009/1/6/4V9S-7G40-TX4S-W0M9.xml#char=273,277&word=w49&term=t49> {
+  ks:mentionOf = <http://www.newsreader-project.eu/data/cars/2009/1/6/4V9S-7G40-TX4S-W0M9.xml>;
+  nwr:localCorefID = "coe8"^^xs:string;
+  nwr:pos = nwr:pos_verb;
+  nwr:pred = "say"^^xs:string;
+  nif:beginIndex = "273"^^xs:string;
+  nif:endIndex = "277"^^xs:int;
+  rdf:type = 
+    ks:Mention,
+    nwr:EntityMention,
+    nwr:EventMention,
+    nwr:TimeOrEventMention }
+Record <http://www.newsreader-project.eu/data/cars/2009/1/6/4V9S-7G40-TX4S-W0M9.xml#char=58,64&word=w13&term=t13> {
+  nwr:eventClass = nwr:event_other;
+  nwr:nombankRef = <http://www.newsreader-project.eu/nombank/future.01>;
+  nwr:pos = nwr:pos_noun;
+  nwr:pred = "future"^^xs:string;
+  nif:beginIndex = "58"^^xs:string;
+  nif:endIndex = "64"^^xs:int;
+  rdf:type = 
+    ks:Mention,
+    nwr:EntityMention,
+    nwr:EventMention,
+    nwr:TimeOrEventMention }
+Record <http://www.newsreader-project.eu/data/cars/2009/1/6/4V9S-7G40-TX4S-W0M9.xml#char=2,4&word=w2&term=t2> {
+  ks:mentionOf = <http://www.newsreader-project.eu/data/cars/2009/1/6/4V9S-7G40-TX4S-W0M9.xml>;
+  ks:refersTo = dbpedia:Köchel_catalogue;
+  nwr:entityType = nwr:entity_type_per;
+  nif:beginIndex = "2"^^xs:string;
+  nif:endIndex = "4"^^xs:int;
+  rdf:type = 
+    ks:Mention,
+    nwr:EntityMention,
+    nwr:ObjectMention }
+Record <http://www.newsreader-project.eu/data/cars/2009/1/6/4V9S-7G40-TX4S-W0M9.xml#char=22,27&word=w5> {
+  nwr:eventClass = nwr:event_speech_cognitive;
+  nwr:factualityConfidence = "0.6155728435785741"^^xs:string;
+  nwr:framenetRef = 
+    framenet:Attempt_suasion,
+    framenet:Request;
+  nwr:pos = nwr:pos_verb;
+  nwr:pred = "urge"^^xs:string;
+  nwr:propbankRef = <http://www.newsreader-project.eu/propbank/urge.01>;
+  nwr:verbnetRef = <http://www.newsreader-project.eu/verbnet/urge-58.1>;
+  nif:beginIndex = "22"^^xs:string;
+  nif:endIndex = "27"^^xs:int;
+  rdf:type = 
+    ks:Mention,
+    nwr:EntityMention,
+    nwr:EventMention,
+    nwr:TimeOrEventMention }
+Record <http://www.newsreader-project.eu/data/cars/2009/1/6/4V9S-7G40-TX4S-W0M9.xml#char=101,107&word=w20&term=t20> {
+  ks:mentionOf = <http://www.newsreader-project.eu/data/cars/2009/1/6/4V9S-7G40-TX4S-W0M9.xml>;
+  ks:refersTo = dbpedia:Japan;
+  nwr:entityType = nwr:entity_type_loc;
+  nif:beginIndex = "101"^^xs:string;
+  nif:endIndex = "107"^^xs:int;
+  rdf:type = 
+    ks:Mention,
+    nwr:EntityMention,
+    nwr:ObjectMention }
+Record <http://www.newsreader-project.eu/data/cars/2009/1/6/4V9S-7G40-TX4S-W0M9.xml#char=689,693&word=w131&term=t131> {
+  ks:mentionOf = <http://www.newsreader-project.eu/data/cars/2009/1/6/4V9S-7G40-TX4S-W0M9.xml>;
+  nwr:localCorefID = "coe8"^^xs:string;
+  nwr:pos = nwr:pos_verb;
+  nwr:pred = "say"^^xs:string;
+  nif:beginIndex = "689"^^xs:string;
+  nif:endIndex = "693"^^xs:int;
+  rdf:type = 
+    ks:Mention,
+    nwr:EntityMention,
+    nwr:EventMention,
+    nwr:TimeOrEventMention }

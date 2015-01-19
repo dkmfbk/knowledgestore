@@ -1,0 +1,5 @@
+<configuration name.inherited="parent-${user.dir}">
+  <impl inherited="true">eu.fbk.knowledgestore.runtime.ConfigurationTest$ComponentImpl</impl>
+  <child name="child1" />
+  <child impl="eu.fbk.knowledgestore.runtime.ConfigurationTest.createComponent" />
+</configuration>

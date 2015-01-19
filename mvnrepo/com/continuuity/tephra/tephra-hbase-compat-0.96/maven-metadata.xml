@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>com.continuuity.tephra</groupId>
+  <artifactId>tephra-hbase-compat-0.96</artifactId>
+  <versioning>
+    <release>0.2.0-ROL</release>
+    <versions>
+      <version>0.2.0-ROL</version>
+    </versions>
+    <lastUpdated>20150119152225</lastUpdated>
+  </versioning>
+</metadata>

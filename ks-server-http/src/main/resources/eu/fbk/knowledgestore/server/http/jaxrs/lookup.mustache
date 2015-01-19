@@ -1,0 +1,170 @@
+{{<eu/fbk/knowledgestore/server/http/jaxrs/template}}
+{{$content}}
+
+<div class="row subbar">
+<div class="col-md-12">
+<form id="request" class="form-inline" role="form" action="ui">
+  <input type="hidden" name="action" value="lookup"/>
+  <div class="form-group">
+    <div class="input-group" style="max-width: 700px">
+      <span class="input-group-addon">ID</span>
+      <input id="id" class="form-control input-sm" name="id" type="text" size="128" placeholder="Enter URI" {{#id}}value={{id}}{{/id}}>
+    </div>
+  </div>
+  &nbsp;
+  <button type="submit" class="btn btn-default btn-sm">Lookup</button>
+  &nbsp;
+  &nbsp;
+  &nbsp;
+  {{#examplesCount}}
+  <span class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">example URI <b class="caret"></b></a>
+    <ul class="dropdown-menu pull-right">
+      {{#examples}}
+      <li><a href="#" onclick="$('#id').val('{{value}}')">{{value}} - {{label}}</a></li>
+      {{/examples}}
+    </ul>
+  </span>
+  {{/examplesCount}}
+  <span style="float: right; font-size: 150%">
+  	{{#resource}}1 resource found{{/resource}}
+  	{{#mention}}1 mention found{{/mention}}
+  	{{#entity}}1 entity found{{/entity}}	
+  </span>
+</form>
+</div>
+</div>
+
+{{#resource}}
+{{#resourceText}}
+<div class="row">
+<div class="col-md-12">
+<div style="float: left"><strong>Resource text</strong></div>
+<div style="float: right">
+<a href="#" onclick="select('')">Select resource metadata</a>
+{{#resourceEntitiesCount}}
+&nbsp;&nbsp;&nbsp;
+<span class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">Select entity ({{resourceEntitiesCount}}) <b class="caret"></b></a>
+<ul class="dropdown-menu pull-right">
+  {{#resourceEntities}}<li>{{{.}}}</li>{{/resourceEntities}}
+</ul>
+</span>
+{{/resourceEntitiesCount}}
+{{#resourceMentionsCount}}
+&nbsp;&nbsp;&nbsp;
+<span class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">Select mention ({{resourceMentionsCount}}) <b class="caret"></b></a>
+<ul class="dropdown-menu pull-right">
+  {{#resourceMentions}}<li>{{{.}}}</li>{{/resourceMentions}}
+</ul>
+</span>
+{{/resourceMentionsCount}}
+{{#resourcePrettyPrint}}
+&nbsp;&nbsp;&nbsp;
+<span class="dropdown">
+<a href="#" onclick="prettyPrint()">Highlight syntax</a>
+</span>
+{{/resourcePrettyPrint}}
+</div>
+<br/>
+<div class="panel panel-default">
+  <div class="panel-body">
+  {{{resourceText}}}
+  </div>
+</div>
+</div>
+</div>
+{{/resourceText}}
+
+{{#resourceDetailsBody}}
+<div class="row">
+<div class="col-md-12">
+<div style="float: left">{{{resourceDetailsTitle}}}</div>
+<br/>
+<div class="panel panel-default">
+{{{resourceDetailsBody}}}
+</div>
+</div>
+</div>
+{{/resourceDetailsBody}}
+{{/resource}}
+
+{{#mention}}
+{{#mentionResourceLink}}
+<div class="row">
+<div class="col-md-12">
+<div style="float: left"><strong>Mention resource (excerpt): {{{mentionResourceLink}}}</strong></div>
+<br/>
+<div class="panel panel-default">
+  <div class="panel-body">
+  {{{mentionResourceExcerpt}}}
+  </div>
+</div>
+</div>
+</div>
+{{/mentionResourceLink}}
+
+<div class="row">
+<div class="col-md-12">
+<div style="float: left"><strong>Mention data</strong></div>
+<br/>
+<div class="panel panel-default">
+{{{mentionData}}}
+</div>
+</div>
+</div>
+
+{{#mentionEntityLink}}
+<div class="row">
+<div class="col-md-12">
+<div style="float: left"><strong>Mention referent ({{mentionEntityTriplesCount}} triples, max {{maxTriples}}): {{{mentionEntityLink}}}</strong></div>
+<br/>
+<div class="panel panel-default">
+{{{mentionEntityTriples}}}
+</div>
+</div>
+</div>
+{{/mentionEntityLink}}
+{{/mention}}
+
+{{#entity}}
+{{#entityResources}}
+<div class="row">
+<div class="col-md-12">
+<div style="float: left"><strong>Entity occurrences ({{entityResourcesCount}}, max {{maxTriples}})</strong></div>
+<br/>
+<div class="panel panel-default">
+{{{entityResources}}}
+</div>
+</div>
+</div>
+{{/entityResources}}
+
+{{#entityTriples}}
+<div class="row">
+<div class="col-md-12">
+<div style="float: left"><strong>Entity description ({{entityTriplesCount}} triples, max {{maxTriples}})</strong></div>
+<br/>
+<div class="panel panel-default">
+{{{entityTriples}}}
+</div>
+</div>
+</div>
+{{/entityTriples}}
+
+{{#entityGraph}}
+<div class="row">
+<div class="col-md-12">
+<div style="float: left"><strong>Entity graph ({{entityGraphCount}} triples, max {{maxTriples}})</strong></div>
+<br/>
+<div class="panel panel-default">
+{{{entityGraph}}}
+</div>
+</div>
+</div>
+{{/entityGraph}}
+{{/entity}}
+
+{{/content}}
+{{/eu/fbk/knowledgestore/server/http/jaxrs/template}}

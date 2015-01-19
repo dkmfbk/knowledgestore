@@ -1,0 +1,118 @@
+The KnowledgeStore - Scalable storage for text and RDF data
+Copyright 2014 FBK-Irst
+========================================================================
+
+
+This product includes the following licensed third-party software:
+
+- Apache Avro, Commons IO, Commons CLI, Commons Configuration, Commons
+  Compress, Commons Net, Commons EL, Commons Math, Commons Collections,
+  Commons Codec, Commons Lang, Hadoop, HBase, Zookeeper, HTTPClient,
+  Velocity, Thrift, BookKeeper and Jakarta ORO, software libraries
+  developed by The Apache Software Foundation (http://www.apache.org/)
+  License: http://www.apache.org/licenses/LICENSE-2.0
+
+- OpenRDF Sesame, software library developed by Aduna
+  (http://www.openrdf.org/). License:
+  https://bitbucket.org/openrdf/sesame/src/master/core/LICENSE.txt
+
+- JSON Jackson parser, a software library developed by FasterXML, LLC
+  (https://fasterxml.com).
+  License: http://www.apache.org/licenses/LICENSE-2.0
+
+- Semargl libraries (http://semarglproject.org/)
+  License: http://www.apache.org/licenses/LICENSE-2.0
+
+- Logback, software library developed by QOS.ch (http://logback.qos.ch/)
+  License: http://logback.qos.ch/license.html
+
+- SLF4J, software library developed by QOS.ch (http://www.slf4j.org/)
+  License: http://www.slf4j.org/license.html
+
+- Google Guava, software library developed by Google
+  (https://code.google.com/p/guava-libraries/)
+  License: http://www.apache.org/licenses/LICENSE-2.0
+
+- Paranamer, software library developed by Paul Hammant & ThoughtWorks
+  Inc (https://github.com/paul-hammant/paranamer). License:
+  https://github.com/paul-hammant/paranamer/blob/master/LICENSE.txt
+
+- Cors-filter, software library developed by eBay
+  (https://github.com/ebay/cors-filter)
+  License: https://github.com/eBay/cors-filter/blob/master/LICENSE
+
+- Jetty, embeddable web server developed by The Eclipse Software
+  Foundation (http://www.eclipse.org/jetty/)
+  License: http://www.apache.org/licenses/LICENSE-2.0.html
+
+- Jansy library (http://jansi.fusesource.org/)
+  License: http://www.apache.org/licenses/LICENSE-2.0.txt
+
+- Jaxen, a software library by The Werken Company
+  (http://jaxen.codehaus.org)
+  License: http://jaxen.codehaus.org/license.html
+
+- Jersey, software library developed by Oracle Corporation
+  (https://jersey.java.net/)
+  License: https://jersey.java.net/license.html#cddl
+
+- Java Servlet API and Java Annotation API by Oracle Corporation
+  License: https://glassfish.dev.java.net/nonav/public/CDDL+GPL.html
+
+- Java JAX-RS API, JAXB (JSR 222) API and Mimepull library by
+  Oracle Corporation
+  License: http://glassfish.java.net/public/CDDL+GPL_1_1.html
+
+- JavaBeans Activation Framework by Oracle Corporation
+  License: https://glassfish.dev.java.net/public/CDDLv1.0.html
+
+- Bean Validation API by Red Hat Inc (http://beanvalidation.org/)
+  License: http://www.apache.org/licenses/LICENSE-2.0.txt
+
+- mustache.java, a software library by RightTime, Inc.
+  (https://github.com/spullara/mustache.java)
+  License: https://github.com/spullara/mustache.java/blob/master/LICENSE
+
+- HK2, a library by Oracle Corporation (https://hk2.java.net/2.3.0-b09/)
+  License: https://hk2.java.net/2.3.0-b09/license.html
+
+- xmlenc software library (http://xmlenc.sourceforge.net/)
+  License: http://www.opensource.org/licenses/bsd-license.php
+
+- opencsv library (http://opencsv.sourceforge.net/)
+  License: http://www.apache.org/licenses/LICENSE-2.0.txt
+
+- Javassist library (http://www.javassist.org/)
+  License: http://www.apache.org/licenses/
+
+- Jolokia, a library by Roland Huß (http://www.jolokia.org/)
+  License: http://www.jolokia.org/license.html
+
+- JSON.simple (http://code.google.com/p/json-simple/)
+  License: http://www.apache.org/licenses/LICENSE-2.0.txt
+
+- Metrics, a library by Coda Hale, Yammer Inc.
+  (http://metrics.codahale.com/)
+  License: http://www.apache.org/licenses/LICENSE-2.0.txt
+
+- Protocol Buffer Java API (http://code.google.com/p/protobuf)
+  License: http://www.opensource.org/licenses/bsd-license.php
+
+- StAX API (http://stax.codehaus.org/)
+  License: http://www.apache.org/licenses/LICENSE-2.0.txt
+
+- OMID, by Yahoo Inc (https://github.com/yahoo/omid)
+  License: http://www.apache.org/licenses/LICENSE-2.0.txt
+
+- Netty (http://netty.io/)
+  License: http://www.apache.org/licenses/LICENSE-2.0
+
+
+This product uses the following public domain software
+
+- high-scale-lib (https://github.com/stephenc/high-scale-lib)
+
+
+Original code of the KnowledgeStore by FBK-Irts (excluding 3rd party
+code) is licensed under the Apache License version 2.0.
+License: http://www.apache.org/licenses/LICENSE-2.0

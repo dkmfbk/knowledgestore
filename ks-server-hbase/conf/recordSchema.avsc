@@ -1,0 +1,8 @@
+  {
+    "type": "record",
+    "name": "complex",
+    "namespace": "eu.fbk.knowledgestore",
+    "fields": [
+      { "name": "fields", "type": {"type": "array", "items": "field"} }
+    ]
+  }

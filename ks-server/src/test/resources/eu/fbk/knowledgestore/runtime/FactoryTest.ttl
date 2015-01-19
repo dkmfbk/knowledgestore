@@ -1,0 +1,16 @@
+@prefix java: <java:> .
+@prefix ex: <example:> .
+
+ex:john a <java:eu.fbk.knowledgestore.runtime.FactoryTest$Person#builder> ;
+    java:name "John" ;
+    java:age 30 ;
+    java:knows ex:jack , ex:alice .
+
+ex:jack a <java:eu.fbk.knowledgestore.runtime.FactoryTest$Person#create> ;
+    java:name "Jack" ;
+    java:knows ex:alice .
+
+ex:alice a <java:eu.fbk.knowledgestore.runtime.FactoryTest$Person> ;
+    java:name "Alice" ;
+    java:age 84 ;
+    rdfs:label "This is Alice" .

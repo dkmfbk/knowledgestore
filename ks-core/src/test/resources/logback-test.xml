@@ -1,0 +1,34 @@
+<configuration>
+
+  <appender
+    name="STDOUT"
+    class="ch.qos.logback.core.ConsoleAppender">
+    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+      <!-- <pattern>%d{HH:mm:ss.SSS} %-5level [%thread] %logger{36} - %msg%n</pattern> -->
+      <pattern>%d{HH:mm:ss.SSS}\(%.-1level\) [%-13X{context}] %msg \(%logger{0}\)%n%rEx{full}</pattern>
+    </encoder>
+  </appender>
+
+  <root level="WARN">
+    <appender-ref ref="STDOUT" />
+  </root>
+
+  <logger
+    name="eu.fbk.knowledgestore"
+    level="INFO" />
+
+  <logger
+    name="eu.fbk.knowledgestore.helper.AbstractSession"
+    level="INFO" />
+
+  <!-- Set the following to DEBUG to log request/response headers -->
+  <logger
+    name="org.apache.http.headers"
+    level="ERROR" />
+
+  <!-- Set the following to DEBUG to log request/response content -->
+  <logger
+    name="org.apache.http.wire"
+    level="ERROR" />
+
+</configuration>

@@ -1,0 +1,39 @@
+<assembly>
+  <id>client</id>
+  <formats>
+    <format>tar.gz</format>
+  </formats>
+  <includeBaseDirectory>true</includeBaseDirectory>
+  <baseDirectory>knowledgestore</baseDirectory>
+  <fileSets>
+    <fileSet>
+      <directory>..</directory>
+      <outputDirectory>/</outputDirectory>
+      <includes>
+        <include>README.txt</include>
+        <include>NOTICE.txt</include>
+        <include>LICENSE.txt</include>
+      </includes>
+    </fileSet>
+  </fileSets>
+  <dependencySets>
+    <dependencySet>
+      <outputDirectory>/lib</outputDirectory>
+      <useStrictFiltering>true</useStrictFiltering>
+      <useTransitiveFiltering>true</useTransitiveFiltering><!-- TODO: does not work! -->
+      <includes>
+        <include>eu.fbk.knowledgestore:ks-core</include>
+        <include>eu.fbk.knowledgestore:ks-client</include>
+      </includes>
+    </dependencySet>
+    <!-- TODO: client javadocs, other docs? -->
+    <!-- <dependencySet> -->
+    <!-- <outputDirectory>/doc</outputDirectory> -->
+    <!-- <useStrictFiltering>true</useStrictFiltering> -->
+    <!-- <unpack>true</unpack> -->
+    <!-- <includes> -->
+    <!-- <include>eu.fbk.knowledgestore:ks-core:*:javadoc</include> -->
+    <!-- </includes> -->
+    <!-- </dependencySet> -->
+  </dependencySets>
+</assembly>

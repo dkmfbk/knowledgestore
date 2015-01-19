@@ -1,0 +1,2 @@
+Read (compressed) RDF files, or STDIN, extract axioms contained therein and
+send them to a KnowledgeStore server instance, a local file or STDOUT.

@@ -1,0 +1,9 @@
+{
+  "type": "record",
+  "name": "field",
+  "namespace": "eu.fbk.knowledgestore",
+  "fields" : [
+    {"name": "property", "type": "string"},
+    {"name": "value", "type": "string"}
+  ]
+}

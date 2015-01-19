@@ -1,0 +1,226 @@
+body {
+	padding-top: 32px;
+	background-color: #f4f4f4;
+}
+
+textarea {
+	font-family: Consolas, Monaco, Lucida Console, Liberation Mono,
+		DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
+}
+
+p {
+	margin-bottom: 5px !important;
+}
+
+.tablesorter th {
+	cursor: pointer;
+}
+
+#uriMenu {
+	position: absolute;
+	display: none;
+}
+
+.starter-template {
+	padding: 40px 15px;
+	text-align: center;
+}
+
+.record,.sparql,.rdf {
+	margin: 0;
+}
+
+.record td,.sparql td,.rdf td {
+	padding-top: 2px !important;
+	padding-bottom: 2px !important;
+}
+
+.scroll {
+	max-height: 150px;
+	overflow: auto;
+}
+
+.text {
+	max-height: 350px;
+	overflow: auto;
+}
+
+.text-pre {
+	background-color: #fff;
+	border: 1px solid #eee !important;
+	margin: 0px;
+}
+
+.navbar-nav>li>a {
+	padding-top: 5px !important;
+	padding-bottom: 5px !important;
+}
+
+.navbar {
+	min-height: 32px !important
+}
+
+.navbar-brand {
+	height: 32px !important;
+	padding-top: 5px !important;
+	padding-bottom: 5px !important;
+	padding-right: 50px;
+	padding-left: 16px
+}
+
+.navbar-form {
+	height: 32px !important;
+}
+
+.navbar-right {
+	padding-right: 16px;
+}
+
+.form-group {
+	margin-bottom: 5px;
+}
+
+#request {
+	padding-top: 8px;
+	padding-bottom: 8px;
+}
+
+.subbar {
+	background-color: #ddd;
+	border-bottom: 1px solid #bbb;
+	margin-bottom: 15px;
+}
+
+.error {
+	background-color: #FFF;
+	color: #F00;
+}
+
+.mention,.mention:hover {
+	text-decoration: none;
+	color: black;
+	cursor: pointer;
+}
+
+.other {
+	background-color: #E0E0E0;
+}
+
+.event {
+	background-color: #CFE990;
+}
+
+.per {
+	background-color: #FB9C6C;
+}
+
+.org {
+	background-color: #FFFF99;
+}
+
+.loc {
+	background-color: #66CCFF;
+}
+
+.fin {
+	background-color: #CC9900;
+}
+
+.pro {
+	background-color: #CC66CC;
+}
+
+.mix {
+	background-color: #808080;
+}
+
+.selected {
+	border-bottom: 3px solid black;
+}
+
+/* Pretty printing styles. Used with prettify.js. */
+.pln {
+	color: #000
+} /* plain text */
+@media screen {
+	.str {
+		color: #080
+	} /* string content */
+	.kwd {
+		color: #008
+	} /* a keyword */
+	.com {
+		color: #800
+	} /* a comment */
+	.typ {
+		color: #606
+	} /* a type name */
+	.lit {
+		color: #066
+	} /* a literal value */
+	.pun,.opn,.clo {
+		color: #660
+	}
+	.tag {
+		color: #008
+	} /* a markup tag name */
+	.atn {
+		color: #606
+	} /* a markup attribute name */
+	.atv {
+		color: #080
+	} /* a markup attribute value */
+	.dec,.var {
+		color: #606
+	} /* a declaration; a variable name */
+	.fun {
+		color: red
+	} /* a function name */
+}
+
+@media print , projection {
+	.str {
+		color: #060
+	}
+	.kwd {
+		color: #006;
+		font-weight: bold
+	}
+	.com {
+		color: #600;
+		font-style: italic
+	}
+	.typ {
+		color: #404;
+		font-weight: bold
+	}
+	.lit {
+		color: #044
+	}
+	.pun,.opn,.clo {
+		color: #440
+	}
+	.tag {
+		color: #006;
+		font-weight: bold
+	}
+	.atn {
+		color: #404
+	}
+	.atv {
+		color: #060
+	}
+}
+
+pre.prettyprint {
+	padding: 2px;
+	border: 1px solid #888
+}
+
+ol.linenums {
+	margin-top: 0;
+	margin-bottom: 0
+} /* IE indents via margin-left */
+li.L0,li.L1,li.L2,li.L3,li.L5,li.L6,li.L7,li.L8 {
+	list-style-type: none
+}

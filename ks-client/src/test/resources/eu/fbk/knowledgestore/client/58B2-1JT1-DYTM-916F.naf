@@ -1,0 +1,4335 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<NAF version="v3" xml:lang="en">
+  <nafHeader>
+    <fileDesc creationtime="2013-04-30"/>
+    <public publicId="58B2-1JT1-DYTM-916F" uri="2013/4/30/58B2-1JT1-DYTM-916F.xml"/>
+    <linguisticProcessors layer="text">
+      <lp name="ixa-pipe-tok-en" timestamp="2013-11-29 17:46:15" version="1.0"/>
+    </linguisticProcessors>
+    <linguisticProcessors layer="srl">
+      <lp name="ixa-pipe-srl-en" timestamp="2013-11-29 17:47:15" version="1.0"/>
+    </linguisticProcessors>
+    <linguisticProcessors layer="factuality">
+      <lp name="vua-factuality" timestamp="2013-11-29T17:47:21Z" version="1.0"/>
+    </linguisticProcessors>
+    <linguisticProcessors layer="terms">
+      <lp name="ixa-pipe-pos-en" timestamp="2013-11-29 17:46:16" version="1.0"/>
+      <lp name="vua-multiword-tagger" timestamp="2013-11-29 17:46:23" version="1.0"/>
+      <lp name="VUA-DSC-WSD" timestamp="2013-11-29T17:46:27CET" version="8nov2013_v1.0"/>
+    </linguisticProcessors>
+    <linguisticProcessors layer="coreferences">
+      <lp name="vua-event-coref-intradoc-lemma-baseline" timestamp="2013-11-29 17:47:20" version="1.0"/>
+      <lp name="vua-entity-coref-intradoc-reference-baseline" timestamp="2013-12-13 17:40:01" version="1.0"/>
+    </linguisticProcessors>
+    <linguisticProcessors layer="deps">
+      <lp name="ixa-pipe-srl-en" timestamp="2013-11-29 17:47:15" version="1.0"/>
+    </linguisticProcessors>
+    <linguisticProcessors layer="opinions">
+      <lp name="VUA opinion miner. CRF deluxe" timestamp="2013-11-29T17:46:27CET" version="8nov2013_1.1"/>
+    </linguisticProcessors>
+    <linguisticProcessors layer="timex3">
+      <lp name="TimePro" timestamp="2013-11-29 17:47:18.563" version="2.0"/>
+    </linguisticProcessors>
+    <linguisticProcessors layer="entities">
+      <lp name="ixa-pipe-nerc-en" timestamp="2013-11-29 17:46:25" version="1.0"/>
+    </linguisticProcessors>
+    <linguisticProcessors layer="ned">
+      <lp name="ixa-pipe-spotlight" timestamp="2013-11-29 17:46:29" version="1.0"/>
+    </linguisticProcessors>
+  </nafHeader>
+  <raw>SWITZERLAND: Nissan announces management changes in Europe.
+
+
+Nissan is announcing a new vice president of its after sales division in Europe as well as a new head of the region comprised of Germany, Austria and Switzerland.
+
+Vincent Wijnen has been named vice president, after sales, Nissan Europe. Wijnen's most recent role at Nissan was supervising the central European markets of Germany, Austria and Switzerland, as managing director, RBU Centre. His appointment is effective 1 June 2013, and he will be based in Amsterdam.
+Thomas Hausch has been named managing director, RBU Centre, based in Bruhl, Germany. He joins Nissan Europe effective 1 May 2013, afteran automotive career covering more than 20 years. Hausch started in his native Germany with the Daimler group, working in diverse disciplines including product development, strategy and sales. He moved to the United States with Chrysler, heading international sales, before returning to Germany to be responsible for Europe, Middle East and Africa for Chrysler. Hausch most recently joins Nissan from CODA Automotive, the US-based electric-vehicle specialist, where he served as vice president, sales, marketing and after sales.
+Both Wijnen and Hausch will report to Paul Willcox, senior vice president, sales and marketing for Nissan Europe.
+This article was originally published by just-auto.com on 30 April2013. For authoritative and timely auto business information visit http://www.just-auto.com.</raw>
+  <text>
+    <wf id="w1" length="11" offset="0" sent="1">SWITZERLAND</wf>
+    <wf id="w2" length="1" offset="11" sent="1">:</wf>
+    <wf id="w3" length="6" offset="13" sent="1">Nissan</wf>
+    <wf id="w4" length="9" offset="20" sent="1">announces</wf>
+    <wf id="w5" length="10" offset="30" sent="1">management</wf>
+    <wf id="w6" length="7" offset="41" sent="1">changes</wf>
+    <wf id="w7" length="2" offset="49" sent="1">in</wf>
+    <wf id="w8" length="6" offset="52" sent="1">Europe</wf>
+    <wf id="w9" length="1" offset="58" sent="1">.</wf>
+    <wf id="w10" length="6" offset="60" sent="2">Nissan</wf>
+    <wf id="w11" length="2" offset="67" sent="2">is</wf>
+    <wf id="w12" length="10" offset="70" sent="2">announcing</wf>
+    <wf id="w13" length="1" offset="81" sent="2">a</wf>
+    <wf id="w14" length="3" offset="83" sent="2">new</wf>
+    <wf id="w15" length="4" offset="87" sent="2">vice</wf>
+    <wf id="w16" length="9" offset="92" sent="2">president</wf>
+    <wf id="w17" length="2" offset="102" sent="2">of</wf>
+    <wf id="w18" length="3" offset="105" sent="2">its</wf>
+    <wf id="w19" length="5" offset="109" sent="2">after</wf>
+    <wf id="w20" length="5" offset="115" sent="2">sales</wf>
+    <wf id="w21" length="8" offset="121" sent="2">division</wf>
+    <wf id="w22" length="2" offset="130" sent="2">in</wf>
+    <wf id="w23" length="6" offset="133" sent="2">Europe</wf>
+    <wf id="w24" length="2" offset="140" sent="2">as</wf>
+    <wf id="w25" length="4" offset="143" sent="2">well</wf>
+    <wf id="w26" length="2" offset="148" sent="2">as</wf>
+    <wf id="w27" length="1" offset="151" sent="2">a</wf>
+    <wf id="w28" length="3" offset="153" sent="2">new</wf>
+    <wf id="w29" length="4" offset="157" sent="2">head</wf>
+    <wf id="w30" length="2" offset="162" sent="2">of</wf>
+    <wf id="w31" length="3" offset="165" sent="2">the</wf>
+    <wf id="w32" length="6" offset="169" sent="2">region</wf>
+    <wf id="w33" length="9" offset="176" sent="2">comprised</wf>
+    <wf id="w34" length="2" offset="186" sent="2">of</wf>
+    <wf id="w35" length="7" offset="189" sent="2">Germany</wf>
+    <wf id="w36" length="1" offset="196" sent="2">,</wf>
+    <wf id="w37" length="7" offset="198" sent="2">Austria</wf>
+    <wf id="w38" length="3" offset="206" sent="2">and</wf>
+    <wf id="w39" length="11" offset="210" sent="2">Switzerland</wf>
+    <wf id="w40" length="1" offset="221" sent="2">.</wf>
+    <wf id="w41" length="7" offset="223" sent="3">Vincent</wf>
+    <wf id="w42" length="6" offset="231" sent="3">Wijnen</wf>
+    <wf id="w43" length="3" offset="238" sent="3">has</wf>
+    <wf id="w44" length="4" offset="242" sent="3">been</wf>
+    <wf id="w45" length="5" offset="247" sent="3">named</wf>
+    <wf id="w46" length="4" offset="253" sent="3">vice</wf>
+    <wf id="w47" length="9" offset="258" sent="3">president</wf>
+    <wf id="w48" length="1" offset="267" sent="3">,</wf>
+    <wf id="w49" length="5" offset="269" sent="3">after</wf>
+    <wf id="w50" length="5" offset="275" sent="3">sales</wf>
+    <wf id="w51" length="1" offset="280" sent="3">,</wf>
+    <wf id="w52" length="6" offset="282" sent="3">Nissan</wf>
+    <wf id="w53" length="6" offset="289" sent="3">Europe</wf>
+    <wf id="w54" length="1" offset="295" sent="3">.</wf>
+    <wf id="w55" length="6" offset="297" sent="4">Wijnen</wf>
+    <wf id="w56" length="2" offset="303" sent="4">'s</wf>
+    <wf id="w57" length="4" offset="306" sent="4">most</wf>
+    <wf id="w58" length="6" offset="311" sent="4">recent</wf>
+    <wf id="w59" length="4" offset="318" sent="4">role</wf>
+    <wf id="w60" length="2" offset="323" sent="4">at</wf>
+    <wf id="w61" length="6" offset="326" sent="4">Nissan</wf>
+    <wf id="w62" length="3" offset="333" sent="4">was</wf>
+    <wf id="w63" length="11" offset="337" sent="4">supervising</wf>
+    <wf id="w64" length="3" offset="349" sent="4">the</wf>
+    <wf id="w65" length="7" offset="353" sent="4">central</wf>
+    <wf id="w66" length="8" offset="361" sent="4">European</wf>
+    <wf id="w67" length="7" offset="370" sent="4">markets</wf>
+    <wf id="w68" length="2" offset="378" sent="4">of</wf>
+    <wf id="w69" length="7" offset="381" sent="4">Germany</wf>
+    <wf id="w70" length="1" offset="388" sent="4">,</wf>
+    <wf id="w71" length="7" offset="390" sent="4">Austria</wf>
+    <wf id="w72" length="3" offset="398" sent="4">and</wf>
+    <wf id="w73" length="11" offset="402" sent="4">Switzerland</wf>
+    <wf id="w74" length="1" offset="413" sent="4">,</wf>
+    <wf id="w75" length="2" offset="415" sent="4">as</wf>
+    <wf id="w76" length="8" offset="418" sent="4">managing</wf>
+    <wf id="w77" length="8" offset="427" sent="4">director</wf>
+    <wf id="w78" length="1" offset="435" sent="4">,</wf>
+    <wf id="w79" length="3" offset="437" sent="4">RBU</wf>
+    <wf id="w80" length="6" offset="441" sent="4">Centre</wf>
+    <wf id="w81" length="1" offset="447" sent="4">.</wf>
+    <wf id="w82" length="3" offset="449" sent="5">His</wf>
+    <wf id="w83" length="11" offset="453" sent="5">appointment</wf>
+    <wf id="w84" length="2" offset="465" sent="5">is</wf>
+    <wf id="w85" length="9" offset="468" sent="5">effective</wf>
+    <wf id="w86" length="1" offset="478" sent="5">1</wf>
+    <wf id="w87" length="4" offset="480" sent="5">June</wf>
+    <wf id="w88" length="4" offset="485" sent="5">2013</wf>
+    <wf id="w89" length="1" offset="489" sent="5">,</wf>
+    <wf id="w90" length="3" offset="491" sent="5">and</wf>
+    <wf id="w91" length="2" offset="495" sent="5">he</wf>
+    <wf id="w92" length="4" offset="498" sent="5">will</wf>
+    <wf id="w93" length="2" offset="503" sent="5">be</wf>
+    <wf id="w94" length="5" offset="506" sent="5">based</wf>
+    <wf id="w95" length="2" offset="512" sent="5">in</wf>
+    <wf id="w96" length="9" offset="515" sent="5">Amsterdam</wf>
+    <wf id="w97" length="1" offset="524" sent="5">.</wf>
+    <wf id="w98" length="6" offset="526" sent="6">Thomas</wf>
+    <wf id="w99" length="6" offset="533" sent="6">Hausch</wf>
+    <wf id="w100" length="3" offset="540" sent="6">has</wf>
+    <wf id="w101" length="4" offset="544" sent="6">been</wf>
+    <wf id="w102" length="5" offset="549" sent="6">named</wf>
+    <wf id="w103" length="8" offset="555" sent="6">managing</wf>
+    <wf id="w104" length="8" offset="564" sent="6">director</wf>
+    <wf id="w105" length="1" offset="572" sent="6">,</wf>
+    <wf id="w106" length="3" offset="574" sent="6">RBU</wf>
+    <wf id="w107" length="6" offset="578" sent="6">Centre</wf>
+    <wf id="w108" length="1" offset="584" sent="6">,</wf>
+    <wf id="w109" length="5" offset="586" sent="6">based</wf>
+    <wf id="w110" length="2" offset="592" sent="6">in</wf>
+    <wf id="w111" length="5" offset="595" sent="6">Bruhl</wf>
+    <wf id="w112" length="1" offset="600" sent="6">,</wf>
+    <wf id="w113" length="7" offset="602" sent="6">Germany</wf>
+    <wf id="w114" length="1" offset="609" sent="6">.</wf>
+    <wf id="w115" length="2" offset="611" sent="7">He</wf>
+    <wf id="w116" length="5" offset="614" sent="7">joins</wf>
+    <wf id="w117" length="6" offset="620" sent="7">Nissan</wf>
+    <wf id="w118" length="6" offset="627" sent="7">Europe</wf>
+    <wf id="w119" length="9" offset="634" sent="7">effective</wf>
+    <wf id="w120" length="1" offset="644" sent="7">1</wf>
+    <wf id="w121" length="3" offset="646" sent="7">May</wf>
+    <wf id="w122" length="4" offset="650" sent="7">2013</wf>
+    <wf id="w123" length="1" offset="654" sent="7">,</wf>
+    <wf id="w124" length="7" offset="656" sent="7">afteran</wf>
+    <wf id="w125" length="10" offset="664" sent="7">automotive</wf>
+    <wf id="w126" length="6" offset="675" sent="7">career</wf>
+    <wf id="w127" length="8" offset="682" sent="7">covering</wf>
+    <wf id="w128" length="4" offset="691" sent="7">more</wf>
+    <wf id="w129" length="4" offset="696" sent="7">than</wf>
+    <wf id="w130" length="2" offset="701" sent="7">20</wf>
+    <wf id="w131" length="5" offset="704" sent="7">years</wf>
+    <wf id="w132" length="1" offset="709" sent="7">.</wf>
+    <wf id="w133" length="6" offset="711" sent="8">Hausch</wf>
+    <wf id="w134" length="7" offset="718" sent="8">started</wf>
+    <wf id="w135" length="2" offset="726" sent="8">in</wf>
+    <wf id="w136" length="3" offset="729" sent="8">his</wf>
+    <wf id="w137" length="6" offset="733" sent="8">native</wf>
+    <wf id="w138" length="7" offset="740" sent="8">Germany</wf>
+    <wf id="w139" length="4" offset="748" sent="8">with</wf>
+    <wf id="w140" length="3" offset="753" sent="8">the</wf>
+    <wf id="w141" length="7" offset="757" sent="8">Daimler</wf>
+    <wf id="w142" length="5" offset="765" sent="8">group</wf>
+    <wf id="w143" length="1" offset="770" sent="8">,</wf>
+    <wf id="w144" length="7" offset="772" sent="8">working</wf>
+    <wf id="w145" length="2" offset="780" sent="8">in</wf>
+    <wf id="w146" length="7" offset="783" sent="8">diverse</wf>
+    <wf id="w147" length="11" offset="791" sent="8">disciplines</wf>
+    <wf id="w148" length="9" offset="803" sent="8">including</wf>
+    <wf id="w149" length="7" offset="813" sent="8">product</wf>
+    <wf id="w150" length="11" offset="821" sent="8">development</wf>
+    <wf id="w151" length="1" offset="832" sent="8">,</wf>
+    <wf id="w152" length="8" offset="834" sent="8">strategy</wf>
+    <wf id="w153" length="3" offset="843" sent="8">and</wf>
+    <wf id="w154" length="5" offset="847" sent="8">sales</wf>
+    <wf id="w155" length="1" offset="852" sent="8">.</wf>
+    <wf id="w156" length="2" offset="854" sent="9">He</wf>
+    <wf id="w157" length="5" offset="857" sent="9">moved</wf>
+    <wf id="w158" length="2" offset="863" sent="9">to</wf>
+    <wf id="w159" length="3" offset="866" sent="9">the</wf>
+    <wf id="w160" length="6" offset="870" sent="9">United</wf>
+    <wf id="w161" length="6" offset="877" sent="9">States</wf>
+    <wf id="w162" length="4" offset="884" sent="9">with</wf>
+    <wf id="w163" length="8" offset="889" sent="9">Chrysler</wf>
+    <wf id="w164" length="1" offset="897" sent="9">,</wf>
+    <wf id="w165" length="7" offset="899" sent="9">heading</wf>
+    <wf id="w166" length="13" offset="907" sent="9">international</wf>
+    <wf id="w167" length="5" offset="921" sent="9">sales</wf>
+    <wf id="w168" length="1" offset="926" sent="9">,</wf>
+    <wf id="w169" length="6" offset="928" sent="9">before</wf>
+    <wf id="w170" length="9" offset="935" sent="9">returning</wf>
+    <wf id="w171" length="2" offset="945" sent="9">to</wf>
+    <wf id="w172" length="7" offset="948" sent="9">Germany</wf>
+    <wf id="w173" length="2" offset="956" sent="9">to</wf>
+    <wf id="w174" length="2" offset="959" sent="9">be</wf>
+    <wf id="w175" length="11" offset="962" sent="9">responsible</wf>
+    <wf id="w176" length="3" offset="974" sent="9">for</wf>
+    <wf id="w177" length="6" offset="978" sent="9">Europe</wf>
+    <wf id="w178" length="1" offset="984" sent="9">,</wf>
+    <wf id="w179" length="6" offset="986" sent="9">Middle</wf>
+    <wf id="w180" length="4" offset="993" sent="9">East</wf>
+    <wf id="w181" length="3" offset="998" sent="9">and</wf>
+    <wf id="w182" length="6" offset="1002" sent="9">Africa</wf>
+    <wf id="w183" length="3" offset="1009" sent="9">for</wf>
+    <wf id="w184" length="8" offset="1013" sent="9">Chrysler</wf>
+    <wf id="w185" length="1" offset="1021" sent="9">.</wf>
+    <wf id="w186" length="6" offset="1023" sent="10">Hausch</wf>
+    <wf id="w187" length="4" offset="1030" sent="10">most</wf>
+    <wf id="w188" length="8" offset="1035" sent="10">recently</wf>
+    <wf id="w189" length="5" offset="1044" sent="10">joins</wf>
+    <wf id="w190" length="6" offset="1050" sent="10">Nissan</wf>
+    <wf id="w191" length="4" offset="1057" sent="10">from</wf>
+    <wf id="w192" length="4" offset="1062" sent="10">CODA</wf>
+    <wf id="w193" length="10" offset="1067" sent="10">Automotive</wf>
+    <wf id="w194" length="1" offset="1077" sent="10">,</wf>
+    <wf id="w195" length="3" offset="1079" sent="10">the</wf>
+    <wf id="w196" length="8" offset="1083" sent="10">US-based</wf>
+    <wf id="w197" length="16" offset="1092" sent="10">electric-vehicle</wf>
+    <wf id="w198" length="10" offset="1109" sent="10">specialist</wf>
+    <wf id="w199" length="1" offset="1119" sent="10">,</wf>
+    <wf id="w200" length="5" offset="1121" sent="10">where</wf>
+    <wf id="w201" length="2" offset="1127" sent="10">he</wf>
+    <wf id="w202" length="6" offset="1130" sent="10">served</wf>
+    <wf id="w203" length="2" offset="1137" sent="10">as</wf>
+    <wf id="w204" length="4" offset="1140" sent="10">vice</wf>
+    <wf id="w205" length="9" offset="1145" sent="10">president</wf>
+    <wf id="w206" length="1" offset="1154" sent="10">,</wf>
+    <wf id="w207" length="5" offset="1156" sent="10">sales</wf>
+    <wf id="w208" length="1" offset="1161" sent="10">,</wf>
+    <wf id="w209" length="9" offset="1163" sent="10">marketing</wf>
+    <wf id="w210" length="3" offset="1173" sent="10">and</wf>
+    <wf id="w211" length="5" offset="1177" sent="10">after</wf>
+    <wf id="w212" length="5" offset="1183" sent="10">sales</wf>
+    <wf id="w213" length="1" offset="1188" sent="10">.</wf>
+    <wf id="w214" length="4" offset="1190" sent="11">Both</wf>
+    <wf id="w215" length="6" offset="1195" sent="11">Wijnen</wf>
+    <wf id="w216" length="3" offset="1202" sent="11">and</wf>
+    <wf id="w217" length="6" offset="1206" sent="11">Hausch</wf>
+    <wf id="w218" length="4" offset="1213" sent="11">will</wf>
+    <wf id="w219" length="6" offset="1218" sent="11">report</wf>
+    <wf id="w220" length="2" offset="1225" sent="11">to</wf>
+    <wf id="w221" length="4" offset="1228" sent="11">Paul</wf>
+    <wf id="w222" length="7" offset="1233" sent="11">Willcox</wf>
+    <wf id="w223" length="1" offset="1240" sent="11">,</wf>
+    <wf id="w224" length="6" offset="1242" sent="11">senior</wf>
+    <wf id="w225" length="4" offset="1249" sent="11">vice</wf>
+    <wf id="w226" length="9" offset="1254" sent="11">president</wf>
+    <wf id="w227" length="1" offset="1263" sent="11">,</wf>
+    <wf id="w228" length="5" offset="1265" sent="11">sales</wf>
+    <wf id="w229" length="3" offset="1271" sent="11">and</wf>
+    <wf id="w230" length="9" offset="1275" sent="11">marketing</wf>
+    <wf id="w231" length="3" offset="1285" sent="11">for</wf>
+    <wf id="w232" length="6" offset="1289" sent="11">Nissan</wf>
+    <wf id="w233" length="6" offset="1296" sent="11">Europe</wf>
+    <wf id="w234" length="1" offset="1302" sent="11">.</wf>
+    <wf id="w235" length="4" offset="1304" sent="12">This</wf>
+    <wf id="w236" length="7" offset="1309" sent="12">article</wf>
+    <wf id="w237" length="3" offset="1317" sent="12">was</wf>
+    <wf id="w238" length="10" offset="1321" sent="12">originally</wf>
+    <wf id="w239" length="9" offset="1332" sent="12">published</wf>
+    <wf id="w240" length="2" offset="1342" sent="12">by</wf>
+    <wf id="w241" length="13" offset="1345" sent="12">just-auto.com</wf>
+    <wf id="w242" length="2" offset="1359" sent="12">on</wf>
+    <wf id="w243" length="2" offset="1362" sent="12">30</wf>
+    <wf id="w244" length="9" offset="1365" sent="12">April2013</wf>
+    <wf id="w245" length="1" offset="1374" sent="12">.</wf>
+    <wf id="w246" length="3" offset="1376" sent="13">For</wf>
+    <wf id="w247" length="13" offset="1380" sent="13">authoritative</wf>
+    <wf id="w248" length="3" offset="1394" sent="13">and</wf>
+    <wf id="w249" length="6" offset="1398" sent="13">timely</wf>
+    <wf id="w250" length="4" offset="1405" sent="13">auto</wf>
+    <wf id="w251" length="8" offset="1410" sent="13">business</wf>
+    <wf id="w252" length="11" offset="1419" sent="13">information</wf>
+    <wf id="w253" length="5" offset="1431" sent="13">visit</wf>
+    <wf id="w254" length="4" offset="1437" sent="13">http</wf>
+    <wf id="w255" length="1" offset="1441" sent="13">:</wf>
+    <wf id="w256" length="1" offset="1442" sent="13">/</wf>
+    <wf id="w257" length="1" offset="1443" sent="13">/</wf>
+    <wf id="w258" length="17" offset="1444" sent="13">www.just-auto.com</wf>
+    <wf id="w259" length="1" offset="1461" sent="13">.</wf>
+  </text>
+  <terms>
+    <term id="t1" lemma="SWITZERLAND" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--SWITZERLAND-->
+        <target id="w1"/>
+      </span>
+    </term>
+    <term id="t2" lemma=":" morphofeat=":" pos="O" type="close">
+      <span>
+        <!--:-->
+        <target id="w2"/>
+      </span>
+    </term>
+    <term id="t3" lemma="Nissan" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Nissan-->
+        <target id="w3"/>
+      </span>
+    </term>
+    <term id="t4" lemma="announce" morphofeat="VBZ" pos="V" type="open">
+      <span>
+        <!--announces-->
+        <target id="w4"/>
+      </span>
+    </term>
+    <term id="t5" lemma="management" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--management-->
+        <target id="w5"/>
+      </span>
+      <externalReferences>
+        <externalRef confidence="0.024169642" reference="r_n-23114" resource="Cornetto"/>
+        <externalRef confidence="0.24710257" reference="r_n-23115" resource="Cornetto"/>
+        <externalRef confidence="0.12333734" reference="d_n-166716" resource="Cornetto"/>
+      </externalReferences>
+    </term>
+    <term id="t6" lemma="change" morphofeat="NNS" pos="N" type="open">
+      <span>
+        <!--changes-->
+        <target id="w6"/>
+      </span>
+    </term>
+    <term id="t7" lemma="in" morphofeat="IN" pos="P" type="close">
+      <span>
+        <!--in-->
+        <target id="w7"/>
+      </span>
+    </term>
+    <term id="t8" lemma="Europe" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Europe-->
+        <target id="w8"/>
+      </span>
+    </term>
+    <term id="t9" lemma="." morphofeat="." pos="O" type="close">
+      <span>
+        <!--.-->
+        <target id="w9"/>
+      </span>
+    </term>
+    <term id="t10" lemma="Nissan" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Nissan-->
+        <target id="w10"/>
+      </span>
+    </term>
+    <term id="t11" lemma="be" morphofeat="VBZ" pos="V" type="open">
+      <span>
+        <!--is-->
+        <target id="w11"/>
+      </span>
+    </term>
+    <term id="t12" lemma="announce" morphofeat="VBG" pos="V" type="open">
+      <span>
+        <!--announcing-->
+        <target id="w12"/>
+      </span>
+    </term>
+    <term id="t13" lemma="a" morphofeat="DT" pos="D" type="close">
+      <span>
+        <!--a-->
+        <target id="w13"/>
+      </span>
+    </term>
+    <term id="t14" lemma="new" morphofeat="JJ" pos="G" type="open">
+      <span>
+        <!--new-->
+        <target id="w14"/>
+      </span>
+    </term>
+    <term head="t.mw15.1" id="t.mw15" lemma="vice president" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--vice president-->
+        <target id="w15"/>
+        <target id="w16"/>
+      </span>
+      <component id="t.mw15.1" lemma="" pos=""/>
+      <component id="t.mw15.2" lemma="" pos=""/>
+    </term>
+    <term id="t17" lemma="of" morphofeat="IN" pos="P" type="close">
+      <span>
+        <!--of-->
+        <target id="w17"/>
+      </span>
+    </term>
+    <term id="t18" lemma="its" morphofeat="PRP$" pos="Q" type="close">
+      <span>
+        <!--its-->
+        <target id="w18"/>
+      </span>
+    </term>
+    <term id="t19" lemma="after" morphofeat="IN" pos="P" type="close">
+      <span>
+        <!--after-->
+        <target id="w19"/>
+      </span>
+    </term>
+    <term id="t20" lemma="sale" morphofeat="NNS" pos="N" type="open">
+      <span>
+        <!--sales-->
+        <target id="w20"/>
+      </span>
+    </term>
+    <term id="t21" lemma="division" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--division-->
+        <target id="w21"/>
+      </span>
+    </term>
+    <term id="t22" lemma="in" morphofeat="IN" pos="P" type="close">
+      <span>
+        <!--in-->
+        <target id="w22"/>
+      </span>
+    </term>
+    <term id="t23" lemma="Europe" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Europe-->
+        <target id="w23"/>
+      </span>
+    </term>
+    <term id="t24" lemma="as" morphofeat="RB" pos="A" type="open">
+      <span>
+        <!--as-->
+        <target id="w24"/>
+      </span>
+    </term>
+    <term id="t25" lemma="well" morphofeat="RB" pos="A" type="open">
+      <span>
+        <!--well-->
+        <target id="w25"/>
+      </span>
+    </term>
+    <term id="t26" lemma="as" morphofeat="IN" pos="P" type="close">
+      <span>
+        <!--as-->
+        <target id="w26"/>
+      </span>
+    </term>
+    <term id="t27" lemma="a" morphofeat="DT" pos="D" type="close">
+      <span>
+        <!--a-->
+        <target id="w27"/>
+      </span>
+    </term>
+    <term id="t28" lemma="new" morphofeat="JJ" pos="G" type="open">
+      <span>
+        <!--new-->
+        <target id="w28"/>
+      </span>
+    </term>
+    <term id="t29" lemma="head" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--head-->
+        <target id="w29"/>
+      </span>
+    </term>
+    <term id="t30" lemma="of" morphofeat="IN" pos="P" type="close">
+      <span>
+        <!--of-->
+        <target id="w30"/>
+      </span>
+    </term>
+    <term id="t31" lemma="the" morphofeat="DT" pos="D" type="close">
+      <span>
+        <!--the-->
+        <target id="w31"/>
+      </span>
+    </term>
+    <term id="t32" lemma="region" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--region-->
+        <target id="w32"/>
+      </span>
+    </term>
+    <term id="t33" lemma="comprise" morphofeat="VBN" pos="V" type="open">
+      <span>
+        <!--comprised-->
+        <target id="w33"/>
+      </span>
+    </term>
+    <term id="t34" lemma="of" morphofeat="IN" pos="P" type="close">
+      <span>
+        <!--of-->
+        <target id="w34"/>
+      </span>
+    </term>
+    <term id="t35" lemma="Germany" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Germany-->
+        <target id="w35"/>
+      </span>
+    </term>
+    <term id="t36" lemma="," morphofeat="," pos="O" type="close">
+      <span>
+        <!--,-->
+        <target id="w36"/>
+      </span>
+    </term>
+    <term id="t37" lemma="Austria" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Austria-->
+        <target id="w37"/>
+      </span>
+    </term>
+    <term id="t38" lemma="and" morphofeat="CC" pos="C" type="close">
+      <span>
+        <!--and-->
+        <target id="w38"/>
+      </span>
+    </term>
+    <term id="t39" lemma="Switzerland" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Switzerland-->
+        <target id="w39"/>
+      </span>
+    </term>
+    <term id="t40" lemma="." morphofeat="." pos="O" type="close">
+      <span>
+        <!--.-->
+        <target id="w40"/>
+      </span>
+    </term>
+    <term id="t41" lemma="Vincent" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Vincent-->
+        <target id="w41"/>
+      </span>
+    </term>
+    <term id="t42" lemma="Wijnen" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Wijnen-->
+        <target id="w42"/>
+      </span>
+    </term>
+    <term id="t43" lemma="have" morphofeat="VBZ" pos="V" type="open">
+      <span>
+        <!--has-->
+        <target id="w43"/>
+      </span>
+    </term>
+    <term id="t44" lemma="be" morphofeat="VBN" pos="V" type="open">
+      <span>
+        <!--been-->
+        <target id="w44"/>
+      </span>
+    </term>
+    <term id="t45" lemma="name" morphofeat="VBN" pos="V" type="open">
+      <span>
+        <!--named-->
+        <target id="w45"/>
+      </span>
+    </term>
+    <term head="t.mw46.1" id="t.mw46" lemma="vice president" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--vice president-->
+        <target id="w46"/>
+        <target id="w47"/>
+      </span>
+      <component id="t.mw46.1" lemma="" pos=""/>
+      <component id="t.mw46.2" lemma="" pos=""/>
+    </term>
+    <term id="t48" lemma="," morphofeat="," pos="O" type="close">
+      <span>
+        <!--,-->
+        <target id="w48"/>
+      </span>
+    </term>
+    <term id="t49" lemma="after" morphofeat="IN" pos="P" type="close">
+      <span>
+        <!--after-->
+        <target id="w49"/>
+      </span>
+    </term>
+    <term id="t50" lemma="sale" morphofeat="NNS" pos="N" type="open">
+      <span>
+        <!--sales-->
+        <target id="w50"/>
+      </span>
+    </term>
+    <term id="t51" lemma="," morphofeat="," pos="O" type="close">
+      <span>
+        <!--,-->
+        <target id="w51"/>
+      </span>
+    </term>
+    <term id="t52" lemma="Nissan" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Nissan-->
+        <target id="w52"/>
+      </span>
+    </term>
+    <term id="t53" lemma="Europe" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Europe-->
+        <target id="w53"/>
+      </span>
+    </term>
+    <term id="t54" lemma="." morphofeat="." pos="O" type="close">
+      <span>
+        <!--.-->
+        <target id="w54"/>
+      </span>
+    </term>
+    <term id="t55" lemma="Wijnen" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Wijnen-->
+        <target id="w55"/>
+      </span>
+    </term>
+    <term id="t56" lemma="'s" morphofeat="POS" pos="O" type="close">
+      <span>
+        <!--'s-->
+        <target id="w56"/>
+      </span>
+    </term>
+    <term id="t57" lemma="much" morphofeat="RBS" pos="A" type="open">
+      <span>
+        <!--most-->
+        <target id="w57"/>
+      </span>
+    </term>
+    <term id="t58" lemma="recent" morphofeat="JJ" pos="G" type="open">
+      <span>
+        <!--recent-->
+        <target id="w58"/>
+      </span>
+    </term>
+    <term id="t59" lemma="role" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--role-->
+        <target id="w59"/>
+      </span>
+    </term>
+    <term id="t60" lemma="at" morphofeat="IN" pos="P" type="close">
+      <span>
+        <!--at-->
+        <target id="w60"/>
+      </span>
+    </term>
+    <term id="t61" lemma="Nissan" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Nissan-->
+        <target id="w61"/>
+      </span>
+    </term>
+    <term id="t62" lemma="be" morphofeat="VBD" pos="V" type="open">
+      <span>
+        <!--was-->
+        <target id="w62"/>
+      </span>
+    </term>
+    <term id="t63" lemma="supervise" morphofeat="VBG" pos="V" type="open">
+      <span>
+        <!--supervising-->
+        <target id="w63"/>
+      </span>
+    </term>
+    <term id="t64" lemma="the" morphofeat="DT" pos="D" type="close">
+      <span>
+        <!--the-->
+        <target id="w64"/>
+      </span>
+    </term>
+    <term id="t65" lemma="central" morphofeat="JJ" pos="G" type="open">
+      <span>
+        <!--central-->
+        <target id="w65"/>
+      </span>
+    </term>
+    <term id="t66" lemma="european" morphofeat="JJ" pos="G" type="open">
+      <span>
+        <!--European-->
+        <target id="w66"/>
+      </span>
+    </term>
+    <term id="t67" lemma="market" morphofeat="NNS" pos="N" type="open">
+      <span>
+        <!--markets-->
+        <target id="w67"/>
+      </span>
+    </term>
+    <term id="t68" lemma="of" morphofeat="IN" pos="P" type="close">
+      <span>
+        <!--of-->
+        <target id="w68"/>
+      </span>
+    </term>
+    <term id="t69" lemma="Germany" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Germany-->
+        <target id="w69"/>
+      </span>
+    </term>
+    <term id="t70" lemma="," morphofeat="," pos="O" type="close">
+      <span>
+        <!--,-->
+        <target id="w70"/>
+      </span>
+    </term>
+    <term id="t71" lemma="Austria" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Austria-->
+        <target id="w71"/>
+      </span>
+    </term>
+    <term id="t72" lemma="and" morphofeat="CC" pos="C" type="close">
+      <span>
+        <!--and-->
+        <target id="w72"/>
+      </span>
+    </term>
+    <term id="t73" lemma="Switzerland" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Switzerland-->
+        <target id="w73"/>
+      </span>
+    </term>
+    <term id="t74" lemma="," morphofeat="," pos="O" type="close">
+      <span>
+        <!--,-->
+        <target id="w74"/>
+      </span>
+    </term>
+    <term id="t75" lemma="as" morphofeat="IN" pos="P" type="close">
+      <span>
+        <!--as-->
+        <target id="w75"/>
+      </span>
+    </term>
+    <term head="t.mw76.2" id="t.mw76" lemma="managing director" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--managing director-->
+        <target id="w76"/>
+        <target id="w77"/>
+      </span>
+      <component id="t.mw76.1" lemma="" pos=""/>
+      <component id="t.mw76.2" lemma="" pos=""/>
+    </term>
+    <term id="t78" lemma="," morphofeat="," pos="O" type="close">
+      <span>
+        <!--,-->
+        <target id="w78"/>
+      </span>
+    </term>
+    <term id="t79" lemma="RBU" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--RBU-->
+        <target id="w79"/>
+      </span>
+    </term>
+    <term id="t80" lemma="Centre" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Centre-->
+        <target id="w80"/>
+      </span>
+    </term>
+    <term id="t81" lemma="." morphofeat="." pos="O" type="close">
+      <span>
+        <!--.-->
+        <target id="w81"/>
+      </span>
+    </term>
+    <term id="t82" lemma="his" morphofeat="PRP$" pos="Q" type="close">
+      <span>
+        <!--His-->
+        <target id="w82"/>
+      </span>
+    </term>
+    <term id="t83" lemma="appointment" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--appointment-->
+        <target id="w83"/>
+      </span>
+    </term>
+    <term id="t84" lemma="be" morphofeat="VBZ" pos="V" type="open">
+      <span>
+        <!--is-->
+        <target id="w84"/>
+      </span>
+    </term>
+    <term id="t85" lemma="effective" morphofeat="JJ" pos="G" type="open">
+      <span>
+        <!--effective-->
+        <target id="w85"/>
+      </span>
+    </term>
+    <term id="t86" lemma="1" morphofeat="CD" pos="O" type="close">
+      <span>
+        <!--1-->
+        <target id="w86"/>
+      </span>
+    </term>
+    <term id="t87" lemma="June" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--June-->
+        <target id="w87"/>
+      </span>
+    </term>
+    <term id="t88" lemma="2013" morphofeat="CD" pos="O" type="close">
+      <span>
+        <!--2013-->
+        <target id="w88"/>
+      </span>
+    </term>
+    <term id="t89" lemma="," morphofeat="," pos="O" type="close">
+      <span>
+        <!--,-->
+        <target id="w89"/>
+      </span>
+    </term>
+    <term id="t90" lemma="and" morphofeat="CC" pos="C" type="close">
+      <span>
+        <!--and-->
+        <target id="w90"/>
+      </span>
+    </term>
+    <term id="t91" lemma="he" morphofeat="PRP" pos="Q" type="close">
+      <span>
+        <!--he-->
+        <target id="w91"/>
+      </span>
+    </term>
+    <term id="t92" lemma="will" morphofeat="MD" pos="O" type="close">
+      <span>
+        <!--will-->
+        <target id="w92"/>
+      </span>
+    </term>
+    <term id="t93" lemma="be" morphofeat="VB" pos="V" type="open">
+      <span>
+        <!--be-->
+        <target id="w93"/>
+      </span>
+    </term>
+    <term id="t94" lemma="base" morphofeat="VBN" pos="V" type="open">
+      <span>
+        <!--based-->
+        <target id="w94"/>
+      </span>
+    </term>
+    <term id="t95" lemma="in" morphofeat="IN" pos="P" type="close">
+      <span>
+        <!--in-->
+        <target id="w95"/>
+      </span>
+    </term>
+    <term id="t96" lemma="Amsterdam" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Amsterdam-->
+        <target id="w96"/>
+      </span>
+    </term>
+    <term id="t97" lemma="." morphofeat="." pos="O" type="close">
+      <span>
+        <!--.-->
+        <target id="w97"/>
+      </span>
+    </term>
+    <term id="t98" lemma="Thomas" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Thomas-->
+        <target id="w98"/>
+      </span>
+    </term>
+    <term id="t99" lemma="Hausch" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Hausch-->
+        <target id="w99"/>
+      </span>
+    </term>
+    <term id="t100" lemma="have" morphofeat="VBZ" pos="V" type="open">
+      <span>
+        <!--has-->
+        <target id="w100"/>
+      </span>
+    </term>
+    <term id="t101" lemma="be" morphofeat="VBN" pos="V" type="open">
+      <span>
+        <!--been-->
+        <target id="w101"/>
+      </span>
+    </term>
+    <term id="t102" lemma="name" morphofeat="VBN" pos="V" type="open">
+      <span>
+        <!--named-->
+        <target id="w102"/>
+      </span>
+    </term>
+    <term head="t.mw103.2" id="t.mw103" lemma="managing director" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--managing director-->
+        <target id="w103"/>
+        <target id="w104"/>
+      </span>
+      <component id="t.mw103.1" lemma="" pos=""/>
+      <component id="t.mw103.2" lemma="" pos=""/>
+    </term>
+    <term id="t105" lemma="," morphofeat="," pos="O" type="close">
+      <span>
+        <!--,-->
+        <target id="w105"/>
+      </span>
+    </term>
+    <term id="t106" lemma="RBU" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--RBU-->
+        <target id="w106"/>
+      </span>
+    </term>
+    <term id="t107" lemma="Centre" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Centre-->
+        <target id="w107"/>
+      </span>
+    </term>
+    <term id="t108" lemma="," morphofeat="," pos="O" type="close">
+      <span>
+        <!--,-->
+        <target id="w108"/>
+      </span>
+    </term>
+    <term id="t109" lemma="base" morphofeat="VBN" pos="V" type="open">
+      <span>
+        <!--based-->
+        <target id="w109"/>
+      </span>
+    </term>
+    <term id="t110" lemma="in" morphofeat="IN" pos="P" type="close">
+      <span>
+        <!--in-->
+        <target id="w110"/>
+      </span>
+    </term>
+    <term id="t111" lemma="Bruhl" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Bruhl-->
+        <target id="w111"/>
+      </span>
+    </term>
+    <term id="t112" lemma="," morphofeat="," pos="O" type="close">
+      <span>
+        <!--,-->
+        <target id="w112"/>
+      </span>
+    </term>
+    <term id="t113" lemma="Germany" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Germany-->
+        <target id="w113"/>
+      </span>
+    </term>
+    <term id="t114" lemma="." morphofeat="." pos="O" type="close">
+      <span>
+        <!--.-->
+        <target id="w114"/>
+      </span>
+    </term>
+    <term id="t115" lemma="he" morphofeat="PRP" pos="Q" type="close">
+      <span>
+        <!--He-->
+        <target id="w115"/>
+      </span>
+    </term>
+    <term id="t116" lemma="join" morphofeat="VBZ" pos="V" type="open">
+      <span>
+        <!--joins-->
+        <target id="w116"/>
+      </span>
+    </term>
+    <term id="t117" lemma="Nissan" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Nissan-->
+        <target id="w117"/>
+      </span>
+    </term>
+    <term id="t118" lemma="Europe" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Europe-->
+        <target id="w118"/>
+      </span>
+    </term>
+    <term id="t119" lemma="effective" morphofeat="JJ" pos="G" type="open">
+      <span>
+        <!--effective-->
+        <target id="w119"/>
+      </span>
+    </term>
+    <term id="t120" lemma="1" morphofeat="CD" pos="O" type="close">
+      <span>
+        <!--1-->
+        <target id="w120"/>
+      </span>
+    </term>
+    <term id="t121" lemma="May" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--May-->
+        <target id="w121"/>
+      </span>
+    </term>
+    <term id="t122" lemma="2013" morphofeat="CD" pos="O" type="close">
+      <span>
+        <!--2013-->
+        <target id="w122"/>
+      </span>
+    </term>
+    <term id="t123" lemma="," morphofeat="," pos="O" type="close">
+      <span>
+        <!--,-->
+        <target id="w123"/>
+      </span>
+    </term>
+    <term id="t124" lemma="afteran" morphofeat="JJ" pos="G" type="open">
+      <span>
+        <!--afteran-->
+        <target id="w124"/>
+      </span>
+    </term>
+    <term id="t125" lemma="automotive" morphofeat="JJ" pos="G" type="open">
+      <span>
+        <!--automotive-->
+        <target id="w125"/>
+      </span>
+    </term>
+    <term id="t126" lemma="career" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--career-->
+        <target id="w126"/>
+      </span>
+    </term>
+    <term id="t127" lemma="cover" morphofeat="VBG" pos="V" type="open">
+      <span>
+        <!--covering-->
+        <target id="w127"/>
+      </span>
+    </term>
+    <term head="t.mw128.1" id="t.mw128" lemma="more than" morphofeat="JJR" pos="G" type="open">
+      <span>
+        <!--more than-->
+        <target id="w128"/>
+        <target id="w129"/>
+      </span>
+      <component id="t.mw128.1" lemma="" pos=""/>
+      <component id="t.mw128.2" lemma="" pos=""/>
+    </term>
+    <term id="t130" lemma="20" morphofeat="CD" pos="O" type="close">
+      <span>
+        <!--20-->
+        <target id="w130"/>
+      </span>
+    </term>
+    <term id="t131" lemma="year" morphofeat="NNS" pos="N" type="open">
+      <span>
+        <!--years-->
+        <target id="w131"/>
+      </span>
+    </term>
+    <term id="t132" lemma="." morphofeat="." pos="O" type="close">
+      <span>
+        <!--.-->
+        <target id="w132"/>
+      </span>
+    </term>
+    <term id="t133" lemma="Hausch" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Hausch-->
+        <target id="w133"/>
+      </span>
+    </term>
+    <term id="t134" lemma="start" morphofeat="VBD" pos="V" type="open">
+      <span>
+        <!--started-->
+        <target id="w134"/>
+      </span>
+    </term>
+    <term id="t135" lemma="in" morphofeat="IN" pos="P" type="close">
+      <span>
+        <!--in-->
+        <target id="w135"/>
+      </span>
+    </term>
+    <term id="t136" lemma="his" morphofeat="PRP$" pos="Q" type="close">
+      <span>
+        <!--his-->
+        <target id="w136"/>
+      </span>
+    </term>
+    <term id="t137" lemma="native" morphofeat="JJ" pos="G" type="open">
+      <span>
+        <!--native-->
+        <target id="w137"/>
+      </span>
+    </term>
+    <term id="t138" lemma="Germany" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Germany-->
+        <target id="w138"/>
+      </span>
+    </term>
+    <term id="t139" lemma="with" morphofeat="IN" pos="P" type="close">
+      <span>
+        <!--with-->
+        <target id="w139"/>
+      </span>
+    </term>
+    <term id="t140" lemma="the" morphofeat="DT" pos="D" type="close">
+      <span>
+        <!--the-->
+        <target id="w140"/>
+      </span>
+    </term>
+    <term id="t141" lemma="Daimler" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Daimler-->
+        <target id="w141"/>
+      </span>
+    </term>
+    <term id="t142" lemma="group" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--group-->
+        <target id="w142"/>
+      </span>
+    </term>
+    <term id="t143" lemma="," morphofeat="," pos="O" type="close">
+      <span>
+        <!--,-->
+        <target id="w143"/>
+      </span>
+    </term>
+    <term head="t.mw144.1" id="t.mw144" lemma="work in" morphofeat="VBG" pos="V" type="open">
+      <span>
+        <!--working in-->
+        <target id="w144"/>
+        <target id="w145"/>
+      </span>
+      <component id="t.mw144.1" lemma="" pos=""/>
+      <component id="t.mw144.2" lemma="" pos=""/>
+    </term>
+    <term id="t146" lemma="diverse" morphofeat="JJ" pos="G" type="open">
+      <span>
+        <!--diverse-->
+        <target id="w146"/>
+      </span>
+    </term>
+    <term id="t147" lemma="discipline" morphofeat="NNS" pos="N" type="open">
+      <span>
+        <!--disciplines-->
+        <target id="w147"/>
+      </span>
+      <externalReferences>
+        <externalRef confidence="0.05403374" reference="r_n-11030" resource="Cornetto"/>
+        <externalRef confidence="0.9744324" reference="r_n-11031" resource="Cornetto"/>
+      </externalReferences>
+    </term>
+    <term id="t148" lemma="include" morphofeat="VBG" pos="V" type="open">
+      <span>
+        <!--including-->
+        <target id="w148"/>
+      </span>
+    </term>
+    <term head="t.mw149.1" id="t.mw149" lemma="product development" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--product development-->
+        <target id="w149"/>
+        <target id="w150"/>
+      </span>
+      <component id="t.mw149.1" lemma="" pos=""/>
+      <component id="t.mw149.2" lemma="" pos=""/>
+    </term>
+    <term id="t151" lemma="," morphofeat="," pos="O" type="close">
+      <span>
+        <!--,-->
+        <target id="w151"/>
+      </span>
+    </term>
+    <term id="t152" lemma="strategy" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--strategy-->
+        <target id="w152"/>
+      </span>
+    </term>
+    <term id="t153" lemma="and" morphofeat="CC" pos="C" type="close">
+      <span>
+        <!--and-->
+        <target id="w153"/>
+      </span>
+    </term>
+    <term id="t154" lemma="sale" morphofeat="NNS" pos="N" type="open">
+      <span>
+        <!--sales-->
+        <target id="w154"/>
+      </span>
+    </term>
+    <term id="t155" lemma="." morphofeat="." pos="O" type="close">
+      <span>
+        <!--.-->
+        <target id="w155"/>
+      </span>
+    </term>
+    <term id="t156" lemma="he" morphofeat="PRP" pos="Q" type="close">
+      <span>
+        <!--He-->
+        <target id="w156"/>
+      </span>
+    </term>
+    <term id="t157" lemma="move" morphofeat="VBD" pos="V" type="open">
+      <span>
+        <!--moved-->
+        <target id="w157"/>
+      </span>
+    </term>
+    <term id="t158" lemma="to" morphofeat="TO" pos="P" type="close">
+      <span>
+        <!--to-->
+        <target id="w158"/>
+      </span>
+    </term>
+    <term id="t159" lemma="the" morphofeat="DT" pos="D" type="close">
+      <span>
+        <!--the-->
+        <target id="w159"/>
+      </span>
+    </term>
+    <term id="t160" lemma="United" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--United-->
+        <target id="w160"/>
+      </span>
+    </term>
+    <term id="t161" lemma="States" morphofeat="NNPS" pos="R" type="close">
+      <span>
+        <!--States-->
+        <target id="w161"/>
+      </span>
+    </term>
+    <term id="t162" lemma="with" morphofeat="IN" pos="P" type="close">
+      <span>
+        <!--with-->
+        <target id="w162"/>
+      </span>
+    </term>
+    <term id="t163" lemma="Chrysler" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Chrysler-->
+        <target id="w163"/>
+      </span>
+    </term>
+    <term id="t164" lemma="," morphofeat="," pos="O" type="close">
+      <span>
+        <!--,-->
+        <target id="w164"/>
+      </span>
+    </term>
+    <term id="t165" lemma="head" morphofeat="VBG" pos="V" type="open">
+      <span>
+        <!--heading-->
+        <target id="w165"/>
+      </span>
+    </term>
+    <term id="t166" lemma="international" morphofeat="JJ" pos="G" type="open">
+      <span>
+        <!--international-->
+        <target id="w166"/>
+      </span>
+    </term>
+    <term id="t167" lemma="sale" morphofeat="NNS" pos="N" type="open">
+      <span>
+        <!--sales-->
+        <target id="w167"/>
+      </span>
+    </term>
+    <term id="t168" lemma="," morphofeat="," pos="O" type="close">
+      <span>
+        <!--,-->
+        <target id="w168"/>
+      </span>
+    </term>
+    <term id="t169" lemma="before" morphofeat="IN" pos="P" type="close">
+      <span>
+        <!--before-->
+        <target id="w169"/>
+      </span>
+    </term>
+    <term id="t170" lemma="return" morphofeat="VBG" pos="V" type="open">
+      <span>
+        <!--returning-->
+        <target id="w170"/>
+      </span>
+    </term>
+    <term id="t171" lemma="to" morphofeat="TO" pos="P" type="close">
+      <span>
+        <!--to-->
+        <target id="w171"/>
+      </span>
+    </term>
+    <term id="t172" lemma="Germany" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Germany-->
+        <target id="w172"/>
+      </span>
+    </term>
+    <term id="t173" lemma="to" morphofeat="TO" pos="P" type="close">
+      <span>
+        <!--to-->
+        <target id="w173"/>
+      </span>
+    </term>
+    <term id="t174" lemma="be" morphofeat="VB" pos="V" type="open">
+      <span>
+        <!--be-->
+        <target id="w174"/>
+      </span>
+    </term>
+    <term head="t.mw175.1" id="t.mw175" lemma="responsible for" morphofeat="JJ" pos="G" type="open">
+      <span>
+        <!--responsible for-->
+        <target id="w175"/>
+        <target id="w176"/>
+      </span>
+      <component id="t.mw175.1" lemma="" pos=""/>
+      <component id="t.mw175.2" lemma="" pos=""/>
+    </term>
+    <term id="t177" lemma="Europe" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Europe-->
+        <target id="w177"/>
+      </span>
+    </term>
+    <term id="t178" lemma="," morphofeat="," pos="O" type="close">
+      <span>
+        <!--,-->
+        <target id="w178"/>
+      </span>
+    </term>
+    <term id="t179" lemma="Middle" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Middle-->
+        <target id="w179"/>
+      </span>
+    </term>
+    <term id="t180" lemma="East" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--East-->
+        <target id="w180"/>
+      </span>
+    </term>
+    <term id="t181" lemma="and" morphofeat="CC" pos="C" type="close">
+      <span>
+        <!--and-->
+        <target id="w181"/>
+      </span>
+    </term>
+    <term id="t182" lemma="Africa" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Africa-->
+        <target id="w182"/>
+      </span>
+    </term>
+    <term id="t183" lemma="for" morphofeat="IN" pos="P" type="close">
+      <span>
+        <!--for-->
+        <target id="w183"/>
+      </span>
+    </term>
+    <term id="t184" lemma="Chrysler" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Chrysler-->
+        <target id="w184"/>
+      </span>
+    </term>
+    <term id="t185" lemma="." morphofeat="." pos="O" type="close">
+      <span>
+        <!--.-->
+        <target id="w185"/>
+      </span>
+    </term>
+    <term id="t186" lemma="Hausch" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Hausch-->
+        <target id="w186"/>
+      </span>
+    </term>
+    <term id="t187" lemma="much" morphofeat="RBS" pos="A" type="open">
+      <span>
+        <!--most-->
+        <target id="w187"/>
+      </span>
+    </term>
+    <term id="t188" lemma="recently" morphofeat="RB" pos="A" type="open">
+      <span>
+        <!--recently-->
+        <target id="w188"/>
+      </span>
+    </term>
+    <term id="t189" lemma="join" morphofeat="VBZ" pos="V" type="open">
+      <span>
+        <!--joins-->
+        <target id="w189"/>
+      </span>
+    </term>
+    <term id="t190" lemma="Nissan" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Nissan-->
+        <target id="w190"/>
+      </span>
+    </term>
+    <term id="t191" lemma="from" morphofeat="IN" pos="P" type="close">
+      <span>
+        <!--from-->
+        <target id="w191"/>
+      </span>
+    </term>
+    <term id="t192" lemma="CODA" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--CODA-->
+        <target id="w192"/>
+      </span>
+    </term>
+    <term id="t193" lemma="Automotive" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Automotive-->
+        <target id="w193"/>
+      </span>
+    </term>
+    <term id="t194" lemma="," morphofeat="," pos="O" type="close">
+      <span>
+        <!--,-->
+        <target id="w194"/>
+      </span>
+    </term>
+    <term id="t195" lemma="the" morphofeat="DT" pos="D" type="close">
+      <span>
+        <!--the-->
+        <target id="w195"/>
+      </span>
+    </term>
+    <term id="t196" lemma="us-based" morphofeat="JJ" pos="G" type="open">
+      <span>
+        <!--US-based-->
+        <target id="w196"/>
+      </span>
+    </term>
+    <term id="t197" lemma="electric-vehicle" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--electric-vehicle-->
+        <target id="w197"/>
+      </span>
+    </term>
+    <term id="t198" lemma="specialist" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--specialist-->
+        <target id="w198"/>
+      </span>
+      <externalReferences>
+        <externalRef confidence="0.4839102" reference="r_n-34814" resource="Cornetto"/>
+        <externalRef confidence="0.07572235" reference="r_n-34815" resource="Cornetto"/>
+      </externalReferences>
+    </term>
+    <term id="t199" lemma="," morphofeat="," pos="O" type="close">
+      <span>
+        <!--,-->
+        <target id="w199"/>
+      </span>
+    </term>
+    <term id="t200" lemma="where" morphofeat="WRB" pos="O" type="close">
+      <span>
+        <!--where-->
+        <target id="w200"/>
+      </span>
+    </term>
+    <term id="t201" lemma="he" morphofeat="PRP" pos="Q" type="close">
+      <span>
+        <!--he-->
+        <target id="w201"/>
+      </span>
+    </term>
+    <term id="t202" lemma="serve" morphofeat="VBD" pos="V" type="open">
+      <span>
+        <!--served-->
+        <target id="w202"/>
+      </span>
+    </term>
+    <term id="t203" lemma="as" morphofeat="IN" pos="P" type="close">
+      <span>
+        <!--as-->
+        <target id="w203"/>
+      </span>
+    </term>
+    <term head="t.mw204.1" id="t.mw204" lemma="vice president" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--vice president-->
+        <target id="w204"/>
+        <target id="w205"/>
+      </span>
+      <component id="t.mw204.1" lemma="" pos=""/>
+      <component id="t.mw204.2" lemma="" pos=""/>
+    </term>
+    <term id="t206" lemma="," morphofeat="," pos="O" type="close">
+      <span>
+        <!--,-->
+        <target id="w206"/>
+      </span>
+    </term>
+    <term id="t207" lemma="sale" morphofeat="NNS" pos="N" type="open">
+      <span>
+        <!--sales-->
+        <target id="w207"/>
+      </span>
+    </term>
+    <term id="t208" lemma="," morphofeat="," pos="O" type="close">
+      <span>
+        <!--,-->
+        <target id="w208"/>
+      </span>
+    </term>
+    <term id="t209" lemma="marketing" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--marketing-->
+        <target id="w209"/>
+      </span>
+    </term>
+    <term id="t210" lemma="and" morphofeat="CC" pos="C" type="close">
+      <span>
+        <!--and-->
+        <target id="w210"/>
+      </span>
+    </term>
+    <term id="t211" lemma="after" morphofeat="IN" pos="P" type="close">
+      <span>
+        <!--after-->
+        <target id="w211"/>
+      </span>
+    </term>
+    <term id="t212" lemma="sale" morphofeat="NNS" pos="N" type="open">
+      <span>
+        <!--sales-->
+        <target id="w212"/>
+      </span>
+    </term>
+    <term id="t213" lemma="." morphofeat="." pos="O" type="close">
+      <span>
+        <!--.-->
+        <target id="w213"/>
+      </span>
+    </term>
+    <term id="t214" lemma="both" morphofeat="DT" pos="D" type="close">
+      <span>
+        <!--Both-->
+        <target id="w214"/>
+      </span>
+    </term>
+    <term id="t215" lemma="Wijnen" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Wijnen-->
+        <target id="w215"/>
+      </span>
+    </term>
+    <term id="t216" lemma="and" morphofeat="CC" pos="C" type="close">
+      <span>
+        <!--and-->
+        <target id="w216"/>
+      </span>
+    </term>
+    <term id="t217" lemma="Hausch" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Hausch-->
+        <target id="w217"/>
+      </span>
+    </term>
+    <term id="t218" lemma="will" morphofeat="MD" pos="O" type="close">
+      <span>
+        <!--will-->
+        <target id="w218"/>
+      </span>
+    </term>
+    <term id="t219" lemma="report" morphofeat="VB" pos="V" type="open">
+      <span>
+        <!--report-->
+        <target id="w219"/>
+      </span>
+    </term>
+    <term id="t220" lemma="to" morphofeat="TO" pos="P" type="close">
+      <span>
+        <!--to-->
+        <target id="w220"/>
+      </span>
+    </term>
+    <term id="t221" lemma="Paul" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Paul-->
+        <target id="w221"/>
+      </span>
+    </term>
+    <term id="t222" lemma="Willcox" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Willcox-->
+        <target id="w222"/>
+      </span>
+    </term>
+    <term id="t223" lemma="," morphofeat="," pos="O" type="close">
+      <span>
+        <!--,-->
+        <target id="w223"/>
+      </span>
+    </term>
+    <term head="t.mw224.2" id="t.mw224" lemma="senior vice president" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--senior vice president-->
+        <target id="w224"/>
+        <target id="w225"/>
+        <target id="w226"/>
+      </span>
+      <component id="t.mw224.1" lemma="" pos=""/>
+      <component id="t.mw224.2" lemma="" pos=""/>
+      <component id="t226" lemma="" pos=""/>
+    </term>
+    <term id="t227" lemma="," morphofeat="," pos="O" type="close">
+      <span>
+        <!--,-->
+        <target id="w227"/>
+      </span>
+    </term>
+    <term id="t228" lemma="sale" morphofeat="NNS" pos="N" type="open">
+      <span>
+        <!--sales-->
+        <target id="w228"/>
+      </span>
+    </term>
+    <term id="t229" lemma="and" morphofeat="CC" pos="C" type="close">
+      <span>
+        <!--and-->
+        <target id="w229"/>
+      </span>
+    </term>
+    <term id="t230" lemma="marketing" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--marketing-->
+        <target id="w230"/>
+      </span>
+    </term>
+    <term id="t231" lemma="for" morphofeat="IN" pos="P" type="close">
+      <span>
+        <!--for-->
+        <target id="w231"/>
+      </span>
+    </term>
+    <term id="t232" lemma="Nissan" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Nissan-->
+        <target id="w232"/>
+      </span>
+    </term>
+    <term id="t233" lemma="Europe" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Europe-->
+        <target id="w233"/>
+      </span>
+    </term>
+    <term id="t234" lemma="." morphofeat="." pos="O" type="close">
+      <span>
+        <!--.-->
+        <target id="w234"/>
+      </span>
+    </term>
+    <term id="t235" lemma="this" morphofeat="DT" pos="D" type="close">
+      <span>
+        <!--This-->
+        <target id="w235"/>
+      </span>
+    </term>
+    <term id="t236" lemma="article" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--article-->
+        <target id="w236"/>
+      </span>
+    </term>
+    <term id="t237" lemma="be" morphofeat="VBD" pos="V" type="open">
+      <span>
+        <!--was-->
+        <target id="w237"/>
+      </span>
+    </term>
+    <term id="t238" lemma="originally" morphofeat="RB" pos="A" type="open">
+      <span>
+        <!--originally-->
+        <target id="w238"/>
+      </span>
+    </term>
+    <term id="t239" lemma="publish" morphofeat="VBN" pos="V" type="open">
+      <span>
+        <!--published-->
+        <target id="w239"/>
+      </span>
+    </term>
+    <term id="t240" lemma="by" morphofeat="IN" pos="P" type="close">
+      <span>
+        <!--by-->
+        <target id="w240"/>
+      </span>
+    </term>
+    <term id="t241" lemma="just-auto.com" morphofeat="JJ" pos="G" type="open">
+      <span>
+        <!--just-auto.com-->
+        <target id="w241"/>
+      </span>
+    </term>
+    <term id="t242" lemma="on" morphofeat="IN" pos="P" type="close">
+      <span>
+        <!--on-->
+        <target id="w242"/>
+      </span>
+    </term>
+    <term id="t243" lemma="30" morphofeat="CD" pos="O" type="close">
+      <span>
+        <!--30-->
+        <target id="w243"/>
+      </span>
+    </term>
+    <term id="t244" lemma="april2013" morphofeat="CD" pos="O" type="close">
+      <span>
+        <!--April2013-->
+        <target id="w244"/>
+      </span>
+    </term>
+    <term id="t245" lemma="." morphofeat="." pos="O" type="close">
+      <span>
+        <!--.-->
+        <target id="w245"/>
+      </span>
+    </term>
+    <term id="t246" lemma="for" morphofeat="IN" pos="P" type="close">
+      <span>
+        <!--For-->
+        <target id="w246"/>
+      </span>
+    </term>
+    <term id="t247" lemma="authoritative" morphofeat="JJ" pos="G" type="open">
+      <span>
+        <!--authoritative-->
+        <target id="w247"/>
+      </span>
+    </term>
+    <term id="t248" lemma="and" morphofeat="CC" pos="C" type="close">
+      <span>
+        <!--and-->
+        <target id="w248"/>
+      </span>
+    </term>
+    <term id="t249" lemma="timely" morphofeat="JJ" pos="G" type="open">
+      <span>
+        <!--timely-->
+        <target id="w249"/>
+      </span>
+    </term>
+    <term id="t250" lemma="auto" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--auto-->
+        <target id="w250"/>
+      </span>
+    </term>
+    <term id="t251" lemma="business" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--business-->
+        <target id="w251"/>
+      </span>
+    </term>
+    <term id="t252" lemma="information" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--information-->
+        <target id="w252"/>
+      </span>
+    </term>
+    <term id="t253" lemma="visit" morphofeat="VBP" pos="V" type="open">
+      <span>
+        <!--visit-->
+        <target id="w253"/>
+      </span>
+    </term>
+    <term id="t254" lemma="http" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--http-->
+        <target id="w254"/>
+      </span>
+    </term>
+    <term id="t255" lemma=":" morphofeat=":" pos="O" type="close">
+      <span>
+        <!--:-->
+        <target id="w255"/>
+      </span>
+    </term>
+    <term id="t256" lemma="/" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--/-->
+        <target id="w256"/>
+      </span>
+    </term>
+    <term id="t257" lemma="/" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--/-->
+        <target id="w257"/>
+      </span>
+    </term>
+    <term id="t258" lemma="www.just-auto.com" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--www.just-auto.com-->
+        <target id="w258"/>
+      </span>
+    </term>
+    <term id="t259" lemma="." morphofeat="." pos="O" type="close">
+      <span>
+        <!--.-->
+        <target id="w259"/>
+      </span>
+    </term>
+  </terms>
+  <deps>
+    <!--TITLE(Nissan,SWITZERLAND)-->
+    <dep from="t3" rfunc="TITLE" to="t1"/>
+    <!--P(SWITZERLAND,:)-->
+    <dep from="t1" rfunc="P" to="t2"/>
+    <!--SBJ(announces,Nissan)-->
+    <dep from="t4" rfunc="SBJ" to="t3"/>
+    <!--NMOD(changes,management)-->
+    <dep from="t6" rfunc="NMOD" to="t5"/>
+    <!--OBJ(announces,changes)-->
+    <dep from="t4" rfunc="OBJ" to="t6"/>
+    <!--LOC(changes,in)-->
+    <dep from="t6" rfunc="LOC" to="t7"/>
+    <!--PMOD(in,Europe)-->
+    <dep from="t7" rfunc="PMOD" to="t8"/>
+    <!--P(announces,.)-->
+    <dep from="t4" rfunc="P" to="t9"/>
+    <!--SBJ(is,Nissan)-->
+    <dep from="t11" rfunc="SBJ" to="t10"/>
+    <!--VC(is,announcing)-->
+    <dep from="t11" rfunc="VC" to="t12"/>
+    <!--NMOD(division,a)-->
+    <dep from="t21" rfunc="NMOD" to="t13"/>
+    <!--NMOD(division,new)-->
+    <dep from="t21" rfunc="NMOD" to="t14"/>
+    <!--NMOD(division,vice president)-->
+    <dep from="t21" rfunc="NMOD" to="t.mw15"/>
+    <!--NMOD(vice president,of)-->
+    <dep from="t.mw15" rfunc="NMOD" to="t17"/>
+    <!--PMOD(of,its)-->
+    <dep from="t17" rfunc="PMOD" to="t18"/>
+    <!--DEP(of,after)-->
+    <dep from="t17" rfunc="DEP" to="t19"/>
+    <!--NMOD(division,sales)-->
+    <dep from="t21" rfunc="NMOD" to="t20"/>
+    <!--OBJ(announcing,division)-->
+    <dep from="t12" rfunc="OBJ" to="t21"/>
+    <!--LOC(division,in)-->
+    <dep from="t21" rfunc="LOC" to="t22"/>
+    <!--PMOD(in,Europe)-->
+    <dep from="t22" rfunc="PMOD" to="t23"/>
+    <!--COORD(division,as)-->
+    <dep from="t21" rfunc="COORD" to="t24"/>
+    <!--DEP(as,well)-->
+    <dep from="t24" rfunc="DEP" to="t25"/>
+    <!--DEP(as,as)-->
+    <dep from="t24" rfunc="DEP" to="t26"/>
+    <!--NMOD(head,a)-->
+    <dep from="t29" rfunc="NMOD" to="t27"/>
+    <!--NMOD(head,new)-->
+    <dep from="t29" rfunc="NMOD" to="t28"/>
+    <!--CONJ(as,head)-->
+    <dep from="t24" rfunc="CONJ" to="t29"/>
+    <!--NMOD(head,of)-->
+    <dep from="t29" rfunc="NMOD" to="t30"/>
+    <!--NMOD(region,the)-->
+    <dep from="t32" rfunc="NMOD" to="t31"/>
+    <!--PMOD(of,region)-->
+    <dep from="t30" rfunc="PMOD" to="t32"/>
+    <!--APPO(region,comprised)-->
+    <dep from="t32" rfunc="APPO" to="t33"/>
+    <!--ADV(comprised,of)-->
+    <dep from="t33" rfunc="ADV" to="t34"/>
+    <!--PMOD(of,Germany)-->
+    <dep from="t34" rfunc="PMOD" to="t35"/>
+    <!--P(Germany,,)-->
+    <dep from="t35" rfunc="P" to="t36"/>
+    <!--COORD(Germany,Austria)-->
+    <dep from="t35" rfunc="COORD" to="t37"/>
+    <!--COORD(Austria,and)-->
+    <dep from="t37" rfunc="COORD" to="t38"/>
+    <!--CONJ(and,Switzerland)-->
+    <dep from="t38" rfunc="CONJ" to="t39"/>
+    <!--P(is,.)-->
+    <dep from="t11" rfunc="P" to="t40"/>
+    <!--NAME(Wijnen,Vincent)-->
+    <dep from="t42" rfunc="NAME" to="t41"/>
+    <!--SBJ(has,Wijnen)-->
+    <dep from="t43" rfunc="SBJ" to="t42"/>
+    <!--VC(has,been)-->
+    <dep from="t43" rfunc="VC" to="t44"/>
+    <!--VC(been,named)-->
+    <dep from="t44" rfunc="VC" to="t45"/>
+    <!--NMOD(Europe,vice president)-->
+    <dep from="t53" rfunc="NMOD" to="t.mw46"/>
+    <!--P(Europe,,)-->
+    <dep from="t53" rfunc="P" to="t48"/>
+    <!--TMP(Europe,after)-->
+    <dep from="t53" rfunc="TMP" to="t49"/>
+    <!--PMOD(after,sales)-->
+    <dep from="t49" rfunc="PMOD" to="t50"/>
+    <!--P(Europe,,)-->
+    <dep from="t53" rfunc="P" to="t51"/>
+    <!--NAME(Europe,Nissan)-->
+    <dep from="t53" rfunc="NAME" to="t52"/>
+    <!--OPRD(named,Europe)-->
+    <dep from="t45" rfunc="OPRD" to="t53"/>
+    <!--P(has,.)-->
+    <dep from="t43" rfunc="P" to="t54"/>
+    <!--NMOD(role,Wijnen)-->
+    <dep from="t59" rfunc="NMOD" to="t55"/>
+    <!--SUFFIX(Wijnen,'s)-->
+    <dep from="t55" rfunc="SUFFIX" to="t56"/>
+    <!--AMOD(recent,most)-->
+    <dep from="t58" rfunc="AMOD" to="t57"/>
+    <!--NMOD(role,recent)-->
+    <dep from="t59" rfunc="NMOD" to="t58"/>
+    <!--SBJ(was,role)-->
+    <dep from="t62" rfunc="SBJ" to="t59"/>
+    <!--LOC(role,at)-->
+    <dep from="t59" rfunc="LOC" to="t60"/>
+    <!--PMOD(at,Nissan)-->
+    <dep from="t60" rfunc="PMOD" to="t61"/>
+    <!--VC(was,supervising)-->
+    <dep from="t62" rfunc="VC" to="t63"/>
+    <!--NMOD(markets,the)-->
+    <dep from="t67" rfunc="NMOD" to="t64"/>
+    <!--NMOD(European,central)-->
+    <dep from="t66" rfunc="NMOD" to="t65"/>
+    <!--NMOD(markets,European)-->
+    <dep from="t67" rfunc="NMOD" to="t66"/>
+    <!--OBJ(supervising,markets)-->
+    <dep from="t63" rfunc="OBJ" to="t67"/>
+    <!--NMOD(markets,of)-->
+    <dep from="t67" rfunc="NMOD" to="t68"/>
+    <!--PMOD(of,Germany)-->
+    <dep from="t68" rfunc="PMOD" to="t69"/>
+    <!--P(Germany,,)-->
+    <dep from="t69" rfunc="P" to="t70"/>
+    <!--COORD(Germany,Austria)-->
+    <dep from="t69" rfunc="COORD" to="t71"/>
+    <!--COORD(Austria,and)-->
+    <dep from="t71" rfunc="COORD" to="t72"/>
+    <!--CONJ(and,Switzerland)-->
+    <dep from="t72" rfunc="CONJ" to="t73"/>
+    <!--P(supervising,,)-->
+    <dep from="t63" rfunc="P" to="t74"/>
+    <!--ADV(supervising,as)-->
+    <dep from="t63" rfunc="ADV" to="t75"/>
+    <!--NMOD(Centre,managing director)-->
+    <dep from="t80" rfunc="NMOD" to="t.mw76"/>
+    <!--P(Centre,,)-->
+    <dep from="t80" rfunc="P" to="t78"/>
+    <!--NAME(Centre,RBU)-->
+    <dep from="t80" rfunc="NAME" to="t79"/>
+    <!--PMOD(as,Centre)-->
+    <dep from="t75" rfunc="PMOD" to="t80"/>
+    <!--P(was,.)-->
+    <dep from="t62" rfunc="P" to="t81"/>
+    <!--NMOD(appointment,His)-->
+    <dep from="t83" rfunc="NMOD" to="t82"/>
+    <!--SBJ(is,appointment)-->
+    <dep from="t84" rfunc="SBJ" to="t83"/>
+    <!--PRD(is,effective)-->
+    <dep from="t84" rfunc="PRD" to="t85"/>
+    <!--NMOD(2013,1)-->
+    <dep from="t88" rfunc="NMOD" to="t86"/>
+    <!--NMOD(2013,June)-->
+    <dep from="t88" rfunc="NMOD" to="t87"/>
+    <!--TMP(effective,2013)-->
+    <dep from="t85" rfunc="TMP" to="t88"/>
+    <!--P(is,,)-->
+    <dep from="t84" rfunc="P" to="t89"/>
+    <!--COORD(is,and)-->
+    <dep from="t84" rfunc="COORD" to="t90"/>
+    <!--SBJ(will,he)-->
+    <dep from="t92" rfunc="SBJ" to="t91"/>
+    <!--CONJ(and,will)-->
+    <dep from="t90" rfunc="CONJ" to="t92"/>
+    <!--VC(will,be)-->
+    <dep from="t92" rfunc="VC" to="t93"/>
+    <!--VC(be,based)-->
+    <dep from="t93" rfunc="VC" to="t94"/>
+    <!--LOC(based,in)-->
+    <dep from="t94" rfunc="LOC" to="t95"/>
+    <!--PMOD(in,Amsterdam)-->
+    <dep from="t95" rfunc="PMOD" to="t96"/>
+    <!--P(is,.)-->
+    <dep from="t84" rfunc="P" to="t97"/>
+    <!--NAME(Hausch,Thomas)-->
+    <dep from="t99" rfunc="NAME" to="t98"/>
+    <!--SBJ(has,Hausch)-->
+    <dep from="t100" rfunc="SBJ" to="t99"/>
+    <!--VC(has,been)-->
+    <dep from="t100" rfunc="VC" to="t101"/>
+    <!--VC(been,named)-->
+    <dep from="t101" rfunc="VC" to="t102"/>
+    <!--NMOD(Centre,managing director)-->
+    <dep from="t107" rfunc="NMOD" to="t.mw103"/>
+    <!--P(Centre,,)-->
+    <dep from="t107" rfunc="P" to="t105"/>
+    <!--NAME(Centre,RBU)-->
+    <dep from="t107" rfunc="NAME" to="t106"/>
+    <!--OPRD(named,Centre)-->
+    <dep from="t102" rfunc="OPRD" to="t107"/>
+    <!--P(Centre,,)-->
+    <dep from="t107" rfunc="P" to="t108"/>
+    <!--APPO(Centre,based)-->
+    <dep from="t107" rfunc="APPO" to="t109"/>
+    <!--LOC(based,in)-->
+    <dep from="t109" rfunc="LOC" to="t110"/>
+    <!--NMOD(Germany,Bruhl)-->
+    <dep from="t113" rfunc="NMOD" to="t111"/>
+    <!--P(Germany,,)-->
+    <dep from="t113" rfunc="P" to="t112"/>
+    <!--PMOD(in,Germany)-->
+    <dep from="t110" rfunc="PMOD" to="t113"/>
+    <!--P(has,.)-->
+    <dep from="t100" rfunc="P" to="t114"/>
+    <!--SBJ(joins,He)-->
+    <dep from="t116" rfunc="SBJ" to="t115"/>
+    <!--NAME(Europe,Nissan)-->
+    <dep from="t118" rfunc="NAME" to="t117"/>
+    <!--OBJ(joins,Europe)-->
+    <dep from="t116" rfunc="OBJ" to="t118"/>
+    <!--ADV(joins,effective)-->
+    <dep from="t116" rfunc="ADV" to="t119"/>
+    <!--NMOD(2013,1)-->
+    <dep from="t122" rfunc="NMOD" to="t120"/>
+    <!--NMOD(2013,May)-->
+    <dep from="t122" rfunc="NMOD" to="t121"/>
+    <!--TMP(effective,2013)-->
+    <dep from="t119" rfunc="TMP" to="t122"/>
+    <!--P(2013,,)-->
+    <dep from="t122" rfunc="P" to="t123"/>
+    <!--NMOD(career,afteran)-->
+    <dep from="t126" rfunc="NMOD" to="t124"/>
+    <!--NMOD(career,automotive)-->
+    <dep from="t126" rfunc="NMOD" to="t125"/>
+    <!--APPO(2013,career)-->
+    <dep from="t122" rfunc="APPO" to="t126"/>
+    <!--APPO(career,covering)-->
+    <dep from="t126" rfunc="APPO" to="t127"/>
+    <!--NMOD(effective,more than)-->
+    <dep from="t119" rfunc="NMOD" to="t.mw128"/>
+    <!--NMOD(years,20)-->
+    <dep from="t131" rfunc="NMOD" to="t130"/>
+    <!--OBJ(covering,years)-->
+    <dep from="t127" rfunc="OBJ" to="t131"/>
+    <!--P(joins,.)-->
+    <dep from="t116" rfunc="P" to="t132"/>
+    <!--SBJ(started,Hausch)-->
+    <dep from="t134" rfunc="SBJ" to="t133"/>
+    <!--LOC(started,in)-->
+    <dep from="t134" rfunc="LOC" to="t135"/>
+    <!--NMOD(Germany,his)-->
+    <dep from="t138" rfunc="NMOD" to="t136"/>
+    <!--NMOD(Germany,native)-->
+    <dep from="t138" rfunc="NMOD" to="t137"/>
+    <!--PMOD(in,Germany)-->
+    <dep from="t135" rfunc="PMOD" to="t138"/>
+    <!--MNR(started,with)-->
+    <dep from="t134" rfunc="MNR" to="t139"/>
+    <!--NMOD(group,the)-->
+    <dep from="t142" rfunc="NMOD" to="t140"/>
+    <!--NMOD(group,Daimler)-->
+    <dep from="t142" rfunc="NMOD" to="t141"/>
+    <!--PMOD(with,group)-->
+    <dep from="t139" rfunc="PMOD" to="t142"/>
+    <!--P(group,,)-->
+    <dep from="t142" rfunc="P" to="t143"/>
+    <!--NMOD(disciplines,working in)-->
+    <dep from="t147" rfunc="NMOD" to="t.mw144"/>
+    <!--NMOD(disciplines,diverse)-->
+    <dep from="t147" rfunc="NMOD" to="t146"/>
+    <!--SBJ(including,disciplines)-->
+    <dep from="t148" rfunc="SBJ" to="t147"/>
+    <!--NMOD(group,including)-->
+    <dep from="t142" rfunc="NMOD" to="t148"/>
+    <!--NMOD(strategy,product development)-->
+    <dep from="t152" rfunc="NMOD" to="t.mw149"/>
+    <!--P(group,,)-->
+    <dep from="t142" rfunc="P" to="t151"/>
+    <!--PMOD(including,strategy)-->
+    <dep from="t148" rfunc="PMOD" to="t152"/>
+    <!--COORD(strategy,and)-->
+    <dep from="t152" rfunc="COORD" to="t153"/>
+    <!--CONJ(and,sales)-->
+    <dep from="t153" rfunc="CONJ" to="t154"/>
+    <!--P(started,.)-->
+    <dep from="t134" rfunc="P" to="t155"/>
+    <!--SBJ(moved,He)-->
+    <dep from="t157" rfunc="SBJ" to="t156"/>
+    <!--DIR(moved,to)-->
+    <dep from="t157" rfunc="DIR" to="t158"/>
+    <!--NMOD(States,the)-->
+    <dep from="t161" rfunc="NMOD" to="t159"/>
+    <!--NAME(States,United)-->
+    <dep from="t161" rfunc="NAME" to="t160"/>
+    <!--PMOD(to,States)-->
+    <dep from="t158" rfunc="PMOD" to="t161"/>
+    <!--AMOD(to,with)-->
+    <dep from="t158" rfunc="AMOD" to="t162"/>
+    <!--PMOD(with,Chrysler)-->
+    <dep from="t162" rfunc="PMOD" to="t163"/>
+    <!--P(moved,,)-->
+    <dep from="t157" rfunc="P" to="t164"/>
+    <!--ADV(moved,heading)-->
+    <dep from="t157" rfunc="ADV" to="t165"/>
+    <!--NMOD(sales,international)-->
+    <dep from="t167" rfunc="NMOD" to="t166"/>
+    <!--OBJ(heading,sales)-->
+    <dep from="t165" rfunc="OBJ" to="t167"/>
+    <!--P(moved,,)-->
+    <dep from="t157" rfunc="P" to="t168"/>
+    <!--TMP(moved,before)-->
+    <dep from="t157" rfunc="TMP" to="t169"/>
+    <!--PMOD(before,returning)-->
+    <dep from="t169" rfunc="PMOD" to="t170"/>
+    <!--DIR(returning,to)-->
+    <dep from="t170" rfunc="DIR" to="t171"/>
+    <!--PMOD(to,Germany)-->
+    <dep from="t171" rfunc="PMOD" to="t172"/>
+    <!--PRP(returning,to)-->
+    <dep from="t170" rfunc="PRP" to="t173"/>
+    <!--IM(to,be)-->
+    <dep from="t173" rfunc="IM" to="t174"/>
+    <!--NMOD(Europe,responsible for)-->
+    <dep from="t177" rfunc="NMOD" to="t.mw175"/>
+    <!--PRD(be,Europe)-->
+    <dep from="t174" rfunc="PRD" to="t177"/>
+    <!--P(Europe,,)-->
+    <dep from="t177" rfunc="P" to="t178"/>
+    <!--NAME(East,Middle)-->
+    <dep from="t180" rfunc="NAME" to="t179"/>
+    <!--COORD(Europe,East)-->
+    <dep from="t177" rfunc="COORD" to="t180"/>
+    <!--COORD(East,and)-->
+    <dep from="t180" rfunc="COORD" to="t181"/>
+    <!--CONJ(and,Africa)-->
+    <dep from="t181" rfunc="CONJ" to="t182"/>
+    <!--NMOD(Africa,for)-->
+    <dep from="t182" rfunc="NMOD" to="t183"/>
+    <!--PMOD(for,Chrysler)-->
+    <dep from="t183" rfunc="PMOD" to="t184"/>
+    <!--P(moved,.)-->
+    <dep from="t157" rfunc="P" to="t185"/>
+    <!--SBJ(joins,Hausch)-->
+    <dep from="t189" rfunc="SBJ" to="t186"/>
+    <!--AMOD(recently,most)-->
+    <dep from="t188" rfunc="AMOD" to="t187"/>
+    <!--TMP(joins,recently)-->
+    <dep from="t189" rfunc="TMP" to="t188"/>
+    <!--OBJ(joins,Nissan)-->
+    <dep from="t189" rfunc="OBJ" to="t190"/>
+    <!--ADV(joins,from)-->
+    <dep from="t189" rfunc="ADV" to="t191"/>
+    <!--NAME(Automotive,CODA)-->
+    <dep from="t193" rfunc="NAME" to="t192"/>
+    <!--PMOD(from,Automotive)-->
+    <dep from="t191" rfunc="PMOD" to="t193"/>
+    <!--P(Automotive,,)-->
+    <dep from="t193" rfunc="P" to="t194"/>
+    <!--NMOD(specialist,the)-->
+    <dep from="t198" rfunc="NMOD" to="t195"/>
+    <!--NMOD(specialist,US-based)-->
+    <dep from="t198" rfunc="NMOD" to="t196"/>
+    <!--NMOD(specialist,electric-vehicle)-->
+    <dep from="t198" rfunc="NMOD" to="t197"/>
+    <!--APPO(Automotive,specialist)-->
+    <dep from="t193" rfunc="APPO" to="t198"/>
+    <!--P(Automotive,,)-->
+    <dep from="t193" rfunc="P" to="t199"/>
+    <!--LOC(served,where)-->
+    <dep from="t202" rfunc="LOC" to="t200"/>
+    <!--SBJ(served,he)-->
+    <dep from="t202" rfunc="SBJ" to="t201"/>
+    <!--NMOD(Automotive,served)-->
+    <dep from="t193" rfunc="NMOD" to="t202"/>
+    <!--ADV(served,as)-->
+    <dep from="t202" rfunc="ADV" to="t203"/>
+    <!--NMOD(sales,vice president)-->
+    <dep from="t207" rfunc="NMOD" to="t.mw204"/>
+    <!--P(sales,,)-->
+    <dep from="t207" rfunc="P" to="t206"/>
+    <!--PMOD(as,sales)-->
+    <dep from="t203" rfunc="PMOD" to="t207"/>
+    <!--P(sales,,)-->
+    <dep from="t207" rfunc="P" to="t208"/>
+    <!--COORD(sales,marketing)-->
+    <dep from="t207" rfunc="COORD" to="t209"/>
+    <!--COORD(marketing,and)-->
+    <dep from="t209" rfunc="COORD" to="t210"/>
+    <!--CONJ(and,after)-->
+    <dep from="t210" rfunc="CONJ" to="t211"/>
+    <!--PMOD(after,sales)-->
+    <dep from="t211" rfunc="PMOD" to="t212"/>
+    <!--P(joins,.)-->
+    <dep from="t189" rfunc="P" to="t213"/>
+    <!--NMOD(Wijnen,Both)-->
+    <dep from="t215" rfunc="NMOD" to="t214"/>
+    <!--SBJ(will,Wijnen)-->
+    <dep from="t218" rfunc="SBJ" to="t215"/>
+    <!--COORD(Wijnen,and)-->
+    <dep from="t215" rfunc="COORD" to="t216"/>
+    <!--CONJ(and,Hausch)-->
+    <dep from="t216" rfunc="CONJ" to="t217"/>
+    <!--VC(will,report)-->
+    <dep from="t218" rfunc="VC" to="t219"/>
+    <!--ADV(report,to)-->
+    <dep from="t219" rfunc="ADV" to="t220"/>
+    <!--NAME(Willcox,Paul)-->
+    <dep from="t222" rfunc="NAME" to="t221"/>
+    <!--PMOD(to,Willcox)-->
+    <dep from="t220" rfunc="PMOD" to="t222"/>
+    <!--P(Willcox,,)-->
+    <dep from="t222" rfunc="P" to="t223"/>
+    <!--NMOD(sales,senior vice president)-->
+    <dep from="t228" rfunc="NMOD" to="t.mw224"/>
+    <!--P(sales,,)-->
+    <dep from="t228" rfunc="P" to="t227"/>
+    <!--APPO(Willcox,sales)-->
+    <dep from="t222" rfunc="APPO" to="t228"/>
+    <!--COORD(sales,and)-->
+    <dep from="t228" rfunc="COORD" to="t229"/>
+    <!--CONJ(and,marketing)-->
+    <dep from="t229" rfunc="CONJ" to="t230"/>
+    <!--NMOD(sales,for)-->
+    <dep from="t228" rfunc="NMOD" to="t231"/>
+    <!--NAME(Europe,Nissan)-->
+    <dep from="t233" rfunc="NAME" to="t232"/>
+    <!--PMOD(for,Europe)-->
+    <dep from="t231" rfunc="PMOD" to="t233"/>
+    <!--P(will,.)-->
+    <dep from="t218" rfunc="P" to="t234"/>
+    <!--NMOD(article,This)-->
+    <dep from="t236" rfunc="NMOD" to="t235"/>
+    <!--SBJ(was,article)-->
+    <dep from="t237" rfunc="SBJ" to="t236"/>
+    <!--ADV(was,originally)-->
+    <dep from="t237" rfunc="ADV" to="t238"/>
+    <!--VC(was,published)-->
+    <dep from="t237" rfunc="VC" to="t239"/>
+    <!--LGS(published,by)-->
+    <dep from="t239" rfunc="LGS" to="t240"/>
+    <!--PMOD(by,just-auto.com)-->
+    <dep from="t240" rfunc="PMOD" to="t241"/>
+    <!--TMP(published,on)-->
+    <dep from="t239" rfunc="TMP" to="t242"/>
+    <!--NMOD(April2013,30)-->
+    <dep from="t244" rfunc="NMOD" to="t243"/>
+    <!--PMOD(on,April2013)-->
+    <dep from="t242" rfunc="PMOD" to="t244"/>
+    <!--P(was,.)-->
+    <dep from="t237" rfunc="P" to="t245"/>
+    <!--ADV(visit,For)-->
+    <dep from="t253" rfunc="ADV" to="t246"/>
+    <!--NMOD(business,authoritative)-->
+    <dep from="t251" rfunc="NMOD" to="t247"/>
+    <!--COORD(authoritative,and)-->
+    <dep from="t247" rfunc="COORD" to="t248"/>
+    <!--CONJ(and,timely)-->
+    <dep from="t248" rfunc="CONJ" to="t249"/>
+    <!--NMOD(business,auto)-->
+    <dep from="t251" rfunc="NMOD" to="t250"/>
+    <!--NMOD(information,business)-->
+    <dep from="t252" rfunc="NMOD" to="t251"/>
+    <!--PMOD(For,information)-->
+    <dep from="t246" rfunc="PMOD" to="t252"/>
+    <!--OBJ(visit,http)-->
+    <dep from="t253" rfunc="OBJ" to="t254"/>
+    <!--P(http,:)-->
+    <dep from="t254" rfunc="P" to="t255"/>
+    <!--NMOD(www.just-auto.com,/)-->
+    <dep from="t258" rfunc="NMOD" to="t256"/>
+    <!--NMOD(www.just-auto.com,/)-->
+    <dep from="t258" rfunc="NMOD" to="t257"/>
+    <!--APPO(http,www.just-auto.com)-->
+    <dep from="t254" rfunc="APPO" to="t258"/>
+    <!--P(visit,.)-->
+    <dep from="t253" rfunc="P" to="t259"/>
+  </deps>
+  <entities>
+    <entity id="e1" type="location">
+      <references>
+        <span>
+          <!--Europe-->
+          <target id="t8"/>
+        </span>
+      </references>
+      <externalReferences>
+        <externalRef reference="http://dbpedia.org/resource/Europe" resource="spotlight_v1"/>
+      </externalReferences>
+    </entity>
+    <entity id="e2" type="location">
+      <references>
+        <span>
+          <!--Europe-->
+          <target id="t23"/>
+        </span>
+      </references>
+      <externalReferences>
+        <externalRef reference="http://dbpedia.org/resource/Europe" resource="spotlight_v1"/>
+      </externalReferences>
+    </entity>
+    <entity id="e3" type="location">
+      <references>
+        <span>
+          <!--Germany-->
+          <target id="t35"/>
+        </span>
+      </references>
+      <externalReferences>
+        <externalRef reference="http://dbpedia.org/resource/Germany" resource="spotlight_v1"/>
+      </externalReferences>
+    </entity>
+    <entity id="e4" type="location">
+      <references>
+        <span>
+          <!--Austria-->
+          <target id="t37"/>
+        </span>
+      </references>
+      <externalReferences>
+        <externalRef reference="http://dbpedia.org/resource/Austria" resource="spotlight_v1"/>
+      </externalReferences>
+    </entity>
+    <entity id="e5" type="location">
+      <references>
+        <span>
+          <!--Switzerland-->
+          <target id="t39"/>
+        </span>
+      </references>
+      <externalReferences>
+        <externalRef reference="http://dbpedia.org/resource/Switzerland" resource="spotlight_v1"/>
+      </externalReferences>
+    </entity>
+    <entity id="e6" type="person">
+      <references>
+        <span>
+          <!--Vincent Wijnen-->
+          <target id="t41"/>
+          <target id="t42"/>
+        </span>
+      </references>
+    </entity>
+    <entity id="e7" type="person">
+      <references>
+        <span>
+          <!--Nissan Europe-->
+          <target id="t52"/>
+          <target id="t53"/>
+        </span>
+      </references>
+    </entity>
+    <entity id="e8" type="location">
+      <references>
+        <span>
+          <!--Nissan-->
+          <target id="t61"/>
+        </span>
+      </references>
+      <externalReferences>
+        <externalRef reference="http://dbpedia.org/resource/Nissan_Motor_Company" resource="spotlight_v1"/>
+      </externalReferences>
+    </entity>
+    <entity id="e9" type="misc">
+      <references>
+        <span>
+          <!--European-->
+          <target id="t66"/>
+        </span>
+      </references>
+      <externalReferences>
+        <externalRef reference="http://dbpedia.org/resource/Europe" resource="spotlight_v1"/>
+      </externalReferences>
+    </entity>
+    <entity id="e10" type="location">
+      <references>
+        <span>
+          <!--Germany-->
+          <target id="t69"/>
+        </span>
+      </references>
+      <externalReferences>
+        <externalRef reference="http://dbpedia.org/resource/Germany" resource="spotlight_v1"/>
+      </externalReferences>
+    </entity>
+    <entity id="e11" type="location">
+      <references>
+        <span>
+          <!--Austria-->
+          <target id="t71"/>
+        </span>
+      </references>
+      <externalReferences>
+        <externalRef reference="http://dbpedia.org/resource/Austria" resource="spotlight_v1"/>
+      </externalReferences>
+    </entity>
+    <entity id="e12" type="location">
+      <references>
+        <span>
+          <!--Switzerland-->
+          <target id="t73"/>
+        </span>
+      </references>
+      <externalReferences>
+        <externalRef reference="http://dbpedia.org/resource/Switzerland" resource="spotlight_v1"/>
+      </externalReferences>
+    </entity>
+    <entity id="e13" type="organization">
+      <references>
+        <span>
+          <!--RBU Centre-->
+          <target id="t79"/>
+          <target id="t80"/>
+        </span>
+      </references>
+    </entity>
+    <entity id="e14" type="location">
+      <references>
+        <span>
+          <!--Amsterdam-->
+          <target id="t96"/>
+        </span>
+      </references>
+      <externalReferences>
+        <externalRef reference="http://dbpedia.org/resource/Amsterdam" resource="spotlight_v1"/>
+      </externalReferences>
+    </entity>
+    <entity id="e15" type="person">
+      <references>
+        <span>
+          <!--Thomas Hausch-->
+          <target id="t98"/>
+          <target id="t99"/>
+        </span>
+      </references>
+    </entity>
+    <entity id="e16" type="organization">
+      <references>
+        <span>
+          <!--RBU Centre-->
+          <target id="t106"/>
+          <target id="t107"/>
+        </span>
+      </references>
+    </entity>
+    <entity id="e17" type="location">
+      <references>
+        <span>
+          <!--Bruhl-->
+          <target id="t111"/>
+        </span>
+      </references>
+      <externalReferences>
+        <externalRef reference="http://dbpedia.org/resource/Brühl" resource="spotlight_v1"/>
+      </externalReferences>
+    </entity>
+    <entity id="e18" type="location">
+      <references>
+        <span>
+          <!--Germany-->
+          <target id="t113"/>
+        </span>
+      </references>
+      <externalReferences>
+        <externalRef reference="http://dbpedia.org/resource/Germany" resource="spotlight_v1"/>
+      </externalReferences>
+    </entity>
+    <entity id="e19" type="person">
+      <references>
+        <span>
+          <!--Nissan Europe-->
+          <target id="t117"/>
+          <target id="t118"/>
+        </span>
+      </references>
+    </entity>
+    <entity id="e20" type="location">
+      <references>
+        <span>
+          <!--Germany-->
+          <target id="t138"/>
+        </span>
+      </references>
+      <externalReferences>
+        <externalRef reference="http://dbpedia.org/resource/Germany" resource="spotlight_v1"/>
+      </externalReferences>
+    </entity>
+    <entity id="e21" type="location">
+      <references>
+        <span>
+          <!--United States-->
+          <target id="t160"/>
+          <target id="t161"/>
+        </span>
+      </references>
+      <externalReferences>
+        <externalRef reference="http://dbpedia.org/resource/United_States" resource="spotlight_v1"/>
+      </externalReferences>
+    </entity>
+    <entity id="e22" type="location">
+      <references>
+        <span>
+          <!--Chrysler-->
+          <target id="t163"/>
+        </span>
+      </references>
+      <externalReferences>
+        <externalRef reference="http://dbpedia.org/resource/Chrysler" resource="spotlight_v1"/>
+      </externalReferences>
+    </entity>
+    <entity id="e23" type="location">
+      <references>
+        <span>
+          <!--Germany-->
+          <target id="t172"/>
+        </span>
+      </references>
+      <externalReferences>
+        <externalRef reference="http://dbpedia.org/resource/Germany" resource="spotlight_v1"/>
+      </externalReferences>
+    </entity>
+    <entity id="e24" type="location">
+      <references>
+        <span>
+          <!--Europe-->
+          <target id="t177"/>
+        </span>
+      </references>
+      <externalReferences>
+        <externalRef reference="http://dbpedia.org/resource/Europe" resource="spotlight_v1"/>
+      </externalReferences>
+    </entity>
+    <entity id="e25" type="location">
+      <references>
+        <span>
+          <!--Middle East-->
+          <target id="t179"/>
+          <target id="t180"/>
+        </span>
+      </references>
+      <externalReferences>
+        <externalRef reference="http://dbpedia.org/resource/Middle_East" resource="spotlight_v1"/>
+      </externalReferences>
+    </entity>
+    <entity id="e26" type="location">
+      <references>
+        <span>
+          <!--Africa-->
+          <target id="t182"/>
+        </span>
+      </references>
+      <externalReferences>
+        <externalRef reference="http://dbpedia.org/resource/Africa" resource="spotlight_v1"/>
+      </externalReferences>
+    </entity>
+    <entity id="e27" type="location">
+      <references>
+        <span>
+          <!--Chrysler-->
+          <target id="t184"/>
+        </span>
+      </references>
+      <externalReferences>
+        <externalRef reference="http://dbpedia.org/resource/Chrysler" resource="spotlight_v1"/>
+      </externalReferences>
+    </entity>
+    <entity id="e28" type="organization">
+      <references>
+        <span>
+          <!--US-based-->
+          <target id="t196"/>
+        </span>
+      </references>
+      <externalReferences>
+        <externalRef reference="http://dbpedia.org/resource/United_States" resource="spotlight_v1"/>
+      </externalReferences>
+    </entity>
+    <entity id="e29" type="person">
+      <references>
+        <span>
+          <!--Paul Willcox-->
+          <target id="t221"/>
+          <target id="t222"/>
+        </span>
+      </references>
+    </entity>
+    <entity id="e30" type="person">
+      <references>
+        <span>
+          <!--Nissan Europe-->
+          <target id="t232"/>
+          <target id="t233"/>
+        </span>
+      </references>
+    </entity>
+  </entities>
+  <coreferences>
+    <coref id="coe8" type="event">
+      <span>
+        <target id="t63"/>
+      </span>
+    </coref>
+    <coref id="coe2" type="event">
+      <span>
+        <target id="t6"/>
+      </span>
+    </coref>
+    <coref id="coe25" type="event">
+      <span>
+        <target id="t198"/>
+      </span>
+    </coref>
+    <coref id="coe1" type="event">
+      <span>
+        <target id="t4"/>
+      </span>
+      <span>
+        <target id="t12"/>
+      </span>
+    </coref>
+    <coref id="coe28" type="event">
+      <span>
+        <target id="t253"/>
+      </span>
+    </coref>
+    <coref id="coe29" type="event">
+      <span>
+        <target id="t251"/>
+      </span>
+    </coref>
+    <coref id="coe14" type="event">
+      <span>
+        <target id="t127"/>
+      </span>
+    </coref>
+    <coref id="coe3" type="event">
+      <span>
+        <target id="t21"/>
+      </span>
+    </coref>
+    <coref id="coe6" type="event">
+      <span>
+        <target id="t45"/>
+      </span>
+      <span>
+        <target id="t102"/>
+      </span>
+    </coref>
+    <coref id="coe26" type="event">
+      <span>
+        <target id="t219"/>
+      </span>
+    </coref>
+    <coref id="coe7" type="event">
+      <span>
+        <target id="t59"/>
+      </span>
+    </coref>
+    <coref id="coe27" type="event">
+      <span>
+        <target id="t239"/>
+      </span>
+    </coref>
+    <coref id="coe4" type="event">
+      <span>
+        <target id="t29"/>
+      </span>
+      <span>
+        <target id="t165"/>
+      </span>
+    </coref>
+    <coref id="coe18" type="event">
+      <span>
+        <target id="t147"/>
+      </span>
+    </coref>
+    <coref id="coe21" type="event">
+      <span>
+        <target id="t157"/>
+      </span>
+    </coref>
+    <coref id="coe24" type="event">
+      <span>
+        <target id="t202"/>
+      </span>
+    </coref>
+    <coref id="coe30" type="event">
+      <span>
+        <target id="t252"/>
+      </span>
+    </coref>
+    <coref id="coe13" type="event">
+      <span>
+        <target id="t126"/>
+      </span>
+    </coref>
+    <coref id="coe22" type="event">
+      <span>
+        <target id="t170"/>
+      </span>
+    </coref>
+    <coref id="coe20" type="event">
+      <span>
+        <target id="t152"/>
+      </span>
+    </coref>
+    <coref id="coe12" type="event">
+      <span>
+        <target id="t116"/>
+      </span>
+      <span>
+        <target id="t189"/>
+      </span>
+    </coref>
+    <coref id="coe10" type="event">
+      <span>
+        <target id="t83"/>
+      </span>
+    </coref>
+    <coref id="coe19" type="event">
+      <span>
+        <target id="t148"/>
+      </span>
+    </coref>
+    <coref id="coe23" type="event">
+      <span>
+        <target id="t167"/>
+      </span>
+      <span>
+        <target id="t207"/>
+      </span>
+      <span>
+        <target id="t228"/>
+      </span>
+    </coref>
+    <coref id="coe9" type="event">
+      <span>
+        <target id="t67"/>
+      </span>
+    </coref>
+    <coref id="coe15" type="event">
+      <span>
+        <target id="t134"/>
+      </span>
+    </coref>
+    <coref id="coe11" type="event">
+      <span>
+        <target id="t94"/>
+      </span>
+      <span>
+        <target id="t109"/>
+      </span>
+    </coref>
+    <coref id="coe5" type="event">
+      <span>
+        <target id="t33"/>
+      </span>
+    </coref>
+    <coref id="coe16" type="event">
+      <span>
+        <target id="t138"/>
+      </span>
+    </coref>
+    <coref id="coe17" type="event">
+      <span>
+        <target id="t142"/>
+      </span>
+    </coref>
+    <coref id="coentity13" type="location">
+      <span>
+        <!--Chrysler-->
+        <target id="t163"/>
+      </span>
+      <span>
+        <!--Chrysler-->
+        <target id="t184"/>
+      </span>
+    </coref>
+    <coref id="coentity5" type="person">
+      <span>
+        <!--Vincent Wijnen-->
+        <target id="t41"/>
+        <target id="t42"/>
+      </span>
+    </coref>
+    <coref id="coentity16" type="person">
+      <span>
+        <!--Paul Willcox-->
+        <target id="t221"/>
+        <target id="t222"/>
+      </span>
+    </coref>
+    <coref id="coentity4" type="location">
+      <span>
+        <!--Switzerland-->
+        <target id="t39"/>
+      </span>
+      <span>
+        <!--Switzerland-->
+        <target id="t73"/>
+      </span>
+    </coref>
+    <coref id="coentity12" type="location">
+      <span>
+        <!--United States-->
+        <target id="t160"/>
+        <target id="t161"/>
+      </span>
+      <span>
+        <!--us-based-->
+        <target id="t196"/>
+      </span>
+    </coref>
+    <coref id="coentity1" type="location">
+      <span>
+        <!--Europe-->
+        <target id="t8"/>
+      </span>
+      <span>
+        <!--Europe-->
+        <target id="t23"/>
+      </span>
+      <span>
+        <!--european-->
+        <target id="t66"/>
+      </span>
+      <span>
+        <!--Europe-->
+        <target id="t177"/>
+      </span>
+    </coref>
+    <coref id="coentity3" type="location">
+      <span>
+        <!--Austria-->
+        <target id="t37"/>
+      </span>
+      <span>
+        <!--Austria-->
+        <target id="t71"/>
+      </span>
+    </coref>
+    <coref id="coentity14" type="location">
+      <span>
+        <!--Middle East-->
+        <target id="t179"/>
+        <target id="t180"/>
+      </span>
+    </coref>
+    <coref id="coentity7" type="location">
+      <span>
+        <!--Nissan-->
+        <target id="t61"/>
+      </span>
+    </coref>
+    <coref id="coentity9" type="location">
+      <span>
+        <!--Amsterdam-->
+        <target id="t96"/>
+      </span>
+    </coref>
+    <coref id="coentity11" type="location">
+      <span>
+        <!--Bruhl-->
+        <target id="t111"/>
+      </span>
+    </coref>
+    <coref id="coentity6" type="person">
+      <span>
+        <!--Nissan Europe-->
+        <target id="t52"/>
+        <target id="t53"/>
+      </span>
+      <span>
+        <!--Nissan Europe-->
+        <target id="t117"/>
+        <target id="t118"/>
+      </span>
+      <span>
+        <!--Nissan Europe-->
+        <target id="t232"/>
+        <target id="t233"/>
+      </span>
+    </coref>
+    <coref id="coentity2" type="location">
+      <span>
+        <!--Germany-->
+        <target id="t35"/>
+      </span>
+      <span>
+        <!--Germany-->
+        <target id="t69"/>
+      </span>
+      <span>
+        <!--Germany-->
+        <target id="t113"/>
+      </span>
+      <span>
+        <!--Germany-->
+        <target id="t138"/>
+      </span>
+      <span>
+        <!--Germany-->
+        <target id="t172"/>
+      </span>
+    </coref>
+    <coref id="coentity8" type="organization">
+      <span>
+        <!--RBU Centre-->
+        <target id="t79"/>
+        <target id="t80"/>
+      </span>
+      <span>
+        <!--RBU Centre-->
+        <target id="t106"/>
+        <target id="t107"/>
+      </span>
+    </coref>
+    <coref id="coentity15" type="location">
+      <span>
+        <!--Africa-->
+        <target id="t182"/>
+      </span>
+    </coref>
+    <coref id="coentity10" type="person">
+      <span>
+        <!--Thomas Hausch-->
+        <target id="t98"/>
+        <target id="t99"/>
+      </span>
+    </coref>
+  </coreferences>
+  <locations/>
+  <dates/>
+  <srl>
+    <predicate id="pr1">
+      <!--announces-->
+      <externalReferences>
+        <externalRef reference="announce.01" resource="PropBank"/>
+        <externalRef reference="say-37.7" resource="VerbNet"/>
+        <externalRef reference="reflexive_appearance-48.1.2" resource="VerbNet"/>
+        <externalRef reference="say-37.7-1" resource="VerbNet"/>
+        <externalRef reference="Statement" resource="FrameNet"/>
+        <externalRef reference="communication" resource="EventType"/>
+      </externalReferences>
+      <span>
+        <target id="t4"/>
+      </span>
+      <role id="rl1" semRole="A0">
+        <!--SWITZERLAND : Nissan-->
+        <externalReferences>
+          <externalRef reference="say-37.7#Agent" resource="VerbNet"/>
+          <externalRef reference="Statement#Speaker" resource="FrameNet"/>
+        </externalReferences>
+        <span>
+          <target id="t1"/>
+          <target id="t2"/>
+          <target head="yes" id="t3"/>
+        </span>
+      </role>
+      <role id="rl2" semRole="A1">
+        <!--management changes in Europe-->
+        <externalReferences>
+          <externalRef reference="say-37.7#Topic" resource="VerbNet"/>
+          <externalRef reference="Statement#Message" resource="FrameNet"/>
+          <externalRef reference="Statement#Topic" resource="FrameNet"/>
+        </externalReferences>
+        <span>
+          <target id="t5"/>
+          <target head="yes" id="t6"/>
+          <target id="t7"/>
+          <target id="t8"/>
+        </span>
+      </role>
+    </predicate>
+    <predicate id="pr2">
+      <!--changes-->
+      <externalReferences>
+        <externalRef reference="change.01" resource="NomBank"/>
+        <externalRef reference="turn-26.6.1" resource="VerbNet"/>
+        <externalRef reference="other_cos-45.4" resource="VerbNet"/>
+        <externalRef reference="turn-26.6.1-1" resource="VerbNet"/>
+        <externalRef reference="Cause_change" resource="FrameNet"/>
+        <externalRef reference="Undergo_change" resource="FrameNet"/>
+        <externalRef reference="contextual" resource="EventType"/>
+      </externalReferences>
+      <span>
+        <target id="t6"/>
+      </span>
+      <role id="rl3" semRole="A1">
+        <!--management-->
+        <externalReferences>
+          <externalRef reference="turn-26.6.1#Patient" resource="VerbNet"/>
+          <externalRef reference="other_cos-45.4#Patient" resource="VerbNet"/>
+          <externalRef reference="Undergo_change#Entity" resource="FrameNet"/>
+          <externalRef reference="Undergo_change#Initial_category" resource="FrameNet"/>
+        </externalReferences>
+        <span>
+          <target head="yes" id="t5"/>
+        </span>
+      </role>
+      <role id="rl4" semRole="AM-LOC">
+        <!--in Europe-->
+        <span>
+          <target head="yes" id="t7"/>
+          <target id="t8"/>
+        </span>
+      </role>
+    </predicate>
+    <predicate id="pr3">
+      <!--announcing-->
+      <externalReferences>
+        <externalRef reference="announce.01" resource="PropBank"/>
+        <externalRef reference="say-37.7" resource="VerbNet"/>
+        <externalRef reference="reflexive_appearance-48.1.2" resource="VerbNet"/>
+        <externalRef reference="say-37.7-1" resource="VerbNet"/>
+        <externalRef reference="Statement" resource="FrameNet"/>
+        <externalRef reference="communication" resource="EventType"/>
+      </externalReferences>
+      <span>
+        <target id="t12"/>
+      </span>
+      <role id="rl5" semRole="A0">
+        <!--Nissan-->
+        <externalReferences>
+          <externalRef reference="say-37.7#Agent" resource="VerbNet"/>
+          <externalRef reference="Statement#Speaker" resource="FrameNet"/>
+        </externalReferences>
+        <span>
+          <target head="yes" id="t10"/>
+        </span>
+      </role>
+      <role id="rl6" semRole="A1">
+        <!--a new vice president of its after sales division in Europe as well as a new head of the region comprised of Germany , Austria and Switzerland-->
+        <externalReferences>
+          <externalRef reference="say-37.7#Topic" resource="VerbNet"/>
+          <externalRef reference="Statement#Message" resource="FrameNet"/>
+          <externalRef reference="Statement#Topic" resource="FrameNet"/>
+        </externalReferences>
+        <span>
+          <target id="t13"/>
+          <target id="t14"/>
+          <target id="t.mw15"/>
+          <target id="t17"/>
+          <target id="t18"/>
+          <target id="t19"/>
+          <target id="t20"/>
+          <target head="yes" id="t21"/>
+          <target id="t22"/>
+          <target id="t23"/>
+          <target id="t24"/>
+          <target id="t25"/>
+          <target id="t26"/>
+          <target id="t27"/>
+          <target id="t28"/>
+          <target id="t29"/>
+          <target id="t30"/>
+          <target id="t31"/>
+          <target id="t32"/>
+          <target id="t33"/>
+          <target id="t34"/>
+          <target id="t35"/>
+          <target id="t36"/>
+          <target id="t37"/>
+          <target id="t38"/>
+          <target id="t39"/>
+        </span>
+      </role>
+    </predicate>
+    <predicate id="pr4">
+      <!--division-->
+      <externalReferences>
+        <externalRef reference="division.01" resource="NomBank"/>
+      </externalReferences>
+      <span>
+        <target id="t21"/>
+      </span>
+      <role id="rl7" semRole="A1">
+        <!--sales-->
+        <span>
+          <target head="yes" id="t20"/>
+        </span>
+      </role>
+    </predicate>
+    <predicate id="pr5">
+      <!--head-->
+      <externalReferences>
+        <externalRef reference="head.01" resource="NomBank"/>
+        <externalRef reference="contiguous_location-47.8" resource="VerbNet"/>
+        <externalRef reference="Leadership" resource="FrameNet"/>
+        <externalRef reference="contextual" resource="EventType"/>
+      </externalReferences>
+      <span>
+        <target id="t29"/>
+      </span>
+      <role id="rl8" semRole="A0">
+        <!--a new head of the region comprised of Germany , Austria and Switzerland-->
+        <externalReferences>
+          <externalRef reference="contiguous_location-47.8#Theme" resource="VerbNet"/>
+        </externalReferences>
+        <span>
+          <target id="t27"/>
+          <target id="t28"/>
+          <target head="yes" id="t29"/>
+          <target id="t30"/>
+          <target id="t31"/>
+          <target id="t32"/>
+          <target id="t33"/>
+          <target id="t34"/>
+          <target id="t35"/>
+          <target id="t36"/>
+          <target id="t37"/>
+          <target id="t38"/>
+          <target id="t39"/>
+        </span>
+      </role>
+      <role id="rl9" semRole="A1">
+        <!--of the region comprised of Germany , Austria and Switzerland-->
+        <externalReferences>
+          <externalRef reference="contiguous_location-47.8#Co-Theme" resource="VerbNet"/>
+        </externalReferences>
+        <span>
+          <target head="yes" id="t30"/>
+          <target id="t31"/>
+          <target id="t32"/>
+          <target id="t33"/>
+          <target id="t34"/>
+          <target id="t35"/>
+          <target id="t36"/>
+          <target id="t37"/>
+          <target id="t38"/>
+          <target id="t39"/>
+        </span>
+      </role>
+    </predicate>
+    <predicate id="pr6">
+      <!--comprised-->
+      <externalReferences>
+        <externalRef reference="comprise.01" resource="PropBank"/>
+      </externalReferences>
+      <span>
+        <target id="t33"/>
+      </span>
+      <role id="rl10" semRole="A1">
+        <!--the region comprised of Germany , Austria and Switzerland-->
+        <span>
+          <target id="t31"/>
+          <target head="yes" id="t32"/>
+          <target id="t33"/>
+          <target id="t34"/>
+          <target id="t35"/>
+          <target id="t36"/>
+          <target id="t37"/>
+          <target id="t38"/>
+          <target id="t39"/>
+        </span>
+      </role>
+      <role id="rl11" semRole="A2">
+        <!--of Germany , Austria and Switzerland-->
+        <span>
+          <target head="yes" id="t34"/>
+          <target id="t35"/>
+          <target id="t36"/>
+          <target id="t37"/>
+          <target id="t38"/>
+          <target id="t39"/>
+        </span>
+      </role>
+    </predicate>
+    <predicate id="pr7">
+      <!--named-->
+      <externalReferences>
+        <externalRef reference="name.01" resource="PropBank"/>
+        <externalRef reference="dub-29.3" resource="VerbNet"/>
+        <externalRef reference="Change_of_leadership" resource="FrameNet"/>
+        <externalRef reference="Name_conferral" resource="FrameNet"/>
+        <externalRef reference="communication" resource="EventType"/>
+      </externalReferences>
+      <span>
+        <target id="t45"/>
+      </span>
+      <role id="rl12" semRole="A1">
+        <!--Vincent Wijnen-->
+        <externalReferences>
+          <externalRef reference="dub-29.3#Theme" resource="VerbNet"/>
+          <externalRef reference="Name_conferral#Entity" resource="FrameNet"/>
+        </externalReferences>
+        <span>
+          <target id="t41"/>
+          <target head="yes" id="t42"/>
+        </span>
+      </role>
+      <role id="rl13" semRole="A2">
+        <!--vice president , after sales , Nissan Europe-->
+        <externalReferences>
+          <externalRef reference="dub-29.3#Result" resource="VerbNet"/>
+          <externalRef reference="Name_conferral#Name" resource="FrameNet"/>
+        </externalReferences>
+        <span>
+          <target id="t.mw46"/>
+          <target id="t48"/>
+          <target id="t49"/>
+          <target id="t50"/>
+          <target id="t51"/>
+          <target id="t52"/>
+          <target head="yes" id="t53"/>
+        </span>
+      </role>
+    </predicate>
+    <predicate id="pr8">
+      <!--role-->
+      <externalReferences>
+        <externalRef reference="role.01" resource="NomBank"/>
+      </externalReferences>
+      <span>
+        <target id="t59"/>
+      </span>
+      <role id="rl14" semRole="A0">
+        <!--Wijnen 's-->
+        <span>
+          <target head="yes" id="t55"/>
+          <target id="t56"/>
+        </span>
+      </role>
+      <role id="rl15" semRole="A1">
+        <!--Wijnen 's most recent role at Nissan-->
+        <span>
+          <target id="t55"/>
+          <target id="t56"/>
+          <target id="t57"/>
+          <target id="t58"/>
+          <target head="yes" id="t59"/>
+          <target id="t60"/>
+          <target id="t61"/>
+        </span>
+      </role>
+      <role id="rl16" semRole="A2">
+        <!--at Nissan-->
+        <span>
+          <target head="yes" id="t60"/>
+          <target id="t61"/>
+        </span>
+      </role>
+    </predicate>
+    <predicate id="pr9">
+      <!--supervising-->
+      <externalReferences>
+        <externalRef reference="supervise.01" resource="PropBank"/>
+      </externalReferences>
+      <span>
+        <target id="t63"/>
+      </span>
+      <role id="rl17" semRole="A0">
+        <!--Wijnen 's most recent role at Nissan-->
+        <span>
+          <target id="t55"/>
+          <target id="t56"/>
+          <target id="t57"/>
+          <target id="t58"/>
+          <target head="yes" id="t59"/>
+          <target id="t60"/>
+          <target id="t61"/>
+        </span>
+      </role>
+      <role id="rl18" semRole="A1">
+        <!--the central European markets of Germany , Austria and Switzerland-->
+        <span>
+          <target id="t64"/>
+          <target id="t65"/>
+          <target id="t66"/>
+          <target head="yes" id="t67"/>
+          <target id="t68"/>
+          <target id="t69"/>
+          <target id="t70"/>
+          <target id="t71"/>
+          <target id="t72"/>
+          <target id="t73"/>
+        </span>
+      </role>
+      <role id="rl19" semRole="AM-ADV">
+        <!--as managing director , RBU Centre-->
+        <span>
+          <target head="yes" id="t75"/>
+          <target id="t.mw76"/>
+          <target id="t78"/>
+          <target id="t79"/>
+          <target id="t80"/>
+        </span>
+      </role>
+    </predicate>
+    <predicate id="pr10">
+      <!--markets-->
+      <externalReferences>
+        <externalRef reference="market.01" resource="NomBank"/>
+      </externalReferences>
+      <span>
+        <target id="t67"/>
+      </span>
+      <role id="rl20" semRole="A1">
+        <!--of Germany , Austria and Switzerland-->
+        <span>
+          <target head="yes" id="t68"/>
+          <target id="t69"/>
+          <target id="t70"/>
+          <target id="t71"/>
+          <target id="t72"/>
+          <target id="t73"/>
+        </span>
+      </role>
+    </predicate>
+    <predicate id="pr11">
+      <!--appointment-->
+      <externalReferences>
+        <externalRef reference="appointment.01" resource="NomBank"/>
+      </externalReferences>
+      <span>
+        <target id="t83"/>
+      </span>
+      <role id="rl21" semRole="A1">
+        <!--His-->
+        <span>
+          <target head="yes" id="t82"/>
+        </span>
+      </role>
+    </predicate>
+    <predicate id="pr12">
+      <!--based-->
+      <externalReferences>
+        <externalRef reference="base.01" resource="PropBank"/>
+      </externalReferences>
+      <span>
+        <target id="t94"/>
+      </span>
+      <role id="rl22" semRole="A1">
+        <!--he-->
+        <span>
+          <target head="yes" id="t91"/>
+        </span>
+      </role>
+      <role id="rl23" semRole="AM-MOD">
+        <!--he will be based in Amsterdam-->
+        <span>
+          <target id="t91"/>
+          <target head="yes" id="t92"/>
+          <target id="t93"/>
+          <target id="t94"/>
+          <target id="t95"/>
+          <target id="t96"/>
+        </span>
+      </role>
+      <role id="rl24" semRole="AM-LOC">
+        <!--in Amsterdam-->
+        <span>
+          <target head="yes" id="t95"/>
+          <target id="t96"/>
+        </span>
+      </role>
+    </predicate>
+    <predicate id="pr13">
+      <!--named-->
+      <externalReferences>
+        <externalRef reference="name.01" resource="PropBank"/>
+        <externalRef reference="dub-29.3" resource="VerbNet"/>
+        <externalRef reference="Change_of_leadership" resource="FrameNet"/>
+        <externalRef reference="Name_conferral" resource="FrameNet"/>
+        <externalRef reference="communication" resource="EventType"/>
+      </externalReferences>
+      <span>
+        <target id="t102"/>
+      </span>
+      <role id="rl25" semRole="A1">
+        <!--Thomas Hausch-->
+        <externalReferences>
+          <externalRef reference="dub-29.3#Theme" resource="VerbNet"/>
+          <externalRef reference="Name_conferral#Entity" resource="FrameNet"/>
+        </externalReferences>
+        <span>
+          <target id="t98"/>
+          <target head="yes" id="t99"/>
+        </span>
+      </role>
+      <role id="rl26" semRole="A2">
+        <!--managing director , RBU Centre , based in Bruhl , Germany-->
+        <externalReferences>
+          <externalRef reference="dub-29.3#Result" resource="VerbNet"/>
+          <externalRef reference="Name_conferral#Name" resource="FrameNet"/>
+        </externalReferences>
+        <span>
+          <target id="t.mw103"/>
+          <target id="t105"/>
+          <target id="t106"/>
+          <target head="yes" id="t107"/>
+          <target id="t108"/>
+          <target id="t109"/>
+          <target id="t110"/>
+          <target id="t111"/>
+          <target id="t112"/>
+          <target id="t113"/>
+        </span>
+      </role>
+    </predicate>
+    <predicate id="pr14">
+      <!--based-->
+      <externalReferences>
+        <externalRef reference="base.01" resource="PropBank"/>
+      </externalReferences>
+      <span>
+        <target id="t109"/>
+      </span>
+      <role id="rl27" semRole="AM-LOC">
+        <!--in Bruhl , Germany-->
+        <span>
+          <target head="yes" id="t110"/>
+          <target id="t111"/>
+          <target id="t112"/>
+          <target id="t113"/>
+        </span>
+      </role>
+    </predicate>
+    <predicate id="pr15">
+      <!--joins-->
+      <externalReferences>
+        <externalRef reference="join.01" resource="PropBank"/>
+      </externalReferences>
+      <span>
+        <target id="t116"/>
+      </span>
+      <role id="rl28" semRole="A0">
+        <!--He-->
+        <span>
+          <target head="yes" id="t115"/>
+        </span>
+      </role>
+      <role id="rl29" semRole="A1">
+        <!--Nissan Europe-->
+        <span>
+          <target id="t117"/>
+          <target head="yes" id="t118"/>
+        </span>
+      </role>
+      <role id="rl30" semRole="AM-TMP">
+        <!--effective 1 May 2013 , afteran automotive career covering more than 20 years-->
+        <span>
+          <target head="yes" id="t119"/>
+          <target id="t120"/>
+          <target id="t121"/>
+          <target id="t122"/>
+          <target id="t123"/>
+          <target id="t124"/>
+          <target id="t125"/>
+          <target id="t126"/>
+          <target id="t127"/>
+          <target id="t.mw128"/>
+          <target id="t130"/>
+          <target id="t131"/>
+        </span>
+      </role>
+    </predicate>
+    <predicate id="pr16">
+      <!--career-->
+      <externalReferences>
+        <externalRef reference="career.01" resource="NomBank"/>
+      </externalReferences>
+      <span>
+        <target id="t126"/>
+      </span>
+      <role id="rl31" semRole="A1">
+        <!--automotive-->
+        <span>
+          <target head="yes" id="t125"/>
+        </span>
+      </role>
+    </predicate>
+    <predicate id="pr17">
+      <!--covering-->
+      <externalReferences>
+        <externalRef reference="cover.01" resource="PropBank"/>
+      </externalReferences>
+      <span>
+        <target id="t127"/>
+      </span>
+      <role id="rl32" semRole="A2">
+        <!--afteran automotive career covering 20 years-->
+        <span>
+          <target id="t124"/>
+          <target id="t125"/>
+          <target head="yes" id="t126"/>
+          <target id="t127"/>
+          <target id="t130"/>
+          <target id="t131"/>
+        </span>
+      </role>
+      <role id="rl33" semRole="A1">
+        <!--20 years-->
+        <span>
+          <target id="t130"/>
+          <target head="yes" id="t131"/>
+        </span>
+      </role>
+    </predicate>
+    <predicate id="pr18">
+      <!--started-->
+      <externalReferences>
+        <externalRef reference="start.01" resource="PropBank"/>
+        <externalRef reference="begin-55.1" resource="VerbNet"/>
+        <externalRef reference="begin-55.1-1" resource="VerbNet"/>
+        <externalRef reference="Activity_start" resource="FrameNet"/>
+        <externalRef reference="Process_start" resource="FrameNet"/>
+        <externalRef reference="Setting_fire" resource="FrameNet"/>
+        <externalRef reference="grammatical" resource="EventType"/>
+      </externalReferences>
+      <span>
+        <target id="t134"/>
+      </span>
+      <role id="rl34" semRole="A0">
+        <!--Hausch-->
+        <externalReferences>
+          <externalRef reference="begin-55.1#Agent" resource="VerbNet"/>
+          <externalRef reference="Activity_start#Agent" resource="FrameNet"/>
+        </externalReferences>
+        <span>
+          <target head="yes" id="t133"/>
+        </span>
+      </role>
+      <role id="rl35" semRole="AM-LOC">
+        <!--in his native Germany-->
+        <span>
+          <target head="yes" id="t135"/>
+          <target id="t136"/>
+          <target id="t137"/>
+          <target id="t138"/>
+        </span>
+      </role>
+      <role id="rl36" semRole="A2">
+        <!--with the Daimler group , working in diverse disciplines including product development , strategy and sales-->
+        <externalReferences>
+          <externalRef reference="begin-55.1#Instrument" resource="VerbNet"/>
+        </externalReferences>
+        <span>
+          <target head="yes" id="t139"/>
+          <target id="t140"/>
+          <target id="t141"/>
+          <target id="t142"/>
+          <target id="t143"/>
+          <target id="t.mw144"/>
+          <target id="t146"/>
+          <target id="t147"/>
+          <target id="t148"/>
+          <target id="t.mw149"/>
+          <target id="t151"/>
+          <target id="t152"/>
+          <target id="t153"/>
+          <target id="t154"/>
+        </span>
+      </role>
+    </predicate>
+    <predicate id="pr19">
+      <!--Germany-->
+      <externalReferences>
+        <externalRef reference="Germany.01" resource="PropBank"/>
+      </externalReferences>
+      <span>
+        <target id="t138"/>
+      </span>
+      <role id="rl37" semRole="A0">
+        <!--his-->
+        <span>
+          <target head="yes" id="t136"/>
+        </span>
+      </role>
+      <role id="rl38" semRole="AM-MNR">
+        <!--native-->
+        <span>
+          <target head="yes" id="t137"/>
+        </span>
+      </role>
+    </predicate>
+    <predicate id="pr20">
+      <!--group-->
+      <externalReferences>
+        <externalRef reference="group.01" resource="NomBank"/>
+        <externalRef reference="classify-29.10" resource="VerbNet"/>
+        <externalRef reference="herd-47.5.2" resource="VerbNet"/>
+        <externalRef reference="cognition" resource="EventType"/>
+      </externalReferences>
+      <span>
+        <target id="t142"/>
+      </span>
+      <role id="rl39" semRole="A2">
+        <!--Daimler-->
+        <externalReferences>
+          <externalRef reference="classify-29.10#Goal" resource="VerbNet"/>
+        </externalReferences>
+        <span>
+          <target head="yes" id="t141"/>
+        </span>
+      </role>
+    </predicate>
+    <predicate id="pr21">
+      <!--disciplines-->
+      <externalReferences>
+        <externalRef reference="discipline.01" resource="NomBank"/>
+      </externalReferences>
+      <span>
+        <target id="t147"/>
+      </span>
+      <role id="rl40" semRole="A0">
+        <!--the Daimler group , working in diverse disciplines including product development , strategy and sales-->
+        <span>
+          <target id="t140"/>
+          <target id="t141"/>
+          <target head="yes" id="t142"/>
+          <target id="t143"/>
+          <target id="t.mw144"/>
+          <target id="t146"/>
+          <target id="t147"/>
+          <target id="t148"/>
+          <target id="t.mw149"/>
+          <target id="t151"/>
+          <target id="t152"/>
+          <target id="t153"/>
+          <target id="t154"/>
+        </span>
+      </role>
+      <role id="rl41" semRole="A2">
+        <!--working in-->
+        <span>
+          <target head="yes" id="t.mw144"/>
+        </span>
+      </role>
+      <role id="rl42" semRole="AM-MNR">
+        <!--diverse-->
+        <span>
+          <target head="yes" id="t146"/>
+        </span>
+      </role>
+      <role id="rl43" semRole="A0">
+        <!--working in diverse disciplines-->
+        <span>
+          <target id="t.mw144"/>
+          <target id="t146"/>
+          <target head="yes" id="t147"/>
+        </span>
+      </role>
+    </predicate>
+    <predicate id="pr22">
+      <!--including-->
+      <externalReferences>
+        <externalRef reference="include.01" resource="PropBank"/>
+        <externalRef reference="admit-65" resource="VerbNet"/>
+        <externalRef reference="involve-107" resource="VerbNet"/>
+        <externalRef reference="grammatical" resource="EventType"/>
+      </externalReferences>
+      <span>
+        <target id="t148"/>
+      </span>
+      <role id="rl44" semRole="A2">
+        <!--the Daimler group , working in diverse disciplines including product development , strategy and sales-->
+        <externalReferences>
+          <externalRef reference="admit-65#Location" resource="VerbNet"/>
+          <externalRef reference="involve-107#Goal" resource="VerbNet"/>
+        </externalReferences>
+        <span>
+          <target id="t140"/>
+          <target id="t141"/>
+          <target head="yes" id="t142"/>
+          <target id="t143"/>
+          <target id="t.mw144"/>
+          <target id="t146"/>
+          <target id="t147"/>
+          <target id="t148"/>
+          <target id="t.mw149"/>
+          <target id="t151"/>
+          <target id="t152"/>
+          <target id="t153"/>
+          <target id="t154"/>
+        </span>
+      </role>
+      <role id="rl45" semRole="A1">
+        <!--product development strategy and sales-->
+        <externalReferences>
+          <externalRef reference="admit-65#Theme" resource="VerbNet"/>
+          <externalRef reference="involve-107#Theme" resource="VerbNet"/>
+        </externalReferences>
+        <span>
+          <target id="t.mw149"/>
+          <target head="yes" id="t152"/>
+          <target id="t153"/>
+          <target id="t154"/>
+        </span>
+      </role>
+    </predicate>
+    <predicate id="pr23">
+      <!--strategy-->
+      <externalReferences>
+        <externalRef reference="strategy.01" resource="NomBank"/>
+      </externalReferences>
+      <span>
+        <target id="t152"/>
+      </span>
+      <role id="rl46" semRole="A1">
+        <!--product development-->
+        <span>
+          <target head="yes" id="t.mw149"/>
+        </span>
+      </role>
+    </predicate>
+    <predicate id="pr24">
+      <!--moved-->
+      <externalReferences>
+        <externalRef reference="move.01" resource="PropBank"/>
+        <externalRef reference="roll-51.3.1" resource="VerbNet"/>
+        <externalRef reference="slide-11.2" resource="VerbNet"/>
+        <externalRef reference="calibratable_cos-45.6" resource="VerbNet"/>
+        <externalRef reference="calibratable_cos-45.6-1" resource="VerbNet"/>
+        <externalRef reference="Cause_change_of_position_on_a_scale" resource="FrameNet"/>
+        <externalRef reference="Cause_motion" resource="FrameNet"/>
+        <externalRef reference="Change_position_on_a_scale" resource="FrameNet"/>
+        <externalRef reference="Motion" resource="FrameNet"/>
+        <externalRef reference="contextual" resource="EventType"/>
+      </externalReferences>
+      <span>
+        <target id="t157"/>
+      </span>
+      <role id="rl47" semRole="A1">
+        <!--He-->
+        <externalReferences>
+          <externalRef reference="roll-51.3.1#Theme" resource="VerbNet"/>
+          <externalRef reference="slide-11.2#Theme" resource="VerbNet"/>
+          <externalRef reference="Motion#Theme" resource="FrameNet"/>
+        </externalReferences>
+        <span>
+          <target head="yes" id="t156"/>
+        </span>
+      </role>
+      <role id="rl48" semRole="A2">
+        <!--to the United States with Chrysler-->
+        <externalReferences>
+          <externalRef reference="roll-51.3.1#Location" resource="VerbNet"/>
+          <externalRef reference="slide-11.2#Destination" resource="VerbNet"/>
+          <externalRef reference="Motion#Area" resource="FrameNet"/>
+          <externalRef reference="Motion#Goal" resource="FrameNet"/>
+        </externalReferences>
+        <span>
+          <target head="yes" id="t158"/>
+          <target id="t159"/>
+          <target id="t160"/>
+          <target id="t161"/>
+          <target id="t162"/>
+          <target id="t163"/>
+        </span>
+      </role>
+      <role id="rl49" semRole="AM-ADV">
+        <!--heading international sales-->
+        <span>
+          <target head="yes" id="t165"/>
+          <target id="t166"/>
+          <target id="t167"/>
+        </span>
+      </role>
+      <role id="rl50" semRole="AM-TMP">
+        <!--before returning to Germany to be responsible for Europe , Middle East and Africa for Chrysler-->
+        <span>
+          <target head="yes" id="t169"/>
+          <target id="t170"/>
+          <target id="t171"/>
+          <target id="t172"/>
+          <target id="t173"/>
+          <target id="t174"/>
+          <target id="t.mw175"/>
+          <target id="t177"/>
+          <target id="t178"/>
+          <target id="t179"/>
+          <target id="t180"/>
+          <target id="t181"/>
+          <target id="t182"/>
+          <target id="t183"/>
+          <target id="t184"/>
+        </span>
+      </role>
+    </predicate>
+    <predicate id="pr25">
+      <!--heading-->
+      <externalReferences>
+        <externalRef reference="head.01" resource="PropBank"/>
+        <externalRef reference="contiguous_location-47.8" resource="VerbNet"/>
+        <externalRef reference="Leadership" resource="FrameNet"/>
+        <externalRef reference="contextual" resource="EventType"/>
+      </externalReferences>
+      <span>
+        <target id="t165"/>
+      </span>
+      <role id="rl51" semRole="A0">
+        <!--He-->
+        <externalReferences>
+          <externalRef reference="contiguous_location-47.8#Theme" resource="VerbNet"/>
+        </externalReferences>
+        <span>
+          <target head="yes" id="t156"/>
+        </span>
+      </role>
+      <role id="rl52" semRole="A1">
+        <!--international sales-->
+        <externalReferences>
+          <externalRef reference="contiguous_location-47.8#Co-Theme" resource="VerbNet"/>
+        </externalReferences>
+        <span>
+          <target id="t166"/>
+          <target head="yes" id="t167"/>
+        </span>
+      </role>
+    </predicate>
+    <predicate id="pr26">
+      <!--returning-->
+      <externalReferences>
+        <externalRef reference="return.01" resource="PropBank"/>
+        <externalRef reference="escape-51.1" resource="VerbNet"/>
+        <externalRef reference="Arriving" resource="FrameNet"/>
+        <externalRef reference="Resurrection" resource="FrameNet"/>
+        <externalRef reference="contextual" resource="EventType"/>
+      </externalReferences>
+      <span>
+        <target id="t170"/>
+      </span>
+      <role id="rl53" semRole="A1">
+        <!--He-->
+        <externalReferences>
+          <externalRef reference="escape-51.1#Theme" resource="VerbNet"/>
+          <externalRef reference="Arriving#Theme" resource="FrameNet"/>
+        </externalReferences>
+        <span>
+          <target head="yes" id="t156"/>
+        </span>
+      </role>
+      <role id="rl54" semRole="A4">
+        <!--to Germany-->
+        <span>
+          <target head="yes" id="t171"/>
+          <target id="t172"/>
+        </span>
+      </role>
+      <role id="rl55" semRole="AM-PNC">
+        <!--to be responsible for Europe , Middle East and Africa for Chrysler-->
+        <span>
+          <target head="yes" id="t173"/>
+          <target id="t174"/>
+          <target id="t.mw175"/>
+          <target id="t177"/>
+          <target id="t178"/>
+          <target id="t179"/>
+          <target id="t180"/>
+          <target id="t181"/>
+          <target id="t182"/>
+          <target id="t183"/>
+          <target id="t184"/>
+        </span>
+      </role>
+    </predicate>
+    <predicate id="pr27">
+      <!--sales-->
+      <externalReferences>
+        <externalRef reference="sale.01" resource="NomBank"/>
+      </externalReferences>
+      <span>
+        <target id="t167"/>
+      </span>
+      <role id="rl56" semRole="AM-LOC">
+        <!--international-->
+        <span>
+          <target head="yes" id="t166"/>
+        </span>
+      </role>
+    </predicate>
+    <predicate id="pr28">
+      <!--joins-->
+      <externalReferences>
+        <externalRef reference="join.01" resource="PropBank"/>
+      </externalReferences>
+      <span>
+        <target id="t189"/>
+      </span>
+      <role id="rl57" semRole="A0">
+        <!--Hausch-->
+        <span>
+          <target head="yes" id="t186"/>
+        </span>
+      </role>
+      <role id="rl58" semRole="AM-TMP">
+        <!--most recently-->
+        <span>
+          <target id="t187"/>
+          <target head="yes" id="t188"/>
+        </span>
+      </role>
+      <role id="rl59" semRole="A1">
+        <!--Nissan-->
+        <span>
+          <target head="yes" id="t190"/>
+        </span>
+      </role>
+      <role id="rl60" semRole="AM-DIR">
+        <!--from CODA Automotive , the US-based electric-vehicle specialist , where he served as vice president , sales , marketing and after sales-->
+        <span>
+          <target head="yes" id="t191"/>
+          <target id="t192"/>
+          <target id="t193"/>
+          <target id="t194"/>
+          <target id="t195"/>
+          <target id="t196"/>
+          <target id="t197"/>
+          <target id="t198"/>
+          <target id="t199"/>
+          <target id="t200"/>
+          <target id="t201"/>
+          <target id="t202"/>
+          <target id="t203"/>
+          <target id="t.mw204"/>
+          <target id="t206"/>
+          <target id="t207"/>
+          <target id="t208"/>
+          <target id="t209"/>
+          <target id="t210"/>
+          <target id="t211"/>
+          <target id="t212"/>
+        </span>
+      </role>
+    </predicate>
+    <predicate id="pr29">
+      <!--served-->
+      <externalReferences>
+        <externalRef reference="serve.01" resource="PropBank"/>
+        <externalRef reference="spend_time-104" resource="VerbNet"/>
+        <externalRef reference="contextual" resource="EventType"/>
+      </externalReferences>
+      <span>
+        <target id="t202"/>
+      </span>
+      <role id="rl61" semRole="A0">
+        <!--CODA Automotive , the US-based electric-vehicle specialist , where he served as vice president , sales , marketing and after sales-->
+        <externalReferences>
+          <externalRef reference="spend_time-104#Agent" resource="VerbNet"/>
+        </externalReferences>
+        <span>
+          <target id="t192"/>
+          <target head="yes" id="t193"/>
+          <target id="t194"/>
+          <target id="t195"/>
+          <target id="t196"/>
+          <target id="t197"/>
+          <target id="t198"/>
+          <target id="t199"/>
+          <target id="t200"/>
+          <target id="t201"/>
+          <target id="t202"/>
+          <target id="t203"/>
+          <target id="t.mw204"/>
+          <target id="t206"/>
+          <target id="t207"/>
+          <target id="t208"/>
+          <target id="t209"/>
+          <target id="t210"/>
+          <target id="t211"/>
+          <target id="t212"/>
+        </span>
+      </role>
+      <role id="rl62" semRole="R-AM-LOC">
+        <!--where-->
+        <span>
+          <target head="yes" id="t200"/>
+        </span>
+      </role>
+      <role id="rl63" semRole="A0">
+        <!--he-->
+        <externalReferences>
+          <externalRef reference="spend_time-104#Agent" resource="VerbNet"/>
+        </externalReferences>
+        <span>
+          <target head="yes" id="t201"/>
+        </span>
+      </role>
+      <role id="rl64" semRole="A1">
+        <!--as vice president , sales , marketing and after sales-->
+        <externalReferences>
+          <externalRef reference="spend_time-104#Theme" resource="VerbNet"/>
+        </externalReferences>
+        <span>
+          <target head="yes" id="t203"/>
+          <target id="t.mw204"/>
+          <target id="t206"/>
+          <target id="t207"/>
+          <target id="t208"/>
+          <target id="t209"/>
+          <target id="t210"/>
+          <target id="t211"/>
+          <target id="t212"/>
+        </span>
+      </role>
+    </predicate>
+    <predicate id="pr30">
+      <!--specialist-->
+      <externalReferences>
+        <externalRef reference="specialist.01" resource="NomBank"/>
+      </externalReferences>
+      <span>
+        <target id="t198"/>
+      </span>
+      <role id="rl65" semRole="A2">
+        <!--US-based-->
+        <span>
+          <target head="yes" id="t196"/>
+        </span>
+      </role>
+      <role id="rl66" semRole="A1">
+        <!--electric-vehicle-->
+        <span>
+          <target head="yes" id="t197"/>
+        </span>
+      </role>
+      <role id="rl67" semRole="A0">
+        <!--the US-based electric-vehicle specialist-->
+        <span>
+          <target id="t195"/>
+          <target id="t196"/>
+          <target id="t197"/>
+          <target head="yes" id="t198"/>
+        </span>
+      </role>
+    </predicate>
+    <predicate id="pr31">
+      <!--sales-->
+      <externalReferences>
+        <externalRef reference="sale.01" resource="NomBank"/>
+      </externalReferences>
+      <span>
+        <target id="t207"/>
+      </span>
+      <role id="rl68" semRole="A3">
+        <!--vice president-->
+        <span>
+          <target head="yes" id="t.mw204"/>
+        </span>
+      </role>
+      <role id="rl69" semRole="A1">
+        <!--marketing and after sales-->
+        <span>
+          <target head="yes" id="t209"/>
+          <target id="t210"/>
+          <target id="t211"/>
+          <target id="t212"/>
+        </span>
+      </role>
+    </predicate>
+    <predicate id="pr32">
+      <!--report-->
+      <externalReferences>
+        <externalRef reference="report.01" resource="PropBank"/>
+        <externalRef reference="consider-29.9" resource="VerbNet"/>
+        <externalRef reference="say-37.7" resource="VerbNet"/>
+        <externalRef reference="consider-29.9-1" resource="VerbNet"/>
+        <externalRef reference="say-37.7-1" resource="VerbNet"/>
+        <externalRef reference="Statement" resource="FrameNet"/>
+        <externalRef reference="communication" resource="EventType"/>
+      </externalReferences>
+      <span>
+        <target id="t219"/>
+      </span>
+      <role id="rl70" semRole="A0">
+        <!--Both Wijnen and Hausch-->
+        <externalReferences>
+          <externalRef reference="consider-29.9#Agent" resource="VerbNet"/>
+          <externalRef reference="say-37.7#Agent" resource="VerbNet"/>
+          <externalRef reference="Statement#Speaker" resource="FrameNet"/>
+        </externalReferences>
+        <span>
+          <target id="t214"/>
+          <target head="yes" id="t215"/>
+          <target id="t216"/>
+          <target id="t217"/>
+        </span>
+      </role>
+      <role id="rl71" semRole="AM-MOD">
+        <!--Both Wijnen and Hausch will report to Paul Willcox , senior vice president , sales and marketing for Nissan Europe .-->
+        <span>
+          <target id="t214"/>
+          <target id="t215"/>
+          <target id="t216"/>
+          <target id="t217"/>
+          <target head="yes" id="t218"/>
+          <target id="t219"/>
+          <target id="t220"/>
+          <target id="t221"/>
+          <target id="t222"/>
+          <target id="t223"/>
+          <target id="t.mw224"/>
+          <target id="t227"/>
+          <target id="t228"/>
+          <target id="t229"/>
+          <target id="t230"/>
+          <target id="t231"/>
+          <target id="t232"/>
+          <target id="t233"/>
+          <target id="t234"/>
+        </span>
+      </role>
+      <role id="rl72" semRole="A2">
+        <!--to Paul Willcox , senior vice president , sales and marketing for Nissan Europe-->
+        <externalReferences>
+          <externalRef reference="say-37.7#Recipient" resource="VerbNet"/>
+          <externalRef reference="Statement#Addressee" resource="FrameNet"/>
+        </externalReferences>
+        <span>
+          <target head="yes" id="t220"/>
+          <target id="t221"/>
+          <target id="t222"/>
+          <target id="t223"/>
+          <target id="t.mw224"/>
+          <target id="t227"/>
+          <target id="t228"/>
+          <target id="t229"/>
+          <target id="t230"/>
+          <target id="t231"/>
+          <target id="t232"/>
+          <target id="t233"/>
+        </span>
+      </role>
+    </predicate>
+    <predicate id="pr33">
+      <!--sales-->
+      <externalReferences>
+        <externalRef reference="sale.01" resource="NomBank"/>
+      </externalReferences>
+      <span>
+        <target id="t228"/>
+      </span>
+      <role id="rl73" semRole="A1">
+        <!--for Nissan Europe-->
+        <span>
+          <target head="yes" id="t231"/>
+          <target id="t232"/>
+          <target id="t233"/>
+        </span>
+      </role>
+    </predicate>
+    <predicate id="pr34">
+      <!--published-->
+      <externalReferences>
+        <externalRef reference="publish.01" resource="PropBank"/>
+        <externalRef reference="create-26.4" resource="VerbNet"/>
+        <externalRef reference="create-26.4-1" resource="VerbNet"/>
+        <externalRef reference="communication" resource="EventType"/>
+      </externalReferences>
+      <span>
+        <target id="t239"/>
+      </span>
+      <role id="rl74" semRole="A1">
+        <!--This article-->
+        <externalReferences>
+          <externalRef reference="create-26.4#Result" resource="VerbNet"/>
+        </externalReferences>
+        <span>
+          <target id="t235"/>
+          <target head="yes" id="t236"/>
+        </span>
+      </role>
+      <role id="rl75" semRole="AM-TMP">
+        <!--originally-->
+        <span>
+          <target head="yes" id="t238"/>
+        </span>
+      </role>
+      <role id="rl76" semRole="A0">
+        <!--by just-auto.com-->
+        <externalReferences>
+          <externalRef reference="create-26.4#Agent" resource="VerbNet"/>
+        </externalReferences>
+        <span>
+          <target head="yes" id="t240"/>
+          <target id="t241"/>
+        </span>
+      </role>
+      <role id="rl77" semRole="AM-TMP">
+        <!--on 30 April2013-->
+        <span>
+          <target head="yes" id="t242"/>
+          <target id="t243"/>
+          <target id="t244"/>
+        </span>
+      </role>
+    </predicate>
+    <predicate id="pr35">
+      <!--visit-->
+      <externalReferences>
+        <externalRef reference="visit.01" resource="PropBank"/>
+        <externalRef reference="meet-36.3" resource="VerbNet"/>
+        <externalRef reference="meet-36.3-1" resource="VerbNet"/>
+        <externalRef reference="Arriving" resource="FrameNet"/>
+        <externalRef reference="Visiting" resource="FrameNet"/>
+        <externalRef reference="grammatical" resource="EventType"/>
+      </externalReferences>
+      <span>
+        <target id="t253"/>
+      </span>
+      <role id="rl78" semRole="AM-PNC">
+        <!--For authoritative and timely auto business information-->
+        <span>
+          <target head="yes" id="t246"/>
+          <target id="t247"/>
+          <target id="t248"/>
+          <target id="t249"/>
+          <target id="t250"/>
+          <target id="t251"/>
+          <target id="t252"/>
+        </span>
+      </role>
+      <role id="rl79" semRole="A1">
+        <!--http : / / www.just-auto.com-->
+        <externalReferences>
+          <externalRef reference="meet-36.3#Co-Agent" resource="VerbNet"/>
+        </externalReferences>
+        <span>
+          <target head="yes" id="t254"/>
+          <target id="t255"/>
+          <target id="t256"/>
+          <target id="t257"/>
+          <target id="t258"/>
+        </span>
+      </role>
+    </predicate>
+    <predicate id="pr36">
+      <!--business-->
+      <externalReferences>
+        <externalRef reference="business.01" resource="NomBank"/>
+      </externalReferences>
+      <span>
+        <target id="t251"/>
+      </span>
+      <role id="rl80" semRole="A1">
+        <!--auto-->
+        <span>
+          <target head="yes" id="t250"/>
+        </span>
+      </role>
+    </predicate>
+    <predicate id="pr37">
+      <!--information-->
+      <externalReferences>
+        <externalRef reference="information.01" resource="NomBank"/>
+      </externalReferences>
+      <span>
+        <target id="t252"/>
+      </span>
+      <role id="rl81" semRole="A1">
+        <!--authoritative and timely auto business-->
+        <span>
+          <target id="t247"/>
+          <target id="t248"/>
+          <target id="t249"/>
+          <target id="t250"/>
+          <target head="yes" id="t251"/>
+        </span>
+      </role>
+    </predicate>
+  </srl>
+  <factualitylayer>
+    <factvalue confidence="0.9516891798595465" id="w44" prediction="CT+"/>
+    <factvalue confidence="0.8300863202501553" id="w174" prediction="Uu"/>
+    <factvalue confidence="0.4962036083437006" id="w63" prediction="CT+"/>
+    <factvalue confidence="0.9146398369812359" id="w4" prediction="CT+"/>
+    <factvalue confidence="0.8293315032019847" id="w134" prediction="CT+"/>
+    <factvalue confidence="0.5947083479050137" id="w62" prediction="CT+"/>
+    <factvalue confidence="0.9028287148364739" id="w43" prediction="CT+"/>
+    <factvalue confidence="0.880970927154893" id="w189" prediction="CT+"/>
+    <factvalue confidence="0.7797494774760853" id="w11" prediction="CT+"/>
+    <factvalue confidence="0.5920486331678491" id="w253" prediction="Uu"/>
+    <factvalue confidence="0.6949001342420822" id="w33" prediction="CT+"/>
+    <factvalue confidence="0.7492791307495531" id="w239" prediction="CT+"/>
+    <factvalue confidence="0.7206111007672404" id="w157" prediction="CT+"/>
+    <factvalue confidence="0.7540110862942785" id="w145" prediction="CT+"/>
+    <factvalue confidence="0.750475405919117" id="w144" prediction="CT+"/>
+    <factvalue confidence="0.6487511226271442" id="w94" prediction="Uu"/>
+    <factvalue confidence="0.6487511226271442" id="w93" prediction="Uu"/>
+    <factvalue confidence="0.8937731682879887" id="w102" prediction="CT+"/>
+    <factvalue confidence="0.8904980818626783" id="w127" prediction="CT+"/>
+    <factvalue confidence="0.9089006654854276" id="w202" prediction="CT+"/>
+    <factvalue confidence="0.8541019211106312" id="w100" prediction="CT+"/>
+    <factvalue confidence="0.8509264545507215" id="w84" prediction="CT+"/>
+    <factvalue confidence="0.8858703056006271" id="w109" prediction="CT+"/>
+    <factvalue confidence="0.5005553388707915" id="w165" prediction="CT+"/>
+    <factvalue confidence="0.6654570012429112" id="w12" prediction="CT+"/>
+    <factvalue confidence="0.7666354955423372" id="w219" prediction="Uu"/>
+    <factvalue confidence="0.9743161895394381" id="w45" prediction="CT+"/>
+    <factvalue confidence="0.7451251690035063" id="w170" prediction="CT+"/>
+    <factvalue confidence="0.5746245301103501" id="w116" prediction="Uu"/>
+    <factvalue confidence="0.7882804064564564" id="w101" prediction="CT+"/>
+    <factvalue confidence="0.8863440793040739" id="w237" prediction="CT+"/>
+    <factvalue confidence="0.48552934976878914" id="w148" prediction="Uu"/>
+  </factualitylayer>
+</NAF>

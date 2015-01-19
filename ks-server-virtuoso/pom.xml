@@ -1,0 +1,122 @@
+<?xml version="1.0"?>
+<project
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>eu.fbk.knowledgestore</groupId>
+    <artifactId>ks</artifactId>
+    <version>1.2-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+
+  <groupId>eu.fbk.knowledgestore</groupId>
+  <artifactId>ks-server-virtuoso</artifactId>
+  <packaging>jar</packaging>
+
+  <name>ks-server-virtuoso</name>
+  <description>
+    The Virtuoso server module (ks-server-virtuoso) provides an 
+    implementation of the Triple Store server-side component (API in 
+    ks-triplestore) on top of the OpenLink Virtuoso triple store, a scalable 
+    native code triple store that is accessed as an external service. The 
+    Virtuoso Sesame driver, which builds on the Virtuoso JDBC driver, is 
+    used to remotely access the Virtuoso server for writing data and 
+    performing SPARQL queries. For performance reasons, data modification is 
+    performed in a non-transactional way, with the module managing possible 
+    failures in a way that trigger the external repopulation of the Virtuoso 
+    triple store starting from the master copy of data stored in the Data 
+    Store component. 
+  </description>
+  <url>http://www.fbk.eu</url>
+
+  <distributionManagement>
+    <site>
+      <id>siteks</id>
+      <url>${site-path}/ks-server-virtuoso/</url>
+    </site>
+  </distributionManagement>
+
+  <scm>
+    <connection>scm:svn:https://newsreader.fbk.eu/svn/Code/KnowledgeStore/trunk/ks-server-virtuoso</connection>
+    <developerConnection>scm:svn:https://newsreader.fbk.eu/svn/Code/KnowledgeStore/trunk/ks-server-virtuoso</developerConnection>
+    <tag>HEAD</tag>
+    <url>https://newsreader.fbk.eu/trac/browser/newsreader/Code/KnowledgeStore/trunk/ks-server-virtuoso</url>
+  </scm>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.google.code.findbugs</groupId>
+      <artifactId>jsr305</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.openrdf.sesame</groupId>
+      <artifactId>sesame-model</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.openrdf.sesame</groupId>
+      <artifactId>sesame-util</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.openrdf.sesame</groupId>
+      <artifactId>sesame-query</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.openrdf.sesame</groupId>
+      <artifactId>sesame-repository-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.openrdf.sesame</groupId>
+      <artifactId>sesame-queryalgebra-evaluation</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.hadoop</groupId>
+      <artifactId>hadoop-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.openlinksw.virtuoso</groupId>
+      <artifactId>virtjdbc4</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>eu.fbk.knowledgestore</groupId>
+      <artifactId>virt_sesame2</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>eu.fbk.knowledgestore</groupId>
+      <artifactId>ks-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>eu.fbk.knowledgestore</groupId>
+      <artifactId>ks-server</artifactId>
+    </dependency>
+  </dependencies>
+
+  <properties>
+    <parent-path>..</parent-path>
+    <aggregate>false</aggregate>
+  </properties>
+
+</project>

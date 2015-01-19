@@ -1,0 +1,3270 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<NAF version="v3" xml:lang="en">
+  <nafHeader>
+    <fileDesc creationtime="2009-01-06"/>
+    <public publicId="4V9S-7G40-TX4S-W0M9" uri="2009/1/6/4V9S-7G40-TX4S-W0M9.xml"/>
+    <linguisticProcessors layer="srl">
+      <lp name="ixa-pipe-srl-en" timestamp="2013-12-01 1:21:21" version="1.0"/>
+    </linguisticProcessors>
+    <linguisticProcessors layer="text">
+      <lp name="ixa-pipe-tok-en" timestamp="2013-12-01 1:21:00" version="1.0"/>
+    </linguisticProcessors>
+    <linguisticProcessors layer="coreferences">
+      <lp name="vua-event-coref-intradoc-lemma-baseline" timestamp="2013-12-01 01:21:24" version="1.0"/>
+    </linguisticProcessors>
+    <linguisticProcessors layer="terms">
+      <lp name="ixa-pipe-pos-en" timestamp="2013-12-01 1:21:00" version="1.0"/>
+      <lp name="vua-multiword-tagger" timestamp="2013-12-01 01:21:01" version="1.0"/>
+      <lp name="VUA-DSC-WSD" timestamp="2013-12-01T01:21:03CET" version="8nov2013_v1.0"/>
+    </linguisticProcessors>
+    <linguisticProcessors layer="deps">
+      <lp name="ixa-pipe-srl-en" timestamp="2013-12-01 1:21:21" version="1.0"/>
+    </linguisticProcessors>
+    <linguisticProcessors layer="timex3">
+      <lp name="TimePro" timestamp="2013-12-01 01:21:24.132" version="2.0"/>
+    </linguisticProcessors>
+    <linguisticProcessors layer="opinions">
+      <lp name="VUA opinion miner. CRF deluxe" timestamp="2013-12-01T01:21:03CET" version="8nov2013_1.1"/>
+    </linguisticProcessors>
+    <linguisticProcessors layer="ned">
+      <lp name="ixa-pipe-spotlight" timestamp="2013-12-01 1:21:03" version="1.0"/>
+    </linguisticProcessors>
+    <linguisticProcessors layer="entities">
+      <lp name="ixa-pipe-nerc-en" timestamp="2013-12-01 1:21:02" version="1.0"/>
+    </linguisticProcessors>
+  <linguisticProcessors layer="factuality"><lp name="vua-factuality" timestamp="2013-12-01T01:21:25Z" version="1.0"/></linguisticProcessors></nafHeader>
+  <raw>U.K. Government Again Urged to Help Jaguar Land Rover as "Future of this Country"
+
+
+
+Prominent industry leader Lord Kumar Bhattacharyya has urged the U.K. government to support Jaguar Land Rover (JLR) through the current crisis, according to theBirmingham Post. Bhattacharyya said the United Kingdom could not afford to treat JLR as "another Woolworths", the head of Warwick Manufacturing Group said, citing the [GBP]400 million a year investment in research and development (R&amp;D) as being the critical reason. The R&amp;D supports 4,000 workers in Gaydon, and underpins the company's 15,000 workers who are directly employed with up to another 60,000 dependent on the car company. Bhattacharyya said: "Jaguar matters because it is the future of this country." He added, "It is the one flagship British car company which does British R&amp;D. The others basically just make cars here which are designed in Japan or Germany... We have to have sustainability in R&amp;D in this country. We cannot live on fresh air." Lord Bhattacharyya said the government was talking a good game on R&amp;D, but cautioned: "If it does not turn that into action then people will say that is all it is - talk."
+
+Significance:The U.K. government has had a chequered past when it comes to state intervention in the domestic auto industry. After decades of failed state ownership, the government and its advisors finally decided to sell the last surviving publicly owned mass market brand, Austin Rover, in 1986, underselling it to British Aerospace. The subsequent asset-stripping and mismanagement of Rover company led to the eventual sale to BMW, and when BMW walked away with Land Rover (which it sold to Ford), the eventual sale of Rover to Phoenix Consortium over the Alchemy Group led to the demise of the company in 2005. The government let Rover go to the wall, hurting the local economy and wiping out precisely the types of jobs and investment Bhattacharyya is talking about. The U.K. government will need to carefully consider what strings and conditions it attaches to any monies or loan guarantees it may offer.</raw>
+  <text>
+    <wf id="w1" length="2" offset="0" sent="1">U.</wf>
+    <wf id="w2" length="2" offset="2" sent="2">K.</wf>
+    <wf id="w3" length="10" offset="5" sent="3">Government</wf>
+    <wf id="w4" length="5" offset="16" sent="3">Again</wf>
+    <wf id="w5" length="5" offset="22" sent="3">Urged</wf>
+    <wf id="w6" length="2" offset="28" sent="3">to</wf>
+    <wf id="w7" length="4" offset="31" sent="3">Help</wf>
+    <wf id="w8" length="6" offset="36" sent="3">Jaguar</wf>
+    <wf id="w9" length="4" offset="43" sent="3">Land</wf>
+    <wf id="w10" length="5" offset="48" sent="3">Rover</wf>
+    <wf id="w11" length="2" offset="54" sent="3">as</wf>
+    <wf id="w12" length="1" offset="57" sent="3">"</wf>
+    <wf id="w13" length="6" offset="58" sent="3">Future</wf>
+    <wf id="w14" length="2" offset="65" sent="3">of</wf>
+    <wf id="w15" length="4" offset="68" sent="3">this</wf>
+    <wf id="w16" length="7" offset="73" sent="3">Country</wf>
+    <wf id="w17" length="1" offset="80" sent="3">"</wf>
+    <wf id="w18" length="9" offset="82" sent="3">Prominent</wf>
+    <wf id="w19" length="8" offset="92" sent="3">industry</wf>
+    <wf id="w20" length="6" offset="101" sent="3">leader</wf>
+    <wf id="w21" length="4" offset="108" sent="3">Lord</wf>
+    <wf id="w22" length="5" offset="113" sent="3">Kumar</wf>
+    <wf id="w23" length="13" offset="119" sent="3">Bhattacharyya</wf>
+    <wf id="w24" length="3" offset="133" sent="3">has</wf>
+    <wf id="w25" length="5" offset="137" sent="3">urged</wf>
+    <wf id="w26" length="3" offset="143" sent="3">the</wf>
+    <wf id="w27" length="2" offset="147" sent="3">U.</wf>
+    <wf id="w28" length="2" offset="149" sent="4">K.</wf>
+    <wf id="w29" length="10" offset="152" sent="4">government</wf>
+    <wf id="w30" length="2" offset="163" sent="4">to</wf>
+    <wf id="w31" length="7" offset="166" sent="4">support</wf>
+    <wf id="w32" length="6" offset="174" sent="4">Jaguar</wf>
+    <wf id="w33" length="4" offset="181" sent="4">Land</wf>
+    <wf id="w34" length="5" offset="186" sent="4">Rover</wf>
+    <wf id="w35" length="1" offset="192" sent="4">(</wf>
+    <wf id="w36" length="3" offset="193" sent="4">JLR</wf>
+    <wf id="w37" length="1" offset="196" sent="4">)</wf>
+    <wf id="w38" length="7" offset="198" sent="4">through</wf>
+    <wf id="w39" length="3" offset="206" sent="4">the</wf>
+    <wf id="w40" length="7" offset="210" sent="4">current</wf>
+    <wf id="w41" length="6" offset="218" sent="4">crisis</wf>
+    <wf id="w42" length="1" offset="224" sent="4">,</wf>
+    <wf id="w43" length="9" offset="226" sent="4">according</wf>
+    <wf id="w44" length="2" offset="236" sent="4">to</wf>
+    <wf id="w45" length="13" offset="239" sent="4">theBirmingham</wf>
+    <wf id="w46" length="4" offset="253" sent="4">Post</wf>
+    <wf id="w47" length="1" offset="257" sent="4">.</wf>
+    <wf id="w48" length="13" offset="259" sent="5">Bhattacharyya</wf>
+    <wf id="w49" length="4" offset="273" sent="5">said</wf>
+    <wf id="w50" length="3" offset="278" sent="5">the</wf>
+    <wf id="w51" length="6" offset="282" sent="5">United</wf>
+    <wf id="w52" length="7" offset="289" sent="5">Kingdom</wf>
+    <wf id="w53" length="5" offset="297" sent="5">could</wf>
+    <wf id="w54" length="3" offset="303" sent="5">not</wf>
+    <wf id="w55" length="6" offset="307" sent="5">afford</wf>
+    <wf id="w56" length="2" offset="314" sent="5">to</wf>
+    <wf id="w57" length="5" offset="317" sent="5">treat</wf>
+    <wf id="w58" length="3" offset="323" sent="5">JLR</wf>
+    <wf id="w59" length="2" offset="327" sent="5">as</wf>
+    <wf id="w60" length="1" offset="330" sent="5">"</wf>
+    <wf id="w61" length="7" offset="331" sent="5">another</wf>
+    <wf id="w62" length="10" offset="339" sent="5">Woolworths</wf>
+    <wf id="w63" length="1" offset="349" sent="5">"</wf>
+    <wf id="w64" length="1" offset="350" sent="5">,</wf>
+    <wf id="w65" length="3" offset="352" sent="5">the</wf>
+    <wf id="w66" length="4" offset="356" sent="5">head</wf>
+    <wf id="w67" length="2" offset="361" sent="5">of</wf>
+    <wf id="w68" length="7" offset="364" sent="5">Warwick</wf>
+    <wf id="w69" length="13" offset="372" sent="5">Manufacturing</wf>
+    <wf id="w70" length="5" offset="386" sent="5">Group</wf>
+    <wf id="w71" length="4" offset="392" sent="5">said</wf>
+    <wf id="w72" length="1" offset="396" sent="5">,</wf>
+    <wf id="w73" length="6" offset="398" sent="5">citing</wf>
+    <wf id="w74" length="3" offset="405" sent="5">the</wf>
+    <wf id="w75" length="1" offset="409" sent="5">[</wf>
+    <wf id="w76" length="3" offset="410" sent="5">GBP</wf>
+    <wf id="w77" length="1" offset="413" sent="5">]</wf>
+    <wf id="w78" length="3" offset="414" sent="5">400</wf>
+    <wf id="w79" length="7" offset="418" sent="5">million</wf>
+    <wf id="w80" length="1" offset="426" sent="5">a</wf>
+    <wf id="w81" length="4" offset="428" sent="5">year</wf>
+    <wf id="w82" length="10" offset="433" sent="5">investment</wf>
+    <wf id="w83" length="2" offset="444" sent="5">in</wf>
+    <wf id="w84" length="8" offset="447" sent="5">research</wf>
+    <wf id="w85" length="3" offset="456" sent="5">and</wf>
+    <wf id="w86" length="11" offset="460" sent="5">development</wf>
+    <wf id="w87" length="1" offset="472" sent="5">(</wf>
+    <wf id="w88" length="1" offset="473" sent="5">R</wf>
+    <wf id="w89" length="1" offset="474" sent="5">&amp;</wf>
+    <wf id="w90" length="1" offset="475" sent="5">D</wf>
+    <wf id="w91" length="1" offset="476" sent="5">)</wf>
+    <wf id="w92" length="2" offset="478" sent="5">as</wf>
+    <wf id="w93" length="5" offset="481" sent="5">being</wf>
+    <wf id="w94" length="3" offset="487" sent="5">the</wf>
+    <wf id="w95" length="8" offset="491" sent="5">critical</wf>
+    <wf id="w96" length="6" offset="500" sent="5">reason</wf>
+    <wf id="w97" length="1" offset="506" sent="5">.</wf>
+    <wf id="w98" length="3" offset="508" sent="6">The</wf>
+    <wf id="w99" length="1" offset="512" sent="6">R</wf>
+    <wf id="w100" length="1" offset="513" sent="6">&amp;</wf>
+    <wf id="w101" length="1" offset="514" sent="6">D</wf>
+    <wf id="w102" length="8" offset="516" sent="6">supports</wf>
+    <wf id="w103" length="5" offset="525" sent="6">4,000</wf>
+    <wf id="w104" length="7" offset="531" sent="6">workers</wf>
+    <wf id="w105" length="2" offset="539" sent="6">in</wf>
+    <wf id="w106" length="6" offset="542" sent="6">Gaydon</wf>
+    <wf id="w107" length="1" offset="548" sent="6">,</wf>
+    <wf id="w108" length="3" offset="550" sent="6">and</wf>
+    <wf id="w109" length="9" offset="554" sent="6">underpins</wf>
+    <wf id="w110" length="3" offset="564" sent="6">the</wf>
+    <wf id="w111" length="7" offset="568" sent="6">company</wf>
+    <wf id="w112" length="2" offset="575" sent="6">'s</wf>
+    <wf id="w113" length="6" offset="578" sent="6">15,000</wf>
+    <wf id="w114" length="7" offset="585" sent="6">workers</wf>
+    <wf id="w115" length="3" offset="593" sent="6">who</wf>
+    <wf id="w116" length="3" offset="597" sent="6">are</wf>
+    <wf id="w117" length="8" offset="601" sent="6">directly</wf>
+    <wf id="w118" length="8" offset="610" sent="6">employed</wf>
+    <wf id="w119" length="4" offset="619" sent="6">with</wf>
+    <wf id="w120" length="2" offset="624" sent="6">up</wf>
+    <wf id="w121" length="2" offset="627" sent="6">to</wf>
+    <wf id="w122" length="7" offset="630" sent="6">another</wf>
+    <wf id="w123" length="6" offset="638" sent="6">60,000</wf>
+    <wf id="w124" length="9" offset="645" sent="6">dependent</wf>
+    <wf id="w125" length="2" offset="655" sent="6">on</wf>
+    <wf id="w126" length="3" offset="658" sent="6">the</wf>
+    <wf id="w127" length="3" offset="662" sent="6">car</wf>
+    <wf id="w128" length="7" offset="666" sent="6">company</wf>
+    <wf id="w129" length="1" offset="673" sent="6">.</wf>
+    <wf id="w130" length="13" offset="675" sent="7">Bhattacharyya</wf>
+    <wf id="w131" length="4" offset="689" sent="7">said</wf>
+    <wf id="w132" length="1" offset="693" sent="7">:</wf>
+    <wf id="w133" length="1" offset="695" sent="7">"</wf>
+    <wf id="w134" length="6" offset="696" sent="7">Jaguar</wf>
+    <wf id="w135" length="7" offset="703" sent="7">matters</wf>
+    <wf id="w136" length="7" offset="711" sent="7">because</wf>
+    <wf id="w137" length="2" offset="719" sent="7">it</wf>
+    <wf id="w138" length="2" offset="722" sent="7">is</wf>
+    <wf id="w139" length="3" offset="725" sent="7">the</wf>
+    <wf id="w140" length="6" offset="729" sent="7">future</wf>
+    <wf id="w141" length="2" offset="736" sent="7">of</wf>
+    <wf id="w142" length="4" offset="739" sent="7">this</wf>
+    <wf id="w143" length="7" offset="744" sent="7">country</wf>
+    <wf id="w144" length="1" offset="751" sent="7">.</wf>
+    <wf id="w145" length="1" offset="752" sent="7">"</wf>
+    <wf id="w146" length="2" offset="754" sent="8">He</wf>
+    <wf id="w147" length="5" offset="757" sent="8">added</wf>
+    <wf id="w148" length="1" offset="762" sent="8">,</wf>
+    <wf id="w149" length="1" offset="764" sent="8">"</wf>
+    <wf id="w150" length="2" offset="765" sent="8">It</wf>
+    <wf id="w151" length="2" offset="768" sent="8">is</wf>
+    <wf id="w152" length="3" offset="771" sent="8">the</wf>
+    <wf id="w153" length="3" offset="775" sent="8">one</wf>
+    <wf id="w154" length="8" offset="779" sent="8">flagship</wf>
+    <wf id="w155" length="7" offset="788" sent="8">British</wf>
+    <wf id="w156" length="3" offset="796" sent="8">car</wf>
+    <wf id="w157" length="7" offset="800" sent="8">company</wf>
+    <wf id="w158" length="5" offset="808" sent="8">which</wf>
+    <wf id="w159" length="4" offset="814" sent="8">does</wf>
+    <wf id="w160" length="7" offset="819" sent="8">British</wf>
+    <wf id="w161" length="1" offset="827" sent="8">R</wf>
+    <wf id="w162" length="1" offset="828" sent="8">&amp;</wf>
+    <wf id="w163" length="2" offset="829" sent="8">D.</wf>
+    <wf id="w164" length="3" offset="832" sent="9">The</wf>
+    <wf id="w165" length="6" offset="836" sent="9">others</wf>
+    <wf id="w166" length="9" offset="843" sent="9">basically</wf>
+    <wf id="w167" length="4" offset="853" sent="9">just</wf>
+    <wf id="w168" length="4" offset="858" sent="9">make</wf>
+    <wf id="w169" length="4" offset="863" sent="9">cars</wf>
+    <wf id="w170" length="4" offset="868" sent="9">here</wf>
+    <wf id="w171" length="5" offset="873" sent="9">which</wf>
+    <wf id="w172" length="3" offset="879" sent="9">are</wf>
+    <wf id="w173" length="8" offset="883" sent="9">designed</wf>
+    <wf id="w174" length="2" offset="892" sent="9">in</wf>
+    <wf id="w175" length="5" offset="895" sent="9">Japan</wf>
+    <wf id="w176" length="2" offset="901" sent="9">or</wf>
+    <wf id="w177" length="7" offset="904" sent="9">Germany</wf>
+    <wf id="w178" length="3" offset="911" sent="9">...</wf>
+    <wf id="w179" length="2" offset="915" sent="10">We</wf>
+    <wf id="w180" length="4" offset="918" sent="10">have</wf>
+    <wf id="w181" length="2" offset="923" sent="10">to</wf>
+    <wf id="w182" length="4" offset="926" sent="10">have</wf>
+    <wf id="w183" length="14" offset="931" sent="10">sustainability</wf>
+    <wf id="w184" length="2" offset="946" sent="10">in</wf>
+    <wf id="w185" length="1" offset="949" sent="10">R</wf>
+    <wf id="w186" length="1" offset="950" sent="10">&amp;</wf>
+    <wf id="w187" length="1" offset="951" sent="10">D</wf>
+    <wf id="w188" length="2" offset="953" sent="10">in</wf>
+    <wf id="w189" length="4" offset="956" sent="10">this</wf>
+    <wf id="w190" length="7" offset="961" sent="10">country</wf>
+    <wf id="w191" length="1" offset="968" sent="10">.</wf>
+    <wf id="w192" length="2" offset="970" sent="11">We</wf>
+    <wf id="w193" length="6" offset="973" sent="11">cannot</wf>
+    <wf id="w194" length="4" offset="980" sent="11">live</wf>
+    <wf id="w195" length="2" offset="985" sent="11">on</wf>
+    <wf id="w196" length="5" offset="988" sent="11">fresh</wf>
+    <wf id="w197" length="3" offset="994" sent="11">air</wf>
+    <wf id="w198" length="1" offset="997" sent="11">.</wf>
+    <wf id="w199" length="1" offset="998" sent="11">"</wf>
+    <wf id="w200" length="4" offset="1000" sent="12">Lord</wf>
+    <wf id="w201" length="13" offset="1005" sent="12">Bhattacharyya</wf>
+    <wf id="w202" length="4" offset="1019" sent="12">said</wf>
+    <wf id="w203" length="3" offset="1024" sent="12">the</wf>
+    <wf id="w204" length="10" offset="1028" sent="12">government</wf>
+    <wf id="w205" length="3" offset="1039" sent="12">was</wf>
+    <wf id="w206" length="7" offset="1043" sent="12">talking</wf>
+    <wf id="w207" length="1" offset="1051" sent="12">a</wf>
+    <wf id="w208" length="4" offset="1053" sent="12">good</wf>
+    <wf id="w209" length="4" offset="1058" sent="12">game</wf>
+    <wf id="w210" length="2" offset="1063" sent="12">on</wf>
+    <wf id="w211" length="1" offset="1066" sent="12">R</wf>
+    <wf id="w212" length="1" offset="1067" sent="12">&amp;</wf>
+    <wf id="w213" length="1" offset="1068" sent="12">D</wf>
+    <wf id="w214" length="1" offset="1069" sent="12">,</wf>
+    <wf id="w215" length="3" offset="1071" sent="12">but</wf>
+    <wf id="w216" length="9" offset="1075" sent="12">cautioned</wf>
+    <wf id="w217" length="1" offset="1084" sent="12">:</wf>
+    <wf id="w218" length="1" offset="1086" sent="12">"</wf>
+    <wf id="w219" length="2" offset="1087" sent="12">If</wf>
+    <wf id="w220" length="2" offset="1090" sent="12">it</wf>
+    <wf id="w221" length="4" offset="1093" sent="12">does</wf>
+    <wf id="w222" length="3" offset="1098" sent="12">not</wf>
+    <wf id="w223" length="4" offset="1102" sent="12">turn</wf>
+    <wf id="w224" length="4" offset="1107" sent="12">that</wf>
+    <wf id="w225" length="4" offset="1112" sent="12">into</wf>
+    <wf id="w226" length="6" offset="1117" sent="12">action</wf>
+    <wf id="w227" length="4" offset="1124" sent="12">then</wf>
+    <wf id="w228" length="6" offset="1129" sent="12">people</wf>
+    <wf id="w229" length="4" offset="1136" sent="12">will</wf>
+    <wf id="w230" length="3" offset="1141" sent="12">say</wf>
+    <wf id="w231" length="4" offset="1145" sent="12">that</wf>
+    <wf id="w232" length="2" offset="1150" sent="12">is</wf>
+    <wf id="w233" length="3" offset="1153" sent="12">all</wf>
+    <wf id="w234" length="2" offset="1157" sent="12">it</wf>
+    <wf id="w235" length="2" offset="1160" sent="12">is</wf>
+    <wf id="w236" length="1" offset="1163" sent="12">-</wf>
+    <wf id="w237" length="4" offset="1165" sent="12">talk</wf>
+    <wf id="w238" length="1" offset="1169" sent="12">.</wf>
+    <wf id="w239" length="1" offset="1170" sent="12">"</wf>
+    <wf id="w240" length="12" offset="1172" sent="13">Significance</wf>
+    <wf id="w241" length="1" offset="1184" sent="13">:</wf>
+    <wf id="w242" length="3" offset="1185" sent="13">The</wf>
+    <wf id="w243" length="2" offset="1189" sent="13">U.</wf>
+    <wf id="w244" length="2" offset="1191" sent="14">K.</wf>
+    <wf id="w245" length="10" offset="1194" sent="14">government</wf>
+    <wf id="w246" length="3" offset="1205" sent="14">has</wf>
+    <wf id="w247" length="3" offset="1209" sent="14">had</wf>
+    <wf id="w248" length="1" offset="1213" sent="14">a</wf>
+    <wf id="w249" length="9" offset="1215" sent="14">chequered</wf>
+    <wf id="w250" length="4" offset="1225" sent="14">past</wf>
+    <wf id="w251" length="4" offset="1230" sent="14">when</wf>
+    <wf id="w252" length="2" offset="1235" sent="14">it</wf>
+    <wf id="w253" length="5" offset="1238" sent="14">comes</wf>
+    <wf id="w254" length="2" offset="1244" sent="14">to</wf>
+    <wf id="w255" length="5" offset="1247" sent="14">state</wf>
+    <wf id="w256" length="12" offset="1253" sent="14">intervention</wf>
+    <wf id="w257" length="2" offset="1266" sent="14">in</wf>
+    <wf id="w258" length="3" offset="1269" sent="14">the</wf>
+    <wf id="w259" length="8" offset="1273" sent="14">domestic</wf>
+    <wf id="w260" length="4" offset="1282" sent="14">auto</wf>
+    <wf id="w261" length="8" offset="1287" sent="14">industry</wf>
+    <wf id="w262" length="1" offset="1295" sent="14">.</wf>
+    <wf id="w263" length="5" offset="1297" sent="15">After</wf>
+    <wf id="w264" length="7" offset="1303" sent="15">decades</wf>
+    <wf id="w265" length="2" offset="1311" sent="15">of</wf>
+    <wf id="w266" length="6" offset="1314" sent="15">failed</wf>
+    <wf id="w267" length="5" offset="1321" sent="15">state</wf>
+    <wf id="w268" length="9" offset="1327" sent="15">ownership</wf>
+    <wf id="w269" length="1" offset="1336" sent="15">,</wf>
+    <wf id="w270" length="3" offset="1338" sent="15">the</wf>
+    <wf id="w271" length="10" offset="1342" sent="15">government</wf>
+    <wf id="w272" length="3" offset="1353" sent="15">and</wf>
+    <wf id="w273" length="3" offset="1357" sent="15">its</wf>
+    <wf id="w274" length="8" offset="1361" sent="15">advisors</wf>
+    <wf id="w275" length="7" offset="1370" sent="15">finally</wf>
+    <wf id="w276" length="7" offset="1378" sent="15">decided</wf>
+    <wf id="w277" length="2" offset="1386" sent="15">to</wf>
+    <wf id="w278" length="4" offset="1389" sent="15">sell</wf>
+    <wf id="w279" length="3" offset="1394" sent="15">the</wf>
+    <wf id="w280" length="4" offset="1398" sent="15">last</wf>
+    <wf id="w281" length="9" offset="1403" sent="15">surviving</wf>
+    <wf id="w282" length="8" offset="1413" sent="15">publicly</wf>
+    <wf id="w283" length="5" offset="1422" sent="15">owned</wf>
+    <wf id="w284" length="4" offset="1428" sent="15">mass</wf>
+    <wf id="w285" length="6" offset="1433" sent="15">market</wf>
+    <wf id="w286" length="5" offset="1440" sent="15">brand</wf>
+    <wf id="w287" length="1" offset="1445" sent="15">,</wf>
+    <wf id="w288" length="6" offset="1447" sent="15">Austin</wf>
+    <wf id="w289" length="5" offset="1454" sent="15">Rover</wf>
+    <wf id="w290" length="1" offset="1459" sent="15">,</wf>
+    <wf id="w291" length="2" offset="1461" sent="15">in</wf>
+    <wf id="w292" length="4" offset="1464" sent="15">1986</wf>
+    <wf id="w293" length="1" offset="1468" sent="15">,</wf>
+    <wf id="w294" length="12" offset="1470" sent="15">underselling</wf>
+    <wf id="w295" length="2" offset="1483" sent="15">it</wf>
+    <wf id="w296" length="2" offset="1486" sent="15">to</wf>
+    <wf id="w297" length="7" offset="1489" sent="15">British</wf>
+    <wf id="w298" length="9" offset="1497" sent="15">Aerospace</wf>
+    <wf id="w299" length="1" offset="1506" sent="15">.</wf>
+    <wf id="w300" length="3" offset="1508" sent="16">The</wf>
+    <wf id="w301" length="10" offset="1512" sent="16">subsequent</wf>
+    <wf id="w302" length="15" offset="1523" sent="16">asset-stripping</wf>
+    <wf id="w303" length="3" offset="1539" sent="16">and</wf>
+    <wf id="w304" length="13" offset="1543" sent="16">mismanagement</wf>
+    <wf id="w305" length="2" offset="1557" sent="16">of</wf>
+    <wf id="w306" length="5" offset="1560" sent="16">Rover</wf>
+    <wf id="w307" length="7" offset="1566" sent="16">company</wf>
+    <wf id="w308" length="3" offset="1574" sent="16">led</wf>
+    <wf id="w309" length="2" offset="1578" sent="16">to</wf>
+    <wf id="w310" length="3" offset="1581" sent="16">the</wf>
+    <wf id="w311" length="8" offset="1585" sent="16">eventual</wf>
+    <wf id="w312" length="4" offset="1594" sent="16">sale</wf>
+    <wf id="w313" length="2" offset="1599" sent="16">to</wf>
+    <wf id="w314" length="3" offset="1602" sent="16">BMW</wf>
+    <wf id="w315" length="1" offset="1605" sent="16">,</wf>
+    <wf id="w316" length="3" offset="1607" sent="16">and</wf>
+    <wf id="w317" length="4" offset="1611" sent="16">when</wf>
+    <wf id="w318" length="3" offset="1616" sent="16">BMW</wf>
+    <wf id="w319" length="6" offset="1620" sent="16">walked</wf>
+    <wf id="w320" length="4" offset="1627" sent="16">away</wf>
+    <wf id="w321" length="4" offset="1632" sent="16">with</wf>
+    <wf id="w322" length="4" offset="1637" sent="16">Land</wf>
+    <wf id="w323" length="5" offset="1642" sent="16">Rover</wf>
+    <wf id="w324" length="1" offset="1648" sent="16">(</wf>
+    <wf id="w325" length="5" offset="1649" sent="16">which</wf>
+    <wf id="w326" length="2" offset="1655" sent="16">it</wf>
+    <wf id="w327" length="4" offset="1658" sent="16">sold</wf>
+    <wf id="w328" length="2" offset="1663" sent="16">to</wf>
+    <wf id="w329" length="4" offset="1666" sent="16">Ford</wf>
+    <wf id="w330" length="1" offset="1670" sent="16">)</wf>
+    <wf id="w331" length="1" offset="1671" sent="16">,</wf>
+    <wf id="w332" length="3" offset="1673" sent="16">the</wf>
+    <wf id="w333" length="8" offset="1677" sent="16">eventual</wf>
+    <wf id="w334" length="4" offset="1686" sent="16">sale</wf>
+    <wf id="w335" length="2" offset="1691" sent="16">of</wf>
+    <wf id="w336" length="5" offset="1694" sent="16">Rover</wf>
+    <wf id="w337" length="2" offset="1700" sent="16">to</wf>
+    <wf id="w338" length="7" offset="1703" sent="16">Phoenix</wf>
+    <wf id="w339" length="10" offset="1711" sent="16">Consortium</wf>
+    <wf id="w340" length="4" offset="1722" sent="16">over</wf>
+    <wf id="w341" length="3" offset="1727" sent="16">the</wf>
+    <wf id="w342" length="7" offset="1731" sent="16">Alchemy</wf>
+    <wf id="w343" length="5" offset="1739" sent="16">Group</wf>
+    <wf id="w344" length="3" offset="1745" sent="16">led</wf>
+    <wf id="w345" length="2" offset="1749" sent="16">to</wf>
+    <wf id="w346" length="3" offset="1752" sent="16">the</wf>
+    <wf id="w347" length="6" offset="1756" sent="16">demise</wf>
+    <wf id="w348" length="2" offset="1763" sent="16">of</wf>
+    <wf id="w349" length="3" offset="1766" sent="16">the</wf>
+    <wf id="w350" length="7" offset="1770" sent="16">company</wf>
+    <wf id="w351" length="2" offset="1778" sent="16">in</wf>
+    <wf id="w352" length="4" offset="1781" sent="16">2005</wf>
+    <wf id="w353" length="1" offset="1785" sent="16">.</wf>
+    <wf id="w354" length="3" offset="1787" sent="17">The</wf>
+    <wf id="w355" length="10" offset="1791" sent="17">government</wf>
+    <wf id="w356" length="3" offset="1802" sent="17">let</wf>
+    <wf id="w357" length="5" offset="1806" sent="17">Rover</wf>
+    <wf id="w358" length="2" offset="1812" sent="17">go</wf>
+    <wf id="w359" length="2" offset="1815" sent="17">to</wf>
+    <wf id="w360" length="3" offset="1818" sent="17">the</wf>
+    <wf id="w361" length="4" offset="1822" sent="17">wall</wf>
+    <wf id="w362" length="1" offset="1826" sent="17">,</wf>
+    <wf id="w363" length="7" offset="1828" sent="17">hurting</wf>
+    <wf id="w364" length="3" offset="1836" sent="17">the</wf>
+    <wf id="w365" length="5" offset="1840" sent="17">local</wf>
+    <wf id="w366" length="7" offset="1846" sent="17">economy</wf>
+    <wf id="w367" length="3" offset="1854" sent="17">and</wf>
+    <wf id="w368" length="6" offset="1858" sent="17">wiping</wf>
+    <wf id="w369" length="3" offset="1865" sent="17">out</wf>
+    <wf id="w370" length="9" offset="1869" sent="17">precisely</wf>
+    <wf id="w371" length="3" offset="1879" sent="17">the</wf>
+    <wf id="w372" length="5" offset="1883" sent="17">types</wf>
+    <wf id="w373" length="2" offset="1889" sent="17">of</wf>
+    <wf id="w374" length="4" offset="1892" sent="17">jobs</wf>
+    <wf id="w375" length="3" offset="1897" sent="17">and</wf>
+    <wf id="w376" length="10" offset="1901" sent="17">investment</wf>
+    <wf id="w377" length="13" offset="1912" sent="17">Bhattacharyya</wf>
+    <wf id="w378" length="2" offset="1926" sent="17">is</wf>
+    <wf id="w379" length="7" offset="1929" sent="17">talking</wf>
+    <wf id="w380" length="5" offset="1937" sent="17">about</wf>
+    <wf id="w381" length="1" offset="1942" sent="17">.</wf>
+    <wf id="w382" length="3" offset="1944" sent="18">The</wf>
+    <wf id="w383" length="2" offset="1948" sent="18">U.</wf>
+    <wf id="w384" length="2" offset="1950" sent="19">K.</wf>
+    <wf id="w385" length="10" offset="1953" sent="19">government</wf>
+    <wf id="w386" length="4" offset="1964" sent="19">will</wf>
+    <wf id="w387" length="4" offset="1969" sent="19">need</wf>
+    <wf id="w388" length="2" offset="1974" sent="19">to</wf>
+    <wf id="w389" length="9" offset="1977" sent="19">carefully</wf>
+    <wf id="w390" length="8" offset="1987" sent="19">consider</wf>
+    <wf id="w391" length="4" offset="1996" sent="19">what</wf>
+    <wf id="w392" length="7" offset="2001" sent="19">strings</wf>
+    <wf id="w393" length="3" offset="2009" sent="19">and</wf>
+    <wf id="w394" length="10" offset="2013" sent="19">conditions</wf>
+    <wf id="w395" length="2" offset="2024" sent="19">it</wf>
+    <wf id="w396" length="8" offset="2027" sent="19">attaches</wf>
+    <wf id="w397" length="2" offset="2036" sent="19">to</wf>
+    <wf id="w398" length="3" offset="2039" sent="19">any</wf>
+    <wf id="w399" length="6" offset="2043" sent="19">monies</wf>
+    <wf id="w400" length="2" offset="2050" sent="19">or</wf>
+    <wf id="w401" length="4" offset="2053" sent="19">loan</wf>
+    <wf id="w402" length="10" offset="2058" sent="19">guarantees</wf>
+    <wf id="w403" length="2" offset="2069" sent="19">it</wf>
+    <wf id="w404" length="3" offset="2072" sent="19">may</wf>
+    <wf id="w405" length="5" offset="2076" sent="19">offer</wf>
+    <wf id="w406" length="1" offset="2081" sent="19">.</wf>
+  </text>
+  <terms>
+    <term id="t1" lemma="U." morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--U.-->
+        <target id="w1"/>
+      </span>
+    </term>
+    <term id="t2" lemma="K." morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--K.-->
+        <target id="w2"/>
+      </span>
+    </term>
+    <term id="t3" lemma="Government" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Government-->
+        <target id="w3"/>
+      </span>
+    </term>
+    <term id="t4" lemma="again" morphofeat="RB" pos="A" type="open">
+      <span>
+        <!--Again-->
+        <target id="w4"/>
+      </span>
+    </term>
+    <term id="t5" lemma="urge" morphofeat="VBD" pos="V" type="open">
+      <span>
+        <!--Urged-->
+        <target id="w5"/>
+      </span>
+    </term>
+    <term id="t6" lemma="to" morphofeat="TO" pos="P" type="close">
+      <span>
+        <!--to-->
+        <target id="w6"/>
+      </span>
+    </term>
+    <term id="t7" lemma="help" morphofeat="VB" pos="V" type="open">
+      <span>
+        <!--Help-->
+        <target id="w7"/>
+      </span>
+    </term>
+    <term id="t8" lemma="Jaguar" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Jaguar-->
+        <target id="w8"/>
+      </span>
+    </term>
+    <term id="t9" lemma="Land" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Land-->
+        <target id="w9"/>
+      </span>
+    </term>
+    <term id="t10" lemma="Rover" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Rover-->
+        <target id="w10"/>
+      </span>
+    </term>
+    <term id="t11" lemma="as" morphofeat="IN" pos="P" type="close">
+      <span>
+        <!--as-->
+        <target id="w11"/>
+      </span>
+    </term>
+    <term id="t12" lemma="&amp;amp;quot;" morphofeat="JJ" pos="G" type="open">
+      <span>
+        <!--"-->
+        <target id="w12"/>
+      </span>
+    </term>
+    <term id="t13" lemma="future" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--Future-->
+        <target id="w13"/>
+      </span>
+    </term>
+    <term id="t14" lemma="of" morphofeat="IN" pos="P" type="close">
+      <span>
+        <!--of-->
+        <target id="w14"/>
+      </span>
+    </term>
+    <term id="t15" lemma="this" morphofeat="DT" pos="D" type="close">
+      <span>
+        <!--this-->
+        <target id="w15"/>
+      </span>
+    </term>
+    <term id="t16" lemma="Country" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Country-->
+        <target id="w16"/>
+      </span>
+    </term>
+    <term id="t17" lemma="&amp;amp;quot;" morphofeat="CD" pos="O" type="close">
+      <span>
+        <!--"-->
+        <target id="w17"/>
+      </span>
+    </term>
+    <term id="t18" lemma="Prominent" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Prominent-->
+        <target id="w18"/>
+      </span>
+    </term>
+    <term id="t19" lemma="industry" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--industry-->
+        <target id="w19"/>
+      </span>
+    </term>
+    <term id="t20" lemma="leader" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--leader-->
+        <target id="w20"/>
+      </span>
+    </term>
+    <term id="t21" lemma="Lord" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Lord-->
+        <target id="w21"/>
+      </span>
+    </term>
+    <term id="t22" lemma="Kumar" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Kumar-->
+        <target id="w22"/>
+      </span>
+    </term>
+    <term id="t23" lemma="Bhattacharyya" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Bhattacharyya-->
+        <target id="w23"/>
+      </span>
+    </term>
+    <term id="t24" lemma="have" morphofeat="VBZ" pos="V" type="open">
+      <span>
+        <!--has-->
+        <target id="w24"/>
+      </span>
+    </term>
+    <term id="t25" lemma="urge" morphofeat="VBN" pos="V" type="open">
+      <span>
+        <!--urged-->
+        <target id="w25"/>
+      </span>
+    </term>
+    <term id="t26" lemma="the" morphofeat="DT" pos="D" type="close">
+      <span>
+        <!--the-->
+        <target id="w26"/>
+      </span>
+    </term>
+    <term id="t27" lemma="U." morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--U.-->
+        <target id="w27"/>
+      </span>
+    </term>
+    <term id="t28" lemma="K." morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--K.-->
+        <target id="w28"/>
+      </span>
+    </term>
+    <term id="t29" lemma="government" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--government-->
+        <target id="w29"/>
+      </span>
+    </term>
+    <term id="t30" lemma="to" morphofeat="TO" pos="P" type="close">
+      <span>
+        <!--to-->
+        <target id="w30"/>
+      </span>
+    </term>
+    <term id="t31" lemma="support" morphofeat="VB" pos="V" type="open">
+      <span>
+        <!--support-->
+        <target id="w31"/>
+      </span>
+    </term>
+    <term id="t32" lemma="Jaguar" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Jaguar-->
+        <target id="w32"/>
+      </span>
+    </term>
+    <term id="t33" lemma="Land" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Land-->
+        <target id="w33"/>
+      </span>
+    </term>
+    <term id="t34" lemma="Rover" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Rover-->
+        <target id="w34"/>
+      </span>
+    </term>
+    <term id="t35" lemma="(" morphofeat="(" pos="O" type="close">
+      <span>
+        <!--(-->
+        <target id="w35"/>
+      </span>
+    </term>
+    <term id="t36" lemma="JLR" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--JLR-->
+        <target id="w36"/>
+      </span>
+    </term>
+    <term id="t37" lemma=")" morphofeat=")" pos="O" type="close">
+      <span>
+        <!--)-->
+        <target id="w37"/>
+      </span>
+    </term>
+    <term id="t38" lemma="through" morphofeat="IN" pos="P" type="close">
+      <span>
+        <!--through-->
+        <target id="w38"/>
+      </span>
+    </term>
+    <term id="t39" lemma="the" morphofeat="DT" pos="D" type="close">
+      <span>
+        <!--the-->
+        <target id="w39"/>
+      </span>
+    </term>
+    <term id="t40" lemma="current" morphofeat="JJ" pos="G" type="open">
+      <span>
+        <!--current-->
+        <target id="w40"/>
+      </span>
+    </term>
+    <term id="t41" lemma="crisis" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--crisis-->
+        <target id="w41"/>
+      </span>
+      <externalReferences>
+        <externalRef confidence="0.050251912" reference="r_n-10169" resource="Cornetto"/>
+        <externalRef confidence="0.014367421" reference="r_n-10168" resource="Cornetto"/>
+        <externalRef confidence="0.028151758" reference="r_n-10167" resource="Cornetto"/>
+        <externalRef confidence="0.07872812" reference="r_n-10170" resource="Cornetto"/>
+      </externalReferences>
+    </term>
+    <term id="t42" lemma="," morphofeat="," pos="O" type="close">
+      <span>
+        <!--,-->
+        <target id="w42"/>
+      </span>
+    </term>
+    <term id="t43" lemma="accord" morphofeat="VBG" pos="V" type="open">
+      <span>
+        <!--according-->
+        <target id="w43"/>
+      </span>
+    </term>
+    <term id="t44" lemma="to" morphofeat="TO" pos="P" type="close">
+      <span>
+        <!--to-->
+        <target id="w44"/>
+      </span>
+    </term>
+    <term id="t45" lemma="theBirmingham" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--theBirmingham-->
+        <target id="w45"/>
+      </span>
+    </term>
+    <term id="t46" lemma="Post" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Post-->
+        <target id="w46"/>
+      </span>
+    </term>
+    <term id="t47" lemma="." morphofeat="." pos="O" type="close">
+      <span>
+        <!--.-->
+        <target id="w47"/>
+      </span>
+    </term>
+    <term id="t48" lemma="Bhattacharyya" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Bhattacharyya-->
+        <target id="w48"/>
+      </span>
+    </term>
+    <term id="t49" lemma="say" morphofeat="VBD" pos="V" type="open">
+      <span>
+        <!--said-->
+        <target id="w49"/>
+      </span>
+    </term>
+    <term id="t50" lemma="the" morphofeat="DT" pos="D" type="close">
+      <span>
+        <!--the-->
+        <target id="w50"/>
+      </span>
+    </term>
+    <term id="t51" lemma="United" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--United-->
+        <target id="w51"/>
+      </span>
+    </term>
+    <term id="t52" lemma="Kingdom" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Kingdom-->
+        <target id="w52"/>
+      </span>
+    </term>
+    <term id="t53" lemma="can" morphofeat="MD" pos="O" type="close">
+      <span>
+        <!--could-->
+        <target id="w53"/>
+      </span>
+    </term>
+    <term id="t54" lemma="not" morphofeat="RB" pos="A" type="open">
+      <span>
+        <!--not-->
+        <target id="w54"/>
+      </span>
+    </term>
+    <term id="t55" lemma="afford" morphofeat="VB" pos="V" type="open">
+      <span>
+        <!--afford-->
+        <target id="w55"/>
+      </span>
+    </term>
+    <term id="t56" lemma="to" morphofeat="TO" pos="P" type="close">
+      <span>
+        <!--to-->
+        <target id="w56"/>
+      </span>
+    </term>
+    <term id="t57" lemma="treat" morphofeat="VB" pos="V" type="open">
+      <span>
+        <!--treat-->
+        <target id="w57"/>
+      </span>
+    </term>
+    <term id="t58" lemma="JLR" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--JLR-->
+        <target id="w58"/>
+      </span>
+    </term>
+    <term id="t59" lemma="as" morphofeat="IN" pos="P" type="close">
+      <span>
+        <!--as-->
+        <target id="w59"/>
+      </span>
+    </term>
+    <term id="t60" lemma="&amp;amp;quot;" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--"-->
+        <target id="w60"/>
+      </span>
+    </term>
+    <term id="t61" lemma="another" morphofeat="DT" pos="D" type="close">
+      <span>
+        <!--another-->
+        <target id="w61"/>
+      </span>
+    </term>
+    <term id="t62" lemma="Woolworths" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Woolworths-->
+        <target id="w62"/>
+      </span>
+    </term>
+    <term id="t63" lemma="&amp;amp;quot;" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--"-->
+        <target id="w63"/>
+      </span>
+    </term>
+    <term id="t64" lemma="," morphofeat="," pos="O" type="close">
+      <span>
+        <!--,-->
+        <target id="w64"/>
+      </span>
+    </term>
+    <term id="t65" lemma="the" morphofeat="DT" pos="D" type="close">
+      <span>
+        <!--the-->
+        <target id="w65"/>
+      </span>
+    </term>
+    <term id="t66" lemma="head" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--head-->
+        <target id="w66"/>
+      </span>
+    </term>
+    <term id="t67" lemma="of" morphofeat="IN" pos="P" type="close">
+      <span>
+        <!--of-->
+        <target id="w67"/>
+      </span>
+    </term>
+    <term id="t68" lemma="Warwick" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Warwick-->
+        <target id="w68"/>
+      </span>
+    </term>
+    <term id="t69" lemma="Manufacturing" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Manufacturing-->
+        <target id="w69"/>
+      </span>
+    </term>
+    <term id="t70" lemma="Group" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Group-->
+        <target id="w70"/>
+      </span>
+    </term>
+    <term id="t71" lemma="say" morphofeat="VBD" pos="V" type="open">
+      <span>
+        <!--said-->
+        <target id="w71"/>
+      </span>
+    </term>
+    <term id="t72" lemma="," morphofeat="," pos="O" type="close">
+      <span>
+        <!--,-->
+        <target id="w72"/>
+      </span>
+    </term>
+    <term id="t73" lemma="cite" morphofeat="VBG" pos="V" type="open">
+      <span>
+        <!--citing-->
+        <target id="w73"/>
+      </span>
+    </term>
+    <term id="t74" lemma="the" morphofeat="DT" pos="D" type="close">
+      <span>
+        <!--the-->
+        <target id="w74"/>
+      </span>
+    </term>
+    <term id="t75" lemma="[" morphofeat="NNS" pos="N" type="open">
+      <span>
+        <!--[-->
+        <target id="w75"/>
+      </span>
+    </term>
+    <term id="t76" lemma="GBP" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--GBP-->
+        <target id="w76"/>
+      </span>
+    </term>
+    <term id="t77" lemma="]" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--]-->
+        <target id="w77"/>
+      </span>
+    </term>
+    <term id="t78" lemma="400" morphofeat="CD" pos="O" type="close">
+      <span>
+        <!--400-->
+        <target id="w78"/>
+      </span>
+    </term>
+    <term id="t79" lemma="million" morphofeat="CD" pos="O" type="close">
+      <span>
+        <!--million-->
+        <target id="w79"/>
+      </span>
+    </term>
+    <term id="t80" lemma="a" morphofeat="DT" pos="D" type="close">
+      <span>
+        <!--a-->
+        <target id="w80"/>
+      </span>
+    </term>
+    <term id="t81" lemma="year" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--year-->
+        <target id="w81"/>
+      </span>
+    </term>
+    <term id="t82" lemma="investment" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--investment-->
+        <target id="w82"/>
+      </span>
+    </term>
+    <term id="t83" lemma="in" morphofeat="IN" pos="P" type="close">
+      <span>
+        <!--in-->
+        <target id="w83"/>
+      </span>
+    </term>
+    <term id="t84" lemma="research" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--research-->
+        <target id="w84"/>
+      </span>
+    </term>
+    <term id="t85" lemma="and" morphofeat="CC" pos="C" type="close">
+      <span>
+        <!--and-->
+        <target id="w85"/>
+      </span>
+    </term>
+    <term id="t86" lemma="development" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--development-->
+        <target id="w86"/>
+      </span>
+    </term>
+    <term id="t87" lemma="(" morphofeat="(" pos="O" type="close">
+      <span>
+        <!--(-->
+        <target id="w87"/>
+      </span>
+    </term>
+    <term id="t88" lemma="R" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--R-->
+        <target id="w88"/>
+      </span>
+    </term>
+    <term id="t89" lemma="&amp;amp;amp;" morphofeat="CC" pos="C" type="close">
+      <span>
+        <!--&-->
+        <target id="w89"/>
+      </span>
+    </term>
+    <term id="t90" lemma="D" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--D-->
+        <target id="w90"/>
+      </span>
+    </term>
+    <term id="t91" lemma=")" morphofeat=")" pos="O" type="close">
+      <span>
+        <!--)-->
+        <target id="w91"/>
+      </span>
+    </term>
+    <term id="t92" lemma="as" morphofeat="IN" pos="P" type="close">
+      <span>
+        <!--as-->
+        <target id="w92"/>
+      </span>
+    </term>
+    <term id="t93" lemma="be" morphofeat="VBG" pos="V" type="open">
+      <span>
+        <!--being-->
+        <target id="w93"/>
+      </span>
+    </term>
+    <term id="t94" lemma="the" morphofeat="DT" pos="D" type="close">
+      <span>
+        <!--the-->
+        <target id="w94"/>
+      </span>
+    </term>
+    <term id="t95" lemma="critical" morphofeat="JJ" pos="G" type="open">
+      <span>
+        <!--critical-->
+        <target id="w95"/>
+      </span>
+    </term>
+    <term id="t96" lemma="reason" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--reason-->
+        <target id="w96"/>
+      </span>
+    </term>
+    <term id="t97" lemma="." morphofeat="." pos="O" type="close">
+      <span>
+        <!--.-->
+        <target id="w97"/>
+      </span>
+    </term>
+    <term id="t98" lemma="the" morphofeat="DT" pos="D" type="close">
+      <span>
+        <!--The-->
+        <target id="w98"/>
+      </span>
+    </term>
+    <term id="t99" lemma="R" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--R-->
+        <target id="w99"/>
+      </span>
+    </term>
+    <term id="t100" lemma="&amp;amp;amp;" morphofeat="CC" pos="C" type="close">
+      <span>
+        <!--&-->
+        <target id="w100"/>
+      </span>
+    </term>
+    <term id="t101" lemma="D" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--D-->
+        <target id="w101"/>
+      </span>
+    </term>
+    <term id="t102" lemma="support" morphofeat="VBZ" pos="V" type="open">
+      <span>
+        <!--supports-->
+        <target id="w102"/>
+      </span>
+    </term>
+    <term id="t103" lemma="4,000" morphofeat="CD" pos="O" type="close">
+      <span>
+        <!--4,000-->
+        <target id="w103"/>
+      </span>
+    </term>
+    <term id="t104" lemma="worker" morphofeat="NNS" pos="N" type="open">
+      <span>
+        <!--workers-->
+        <target id="w104"/>
+      </span>
+    </term>
+    <term id="t105" lemma="in" morphofeat="IN" pos="P" type="close">
+      <span>
+        <!--in-->
+        <target id="w105"/>
+      </span>
+    </term>
+    <term id="t106" lemma="Gaydon" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Gaydon-->
+        <target id="w106"/>
+      </span>
+    </term>
+    <term id="t107" lemma="," morphofeat="," pos="O" type="close">
+      <span>
+        <!--,-->
+        <target id="w107"/>
+      </span>
+    </term>
+    <term id="t108" lemma="and" morphofeat="CC" pos="C" type="close">
+      <span>
+        <!--and-->
+        <target id="w108"/>
+      </span>
+    </term>
+    <term id="t109" lemma="underpin" morphofeat="VBZ" pos="V" type="open">
+      <span>
+        <!--underpins-->
+        <target id="w109"/>
+      </span>
+    </term>
+    <term id="t110" lemma="the" morphofeat="DT" pos="D" type="close">
+      <span>
+        <!--the-->
+        <target id="w110"/>
+      </span>
+    </term>
+    <term id="t111" lemma="company" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--company-->
+        <target id="w111"/>
+      </span>
+    </term>
+    <term id="t112" lemma="'s" morphofeat="POS" pos="O" type="close">
+      <span>
+        <!--'s-->
+        <target id="w112"/>
+      </span>
+    </term>
+    <term id="t113" lemma="15,000" morphofeat="CD" pos="O" type="close">
+      <span>
+        <!--15,000-->
+        <target id="w113"/>
+      </span>
+    </term>
+    <term id="t114" lemma="worker" morphofeat="NNS" pos="N" type="open">
+      <span>
+        <!--workers-->
+        <target id="w114"/>
+      </span>
+    </term>
+    <term id="t115" lemma="who" morphofeat="WP" pos="Q" type="close">
+      <span>
+        <!--who-->
+        <target id="w115"/>
+      </span>
+    </term>
+    <term id="t116" lemma="be" morphofeat="VBP" pos="V" type="open">
+      <span>
+        <!--are-->
+        <target id="w116"/>
+      </span>
+    </term>
+    <term id="t117" lemma="directly" morphofeat="RB" pos="A" type="open">
+      <span>
+        <!--directly-->
+        <target id="w117"/>
+      </span>
+    </term>
+    <term id="t118" lemma="employ" morphofeat="VBN" pos="V" type="open">
+      <span>
+        <!--employed-->
+        <target id="w118"/>
+      </span>
+    </term>
+    <term id="t119" lemma="with" morphofeat="IN" pos="P" type="close">
+      <span>
+        <!--with-->
+        <target id="w119"/>
+      </span>
+    </term>
+    <term id="t120" lemma="up" morphofeat="RB" pos="A" type="open">
+      <span>
+        <!--up-->
+        <target id="w120"/>
+      </span>
+    </term>
+    <term id="t121" lemma="to" morphofeat="TO" pos="P" type="close">
+      <span>
+        <!--to-->
+        <target id="w121"/>
+      </span>
+    </term>
+    <term id="t122" lemma="another" morphofeat="DT" pos="D" type="close">
+      <span>
+        <!--another-->
+        <target id="w122"/>
+      </span>
+    </term>
+    <term id="t123" lemma="60,000" morphofeat="CD" pos="O" type="close">
+      <span>
+        <!--60,000-->
+        <target id="w123"/>
+      </span>
+    </term>
+    <term head="t.mw124.1" id="t.mw124" lemma="dependent on" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--dependent on-->
+        <target id="w124"/>
+        <target id="w125"/>
+      </span>
+      <component id="t.mw124.1" lemma="" pos=""/>
+      <component id="t.mw124.2" lemma="" pos=""/>
+    </term>
+    <term id="t126" lemma="the" morphofeat="DT" pos="D" type="close">
+      <span>
+        <!--the-->
+        <target id="w126"/>
+      </span>
+    </term>
+    <term head="t.mw127.1" id="t.mw127" lemma="car company" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--car company-->
+        <target id="w127"/>
+        <target id="w128"/>
+      </span>
+      <component id="t.mw127.1" lemma="" pos=""/>
+      <component id="t.mw127.2" lemma="" pos=""/>
+    </term>
+    <term id="t129" lemma="." morphofeat="." pos="O" type="close">
+      <span>
+        <!--.-->
+        <target id="w129"/>
+      </span>
+    </term>
+    <term id="t130" lemma="Bhattacharyya" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Bhattacharyya-->
+        <target id="w130"/>
+      </span>
+    </term>
+    <term id="t131" lemma="say" morphofeat="VBD" pos="V" type="open">
+      <span>
+        <!--said-->
+        <target id="w131"/>
+      </span>
+    </term>
+    <term id="t132" lemma=":" morphofeat=":" pos="O" type="close">
+      <span>
+        <!--:-->
+        <target id="w132"/>
+      </span>
+    </term>
+    <term id="t133" lemma="&amp;amp;quot;" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--"-->
+        <target id="w133"/>
+      </span>
+    </term>
+    <term id="t134" lemma="Jaguar" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Jaguar-->
+        <target id="w134"/>
+      </span>
+    </term>
+    <term id="t135" lemma="matter" morphofeat="NNS" pos="N" type="open">
+      <span>
+        <!--matters-->
+        <target id="w135"/>
+      </span>
+    </term>
+    <term id="t136" lemma="because" morphofeat="IN" pos="P" type="close">
+      <span>
+        <!--because-->
+        <target id="w136"/>
+      </span>
+    </term>
+    <term id="t137" lemma="it" morphofeat="PRP" pos="Q" type="close">
+      <span>
+        <!--it-->
+        <target id="w137"/>
+      </span>
+    </term>
+    <term id="t138" lemma="be" morphofeat="VBZ" pos="V" type="open">
+      <span>
+        <!--is-->
+        <target id="w138"/>
+      </span>
+    </term>
+    <term id="t139" lemma="the" morphofeat="DT" pos="D" type="close">
+      <span>
+        <!--the-->
+        <target id="w139"/>
+      </span>
+    </term>
+    <term id="t140" lemma="future" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--future-->
+        <target id="w140"/>
+      </span>
+    </term>
+    <term id="t141" lemma="of" morphofeat="IN" pos="P" type="close">
+      <span>
+        <!--of-->
+        <target id="w141"/>
+      </span>
+    </term>
+    <term id="t142" lemma="this" morphofeat="DT" pos="D" type="close">
+      <span>
+        <!--this-->
+        <target id="w142"/>
+      </span>
+    </term>
+    <term id="t143" lemma="country" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--country-->
+        <target id="w143"/>
+      </span>
+    </term>
+    <term id="t144" lemma="." morphofeat="." pos="O" type="close">
+      <span>
+        <!--.-->
+        <target id="w144"/>
+      </span>
+    </term>
+    <term id="t145" lemma="&amp;amp;quot;" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--"-->
+        <target id="w145"/>
+      </span>
+    </term>
+    <term id="t146" lemma="he" morphofeat="PRP" pos="Q" type="close">
+      <span>
+        <!--He-->
+        <target id="w146"/>
+      </span>
+    </term>
+    <term id="t147" lemma="add" morphofeat="VBD" pos="V" type="open">
+      <span>
+        <!--added-->
+        <target id="w147"/>
+      </span>
+    </term>
+    <term id="t148" lemma="," morphofeat="," pos="O" type="close">
+      <span>
+        <!--,-->
+        <target id="w148"/>
+      </span>
+    </term>
+    <term id="t149" lemma="&amp;amp;quot;" morphofeat="VB" pos="V" type="open">
+      <span>
+        <!--"-->
+        <target id="w149"/>
+      </span>
+    </term>
+    <term id="t150" lemma="it" morphofeat="PRP" pos="Q" type="close">
+      <span>
+        <!--It-->
+        <target id="w150"/>
+      </span>
+    </term>
+    <term id="t151" lemma="be" morphofeat="VBZ" pos="V" type="open">
+      <span>
+        <!--is-->
+        <target id="w151"/>
+      </span>
+    </term>
+    <term id="t152" lemma="the" morphofeat="DT" pos="D" type="close">
+      <span>
+        <!--the-->
+        <target id="w152"/>
+      </span>
+    </term>
+    <term id="t153" lemma="one" morphofeat="CD" pos="O" type="close">
+      <span>
+        <!--one-->
+        <target id="w153"/>
+      </span>
+    </term>
+    <term id="t154" lemma="flagship" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--flagship-->
+        <target id="w154"/>
+      </span>
+    </term>
+    <term id="t155" lemma="british" morphofeat="JJ" pos="G" type="open">
+      <span>
+        <!--British-->
+        <target id="w155"/>
+      </span>
+    </term>
+    <term head="t.mw156.1" id="t.mw156" lemma="car company" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--car company-->
+        <target id="w156"/>
+        <target id="w157"/>
+      </span>
+      <component id="t.mw156.1" lemma="" pos=""/>
+      <component id="t.mw156.2" lemma="" pos=""/>
+    </term>
+    <term id="t158" lemma="which" morphofeat="WDT" pos="O" type="close">
+      <span>
+        <!--which-->
+        <target id="w158"/>
+      </span>
+    </term>
+    <term id="t159" lemma="do" morphofeat="VBZ" pos="V" type="open">
+      <span>
+        <!--does-->
+        <target id="w159"/>
+      </span>
+    </term>
+    <term id="t160" lemma="british" morphofeat="JJ" pos="G" type="open">
+      <span>
+        <!--British-->
+        <target id="w160"/>
+      </span>
+    </term>
+    <term id="t161" lemma="R" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--R-->
+        <target id="w161"/>
+      </span>
+    </term>
+    <term id="t162" lemma="&amp;amp;amp;" morphofeat="CC" pos="C" type="close">
+      <span>
+        <!--&-->
+        <target id="w162"/>
+      </span>
+    </term>
+    <term id="t163" lemma="D." morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--D.-->
+        <target id="w163"/>
+      </span>
+    </term>
+    <term id="t164" lemma="the" morphofeat="DT" pos="D" type="close">
+      <span>
+        <!--The-->
+        <target id="w164"/>
+      </span>
+    </term>
+    <term id="t165" lemma="other" morphofeat="NNS" pos="N" type="open">
+      <span>
+        <!--others-->
+        <target id="w165"/>
+      </span>
+    </term>
+    <term id="t166" lemma="basically" morphofeat="RB" pos="A" type="open">
+      <span>
+        <!--basically-->
+        <target id="w166"/>
+      </span>
+    </term>
+    <term id="t167" lemma="just" morphofeat="RB" pos="A" type="open">
+      <span>
+        <!--just-->
+        <target id="w167"/>
+      </span>
+    </term>
+    <term id="t168" lemma="make" morphofeat="VB" pos="V" type="open">
+      <span>
+        <!--make-->
+        <target id="w168"/>
+      </span>
+    </term>
+    <term id="t169" lemma="car" morphofeat="NNS" pos="N" type="open">
+      <span>
+        <!--cars-->
+        <target id="w169"/>
+      </span>
+    </term>
+    <term id="t170" lemma="here" morphofeat="RB" pos="A" type="open">
+      <span>
+        <!--here-->
+        <target id="w170"/>
+      </span>
+    </term>
+    <term id="t171" lemma="which" morphofeat="WDT" pos="O" type="close">
+      <span>
+        <!--which-->
+        <target id="w171"/>
+      </span>
+    </term>
+    <term id="t172" lemma="be" morphofeat="VBP" pos="V" type="open">
+      <span>
+        <!--are-->
+        <target id="w172"/>
+      </span>
+    </term>
+    <term id="t173" lemma="design" morphofeat="VBN" pos="V" type="open">
+      <span>
+        <!--designed-->
+        <target id="w173"/>
+      </span>
+    </term>
+    <term id="t174" lemma="in" morphofeat="IN" pos="P" type="close">
+      <span>
+        <!--in-->
+        <target id="w174"/>
+      </span>
+    </term>
+    <term id="t175" lemma="Japan" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Japan-->
+        <target id="w175"/>
+      </span>
+    </term>
+    <term id="t176" lemma="or" morphofeat="CC" pos="C" type="close">
+      <span>
+        <!--or-->
+        <target id="w176"/>
+      </span>
+    </term>
+    <term id="t177" lemma="Germany" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Germany-->
+        <target id="w177"/>
+      </span>
+    </term>
+    <term id="t178" lemma="..." morphofeat=":" pos="O" type="close">
+      <span>
+        <!--...-->
+        <target id="w178"/>
+      </span>
+    </term>
+    <term id="t179" lemma="we" morphofeat="PRP" pos="Q" type="close">
+      <span>
+        <!--We-->
+        <target id="w179"/>
+      </span>
+    </term>
+    <term id="t180" lemma="have" morphofeat="VBP" pos="V" type="open">
+      <span>
+        <!--have-->
+        <target id="w180"/>
+      </span>
+    </term>
+    <term id="t181" lemma="to" morphofeat="TO" pos="P" type="close">
+      <span>
+        <!--to-->
+        <target id="w181"/>
+      </span>
+    </term>
+    <term id="t182" lemma="have" morphofeat="VB" pos="V" type="open">
+      <span>
+        <!--have-->
+        <target id="w182"/>
+      </span>
+    </term>
+    <term id="t183" lemma="sustainability" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--sustainability-->
+        <target id="w183"/>
+      </span>
+    </term>
+    <term id="t184" lemma="in" morphofeat="IN" pos="P" type="close">
+      <span>
+        <!--in-->
+        <target id="w184"/>
+      </span>
+    </term>
+    <term id="t185" lemma="R" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--R-->
+        <target id="w185"/>
+      </span>
+    </term>
+    <term id="t186" lemma="&amp;amp;amp;" morphofeat="CC" pos="C" type="close">
+      <span>
+        <!--&-->
+        <target id="w186"/>
+      </span>
+    </term>
+    <term id="t187" lemma="D" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--D-->
+        <target id="w187"/>
+      </span>
+    </term>
+    <term id="t188" lemma="in" morphofeat="IN" pos="P" type="close">
+      <span>
+        <!--in-->
+        <target id="w188"/>
+      </span>
+    </term>
+    <term id="t189" lemma="this" morphofeat="DT" pos="D" type="close">
+      <span>
+        <!--this-->
+        <target id="w189"/>
+      </span>
+    </term>
+    <term id="t190" lemma="country" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--country-->
+        <target id="w190"/>
+      </span>
+    </term>
+    <term id="t191" lemma="." morphofeat="." pos="O" type="close">
+      <span>
+        <!--.-->
+        <target id="w191"/>
+      </span>
+    </term>
+    <term id="t192" lemma="we" morphofeat="PRP" pos="Q" type="close">
+      <span>
+        <!--We-->
+        <target id="w192"/>
+      </span>
+    </term>
+    <term id="t193" lemma="cannot" morphofeat="MD" pos="O" type="close">
+      <span>
+        <!--cannot-->
+        <target id="w193"/>
+      </span>
+    </term>
+    <term head="t.mw194.1" id="t.mw194" lemma="live on" morphofeat="VB" pos="V" type="open">
+      <span>
+        <!--live on-->
+        <target id="w194"/>
+        <target id="w195"/>
+      </span>
+      <component id="t.mw194.1" lemma="" pos=""/>
+      <component id="t.mw194.2" lemma="" pos=""/>
+    </term>
+    <term id="t196" lemma="fresh" morphofeat="JJ" pos="G" type="open">
+      <span>
+        <!--fresh-->
+        <target id="w196"/>
+      </span>
+    </term>
+    <term id="t197" lemma="air" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--air-->
+        <target id="w197"/>
+      </span>
+    </term>
+    <term id="t198" lemma="." morphofeat="." pos="O" type="close">
+      <span>
+        <!--.-->
+        <target id="w198"/>
+      </span>
+    </term>
+    <term id="t199" lemma="&amp;amp;quot;" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--"-->
+        <target id="w199"/>
+      </span>
+    </term>
+    <term id="t200" lemma="Lord" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Lord-->
+        <target id="w200"/>
+      </span>
+    </term>
+    <term id="t201" lemma="Bhattacharyya" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Bhattacharyya-->
+        <target id="w201"/>
+      </span>
+    </term>
+    <term id="t202" lemma="say" morphofeat="VBD" pos="V" type="open">
+      <span>
+        <!--said-->
+        <target id="w202"/>
+      </span>
+    </term>
+    <term id="t203" lemma="the" morphofeat="DT" pos="D" type="close">
+      <span>
+        <!--the-->
+        <target id="w203"/>
+      </span>
+    </term>
+    <term id="t204" lemma="government" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--government-->
+        <target id="w204"/>
+      </span>
+    </term>
+    <term id="t205" lemma="be" morphofeat="VBD" pos="V" type="open">
+      <span>
+        <!--was-->
+        <target id="w205"/>
+      </span>
+    </term>
+    <term id="t206" lemma="talk" morphofeat="VBG" pos="V" type="open">
+      <span>
+        <!--talking-->
+        <target id="w206"/>
+      </span>
+    </term>
+    <term id="t207" lemma="a" morphofeat="DT" pos="D" type="close">
+      <span>
+        <!--a-->
+        <target id="w207"/>
+      </span>
+    </term>
+    <term id="t208" lemma="good" morphofeat="JJ" pos="G" type="open">
+      <span>
+        <!--good-->
+        <target id="w208"/>
+      </span>
+    </term>
+    <term id="t209" lemma="game" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--game-->
+        <target id="w209"/>
+      </span>
+    </term>
+    <term id="t210" lemma="on" morphofeat="IN" pos="P" type="close">
+      <span>
+        <!--on-->
+        <target id="w210"/>
+      </span>
+    </term>
+    <term id="t211" lemma="R" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--R-->
+        <target id="w211"/>
+      </span>
+    </term>
+    <term id="t212" lemma="&amp;amp;amp;" morphofeat="CC" pos="C" type="close">
+      <span>
+        <!--&-->
+        <target id="w212"/>
+      </span>
+    </term>
+    <term id="t213" lemma="D" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--D-->
+        <target id="w213"/>
+      </span>
+    </term>
+    <term id="t214" lemma="," morphofeat="," pos="O" type="close">
+      <span>
+        <!--,-->
+        <target id="w214"/>
+      </span>
+    </term>
+    <term id="t215" lemma="but" morphofeat="CC" pos="C" type="close">
+      <span>
+        <!--but-->
+        <target id="w215"/>
+      </span>
+    </term>
+    <term id="t216" lemma="caution" morphofeat="VBD" pos="V" type="open">
+      <span>
+        <!--cautioned-->
+        <target id="w216"/>
+      </span>
+    </term>
+    <term id="t217" lemma=":" morphofeat=":" pos="O" type="close">
+      <span>
+        <!--:-->
+        <target id="w217"/>
+      </span>
+    </term>
+    <term id="t218" lemma="&amp;amp;quot;" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--"-->
+        <target id="w218"/>
+      </span>
+    </term>
+    <term id="t219" lemma="if" morphofeat="IN" pos="P" type="close">
+      <span>
+        <!--If-->
+        <target id="w219"/>
+      </span>
+    </term>
+    <term id="t220" lemma="it" morphofeat="PRP" pos="Q" type="close">
+      <span>
+        <!--it-->
+        <target id="w220"/>
+      </span>
+    </term>
+    <term id="t221" lemma="do" morphofeat="VBZ" pos="V" type="open">
+      <span>
+        <!--does-->
+        <target id="w221"/>
+      </span>
+    </term>
+    <term id="t222" lemma="not" morphofeat="RB" pos="A" type="open">
+      <span>
+        <!--not-->
+        <target id="w222"/>
+      </span>
+    </term>
+    <term id="t223" lemma="turn" morphofeat="VB" pos="V" type="open">
+      <span>
+        <!--turn-->
+        <target id="w223"/>
+      </span>
+    </term>
+    <term id="t224" lemma="that" morphofeat="DT" pos="D" type="close">
+      <span>
+        <!--that-->
+        <target id="w224"/>
+      </span>
+    </term>
+    <term id="t225" lemma="into" morphofeat="IN" pos="P" type="close">
+      <span>
+        <!--into-->
+        <target id="w225"/>
+      </span>
+    </term>
+    <term id="t226" lemma="action" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--action-->
+        <target id="w226"/>
+      </span>
+    </term>
+    <term id="t227" lemma="then" morphofeat="RB" pos="A" type="open">
+      <span>
+        <!--then-->
+        <target id="w227"/>
+      </span>
+    </term>
+    <term id="t228" lemma="person" morphofeat="NNS" pos="N" type="open">
+      <span>
+        <!--people-->
+        <target id="w228"/>
+      </span>
+    </term>
+    <term id="t229" lemma="will" morphofeat="MD" pos="O" type="close">
+      <span>
+        <!--will-->
+        <target id="w229"/>
+      </span>
+    </term>
+    <term id="t230" lemma="say" morphofeat="VB" pos="V" type="open">
+      <span>
+        <!--say-->
+        <target id="w230"/>
+      </span>
+    </term>
+    <term id="t231" lemma="that" morphofeat="WDT" pos="O" type="close">
+      <span>
+        <!--that-->
+        <target id="w231"/>
+      </span>
+    </term>
+    <term id="t232" lemma="be" morphofeat="VBZ" pos="V" type="open">
+      <span>
+        <!--is-->
+        <target id="w232"/>
+      </span>
+    </term>
+    <term id="t233" lemma="all" morphofeat="DT" pos="D" type="close">
+      <span>
+        <!--all-->
+        <target id="w233"/>
+      </span>
+    </term>
+    <term id="t234" lemma="it" morphofeat="PRP" pos="Q" type="close">
+      <span>
+        <!--it-->
+        <target id="w234"/>
+      </span>
+    </term>
+    <term id="t235" lemma="be" morphofeat="VBZ" pos="V" type="open">
+      <span>
+        <!--is-->
+        <target id="w235"/>
+      </span>
+    </term>
+    <term id="t236" lemma="-" morphofeat=":" pos="O" type="close">
+      <span>
+        <!--- -->
+        <target id="w236"/>
+      </span>
+    </term>
+    <term id="t237" lemma="talk" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--talk-->
+        <target id="w237"/>
+      </span>
+    </term>
+    <term id="t238" lemma="." morphofeat="." pos="O" type="close">
+      <span>
+        <!--.-->
+        <target id="w238"/>
+      </span>
+    </term>
+    <term id="t239" lemma="&amp;amp;quot;" morphofeat="RB" pos="A" type="open">
+      <span>
+        <!--"-->
+        <target id="w239"/>
+      </span>
+    </term>
+    <term id="t240" lemma="significance" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--Significance-->
+        <target id="w240"/>
+      </span>
+    </term>
+    <term id="t241" lemma=":" morphofeat=":" pos="O" type="close">
+      <span>
+        <!--:-->
+        <target id="w241"/>
+      </span>
+    </term>
+    <term id="t242" lemma="the" morphofeat="DT" pos="D" type="close">
+      <span>
+        <!--The-->
+        <target id="w242"/>
+      </span>
+    </term>
+    <term id="t243" lemma="U." morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--U.-->
+        <target id="w243"/>
+      </span>
+    </term>
+    <term id="t244" lemma="K." morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--K.-->
+        <target id="w244"/>
+      </span>
+    </term>
+    <term id="t245" lemma="government" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--government-->
+        <target id="w245"/>
+      </span>
+    </term>
+    <term id="t246" lemma="have" morphofeat="VBZ" pos="V" type="open">
+      <span>
+        <!--has-->
+        <target id="w246"/>
+      </span>
+    </term>
+    <term id="t247" lemma="have" morphofeat="VBN" pos="V" type="open">
+      <span>
+        <!--had-->
+        <target id="w247"/>
+      </span>
+    </term>
+    <term id="t248" lemma="a" morphofeat="DT" pos="D" type="close">
+      <span>
+        <!--a-->
+        <target id="w248"/>
+      </span>
+    </term>
+    <term id="t249" lemma="chequered" morphofeat="JJ" pos="G" type="open">
+      <span>
+        <!--chequered-->
+        <target id="w249"/>
+      </span>
+    </term>
+    <term id="t250" lemma="past" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--past-->
+        <target id="w250"/>
+      </span>
+    </term>
+    <term id="t251" lemma="when" morphofeat="WRB" pos="O" type="close">
+      <span>
+        <!--when-->
+        <target id="w251"/>
+      </span>
+    </term>
+    <term id="t252" lemma="it" morphofeat="PRP" pos="Q" type="close">
+      <span>
+        <!--it-->
+        <target id="w252"/>
+      </span>
+    </term>
+    <term head="t.mw253.1" id="t.mw253" lemma="come to" morphofeat="VBZ" pos="V" type="open">
+      <span>
+        <!--comes to-->
+        <target id="w253"/>
+        <target id="w254"/>
+      </span>
+      <component id="t.mw253.1" lemma="" pos=""/>
+      <component id="t.mw253.2" lemma="" pos=""/>
+    </term>
+    <term id="t255" lemma="state" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--state-->
+        <target id="w255"/>
+      </span>
+    </term>
+    <term id="t256" lemma="intervention" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--intervention-->
+        <target id="w256"/>
+      </span>
+    </term>
+    <term id="t257" lemma="in" morphofeat="IN" pos="P" type="close">
+      <span>
+        <!--in-->
+        <target id="w257"/>
+      </span>
+    </term>
+    <term id="t258" lemma="the" morphofeat="DT" pos="D" type="close">
+      <span>
+        <!--the-->
+        <target id="w258"/>
+      </span>
+    </term>
+    <term id="t259" lemma="domestic" morphofeat="JJ" pos="G" type="open">
+      <span>
+        <!--domestic-->
+        <target id="w259"/>
+      </span>
+    </term>
+    <term id="t260" lemma="auto" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--auto-->
+        <target id="w260"/>
+      </span>
+    </term>
+    <term id="t261" lemma="industry" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--industry-->
+        <target id="w261"/>
+      </span>
+    </term>
+    <term id="t262" lemma="." morphofeat="." pos="O" type="close">
+      <span>
+        <!--.-->
+        <target id="w262"/>
+      </span>
+    </term>
+    <term id="t263" lemma="after" morphofeat="IN" pos="P" type="close">
+      <span>
+        <!--After-->
+        <target id="w263"/>
+      </span>
+    </term>
+    <term id="t264" lemma="decade" morphofeat="NNS" pos="N" type="open">
+      <span>
+        <!--decades-->
+        <target id="w264"/>
+      </span>
+    </term>
+    <term id="t265" lemma="of" morphofeat="IN" pos="P" type="close">
+      <span>
+        <!--of-->
+        <target id="w265"/>
+      </span>
+    </term>
+    <term id="t266" lemma="failed" morphofeat="JJ" pos="G" type="open">
+      <span>
+        <!--failed-->
+        <target id="w266"/>
+      </span>
+    </term>
+    <term id="t267" lemma="state" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--state-->
+        <target id="w267"/>
+      </span>
+    </term>
+    <term id="t268" lemma="ownership" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--ownership-->
+        <target id="w268"/>
+      </span>
+    </term>
+    <term id="t269" lemma="," morphofeat="," pos="O" type="close">
+      <span>
+        <!--,-->
+        <target id="w269"/>
+      </span>
+    </term>
+    <term id="t270" lemma="the" morphofeat="DT" pos="D" type="close">
+      <span>
+        <!--the-->
+        <target id="w270"/>
+      </span>
+    </term>
+    <term id="t271" lemma="government" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--government-->
+        <target id="w271"/>
+      </span>
+    </term>
+    <term id="t272" lemma="and" morphofeat="CC" pos="C" type="close">
+      <span>
+        <!--and-->
+        <target id="w272"/>
+      </span>
+    </term>
+    <term id="t273" lemma="its" morphofeat="PRP$" pos="Q" type="close">
+      <span>
+        <!--its-->
+        <target id="w273"/>
+      </span>
+    </term>
+    <term id="t274" lemma="advisor" morphofeat="NNS" pos="N" type="open">
+      <span>
+        <!--advisors-->
+        <target id="w274"/>
+      </span>
+    </term>
+    <term id="t275" lemma="finally" morphofeat="RB" pos="A" type="open">
+      <span>
+        <!--finally-->
+        <target id="w275"/>
+      </span>
+    </term>
+    <term id="t276" lemma="decide" morphofeat="VBD" pos="V" type="open">
+      <span>
+        <!--decided-->
+        <target id="w276"/>
+      </span>
+    </term>
+    <term id="t277" lemma="to" morphofeat="TO" pos="P" type="close">
+      <span>
+        <!--to-->
+        <target id="w277"/>
+      </span>
+    </term>
+    <term id="t278" lemma="sell" morphofeat="VB" pos="V" type="open">
+      <span>
+        <!--sell-->
+        <target id="w278"/>
+      </span>
+    </term>
+    <term id="t279" lemma="the" morphofeat="DT" pos="D" type="close">
+      <span>
+        <!--the-->
+        <target id="w279"/>
+      </span>
+    </term>
+    <term id="t280" lemma="last" morphofeat="JJ" pos="G" type="open">
+      <span>
+        <!--last-->
+        <target id="w280"/>
+      </span>
+    </term>
+    <term id="t281" lemma="survive" morphofeat="VBG" pos="V" type="open">
+      <span>
+        <!--surviving-->
+        <target id="w281"/>
+      </span>
+    </term>
+    <term id="t282" lemma="publicly" morphofeat="RB" pos="A" type="open">
+      <span>
+        <!--publicly-->
+        <target id="w282"/>
+      </span>
+    </term>
+    <term id="t283" lemma="own" morphofeat="VBN" pos="V" type="open">
+      <span>
+        <!--owned-->
+        <target id="w283"/>
+      </span>
+    </term>
+    <term id="t284" lemma="mass" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--mass-->
+        <target id="w284"/>
+      </span>
+    </term>
+    <term id="t285" lemma="market" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--market-->
+        <target id="w285"/>
+      </span>
+    </term>
+    <term id="t286" lemma="brand" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--brand-->
+        <target id="w286"/>
+      </span>
+      <externalReferences>
+        <externalRef confidence="0.18115126" reference="d_n-37069" resource="Cornetto"/>
+        <externalRef confidence="0.4398227" reference="r_n-8363" resource="Cornetto"/>
+      </externalReferences>
+    </term>
+    <term id="t287" lemma="," morphofeat="," pos="O" type="close">
+      <span>
+        <!--,-->
+        <target id="w287"/>
+      </span>
+    </term>
+    <term id="t288" lemma="Austin" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Austin-->
+        <target id="w288"/>
+      </span>
+    </term>
+    <term id="t289" lemma="Rover" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Rover-->
+        <target id="w289"/>
+      </span>
+    </term>
+    <term id="t290" lemma="," morphofeat="," pos="O" type="close">
+      <span>
+        <!--,-->
+        <target id="w290"/>
+      </span>
+    </term>
+    <term id="t291" lemma="in" morphofeat="IN" pos="P" type="close">
+      <span>
+        <!--in-->
+        <target id="w291"/>
+      </span>
+    </term>
+    <term id="t292" lemma="1986" morphofeat="CD" pos="O" type="close">
+      <span>
+        <!--1986-->
+        <target id="w292"/>
+      </span>
+    </term>
+    <term id="t293" lemma="," morphofeat="," pos="O" type="close">
+      <span>
+        <!--,-->
+        <target id="w293"/>
+      </span>
+    </term>
+    <term id="t294" lemma="undersell" morphofeat="VBG" pos="V" type="open">
+      <span>
+        <!--underselling-->
+        <target id="w294"/>
+      </span>
+    </term>
+    <term id="t295" lemma="it" morphofeat="PRP" pos="Q" type="close">
+      <span>
+        <!--it-->
+        <target id="w295"/>
+      </span>
+    </term>
+    <term id="t296" lemma="to" morphofeat="TO" pos="P" type="close">
+      <span>
+        <!--to-->
+        <target id="w296"/>
+      </span>
+    </term>
+    <term id="t297" lemma="british" morphofeat="JJ" pos="G" type="open">
+      <span>
+        <!--British-->
+        <target id="w297"/>
+      </span>
+    </term>
+    <term id="t298" lemma="Aerospace" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Aerospace-->
+        <target id="w298"/>
+      </span>
+    </term>
+    <term id="t299" lemma="." morphofeat="." pos="O" type="close">
+      <span>
+        <!--.-->
+        <target id="w299"/>
+      </span>
+    </term>
+    <term id="t300" lemma="the" morphofeat="DT" pos="D" type="close">
+      <span>
+        <!--The-->
+        <target id="w300"/>
+      </span>
+    </term>
+    <term id="t301" lemma="subsequent" morphofeat="JJ" pos="G" type="open">
+      <span>
+        <!--subsequent-->
+        <target id="w301"/>
+      </span>
+    </term>
+    <term id="t302" lemma="asset-stripping" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--asset-stripping-->
+        <target id="w302"/>
+      </span>
+    </term>
+    <term id="t303" lemma="and" morphofeat="CC" pos="C" type="close">
+      <span>
+        <!--and-->
+        <target id="w303"/>
+      </span>
+    </term>
+    <term id="t304" lemma="mismanagement" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--mismanagement-->
+        <target id="w304"/>
+      </span>
+    </term>
+    <term id="t305" lemma="of" morphofeat="IN" pos="P" type="close">
+      <span>
+        <!--of-->
+        <target id="w305"/>
+      </span>
+    </term>
+    <term id="t306" lemma="Rover" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Rover-->
+        <target id="w306"/>
+      </span>
+    </term>
+    <term id="t307" lemma="company" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--company-->
+        <target id="w307"/>
+      </span>
+    </term>
+    <term id="t308" lemma="lead" morphofeat="VBD" pos="V" type="open">
+      <span>
+        <!--led-->
+        <target id="w308"/>
+      </span>
+    </term>
+    <term id="t309" lemma="to" morphofeat="TO" pos="P" type="close">
+      <span>
+        <!--to-->
+        <target id="w309"/>
+      </span>
+    </term>
+    <term id="t310" lemma="the" morphofeat="DT" pos="D" type="close">
+      <span>
+        <!--the-->
+        <target id="w310"/>
+      </span>
+    </term>
+    <term id="t311" lemma="eventual" morphofeat="JJ" pos="G" type="open">
+      <span>
+        <!--eventual-->
+        <target id="w311"/>
+      </span>
+    </term>
+    <term id="t312" lemma="sale" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--sale-->
+        <target id="w312"/>
+      </span>
+    </term>
+    <term id="t313" lemma="to" morphofeat="TO" pos="P" type="close">
+      <span>
+        <!--to-->
+        <target id="w313"/>
+      </span>
+    </term>
+    <term id="t314" lemma="BMW" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--BMW-->
+        <target id="w314"/>
+      </span>
+    </term>
+    <term id="t315" lemma="," morphofeat="," pos="O" type="close">
+      <span>
+        <!--,-->
+        <target id="w315"/>
+      </span>
+    </term>
+    <term id="t316" lemma="and" morphofeat="CC" pos="C" type="close">
+      <span>
+        <!--and-->
+        <target id="w316"/>
+      </span>
+    </term>
+    <term id="t317" lemma="when" morphofeat="WRB" pos="O" type="close">
+      <span>
+        <!--when-->
+        <target id="w317"/>
+      </span>
+    </term>
+    <term id="t318" lemma="BMW" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--BMW-->
+        <target id="w318"/>
+      </span>
+    </term>
+    <term head="t.mw319.1" id="t.mw319" lemma="walk away" morphofeat="VBD" pos="V" type="open">
+      <span>
+        <!--walked away-->
+        <target id="w319"/>
+        <target id="w320"/>
+      </span>
+      <component id="t.mw319.1" lemma="" pos=""/>
+      <component id="t.mw319.2" lemma="" pos=""/>
+    </term>
+    <term id="t321" lemma="with" morphofeat="IN" pos="P" type="close">
+      <span>
+        <!--with-->
+        <target id="w321"/>
+      </span>
+    </term>
+    <term id="t322" lemma="land" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--Land-->
+        <target id="w322"/>
+      </span>
+      <externalReferences>
+        <externalRef confidence="0.01865554" reference="r_n-21295" resource="Cornetto"/>
+        <externalRef confidence="0.033404775" reference="r_n-21296" resource="Cornetto"/>
+        <externalRef confidence="0.14945725" reference="r_n-21293" resource="Cornetto"/>
+        <externalRef confidence="0.050322384" reference="r_n-21292" resource="Cornetto"/>
+        <externalRef confidence="0.013783287" reference="r_n-21294" resource="Cornetto"/>
+      </externalReferences>
+    </term>
+    <term id="t323" lemma="Rover" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Rover-->
+        <target id="w323"/>
+      </span>
+    </term>
+    <term id="t324" lemma="(" morphofeat="(" pos="O" type="close">
+      <span>
+        <!--(-->
+        <target id="w324"/>
+      </span>
+    </term>
+    <term id="t325" lemma="which" morphofeat="WDT" pos="O" type="close">
+      <span>
+        <!--which-->
+        <target id="w325"/>
+      </span>
+    </term>
+    <term id="t326" lemma="it" morphofeat="PRP" pos="Q" type="close">
+      <span>
+        <!--it-->
+        <target id="w326"/>
+      </span>
+    </term>
+    <term id="t327" lemma="sell" morphofeat="VBD" pos="V" type="open">
+      <span>
+        <!--sold-->
+        <target id="w327"/>
+      </span>
+    </term>
+    <term id="t328" lemma="to" morphofeat="TO" pos="P" type="close">
+      <span>
+        <!--to-->
+        <target id="w328"/>
+      </span>
+    </term>
+    <term id="t329" lemma="Ford" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Ford-->
+        <target id="w329"/>
+      </span>
+    </term>
+    <term id="t330" lemma=")" morphofeat=")" pos="O" type="close">
+      <span>
+        <!--)-->
+        <target id="w330"/>
+      </span>
+    </term>
+    <term id="t331" lemma="," morphofeat="," pos="O" type="close">
+      <span>
+        <!--,-->
+        <target id="w331"/>
+      </span>
+    </term>
+    <term id="t332" lemma="the" morphofeat="DT" pos="D" type="close">
+      <span>
+        <!--the-->
+        <target id="w332"/>
+      </span>
+    </term>
+    <term id="t333" lemma="eventual" morphofeat="JJ" pos="G" type="open">
+      <span>
+        <!--eventual-->
+        <target id="w333"/>
+      </span>
+    </term>
+    <term id="t334" lemma="sale" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--sale-->
+        <target id="w334"/>
+      </span>
+    </term>
+    <term id="t335" lemma="of" morphofeat="IN" pos="P" type="close">
+      <span>
+        <!--of-->
+        <target id="w335"/>
+      </span>
+    </term>
+    <term id="t336" lemma="Rover" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Rover-->
+        <target id="w336"/>
+      </span>
+    </term>
+    <term id="t337" lemma="to" morphofeat="TO" pos="P" type="close">
+      <span>
+        <!--to-->
+        <target id="w337"/>
+      </span>
+    </term>
+    <term id="t338" lemma="Phoenix" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Phoenix-->
+        <target id="w338"/>
+      </span>
+    </term>
+    <term id="t339" lemma="Consortium" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Consortium-->
+        <target id="w339"/>
+      </span>
+    </term>
+    <term id="t340" lemma="over" morphofeat="IN" pos="P" type="close">
+      <span>
+        <!--over-->
+        <target id="w340"/>
+      </span>
+    </term>
+    <term id="t341" lemma="the" morphofeat="DT" pos="D" type="close">
+      <span>
+        <!--the-->
+        <target id="w341"/>
+      </span>
+    </term>
+    <term id="t342" lemma="Alchemy" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Alchemy-->
+        <target id="w342"/>
+      </span>
+    </term>
+    <term id="t343" lemma="Group" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Group-->
+        <target id="w343"/>
+      </span>
+    </term>
+    <term id="t344" lemma="lead" morphofeat="VBD" pos="V" type="open">
+      <span>
+        <!--led-->
+        <target id="w344"/>
+      </span>
+    </term>
+    <term id="t345" lemma="to" morphofeat="TO" pos="P" type="close">
+      <span>
+        <!--to-->
+        <target id="w345"/>
+      </span>
+    </term>
+    <term id="t346" lemma="the" morphofeat="DT" pos="D" type="close">
+      <span>
+        <!--the-->
+        <target id="w346"/>
+      </span>
+    </term>
+    <term id="t347" lemma="demise" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--demise-->
+        <target id="w347"/>
+      </span>
+    </term>
+    <term id="t348" lemma="of" morphofeat="IN" pos="P" type="close">
+      <span>
+        <!--of-->
+        <target id="w348"/>
+      </span>
+    </term>
+    <term id="t349" lemma="the" morphofeat="DT" pos="D" type="close">
+      <span>
+        <!--the-->
+        <target id="w349"/>
+      </span>
+    </term>
+    <term id="t350" lemma="company" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--company-->
+        <target id="w350"/>
+      </span>
+    </term>
+    <term id="t351" lemma="in" morphofeat="IN" pos="P" type="close">
+      <span>
+        <!--in-->
+        <target id="w351"/>
+      </span>
+    </term>
+    <term id="t352" lemma="2005" morphofeat="CD" pos="O" type="close">
+      <span>
+        <!--2005-->
+        <target id="w352"/>
+      </span>
+    </term>
+    <term id="t353" lemma="." morphofeat="." pos="O" type="close">
+      <span>
+        <!--.-->
+        <target id="w353"/>
+      </span>
+    </term>
+    <term id="t354" lemma="the" morphofeat="DT" pos="D" type="close">
+      <span>
+        <!--The-->
+        <target id="w354"/>
+      </span>
+    </term>
+    <term id="t355" lemma="government" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--government-->
+        <target id="w355"/>
+      </span>
+    </term>
+    <term id="t356" lemma="let" morphofeat="VBD" pos="V" type="open">
+      <span>
+        <!--let-->
+        <target id="w356"/>
+      </span>
+    </term>
+    <term id="t357" lemma="Rover" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Rover-->
+        <target id="w357"/>
+      </span>
+    </term>
+    <term head="t.mw358.1" id="t.mw358" lemma="go to" morphofeat="VB" pos="V" type="open">
+      <span>
+        <!--go to-->
+        <target id="w358"/>
+        <target id="w359"/>
+      </span>
+      <component id="t.mw358.1" lemma="" pos=""/>
+      <component id="t.mw358.2" lemma="" pos=""/>
+    </term>
+    <term id="t360" lemma="the" morphofeat="DT" pos="D" type="close">
+      <span>
+        <!--the-->
+        <target id="w360"/>
+      </span>
+    </term>
+    <term id="t361" lemma="wall" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--wall-->
+        <target id="w361"/>
+      </span>
+    </term>
+    <term id="t362" lemma="," morphofeat="," pos="O" type="close">
+      <span>
+        <!--,-->
+        <target id="w362"/>
+      </span>
+    </term>
+    <term id="t363" lemma="hurt" morphofeat="VBG" pos="V" type="open">
+      <span>
+        <!--hurting-->
+        <target id="w363"/>
+      </span>
+    </term>
+    <term id="t364" lemma="the" morphofeat="DT" pos="D" type="close">
+      <span>
+        <!--the-->
+        <target id="w364"/>
+      </span>
+    </term>
+    <term id="t365" lemma="local" morphofeat="JJ" pos="G" type="open">
+      <span>
+        <!--local-->
+        <target id="w365"/>
+      </span>
+    </term>
+    <term id="t366" lemma="economy" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--economy-->
+        <target id="w366"/>
+      </span>
+    </term>
+    <term id="t367" lemma="and" morphofeat="CC" pos="C" type="close">
+      <span>
+        <!--and-->
+        <target id="w367"/>
+      </span>
+    </term>
+    <term head="t.mw368.1" id="t.mw368" lemma="wipe out" morphofeat="VBG" pos="V" type="open">
+      <span>
+        <!--wiping out-->
+        <target id="w368"/>
+        <target id="w369"/>
+      </span>
+      <component id="t.mw368.1" lemma="" pos=""/>
+      <component id="t.mw368.2" lemma="" pos=""/>
+    </term>
+    <term id="t370" lemma="precisely" morphofeat="RB" pos="A" type="open">
+      <span>
+        <!--precisely-->
+        <target id="w370"/>
+      </span>
+    </term>
+    <term id="t371" lemma="the" morphofeat="DT" pos="D" type="close">
+      <span>
+        <!--the-->
+        <target id="w371"/>
+      </span>
+    </term>
+    <term id="t372" lemma="type" morphofeat="NNS" pos="N" type="open">
+      <span>
+        <!--types-->
+        <target id="w372"/>
+      </span>
+      <externalReferences>
+        <externalRef confidence="0.5455147" reference="r_n-38884" resource="Cornetto"/>
+        <externalRef confidence="0.23398097" reference="r_n-38885" resource="Cornetto"/>
+        <externalRef confidence="0.048725385" reference="d_n-297473" resource="Cornetto"/>
+      </externalReferences>
+    </term>
+    <term id="t373" lemma="of" morphofeat="IN" pos="P" type="close">
+      <span>
+        <!--of-->
+        <target id="w373"/>
+      </span>
+    </term>
+    <term id="t374" lemma="job" morphofeat="NNS" pos="N" type="open">
+      <span>
+        <!--jobs-->
+        <target id="w374"/>
+      </span>
+      <externalReferences>
+        <externalRef confidence="0.6630546" reference="r_n-18521" resource="Cornetto"/>
+        <externalRef confidence="0.04557327" reference="d_n-128063" resource="Cornetto"/>
+      </externalReferences>
+    </term>
+    <term id="t375" lemma="and" morphofeat="CC" pos="C" type="close">
+      <span>
+        <!--and-->
+        <target id="w375"/>
+      </span>
+    </term>
+    <term id="t376" lemma="investment" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--investment-->
+        <target id="w376"/>
+      </span>
+    </term>
+    <term id="t377" lemma="Bhattacharyya" morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--Bhattacharyya-->
+        <target id="w377"/>
+      </span>
+    </term>
+    <term id="t378" lemma="be" morphofeat="VBZ" pos="V" type="open">
+      <span>
+        <!--is-->
+        <target id="w378"/>
+      </span>
+    </term>
+    <term head="t.mw379.1" id="t.mw379" lemma="talk about" morphofeat="VBG" pos="V" type="open">
+      <span>
+        <!--talking about-->
+        <target id="w379"/>
+        <target id="w380"/>
+      </span>
+      <component id="t.mw379.1" lemma="" pos=""/>
+      <component id="t.mw379.2" lemma="" pos=""/>
+    </term>
+    <term id="t381" lemma="." morphofeat="." pos="O" type="close">
+      <span>
+        <!--.-->
+        <target id="w381"/>
+      </span>
+    </term>
+    <term id="t382" lemma="the" morphofeat="DT" pos="D" type="close">
+      <span>
+        <!--The-->
+        <target id="w382"/>
+      </span>
+    </term>
+    <term id="t383" lemma="U." morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--U.-->
+        <target id="w383"/>
+      </span>
+    </term>
+    <term id="t384" lemma="K." morphofeat="NNP" pos="R" type="close">
+      <span>
+        <!--K.-->
+        <target id="w384"/>
+      </span>
+    </term>
+    <term id="t385" lemma="government" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--government-->
+        <target id="w385"/>
+      </span>
+    </term>
+    <term id="t386" lemma="will" morphofeat="MD" pos="O" type="close">
+      <span>
+        <!--will-->
+        <target id="w386"/>
+      </span>
+    </term>
+    <term id="t387" lemma="need" morphofeat="VB" pos="V" type="open">
+      <span>
+        <!--need-->
+        <target id="w387"/>
+      </span>
+    </term>
+    <term id="t388" lemma="to" morphofeat="TO" pos="P" type="close">
+      <span>
+        <!--to-->
+        <target id="w388"/>
+      </span>
+    </term>
+    <term id="t389" lemma="carefully" morphofeat="RB" pos="A" type="open">
+      <span>
+        <!--carefully-->
+        <target id="w389"/>
+      </span>
+    </term>
+    <term id="t390" lemma="consider" morphofeat="VB" pos="V" type="open">
+      <span>
+        <!--consider-->
+        <target id="w390"/>
+      </span>
+    </term>
+    <term id="t391" lemma="what" morphofeat="WP" pos="Q" type="close">
+      <span>
+        <!--what-->
+        <target id="w391"/>
+      </span>
+    </term>
+    <term id="t392" lemma="string" morphofeat="NNS" pos="N" type="open">
+      <span>
+        <!--strings-->
+        <target id="w392"/>
+      </span>
+    </term>
+    <term id="t393" lemma="and" morphofeat="CC" pos="C" type="close">
+      <span>
+        <!--and-->
+        <target id="w393"/>
+      </span>
+    </term>
+    <term id="t394" lemma="condition" morphofeat="NNS" pos="N" type="open">
+      <span>
+        <!--conditions-->
+        <target id="w394"/>
+      </span>
+    </term>
+    <term id="t395" lemma="it" morphofeat="PRP" pos="Q" type="close">
+      <span>
+        <!--it-->
+        <target id="w395"/>
+      </span>
+    </term>
+    <term head="t.mw396.1" id="t.mw396" lemma="attach to" morphofeat="VBZ" pos="V" type="open">
+      <span>
+        <!--attaches to-->
+        <target id="w396"/>
+        <target id="w397"/>
+      </span>
+      <component id="t.mw396.1" lemma="" pos=""/>
+      <component id="t.mw396.2" lemma="" pos=""/>
+    </term>
+    <term id="t398" lemma="any" morphofeat="DT" pos="D" type="close">
+      <span>
+        <!--any-->
+        <target id="w398"/>
+      </span>
+    </term>
+    <term id="t399" lemma="money" morphofeat="NNS" pos="N" type="open">
+      <span>
+        <!--monies-->
+        <target id="w399"/>
+      </span>
+    </term>
+    <term id="t400" lemma="or" morphofeat="CC" pos="C" type="close">
+      <span>
+        <!--or-->
+        <target id="w400"/>
+      </span>
+    </term>
+    <term id="t401" lemma="loan" morphofeat="NN" pos="N" type="open">
+      <span>
+        <!--loan-->
+        <target id="w401"/>
+      </span>
+    </term>
+    <term id="t402" lemma="guarantee" morphofeat="NNS" pos="N" type="open">
+      <span>
+        <!--guarantees-->
+        <target id="w402"/>
+      </span>
+    </term>
+    <term id="t403" lemma="it" morphofeat="PRP" pos="Q" type="close">
+      <span>
+        <!--it-->
+        <target id="w403"/>
+      </span>
+    </term>
+    <term id="t404" lemma="may" morphofeat="MD" pos="O" type="close">
+      <span>
+        <!--may-->
+        <target id="w404"/>
+      </span>
+    </term>
+    <term id="t405" lemma="offer" morphofeat="VB" pos="V" type="open">
+      <span>
+        <!--offer-->
+        <target id="w405"/>
+      </span>
+    </term>
+    <term id="t406" lemma="." morphofeat="." pos="O" type="close">
+      <span>
+        <!--.-->
+        <target id="w406"/>
+      </span>
+    </term>
+  </terms>
+  <entities>
+    <entity id="e1" type="person">
+      <references>
+        <span>
+          <!--K.-->
+          <target id="t2"/>
+        </span>
+      </references>
+      <externalReferences>
+        <externalRef reference="http://dbpedia.org/resource/Köchel_catalogue" resource="spotlight_v1"/>
+      </externalReferences>
+    </entity>
+    <entity id="e2" type="person">
+      <references>
+        <span>
+          <!--Again Urged-->
+          <target id="t4"/>
+        </span>
+      </references>
+    </entity>
+    <entity id="e3" type="organization">
+      <references>
+        <span>
+          <!--Help Jaguar Land Rover-->
+          <target id="t7"/>
+          <target id="t8"/>
+          <target id="t9"/>
+          <target id="t10"/>
+        </span>
+      </references>
+    </entity>
+    <entity id="e4" type="misc">
+      <references>
+        <span>
+          <!--Country-->
+          <target id="t16"/>
+        </span>
+      </references>
+      <externalReferences>
+        <externalRef reference="http://dbpedia.org/resource/Country_music" resource="spotlight_v1"/>
+      </externalReferences>
+    </entity>
+    <entity id="e15" type="location">
+      <references>
+        <span>
+          <!--Japan, i did this example to generate the participation mention-->
+          <target id="t20"/>
+        </span>
+      </references>
+      <externalReferences>
+        <externalRef reference="http://dbpedia.org/resource/Japan" resource="spotlight_v1"/>
+      </externalReferences>
+    </entity>
+  </entities>
+  <coreferences>
+    <coref id="coe2" type="event">
+      <span>
+        <!--help-->
+        <target id="t7"/>
+      </span>
+    </coref>
+    <coref id="coe8" type="event">
+      <span>
+        <!--say-->
+        <target id="t49"/>
+      </span>
+      <span>
+        <!--say-->
+        <target id="t71"/>
+      </span>
+      <span>
+        <!--say-->
+        <target id="t131"/>
+      </span>
+      <span>
+        <!--say-->
+        <target id="t202"/>
+      </span>
+      <span>
+        <!--say-->
+        <target id="t230"/>
+      </span>
+    </coref>
+    <coref id="coe17" type="event">
+      <span>
+        <!--underpin-->
+        <target id="t109"/>
+      </span>
+    </coref>
+    <coref id="coe37" type="event">
+      <span>
+        <!--own-->
+        <target id="t283"/>
+      </span>
+    </coref>
+    <coref id="coe22" type="event">
+      <span>
+        <!--make-->
+        <target id="t168"/>
+      </span>
+    </coref>
+  </coreferences>
+  <srl>
+    <predicate id="pr1">
+      <!--Urged-->
+      <externalReferences>
+        <externalRef reference="urge.01" resource="PropBank"/>
+        <externalRef reference="urge-58.1" resource="VerbNet"/>
+        <externalRef reference="Attempt_suasion" resource="FrameNet"/>
+        <externalRef reference="Request" resource="FrameNet"/>
+        <externalRef reference="communication" resource="EventType"/>
+      </externalReferences>
+      <span>
+        <target id="t5"/>
+      </span>
+      <role id="rl1" semRole="A0">
+        <!--Government-->
+        <externalReferences>
+          <externalRef reference="urge-58.1#Agent" resource="VerbNet"/>
+          <externalRef reference="Attempt_suasion#Speaker" resource="FrameNet"/>
+          <externalRef reference="Request#Speaker" resource="FrameNet"/>
+        </externalReferences>
+        <span>
+          <target head="yes" id="t3"/>
+        </span>
+      </role>
+      <role id="rl2" semRole="AM-TMP">
+        <!--Again-->
+        <span>
+          <target head="yes" id="t4"/>
+        </span>
+      </role>
+      <role id="rl3" semRole="A2">
+        <!--to Help Jaguar Land Rover as " Future of this Country " Prominent industry leader Lord Kumar Bhattacharyya has urged the U.-->
+        <externalReferences>
+          <externalRef reference="urge-58.1#Topic" resource="VerbNet"/>
+          <externalRef reference="Attempt_suasion#Content" resource="FrameNet"/>
+          <externalRef reference="Attempt_suasion#Topic" resource="FrameNet"/>
+          <externalRef reference="Request#Message" resource="FrameNet"/>
+          <externalRef reference="Request#Topic" resource="FrameNet"/>
+        </externalReferences>
+        <span>
+          <target head="yes" id="t6"/>
+          <target id="t7"/>
+          <target id="t8"/>
+          <target id="t9"/>
+          <target id="t10"/>
+          <target id="t11"/>
+          <target id="t12"/>
+          <target id="t13"/>
+          <target id="t14"/>
+          <target id="t15"/>
+          <target id="t16"/>
+          <target id="t17"/>
+          <target id="t18"/>
+          <target id="t19"/>
+          <target id="t20"/>
+          <target id="t21"/>
+          <target id="t22"/>
+          <target id="t23"/>
+          <target id="t24"/>
+          <target id="t25"/>
+          <target id="t26"/>
+          <target id="t27"/>
+        </span>
+      </role>
+    </predicate>
+    <predicate id="pr2">
+      <!--Help-->
+      <externalReferences>
+        <externalRef reference="help.01" resource="PropBank"/>
+        <externalRef reference="help-72" resource="VerbNet"/>
+        <externalRef reference="help-72-1" resource="VerbNet"/>
+        <externalRef reference="Assistance" resource="FrameNet"/>
+        <externalRef reference="grammatical" resource="EventType"/>
+      </externalReferences>
+      <span>
+        <target id="t7"/>
+      </span>
+      <role id="rl4" semRole="A0">
+        <!--Government-->
+        <externalReferences>
+          <externalRef reference="help-72#Agent" resource="VerbNet"/>
+          <externalRef reference="Assistance#Helper" resource="FrameNet"/>
+        </externalReferences>
+        <span>
+          <target head="yes" id="t3"/>
+        </span>
+      </role>
+       <role id="rl99" semRole="A0">
+        <!--Government; i did this example-->
+        <externalReferences>
+          <externalRef reference="help-72#Agent" resource="VerbNet"/>
+          <externalRef reference="Assistance#Helper" resource="FrameNet"/>
+        </externalReferences>
+        <span>
+          <target head="yes" id="t20"/>
+        </span>
+      </role>
+      <role id="rl5" semRole="A1">
+        <!--Jaguar Land Rover-->
+        <externalReferences>
+          <externalRef reference="help-72#Theme" resource="VerbNet"/>
+          <externalRef reference="Assistance#Goal" resource="FrameNet"/>
+          <externalRef reference="Assistance#Focal_entity" resource="FrameNet"/>
+        </externalReferences>
+        <span>
+          <target id="t8"/>
+          <target id="t9"/>
+          <target head="yes" id="t10"/>
+        </span>
+      </role>
+      <role id="rl6" semRole="AM-ADV">
+        <!--as " Future of this Country " Prominent industry leader Lord Kumar Bhattacharyya has urged the U.-->
+        <span>
+          <target head="yes" id="t11"/>
+          <target id="t12"/>
+          <target id="t13"/>
+          <target id="t14"/>
+          <target id="t15"/>
+          <target id="t16"/>
+          <target id="t17"/>
+          <target id="t18"/>
+          <target id="t19"/>
+          <target id="t20"/>
+          <target id="t21"/>
+          <target id="t22"/>
+          <target id="t23"/>
+          <target id="t24"/>
+          <target id="t25"/>
+          <target id="t26"/>
+          <target id="t27"/>
+        </span>
+      </role>
+    </predicate>
+    <predicate id="pr3">
+      <!--Future-->
+      <externalReferences>
+        <externalRef reference="future.01" resource="NomBank"/>
+      </externalReferences>
+      <span>
+        <target id="t13"/>
+      </span>
+      <role id="rl7" semRole="A1">
+        <!--of this Country " Prominent industry leader Lord Kumar Bhattacharyya has urged the U.-->
+        <span>
+          <target head="yes" id="t14"/>
+          <target id="t15"/>
+          <target id="t16"/>
+          <target id="t17"/>
+          <target id="t18"/>
+          <target id="t19"/>
+          <target id="t20"/>
+          <target id="t21"/>
+          <target id="t22"/>
+          <target id="t23"/>
+          <target id="t24"/>
+          <target id="t25"/>
+          <target id="t26"/>
+          <target id="t27"/>
+        </span>
+      </role>
+    </predicate>
+    <predicate id="pr4">
+      <!--leader-->
+      <externalReferences>
+        <externalRef reference="leader.01" resource="NomBank"/>
+      </externalReferences>
+      <span>
+        <target id="t20"/>
+      </span>
+      <role id="rl8" semRole="A2">
+        <!--Prominent-->
+        <span>
+          <target head="yes" id="t18"/>
+        </span>
+      </role>
+      <role id="rl9" semRole="A2">
+        <!--industry-->
+        <span>
+          <target head="yes" id="t19"/>
+        </span>
+      </role>
+      <role id="rl10" semRole="A0">
+        <!--this Country " Prominent industry leader Lord Kumar Bhattacharyya has urged the U.-->
+        <span>
+          <target id="t15"/>
+          <target id="t16"/>
+          <target id="t17"/>
+          <target id="t18"/>
+          <target id="t19"/>
+          <target head="yes" id="t20"/>
+          <target id="t21"/>
+          <target id="t22"/>
+          <target id="t23"/>
+          <target id="t24"/>
+          <target id="t25"/>
+          <target id="t26"/>
+          <target id="t27"/>
+        </span>
+      </role>
+    </predicate>
+    <predicate id="pr5">
+      <!--urged-->
+      <externalReferences>
+        <externalRef reference="urge.01" resource="PropBank"/>
+        <externalRef reference="urge-58.1" resource="VerbNet"/>
+        <externalRef reference="Attempt_suasion" resource="FrameNet"/>
+        <externalRef reference="Request" resource="FrameNet"/>
+        <externalRef reference="communication" resource="EventType"/>
+      </externalReferences>
+      <span>
+        <target id="t25"/>
+      </span>
+      <role id="rl11" semRole="A0">
+        <!--this Country " Prominent industry leader Lord Kumar Bhattacharyya has urged the U.-->
+        <externalReferences>
+          <externalRef reference="urge-58.1#Agent" resource="VerbNet"/>
+          <externalRef reference="Attempt_suasion#Speaker" resource="FrameNet"/>
+          <externalRef reference="Request#Speaker" resource="FrameNet"/>
+        </externalReferences>
+        <span>
+          <target id="t15"/>
+          <target id="t16"/>
+          <target id="t17"/>
+          <target id="t18"/>
+          <target id="t19"/>
+          <target head="yes" id="t20"/>
+          <target id="t21"/>
+          <target id="t22"/>
+          <target id="t23"/>
+          <target id="t24"/>
+          <target id="t25"/>
+          <target id="t26"/>
+          <target id="t27"/>
+        </span>
+      </role>
+      <role id="rl12" semRole="A0">
+        <!--Lord Kumar Bhattacharyya-->
+        <externalReferences>
+          <externalRef reference="urge-58.1#Agent" resource="VerbNet"/>
+          <externalRef reference="Attempt_suasion#Speaker" resource="FrameNet"/>
+          <externalRef reference="Request#Speaker" resource="FrameNet"/>
+        </externalReferences>
+        <span>
+          <target id="t21"/>
+          <target id="t22"/>
+          <target head="yes" id="t23"/>
+        </span>
+      </role>
+      <role id="rl13" semRole="A1">
+        <!--the U.-->
+        <externalReferences>
+          <externalRef reference="urge-58.1#Recipient" resource="VerbNet"/>
+          <externalRef reference="Attempt_suasion#Addressee" resource="FrameNet"/>
+          <externalRef reference="Request#Addressee" resource="FrameNet"/>
+        </externalReferences>
+        <span>
+          <target id="t26"/>
+          <target head="yes" id="t27"/>
+        </span>
+      </role>
+    </predicate>
+  </srl>
+<factualitylayer>
+<factvalue id="w43" prediction="CT+" confidence="0.9714654056549034"/>
+<factvalue id="w31" prediction="CT+" confidence="0.5572075389422826"/>
+<factvalue id="w24" prediction="CT+" confidence="0.9293444920042415"/>
+<factvalue id="w5" prediction="Uu" confidence="0.6155728435785741"/>
+<factvalue id="w25" prediction="CT+" confidence="0.950017669262504"/>
+<factvalue id="w7" prediction="Uu" confidence="0.7367051089334559"/>
+<factvalue id="w55" prediction="CT-" confidence="0.49052073498064114"/>
+</factualitylayer>
+<timeExpressions>
+ <timex3 id="tmx4" type="DATE">
+      <span>
+        <target id="w225"/>
+      </span>
+    </timex3>
+    <timex3 id="tmx5" type="DATE">
+      <span>
+        <target id="w100"/>
+      </span>
+    </timex3>
+</timeExpressions>
+</NAF>

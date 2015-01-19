@@ -1,0 +1,4 @@
+<configuration
+  impl="eu.fbk.knowledgestore.runtime.LauncherExample"
+  delay="2500">
+</configuration>

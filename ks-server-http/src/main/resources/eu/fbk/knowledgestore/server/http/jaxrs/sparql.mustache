@@ -1,0 +1,95 @@
+{{<eu/fbk/knowledgestore/server/http/jaxrs/template}}
+{{$content}}
+
+<div class="row subbar">
+<div class="col-md-12">
+<form id="request" role="form" action="ui">
+  <input type="hidden" name="action" value="sparql"/>
+  <div class="row">
+    <div class="form-group col-sm-12">
+      <textarea class="form-control" style="resize: vertical" id="query" name="query" rows="10" placeholder="Enter your SPARQL query here">{{{query}}}</textarea>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-sm-2">
+      <div class="input-group">
+        <span class="input-group-addon">Timeout</span>
+        <input id="timeout" class="form-control input-sm" name="timeout" type="text" size="9" placeholder="600"/>
+        <span class="input-group-addon">s</span>
+      </div>
+    </div>
+    <div class="form-group col-sm-2">
+      <button type="submit" class="btn btn-default btn-sm" style="width: 100%">Display results</button>
+    </div>
+    <div class="form-group col-sm-2">
+      <button type="button" class="btn btn-default btn-sm dropdown-toggle" style="width: 100%" data-toggle="dropdown">Download as... <span class="caret"></span></button>
+      <ul class="dropdown-menu">
+        <li class="dropdown-header">ASK formats</li>
+        <li><a href="#" onclick="sparqlDownload($('#query').val(), $('#timeout').val(), 'application/sparql-results+json')">application/sparql-results+json</a></li>
+        <li><a href="#" onclick="sparqlDownload($('#query').val(), $('#timeout').val(), 'application/sparql-results+xml')">application/sparql-results+xml</a></li>
+        <li><a href="#" onclick="sparqlDownload($('#query').val(), $('#timeout').val(), 'text/boolean')">text/boolean</a></li>
+        <li class="divider"></li>
+        <li class="dropdown-header">SELECT / ASK formats</li>
+        <li><a href="#" onclick="sparqlDownload($('#query').val(), $('#timeout').val(), 'application/sparql-results+json')">application/sparql-results+json</a></li>
+        <li><a href="#" onclick="sparqlDownload($('#query').val(), $('#timeout').val(), 'application/sparql-results+xml')">application/sparql-results+xml</a></li>
+        <li><a href="#" onclick="sparqlDownload($('#query').val(), $('#timeout').val(), 'application/x-binary-rdf-results-table')">application/x-binary-rdf-results-table</a></li>
+        <li><a href="#" onclick="sparqlDownload($('#query').val(), $('#timeout').val(), 'text/csv')">text/csv</a></li>
+        <li><a href="#" onclick="sparqlDownload($('#query').val(), $('#timeout').val(), 'text/tab-separated-values')">text/tab-separated-values</a></li>
+        <li class="divider"></li>
+        <li class="dropdown-header">CONSTRUCT / DESCRIBE formats</li>
+        <li><a href="#" onclick="sparqlDownload($('#query').val(), $('#timeout').val(), 'application/ld+json')">application/ld+json</a></li>
+        <li><a href="#" onclick="sparqlDownload($('#query').val(), $('#timeout').val(), 'application/rdf+xml')">application/rdf+xml</a></li>
+        <li><a href="#" onclick="sparqlDownload($('#query').val(), $('#timeout').val(), 'application/n-triples')">application/n-triples</a></li>
+        <li><a href="#" onclick="sparqlDownload($('#query').val(), $('#timeout').val(), 'application/x-tql')">application/x-tql</a></li>
+        <li><a href="#" onclick="sparqlDownload($('#query').val(), $('#timeout').val(), 'application/trix')">application/trix</a></li>
+        <li><a href="#" onclick="sparqlDownload($('#query').val(), $('#timeout').val(), 'application/x-trig')">application/x-trig</a></li>
+        <li><a href="#" onclick="sparqlDownload($('#query').val(), $('#timeout').val(), 'text/turtle')">text/turtle</a></li>
+        <li><a href="#" onclick="sparqlDownload($('#query').val(), $('#timeout').val(), 'application/rdf+json')">application/rdf+json</a></li>
+        <li><a href="#" onclick="sparqlDownload($('#query').val(), $('#timeout').val(), 'application/x-binary-rdf')">application/x-binary-rdf</a></li>
+      </ul>
+    </div>
+    <div class="form-group col-sm-2 col-sm-offset-4 text-right">
+      {{#examplesScript}}
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown">example query <b class="caret"></b></a>
+      <ul class="dropdown-menu pull-right text-left">
+        {{#examplesLinks}}
+        <li>{{{.}}}</li>
+        {{/examplesLinks}}
+      </ul>
+      {{/examplesScript}}
+    </div>    
+  </div>
+</fieldset>
+</form>
+</div>
+</div>
+
+{{#hasResults}}
+<div class="row">
+<div class="col-md-12">
+<div style="float: left"><strong>{{resultsMessage}}</strong></div>
+<div style="float: right"><a href="#" data-toggle="collapse" data-target="#request">show / hide query panel</a></div>
+<br/>
+<div class="panel panel-default">
+{{#results}}
+{{{.}}}
+{{/results}}
+</div>
+</div>
+</div>
+{{/hasResults}}
+
+<script>
+function sparqlExample(queryNum) {
+    {{{examplesScript}}}
+}
+
+function sparqlDownload(query, timeout, format) {
+    var url = "sparql?query=" + encodeURIComponent(query) + "&accept="
+            + encodeURIComponent(format) + "&timeout=" + encodeURIComponent(timeout);
+    window.open(url, '_blank');
+}
+</script>
+
+{{/content}}
+{{/eu/fbk/knowledgestore/server/http/jaxrs/template}}

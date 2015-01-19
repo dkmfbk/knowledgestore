@@ -1,0 +1,22 @@
+<assembly>
+	<id>deploy</id>
+	<formats>
+		<format>tar.gz</format>
+	</formats>
+	<includeBaseDirectory>false</includeBaseDirectory>
+	<dependencySets>
+		<dependencySet>
+			<outputDirectory>/</outputDirectory>
+			<includes>
+				<include>eu.fbk.knowledgestore:ks-datastore-hbase</include>
+				<include>eu.fbk.knowledgestore:ks-datastore</include><!-- in principle not needed -->
+				<include>eu.fbk.knowledgestore:ks-runtime</include>
+				<include>eu.fbk.knowledgestore:ks-core</include>
+				<include>org.openrdf.sesame:sesame-model</include>
+				<include>org.openrdf.sesame:sesame-util</include>
+				<include>jaxen:jaxen</include>
+				<include>org.javassist:javassist</include>
+			</includes>
+		</dependencySet>
+	</dependencySets>
+</assembly>

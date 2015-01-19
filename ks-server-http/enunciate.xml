@@ -1,0 +1,52 @@
+<enunciate>
+
+  <services>
+    <rest>
+      <content-types>
+        <content-type
+          type="application/rdf+xml"
+          id="rdfxml" />
+        <content-type
+          type="application/n-triples"
+          id="ntriples" />
+        <content-type
+          type="text/x-nquads"
+          id="nquads" />
+        <content-type
+          type="text/turtle"
+          id="turtle" />
+        <content-type
+          type="text/n3"
+          id="n3" />
+        <content-type
+          type="application/trix"
+          id="trix" />
+        <content-type
+          type="application/x-trig"
+          id="trig" />
+        <content-type
+          type="application/x-binary-rdf"
+          id="binary" />
+        <content-type
+          type="application/ld+json"
+          id="jsonld" />
+        <content-type
+          type="application/rdf+json"
+          id="rdfjson" />
+      </content-types>
+    </rest>
+  </services>
+
+  <facets>
+    <exclude name="internal" />
+  </facets>
+
+  <modules>
+    <docs
+      splashPackage="eu.fbk.knowledgestore.endpoint.jaxrs"
+      title="KnowledgeStore Web API reference"
+      copyright="2014 FBK-irst"
+      freemarkerXMLProcessingTemplate="../src/settings/enunciate.fmt" />
+  </modules>
+
+</enunciate>

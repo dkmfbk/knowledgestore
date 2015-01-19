@@ -1,0 +1,28 @@
+<book>
+	<id>manual</id>
+	<title>SPRINGLES manual</title>
+	<chapters>
+		<chapter>
+			<id>springles</id>
+			<title>SPRINGLES</title>
+			<sections>
+				<section>
+					<id>index</id>
+					<title>Overview</title>
+				</section>
+				<section>
+					<id>download</id>
+					<title>Download instructions</title>
+				</section>
+				<section>
+					<id>users-guide</id>
+					<title>Users' guide</title>
+				</section>
+				<section>
+					<id>developers-guide</id>
+					<title>Developers' guide</title>
+				</section>
+			</sections>
+		</chapter>
+	</chapters>
+</book>

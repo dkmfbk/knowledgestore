@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<knowledgestore.server>
+<!-- 
+<url>http://sisters:8080/</url> 
+<username>ks</username>
+<password>kspass</password>
+-->
+<!-- 
+<url>http://localhost:8080/</url> 
+<username>ks</username>
+<password>kspass</password>
+-->
+<url>http://hlt-services7:8080/</url>
+<username>nwr_hack</username>
+<password>london_2014</password>
+</knowledgestore.server>

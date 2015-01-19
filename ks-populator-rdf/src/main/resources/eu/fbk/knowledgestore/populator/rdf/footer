@@ -1,0 +1,18 @@
+If no INPUT_FILE or option (-@, -T) is given, input is read from STDIN (-s to
+control format/compression); if -o is not given, output is written to STDOUT.
+
+Default metadata and context (-d) are applied only when not present in axioms;
+they are to be encoded in a file using the same rules to encode axioms in RDF.
+
+Merge criteria is a comma-separated sequence of ACTION PROPERTY. PROPERTY is
+either a specific URI/QName or the wildcard '*'. ACTION can be:
+
+  overwrite  replace old property values with new ones, even if null
+  update     replace old property values with new ones, only if not null
+  init       store new property values only if old ones are null
+  min        store the minimum property value among old and new ones
+  max        store the minimum property value among old and new ones
+  union      store the union of old and new property values
+		
+Supported RDF formats: rdf, rj, jsonld, nt, nq, trix, trig, tql, ttl, n3, brf
+Supported compression: gz, bz2, xz

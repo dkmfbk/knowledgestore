@@ -1,0 +1,201 @@
+<web-app
+  xmlns="http://java.sun.com/xml/ns/javaee"
+  xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  id="KnowledgeStore"
+  version="3.0">
+
+  <filter>
+    <filter-name>TeeFilter</filter-name>
+    <filter-class>ch.qos.logback.access.servlet.TeeFilter</filter-class>
+  </filter>
+
+  <filter>
+    <filter-name>CorsFilter</filter-name>
+    <filter-class>org.ebaysf.web.cors.CORSFilter</filter-class>
+    <init-param>
+      <param-name>cors.allowed.methods</param-name>
+      <param-value>GET,POST,PUT,DELETE,OPTIONS,HEAD</param-value>
+    </init-param>
+    <init-param>
+      <param-name>cors.allowed.headers</param-name>
+      <param-value>Origin,Accept,X-Requested-With,Content-Type,Access-Control-Request-Method,Access-Control-Request-Headers,X-KS Content-Meta</param-value>
+    </init-param>
+    <init-param>
+      <param-name>cors.exposed.headers</param-name>
+      <param-value>Content-Type,Content-Encoding,Content-Length,Content-Language,Content-Disposition,Content-MD5,Cache-control,Date,ETag,Last-Modified,Location,Server,Vary,X-KS-Chunked,X-KS-Class,X-KS-Invocation,X-KS-Content-Meta</param-value>
+    </init-param>
+    <init-param>
+      <param-name>cors.request.decorate</param-name>
+      <param-value>false</param-value>
+    </init-param>
+    <!-- what to do with cors.support.credentials? -->
+  </filter>
+
+  <filter-mapping>
+    <filter-name>TeeFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <filter-mapping>
+    <filter-name>CorsFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <servlet>
+    <servlet-name>default</servlet-name>
+    <servlet-class>org.eclipse.jetty.servlet.DefaultServlet</servlet-class>
+    <init-param>
+      <param-name>cacheControl</param-name>
+      <param-value>max-age=3600,public</param-value>
+    </init-param>
+  </servlet>
+
+  <servlet>
+    <servlet-name>jersey-servlet</servlet-name>
+    <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+    <load-on-startup>1</load-on-startup>
+    <init-param>
+      <param-name>javax.ws.rs.Application</param-name>
+      <param-value>eu.fbk.knowledgestore.server.http.jaxrs.Application</param-value>
+    </init-param>
+  </servlet>
+
+  <servlet>
+    <servlet-name>jolokia-agent</servlet-name>
+    <servlet-class>org.jolokia.http.AgentServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>default</servlet-name>
+    <url-pattern>ks.css</url-pattern>
+    <url-pattern>js/bootstrap.js</url-pattern>
+    <url-pattern>js/bootstrap.min.js</url-pattern>
+    <url-pattern>js/jquery-1.11.0.min.js</url-pattern>
+    <url-pattern>css/bootstrap-theme.css</url-pattern>
+    <url-pattern>css/bootstrap-theme.css.map</url-pattern>
+    <url-pattern>css/bootstrap-theme.min.css</url-pattern>
+    <url-pattern>css/bootstrap.css</url-pattern>
+    <url-pattern>css/bootstrap.css.map</url-pattern>
+    <url-pattern>css/bootstrap.min.css</url-pattern>
+    <url-pattern>fonts/glyphicons-halflings-regular.eot</url-pattern>
+    <url-pattern>fonts/glyphicons-halflings-regular.svg</url-pattern>
+    <url-pattern>fonts/glyphicons-halflings-regular.ttf</url-pattern>
+    <url-pattern>fonts/glyphicons-halflings-regular.woff</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>jersey-servlet</servlet-name>
+    <url-pattern>/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>jolokia-agent</servlet-name>
+    <url-pattern>/jolokia/*</url-pattern>
+  </servlet-mapping>
+  
+  <!-- The following security-constraint clauses are filtered at startup time, removing all constraints 
+    for roles associated to anonymous users; if no role remains, the whole security-constraint block is dropped -->
+
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>download</web-resource-name>
+      <url-pattern>/files/*</url-pattern>
+      <http-method>GET</http-method>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>downloader</role-name>
+    </auth-constraint>
+    <user-data-constraint>
+      <transport-guarantee>confidential</transport-guarantee>
+    </user-data-constraint>
+  </security-constraint>
+
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>crud_read</web-resource-name>
+      <url-pattern>/resources/*</url-pattern>
+      <url-pattern>/mentions/*</url-pattern>
+      <url-pattern>/entities/*</url-pattern>
+      <url-pattern>/axioms/*</url-pattern>
+      <http-method>GET</http-method>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>crud_reader</role-name>
+    </auth-constraint>
+    <user-data-constraint>
+      <transport-guarantee>confidential</transport-guarantee>
+    </user-data-constraint>
+  </security-constraint>
+
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>sparql_read</web-resource-name>
+      <url-pattern>/sparql/*</url-pattern>
+      <http-method>GET</http-method>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>sparql_reader</role-name>
+    </auth-constraint>
+    <user-data-constraint>
+      <transport-guarantee>confidential</transport-guarantee>
+    </user-data-constraint>
+  </security-constraint>
+
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>writer</web-resource-name>
+      <url-pattern>/files/*</url-pattern>
+      <url-pattern>/resources/*</url-pattern>
+      <url-pattern>/mentions/*</url-pattern>
+      <url-pattern>/entities/*</url-pattern>
+      <url-pattern>/axioms/*</url-pattern>
+      <http-method>POST</http-method>
+      <http-method>PUT</http-method>
+      <http-method>DELETE</http-method>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>writer</role-name>
+    </auth-constraint>
+    <user-data-constraint>
+      <transport-guarantee>confidential</transport-guarantee>
+    </user-data-constraint>
+  </security-constraint>
+
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>ui</web-resource-name>
+      <url-pattern>/ui</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>ui_user</role-name>
+    </auth-constraint>
+    <user-data-constraint>
+      <transport-guarantee>confidential</transport-guarantee>
+    </user-data-constraint>
+  </security-constraint>
+
+  <login-config>
+    <auth-method>basic</auth-method>
+    <realm-name>REPLACED_AT_RUNTIME</realm-name> <!-- replaced based on configuration -->
+  </login-config>
+
+  <security-role>
+    <role-name>downloader</role-name>
+  </security-role>
+  <security-role>
+    <role-name>crud_reader</role-name>
+  </security-role>
+  <security-role>
+    <role-name>sparql_reader</role-name>
+  </security-role>
+  <security-role>
+    <role-name>writer</role-name>
+  </security-role>
+  <security-role>
+    <role-name>ui_user</role-name>
+  </security-role>
+
+</web-app>

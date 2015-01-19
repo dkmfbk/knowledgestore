@@ -1,0 +1,191 @@
+@prefix : <java:> .
+
+<obj:launcher>
+    :threadCount 16 ;
+    :threadName "ks-%d" ;
+    :logConfig "/Users/alessio/Documents/scripts/svn/Code/KnowledgeStore/trunk/ks-distribution/src/main/config/ks.log.xml" ;
+    :component <obj:httpServer> .
+
+<obj:httpServer>
+    a <java:eu.fbk.knowledgestore.server.http.HttpServer#builder> ;
+    :logConfigLocation "ks.loghttp.xml" ;
+    :delegate <obj:server> ;
+    :host "0.0.0.0" ;
+    :httpPort 8080 ;
+    :httpsPort 8443 ;
+    :path "/" ;
+    :acceptors 2 ;
+    :selectors 2 ;
+    :debug false ;
+    :keystoreConfig [
+        a <java:eu.fbk.knowledgestore.server.http.KeystoreConfig> ;
+        :location "/Users/alessio/Documents/scripts/svn/Code/KnowledgeStore/trunk/ks-distribution/src/main/config/ks.jks" ;
+        :password "kspass" ;
+        :type "jks"
+    ] ;
+    :securityConfig [
+        a <java:eu.fbk.knowledgestore.server.http.SecurityConfig> ;
+        :realm "KnowledgeStore" ;
+        :userdbLocation "/Users/alessio/Documents/scripts/svn/Code/KnowledgeStore/trunk/ks-distribution/src/main/config/ks.userdb" ;
+        :anonymousRoles "sparql_reader" , "crud_reader" , "downloader" , "writer" 
+    ] ;
+    :uiConfig <obj:uiConfig> .    
+    
+<obj:server>
+    a <java:eu.fbk.knowledgestore.server.Server#builder> ;
+    :fileStore <obj:fileStore> ;
+    :dataStore <obj:dataStore> ;
+    :tripleStore <obj:tripleStore> ;
+    :chunkSize 1024 ;
+    :bufferSize 16777216 .
+    
+<obj:fileStore>
+    a <java:eu.fbk.knowledgestore.filestore.GzippedFileStore> ;
+    :compressionLevel 9 ;
+    :bufferSize 512 ;
+    :delegate [
+        a <java:eu.fbk.knowledgestore.filestore.LoggingFileStore> ;
+        :delegate [
+            a <java:eu.fbk.knowledgestore.filestore.HadoopFileStore> ;
+            :fileSystem <obj:fileSystem> ;
+            :path "files"
+        ]
+    ] .
+
+<obj:dataStore>
+    a <java:eu.fbk.knowledgestore.datastore.SynchronizedDataStore> ;
+    :synchronizerSpec "10:10" ;
+    :delegate [
+        a <java:eu.fbk.knowledgestore.datastore.CachingDataStore> ;
+        :delegate [
+            a <java:eu.fbk.knowledgestore.datastore.LoggingDataStore> ;
+            :delegate [
+                a <java:eu.fbk.knowledgestore.datastore.MySQLDataStore> ;
+                :host "localhost";
+                :username "root";
+                :password "pippo";
+                :databaseName "test"
+#                a <java:eu.fbk.knowledgestore.datastore.LuceneDataStore> ;
+#                :folder "/Users/alessio/lucene-ks"
+            ]
+        ]
+    ] .
+
+<obj:tripleStore>
+    a <java:eu.fbk.knowledgestore.triplestore.SynchronizedTripleStore> ;
+    :synchronizerSpec "10:1" ;
+    :delegate [
+        a <java:eu.fbk.knowledgestore.triplestore.LoggingTripleStore> ;
+        :delegate [
+            a <java:eu.fbk.knowledgestore.triplestore.RewritingTripleStore> ;
+            :internalPrefix "http://www.newsreader-project.eu/data/cars/" ;
+            :externalPrefix "http://www.newsreader-project.eu/data/cars/" ;
+            :delegate [
+                a <java:eu.fbk.knowledgestore.triplestore.RepositoryTripleStore> ;
+                :repository [
+                    a <java:org.openrdf.repository.sparql.SPARQLRepository> ;
+                    :endpointUrl "http://hlt-services7:9890/sparql"
+                ]
+            ]
+#            :delegate [
+#                a <java:eu.fbk.knowledgestore.triplestore.virtuoso.VirtuosoTripleStore> ;
+#                :host "hlt-services7" ;
+#                :port "9111" ;
+#                :username "dba" ;
+#                :password "dba" ;
+#                :pooling "false" ;
+#                :batchSize 5000 ;
+#                :fetchSize 200 ;
+#                :fileSystem <obj:fileSystem> ;
+#                :markerFilename "virtuoso.marker" 
+#            ]
+        ]
+    ] .       
+            
+<obj:fileSystem>
+    a <java:eu.fbk.knowledgestore.runtime.Files#getFileSystem> ;
+    :url "file://${user.dir}/var" .
+    
+<obj:uiConfig>
+    a <java:eu.fbk.knowledgestore.server.http.UIConfig#builder> ;
+    :resultLimit 1000 ;
+    :resourceOverviewProperties dcterms:created , dcterms:title ;
+    :mentionOverviewProperties rdf:type , nwr:eventClass , nwr:entityType , ks:refersTo ;
+    :mentionCategories [
+        a <java:eu.fbk.knowledgestore.server.http.UIConfig$Category> ;
+        :label "event" ;
+        :style "background-color: #CFE990" ;
+        :condition "rdf:type = \\nwr:EventMention" ;
+    ] , [
+        a <java:eu.fbk.knowledgestore.server.http.UIConfig$Category> ;
+        :label "per" ;
+        :style "background-color: #FB9C6C" ;
+        :condition "rdf:type = \\nwr:ObjectMention and nwr:entityType = \\nwr:entity_type_per" ;
+    ] , [
+        a <java:eu.fbk.knowledgestore.server.http.UIConfig$Category> ;
+        :label "org" ;
+        :style "background-color: #FFFF99" ;
+        :condition "rdf:type = \\nwr:ObjectMention and nwr:entityType = \\nwr:entity_type_org" ;
+    ] , [
+        a <java:eu.fbk.knowledgestore.server.http.UIConfig$Category> ;
+        :label "loc" ;
+        :style "background-color: #66CCFF" ;
+        :condition "rdf:type = \\nwr:ObjectMention and nwr:entityType = \\nwr:entity_type_loc" ;
+    ] , [
+        a <java:eu.fbk.knowledgestore.server.http.UIConfig$Category> ;
+        :label "fin" ;
+        :style "background-color: #CC9900" ;
+        :condition "rdf:type = \\nwr:ObjectMention and nwr:entityType = \\nwr:entity_type_fin" ;
+    ] , [
+        a <java:eu.fbk.knowledgestore.server.http.UIConfig$Category> ;
+        :label "pro" ;
+        :style "background-color: #CC66CC" ;
+        :condition "rdf:type = \\nwr:ObjectMention and nwr:entityType = \\nwr:entity_type_pro" ;
+    ] , [
+        a <java:eu.fbk.knowledgestore.server.http.UIConfig$Category> ;
+        :label "mix" ;
+        :style "background-color: #808080" ;
+        :condition "rdf:type = \\nwr:ObjectMention and nwr:entityType = \\nwr:entity_type_mix" ;
+    ] , [
+        a <java:eu.fbk.knowledgestore.server.http.UIConfig$Category> ;
+        :label "other" ;
+        :style "background-color: #E0E0E0" ;
+        :condition "rdf:type = \\nwr:ObjectMention and count(nwr:entityType) = 0" ;
+    ] ;
+    :lookupExamples [
+        a <java:eu.fbk.knowledgestore.server.http.UIConfig$Example> ;
+        :label "News resource" ;
+        :value "http://www.newsreader-project.eu/data/cars/2004/4/4/4C3S-T3H0-01CY-M246.xml"
+    ] , [
+        a <java:eu.fbk.knowledgestore.server.http.UIConfig$Example> ;
+        :label "NAF resource" ;
+        :value "http://www.newsreader-project.eu/data/cars/2004/4/4/4C3S-T3H0-01CY-M246.naf"
+    ] , [
+        a <java:eu.fbk.knowledgestore.server.http.UIConfig$Example> ;
+        :label "Mention" ;
+        :value "http://www.newsreader-project.eu/data/cars/2004/4/4/4C3S-T3H0-01CY-M246.xml#char=886,897&word=w158&term=t158" 
+    ] ;
+    :sparqlExamples [
+        a <java:eu.fbk.knowledgestore.server.http.UIConfig$Example> ;
+        :label "Describe an entity" ;
+        :value "DESCRIBE <http://www.newsreader-project.eu/2004/4/4/4C3S-T3H0-01CY-M246.xml#coe3>" 
+    ] , [
+        a <java:eu.fbk.knowledgestore.server.http.UIConfig$Example> ;
+        :label "Retrieve 10 events" ;
+        :value "SELECT ?s WHERE {?s rdf:type sem:Event} LIMIT 10"
+    ] , [
+        a <java:eu.fbk.knowledgestore.server.http.UIConfig$Example> ;
+        :label "Show all properties of an event" ;
+        :value """
+            SELECT ?p ?v ?l ?t
+            WHERE {
+              <http://www.newsreader-project.eu/2004/4/4/4C3S-T3H0-01CY-M246.xml#coe3> ?p ?v .
+              OPTIONAL { SELECT ?v (GROUP_CONCAT(?vl ; SEPARATOR=" | ") AS ?l)
+                         WHERE { ?v rdfs:label ?vl } GROUP BY ?v }
+              OPTIONAL { SELECT ?v (GROUP_CONCAT(str(?vt) ; SEPARATOR=" | ") AS ?t)
+                         WHERE { ?v a ?vt FILTER NOT EXISTS { ?vt1 rdfs:subClassOf ?vt FILTER(?vt1 != ?vt) } } GROUP BY ?v }
+            }
+            ORDER BY DESC(?p) ?v
+            LIMIT 1000
+        """         
+    ] .

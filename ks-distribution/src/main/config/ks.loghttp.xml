@@ -1,0 +1,20 @@
+<configuration debug="false">
+
+  <appender
+    name="FILE"
+    class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>log/ksd-%d{yyyy-MM-dd}.http.log</fileNamePattern>
+      <maxHistory>30</maxHistory>
+    </rollingPolicy>
+    <encoder>
+      <!-- CLF extended with user agent (to identify requests from KS client) and service time -->
+      <pattern>%h %l %u %user %date "%r" %s %b "%i{User-Agent}" %D</pattern>
+      <!-- <pattern>clf</pattern> -->
+      <!-- <pattern>%fullRequest%n%n%fullResponse</pattern> -->
+    </encoder>
+  </appender>
+
+  <appender-ref ref="FILE" />
+
+</configuration>

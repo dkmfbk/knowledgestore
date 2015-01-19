@@ -1,0 +1,144 @@
+NAF: /Users/qwaider/Documents/NewsReader/KnowledgeStore/trunk/ks-populator-naf/target/test-classes/eu/fbk/knowledgestore/populator/naf/multifiles/input/test.naf
+KS stats all(25):
+Object mentions:5 , PER(2), LOC(1), ORG(1), PRO(0), fin(0), mix(0), no-mapping(1)
+Time mentions: 2
+Event mentions: 16
+Participation mentions: 2
+
+populator stats:
+Entity:5
+Coreference: 9 (event: 9 , not-event: 0 )
+Srl:1
+Role with entity: 2 (discarded: 12)
+Timex:2
+Factuality:6
+=========
+
+NAF: /Users/qwaider/Documents/NewsReader/KnowledgeStore/trunk/ks-populator-naf/target/test-classes/eu/fbk/knowledgestore/populator/naf/multifiles/input/test10.naf
+KS stats all(25):
+Object mentions:5 , PER(2), LOC(1), ORG(1), PRO(0), fin(0), mix(0), no-mapping(1)
+Time mentions: 2
+Event mentions: 16
+Participation mentions: 2
+
+populator stats:
+Entity:5
+Coreference: 9 (event: 9 , not-event: 0 )
+Srl:1
+Role with entity: 2 (discarded: 12)
+Timex:2
+Factuality:6
+=========
+
+NAF: /Users/qwaider/Documents/NewsReader/KnowledgeStore/trunk/ks-populator-naf/target/test-classes/eu/fbk/knowledgestore/populator/naf/multifiles/input/test2.naf
+KS stats all(25):
+Object mentions:5 , PER(2), LOC(1), ORG(1), PRO(0), fin(0), mix(0), no-mapping(1)
+Time mentions: 2
+Event mentions: 16
+Participation mentions: 2
+
+populator stats:
+Entity:5
+Coreference: 9 (event: 9 , not-event: 0 )
+Srl:1
+Role with entity: 2 (discarded: 12)
+Timex:2
+Factuality:6
+=========
+
+NAF: /Users/qwaider/Documents/NewsReader/KnowledgeStore/trunk/ks-populator-naf/target/test-classes/eu/fbk/knowledgestore/populator/naf/multifiles/input/test3.naf
+KS stats all(25):
+Object mentions:5 , PER(2), LOC(1), ORG(1), PRO(0), fin(0), mix(0), no-mapping(1)
+Time mentions: 2
+Event mentions: 16
+Participation mentions: 2
+
+populator stats:
+Entity:5
+Coreference: 9 (event: 9 , not-event: 0 )
+Srl:1
+Role with entity: 2 (discarded: 12)
+Timex:2
+Factuality:6
+=========
+
+NAF: /Users/qwaider/Documents/NewsReader/KnowledgeStore/trunk/ks-populator-naf/target/test-classes/eu/fbk/knowledgestore/populator/naf/multifiles/input/test5.naf
+KS stats all(25):
+Object mentions:5 , PER(2), LOC(1), ORG(1), PRO(0), fin(0), mix(0), no-mapping(1)
+Time mentions: 2
+Event mentions: 16
+Participation mentions: 2
+
+populator stats:
+Entity:5
+Coreference: 9 (event: 9 , not-event: 0 )
+Srl:1
+Role with entity: 2 (discarded: 12)
+Timex:2
+Factuality:6
+=========
+
+NAF: /Users/qwaider/Documents/NewsReader/KnowledgeStore/trunk/ks-populator-naf/target/test-classes/eu/fbk/knowledgestore/populator/naf/multifiles/input/test6.naf
+KS stats all(25):
+Object mentions:5 , PER(2), LOC(1), ORG(1), PRO(0), fin(0), mix(0), no-mapping(1)
+Time mentions: 2
+Event mentions: 16
+Participation mentions: 2
+
+populator stats:
+Entity:5
+Coreference: 9 (event: 9 , not-event: 0 )
+Srl:1
+Role with entity: 2 (discarded: 12)
+Timex:2
+Factuality:6
+=========
+
+NAF: /Users/qwaider/Documents/NewsReader/KnowledgeStore/trunk/ks-populator-naf/target/test-classes/eu/fbk/knowledgestore/populator/naf/multifiles/input/test8.naf
+KS stats all(25):
+Object mentions:5 , PER(2), LOC(1), ORG(1), PRO(0), fin(0), mix(0), no-mapping(1)
+Time mentions: 2
+Event mentions: 16
+Participation mentions: 2
+
+populator stats:
+Entity:5
+Coreference: 9 (event: 9 , not-event: 0 )
+Srl:1
+Role with entity: 2 (discarded: 12)
+Timex:2
+Factuality:6
+=========
+
+NAF: /Users/qwaider/Documents/NewsReader/KnowledgeStore/trunk/ks-populator-naf/target/test-classes/eu/fbk/knowledgestore/populator/naf/multifiles/input/test9.naf
+KS stats all(25):
+Object mentions:5 , PER(2), LOC(1), ORG(1), PRO(0), fin(0), mix(0), no-mapping(1)
+Time mentions: 2
+Event mentions: 16
+Participation mentions: 2
+
+populator stats:
+Entity:5
+Coreference: 9 (event: 9 , not-event: 0 )
+Srl:1
+Role with entity: 2 (discarded: 12)
+Timex:2
+Factuality:6
+=========
+
+Global stats:
+
+KS stats all(200):
+Object mentions:40 , PER(16), LOC(8), ORG(8), PRO(0), fin(0), mix(0), no-mapping(8)
+Time mentions: 16
+Event mentions: 128
+Participation mentions: 16
+
+populator stats:
+Entity:40
+Coreference: 72 (event: 0 , not-event: 0 )
+Srl:8
+Role with entity: 16 (discarded: 96)
+Timex:16
+Factuality:48
+=========
