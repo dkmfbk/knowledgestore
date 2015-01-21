@@ -4,6 +4,8 @@ target
 var
 .idea
 
+**/pom.xml.versionsBackup
+
 ks-client/ks-client.iml
 ks-core/ks-core.iml
 ks-distribution/ks-distribution.iml
