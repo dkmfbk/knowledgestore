@@ -23,6 +23,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import com.google.common.base.Function;
+import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
 import com.google.common.collect.HashMultiset;
@@ -98,9 +99,10 @@ public class Root extends Resource {
             + "}\n" //
             + "LIMIT $$";
 
-    private static final String DEFAULT_MENTION_STYLE = "background-color: silver";
-
     private static final int MAX_FETCHED_RESULTS = 10000;
+
+    private static final boolean CHAR_OFFSET_HACK = Boolean.parseBoolean(System.getProperty(
+            "ks.charOffsetHack", "false"));
 
     @GET
     public Response getStatus() {
@@ -295,7 +297,7 @@ public class Root extends Resource {
 
         final long elapsed = System.currentTimeMillis() - ts;
         resultsMessage.append(" results in ").append(elapsed).append(" ms");
-        if (elapsed > timeout) {
+        if (timeout != null && elapsed > timeout) {
             resultsMessage.append(" (timed out, more results may be available)");
         }
 
@@ -386,17 +388,31 @@ public class Root extends Resource {
                     .getUnique();
             if (mention != null) {
                 selectedMentionIDs.add(mention.getID());
-                final URI entityURI = mentionToEntity(mention);
+                final Set<URI> entityURIs = mentionToEntities(mention);
                 model.put(bodyKey, render(mention));
                 final StringBuilder builder = new StringBuilder("<strong>Mention ");
                 render(builder, selection);
-                if (entityURI != null) {
-                    builder.append("&nbsp;&nbsp;&#10143;&nbsp;&nbsp;Entity ");
-                    render(builder, entityURI);
-                    builder.append("</strong>&nbsp;&nbsp;<a href=\"#\" onclick=\"select('")
-                            .append(escapeHtml(entityURI)).append("')\">(select)</a>");
-                } else {
-                    builder.append("</strong>");
+                builder.append("</strong>");
+                if (!entityURIs.isEmpty()) {
+                    builder.append("&nbsp;&nbsp;&#10143;&nbsp;&nbsp;");
+                    builder.append(entityURIs.size() == 1 ? "<strong>Entity</strong>"
+                            : "<strong>Entities</strong>");
+                    for (final URI entityURI : entityURIs) {
+                        builder.append("&nbsp;&nbsp;<strong>");
+                        render(builder, entityURI);
+                        builder.append("</strong>");
+                        boolean mentionedInText = false;
+                        for (final Record m : mentions) {
+                            if (m.get(KS.REFERS_TO, URI.class).contains(entityURI)) {
+                                mentionedInText = true;
+                                break;
+                            }
+                        }
+                        if (mentionedInText) {
+                            builder.append(" <a href=\"#\" onclick=\"select('")
+                                    .append(escapeHtml(entityURI)).append("')\">(select)</a>");
+                        }
+                    }
                 }
                 model.put(titleKey, builder.toString());
             } else {
@@ -437,7 +453,7 @@ public class Root extends Resource {
     private void uiLookupMention(final Map<String, Object> model, final Record mention)
             throws Throwable {
 
-        final URI entityID = mentionToEntity(mention);
+        final Set<URI> entityIDs = mentionToEntities(mention);
         final URI resourceID = mention.getUnique(KS.MENTION_OF, URI.class, null);
 
         model.put("mention", Boolean.TRUE);
@@ -456,11 +472,20 @@ public class Root extends Resource {
             }
         }
 
-        if (entityID != null) {
+        if (!entityIDs.isEmpty()) {
+            final StringBuilder builder = new StringBuilder();
+            for (final URI entityID : entityIDs) {
+                builder.append(builder.length() > 0 ? "&nbsp;&nbsp;" : "");
+                render(builder, entityID);
+            }
+            model.put("mentionEntityLinks", builder.toString());
+            final URI entityID = entityIDs.iterator().next();
             final List<BindingSet> bindings = getSession()
                     .sparql(DESCRIBE_QUERY, entityID, entityID, entityID, entityID,
                             getUIConfig().getResultLimit()).execTuples().toList();
-            model.put("mentionEntityLink", render(new StringBuilder(), entityID));
+            if (entityIDs.size() == 1) {
+                model.put("mentionEntityLink", render(new StringBuilder(), entityID));
+            }
             model.put("mentionEntityTriplesCount", bindings.size());
             model.put("mentionEntityTriples", render(new StringBuilder(), DESCRIBE_VARS, bindings));
         }
@@ -686,9 +711,6 @@ public class Root extends Resource {
         return builder;
     }
 
-    private static final boolean CHAR_OFFSET_HACK = Boolean.parseBoolean(System.getProperty(
-            "ks.charOffsetHack", "false"));
-
     private StringBuilder render(final StringBuilder builder, final String text,
             final List<Record> mentions, final Set<URI> selection, final boolean canSelect,
             final boolean onlyMention) {
@@ -808,15 +830,18 @@ public class Root extends Resource {
         return object == null ? null : HtmlEscapers.htmlEscaper().escape(object.toString());
     }
 
-    private URI mentionToEntity(final Record mention) throws Throwable {
-        URI entityID = mention.getUnique(KS.REFERS_TO, URI.class, null);
-        if (entityID == null) {
-            final URI mentionID = mention.getID();
-            entityID = getSession()
+    private Set<URI> mentionToEntities(final Record mention) throws Throwable {
+        Set<URI> entityIDs = ImmutableSet.copyOf(mention.get(KS.REFERS_TO, URI.class));
+        if (entityIDs.isEmpty()) {
+            entityIDs = getSession()
                     .sparql("SELECT ?e WHERE { ?e $$ $$ }", getUIConfig().getDenotedByProperty(),
-                            mentionID).execTuples().transform(URI.class, true, "e").getUnique();
+                            mention.getID()).execTuples().transform(URI.class, true, "e").toSet();
         }
-        return entityID;
+        if (getUIConfig().isRefersToFunctional() && entityIDs.size() > 1) {
+            throw new IllegalArgumentException("Multiple entities associated to mention "
+                    + mention.getID() + ": " + Joiner.on(", ").join(entityIDs));
+        }
+        return entityIDs;
     }
 
     private Set<URI> mentionsToEntities(final Iterable<Record> mentions) throws Throwable {

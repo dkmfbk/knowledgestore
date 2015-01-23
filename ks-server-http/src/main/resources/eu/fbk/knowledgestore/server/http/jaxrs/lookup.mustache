@@ -115,17 +115,27 @@
 </div>
 </div>
 
-{{#mentionEntityLink}}
+{{#mentionEntityLinks}}
 <div class="row">
 <div class="col-md-12">
-<div style="float: left"><strong>Mention referent ({{mentionEntityTriplesCount}} triples, max {{maxTriples}}): {{{mentionEntityLink}}}</strong></div>
+<div style="float: left">
+<strong>
+{{#mentionEntityLink}}
+Mention referent: {{{mentionEntityLink}}}
+{{/mentionEntityLink}}
+{{^mentionEntityLink}}
+Mention referents: {{{mentionEntityLinks}}}&nbsp;&nbsp;-&nbsp;&nbsp;first one shown
+{{/mentionEntityLink}}
+({{mentionEntityTriplesCount}} triples, max {{maxTriples}})
+</strong>
+</div>
 <br/>
 <div class="panel panel-default">
 {{{mentionEntityTriples}}}
 </div>
 </div>
 </div>
-{{/mentionEntityLink}}
+{{/mentionEntityLinks}}
 {{/mention}}
 
 {{#entity}}

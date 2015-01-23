@@ -26,3 +26,6 @@ ks-server-hbase/target
 ks-server-http/target
 ks-server-virtuoso/target
 
+*/.classpath
+*.project
+*/.settings

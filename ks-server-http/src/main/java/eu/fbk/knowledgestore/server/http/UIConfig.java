@@ -37,6 +37,8 @@ public final class UIConfig implements Serializable {
             "gaf")
             + "denotedBy");
 
+    private static final boolean DEFAULT_REFERS_TO_FUNCTIONAL = true;
+
     private final int resultLimit;
 
     private final List<URI> resourceOverviewProperties;
@@ -50,6 +52,8 @@ public final class UIConfig implements Serializable {
     private final List<Example> sparqlExamples;
 
     private final URI denotedByProperty;
+
+    private final boolean refersToFunctional;
 
     private UIConfig(final Builder builder) {
         this.resultLimit = Objects.firstNonNull(builder.resultLimit, DEFAULT_RESULT_LIMIT);
@@ -65,6 +69,8 @@ public final class UIConfig implements Serializable {
                 : ImmutableList.copyOf(builder.sparqlExamples);
         this.denotedByProperty = builder.denotedByProperty == null ? DEFAULT_DENOTED_BY_PROPERTY
                 : builder.denotedByProperty;
+        this.refersToFunctional = builder.refersToFunctional == null ? DEFAULT_REFERS_TO_FUNCTIONAL
+                : builder.refersToFunctional;
     }
 
     public static Builder builder() {
@@ -97,6 +103,10 @@ public final class UIConfig implements Serializable {
 
     public URI getDenotedByProperty() {
         return this.denotedByProperty;
+    }
+
+    public boolean isRefersToFunctional() {
+        return this.refersToFunctional;
     }
 
     @Override
@@ -290,6 +300,9 @@ public final class UIConfig implements Serializable {
         @Nullable
         private URI denotedByProperty;
 
+        @Nullable
+        private Boolean refersToFunctional = true;
+
         public Builder resultLimit(@Nullable final Integer resultLimit) {
             this.resultLimit = resultLimit;
             return this;
@@ -325,6 +338,11 @@ public final class UIConfig implements Serializable {
 
         public Builder denotedByProperty(@Nullable final URI denotedByProperty) {
             this.denotedByProperty = denotedByProperty;
+            return this;
+        }
+
+        public Builder refersToFunctional(@Nullable final Boolean refersToFunctional) {
+            this.refersToFunctional = refersToFunctional;
             return this;
         }
 
