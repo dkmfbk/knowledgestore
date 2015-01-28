@@ -142,7 +142,10 @@ Mention referents: {{{mentionEntityLinks}}}&nbsp;&nbsp;-&nbsp;&nbsp;first one sh
 {{#entityResources}}
 <div class="row">
 <div class="col-md-12">
-<div style="float: left"><strong>Entity occurrences ({{entityResourcesCount}}, max {{maxTriples}})</strong></div>
+<div style="float: left"><strong>
+Entity occurrences ({{entityResourcesCount}}, max {{maxTriples}})
+{{#entityResourcesCut}}&nbsp;&nbsp;(# mentions may be imprecise){{/entityResourcesCut}}
+</strong></div>
 <br/>
 <div class="panel panel-default">
 {{{entityResources}}}

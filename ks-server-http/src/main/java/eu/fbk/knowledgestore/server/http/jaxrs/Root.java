@@ -54,6 +54,7 @@ import org.slf4j.LoggerFactory;
 
 import eu.fbk.knowledgestore.OperationException;
 import eu.fbk.knowledgestore.Outcome;
+import eu.fbk.knowledgestore.Session;
 import eu.fbk.knowledgestore.data.Data;
 import eu.fbk.knowledgestore.data.Record;
 import eu.fbk.knowledgestore.data.Representation;
@@ -515,6 +516,10 @@ public class Root extends Resource {
             return;
         }
 
+        if (resources.size() == getUIConfig().getResultLimit()) {
+            model.put("entityResourcesCut", true);
+        }
+
         final List<URI> overviewProperties = getUIConfig().getResourceOverviewProperties();
         final StringBuilder builder = new StringBuilder();
         final int width = 75 / (overviewProperties.size() + 2);
@@ -879,22 +884,56 @@ public class Root extends Resource {
     }
 
     private List<Record> entityToResources(final URI entityID) throws Throwable {
-        final List<Record> mentions = entityToMentions(entityID);
 
+        final Session s = getSession();
+        final int limit = getUIConfig().getResultLimit();
         final Multiset<URI> resourceIDs = HashMultiset.create();
-        for (final Record mention : mentions) {
-            final URI resourceID = mention.getUnique(KS.MENTION_OF, URI.class, null);
-            if (resourceID != null) {
-                resourceIDs.add(resourceID);
+
+        final Stream<List<URI>> stream = s.sparql("SELECT ?m WHERE { $$ $$ ?m }", //
+                entityID, getUIConfig().getDenotedByProperty()).execTuples()
+                .transform(URI.class, true, "m").chunk(limit);
+        try {
+            outer: for (final List<URI> uriChunk : stream) {
+                final List<Record> mentions = s.retrieve(KS.MENTION).ids(uriChunk).exec().toList();
+                for (final Record mention : mentions) {
+                    final URI resourceID = mention.getUnique(KS.MENTION_OF, URI.class, null);
+                    if (resourceID != null) {
+                        if (resourceIDs.elementSet().size() == limit
+                                && !resourceIDs.contains(resourceID)) {
+                            break outer;
+                        }
+                        resourceIDs.add(resourceID);
+                    }
+                }
             }
+        } finally {
+            Util.closeQuietly(stream);
         }
 
-        final List<Record> resources = getSession().retrieve(KS.RESOURCE).ids(resourceIDs).exec()
-                .toList();
+        final List<Record> resources = s.retrieve(KS.RESOURCE).ids(resourceIDs).exec().toList();
         for (final Record resource : resources) {
             resource.set(NUM_MENTIONS, resourceIDs.count(resource.getID()));
         }
         return resources;
     }
+
+    // private List<Record> entityToResources(final URI entityID) throws Throwable {
+    // final List<Record> mentions = entityToMentions(entityID);
+    //
+    // final Multiset<URI> resourceIDs = HashMultiset.create();
+    // for (final Record mention : mentions) {
+    // final URI resourceID = mention.getUnique(KS.MENTION_OF, URI.class, null);
+    // if (resourceID != null) {
+    // resourceIDs.add(resourceID);
+    // }
+    // }
+    //
+    // final List<Record> resources = getSession().retrieve(KS.RESOURCE).ids(resourceIDs).exec()
+    // .toList();
+    // for (final Record resource : resources) {
+    // resource.set(NUM_MENTIONS, resourceIDs.count(resource.getID()));
+    // }
+    // return resources;
+    // }
 
 }
