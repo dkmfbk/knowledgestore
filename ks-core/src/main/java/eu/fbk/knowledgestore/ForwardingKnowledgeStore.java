@@ -4,9 +4,6 @@ import javax.annotation.Nullable;
 
 import com.google.common.collect.ForwardingObject;
 
-import org.openrdf.model.URI;
-
-
 public abstract class ForwardingKnowledgeStore extends ForwardingObject implements KnowledgeStore {
 
     @Override
