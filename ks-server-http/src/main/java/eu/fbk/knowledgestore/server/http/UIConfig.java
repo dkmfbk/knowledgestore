@@ -25,7 +25,7 @@ public final class UIConfig implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private static final int DEFAULT_RESULT_LIMIT = 1000;
+    private static final int DEFAULT_RESULT_LIMIT = 100;
 
     private static final Set<URI> DEFAULT_RESOURCE_OVERVIEW_PROPERTIES = ImmutableSet.of(
             DCTERMS.CREATED, DCTERMS.TITLE);

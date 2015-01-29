@@ -14,7 +14,7 @@
     <div class="form-group col-sm-2">
       <div class="input-group">
         <span class="input-group-addon">Timeout</span>
-        <input id="timeout" class="form-control input-sm" name="timeout" type="text" size="9" placeholder="600"/>
+        <input id="timeout" class="form-control input-sm" name="timeout" type="text" size="9" placeholder="600" {{#timeout}}value="{{timeout}}"{{/timeout}}/>
         <span class="input-group-addon">s</span>
       </div>
     </div>
@@ -64,7 +64,7 @@
 </div>
 </div>
 
-{{#hasResults}}
+{{#query}}
 <div class="row">
 <div class="col-md-12">
 <div style="float: left"><strong>{{resultsMessage}}</strong></div>
@@ -77,7 +77,7 @@
 </div>
 </div>
 </div>
-{{/hasResults}}
+{{/query}}
 
 <script>
 function sparqlExample(queryNum) {
