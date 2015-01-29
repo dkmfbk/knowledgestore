@@ -1,8 +1,13 @@
 package eu.fbk.knowledgestore.triplestore.virtuoso;
 
+import java.io.Closeable;
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Iterator;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Nullable;
 
@@ -27,10 +32,12 @@ import org.slf4j.LoggerFactory;
 
 import info.aduna.iteration.CloseableIteration;
 import info.aduna.iteration.CloseableIteratorIteration;
+import info.aduna.iteration.EmptyIteration;
 import info.aduna.iteration.IterationWrapper;
 
 import virtuoso.sesame2.driver.VirtuosoRepositoryConnection;
 
+import eu.fbk.knowledgestore.data.Data;
 import eu.fbk.knowledgestore.data.Handler;
 import eu.fbk.knowledgestore.runtime.DataCorruptedException;
 import eu.fbk.knowledgestore.triplestore.SelectQuery;
@@ -173,19 +180,47 @@ final class VirtuosoTripleTransaction implements TripleTransaction {
             }
         }
 
-        // note: it seems Virtuoso totally ignores the timeout
-        if (timeout != null) {
-            tupleQuery.setMaxQueryTime(timeout.intValue() / 1000);
+        // note: the following setting seems to be totally ignored by Virtuoso
+        // if (timeout != null) {
+        // tupleQuery.setMaxQueryTime(timeout.intValue());
+        // }
+
+        final int msTimeout = timeout == null ? 0 : timeout.intValue();
+        try {
+            this.connection.getQuadStoreConnection()
+                    .prepareCall("set result_timeout = " + msTimeout).execute();
+        } catch (final Throwable ex) {
+            LOGGER.warn("Failed to set result_timeout = " + msTimeout
+                    + " on Virtuoso JDBC connection", ex);
         }
 
         try {
             final long ts = System.currentTimeMillis();
-            final CloseableIteration<BindingSet, QueryEvaluationException> result;
-            result = logClose(tupleQuery.evaluate());
+            CloseableIteration<BindingSet, QueryEvaluationException> result;
+            result = tupleQuery.evaluate();
+            result = new IterationWrapper<BindingSet, QueryEvaluationException>(result) {
+
+                @Override
+                public boolean hasNext() throws QueryEvaluationException {
+                    try {
+                        return super.hasNext();
+                    } catch (final QueryEvaluationException ex) {
+                        if (isPartialResultException(ex)) {
+                            return false;
+                        }
+                        throw ex;
+                    }
+                }
+
+            };
+            result = logClose(result);
             LOGGER.debug("Virtuoso iteration obtained in {} ms", System.currentTimeMillis() - ts);
             return result;
         } catch (final QueryEvaluationException ex) {
-            throw new IOException("Failed to execute query:\n" + query, ex);
+            if (isPartialResultException(ex)) {
+                return new EmptyIteration<>();
+            }
+            throw new IOException("Failed to execute query - " + ex.getMessage(), ex);
         }
     }
 
@@ -348,41 +383,43 @@ final class VirtuosoTripleTransaction implements TripleTransaction {
         boolean committed = false;
 
         try {
-            if (commit) {
-                try {
-                    if (this.store.existsTransactionMarker()) {
-                        this.connection.getQuadStoreConnection().prepareCall("log_enable(1)")
-                                .execute();
-                        this.store.removeTransactionMarker();
-                    }
-                    this.connection.commit();
-                    committed = true;
-
-                } catch (final Throwable ex) {
+            if (!this.readOnly) {
+                if (commit) {
                     try {
                         if (this.store.existsTransactionMarker()) {
-                            throw new DataCorruptedException("Cannot rollback! "
-                                    + "Modifications performed outside a transaction.");
+                            this.connection.getQuadStoreConnection().prepareCall("log_enable(1)")
+                                    .execute();
+                            this.store.removeTransactionMarker();
                         }
-                        this.connection.rollback();
-                        LOGGER.debug("{} rolled back after commit failure", this);
+                        this.connection.commit();
+                        committed = true;
 
-                    } catch (final RepositoryException ex2) {
-                        throw new DataCorruptedException(
-                                "Failed to rollback transaction after commit failure", ex);
+                    } catch (final Throwable ex) {
+                        try {
+                            if (this.store.existsTransactionMarker()) {
+                                throw new DataCorruptedException("Cannot rollback! "
+                                        + "Modifications performed outside a transaction.");
+                            }
+                            this.connection.rollback();
+                            LOGGER.debug("{} rolled back after commit failure", this);
+
+                        } catch (final RepositoryException ex2) {
+                            throw new DataCorruptedException(
+                                    "Failed to rollback transaction after commit failure", ex);
+                        }
+                        throw new IOException("Failed to commit transaction (rollback forced)", ex);
                     }
-                    throw new IOException("Failed to commit transaction (rollback forced)", ex);
-                }
-            } else {
-                try {
-                    this.connection.rollback();
-                } catch (final Throwable ex) {
-                    throw new DataCorruptedException("Failed to rollback transaction", ex);
+                } else {
+                    try {
+                        this.connection.rollback();
+                    } catch (final Throwable ex) {
+                        throw new DataCorruptedException("Failed to rollback transaction", ex);
+                    }
                 }
             }
         } finally {
             try {
-                this.connection.close();
+                closeVirtuosoRepositoryConnection(this.connection);
             } catch (final RepositoryException ex) {
                 LOGGER.error("Failed to close connection", ex);
             } finally {
@@ -398,6 +435,39 @@ final class VirtuosoTripleTransaction implements TripleTransaction {
     @Override
     public String toString() {
         return getClass().getSimpleName();
+    }
+
+    private static boolean isPartialResultException(final QueryEvaluationException ex) {
+        return ex.getMessage() != null && ex.getMessage().contains("Returning incomplete results");
+    }
+
+    private static void closeVirtuosoRepositoryConnection(
+            final VirtuosoRepositoryConnection connection) throws RepositoryException {
+
+        final Future<?> future = Data.getExecutor().schedule(new Runnable() {
+
+            @Override
+            public void run() {
+                final Connection jdbcConnection = connection.getQuadStoreConnection();
+                try {
+                    final Field field = jdbcConnection.getClass().getDeclaredField("socket");
+                    field.setAccessible(true);
+                    final Closeable socket = (Closeable) field.get(jdbcConnection);
+                    socket.close(); // as Virtuoso driver ignores polite interrupt requests...
+                    LOGGER.warn("Closed socket backing virtuoso connection");
+                } catch (final Throwable ex) {
+                    LOGGER.debug("Failed to close socket backing virtuoso connection "
+                            + "(connection class is " + jdbcConnection.getClass() + ")", ex);
+                }
+            }
+
+        }, 1000, TimeUnit.MILLISECONDS);
+
+        try {
+            connection.close();
+        } finally {
+            future.cancel(false);
+        }
     }
 
 }

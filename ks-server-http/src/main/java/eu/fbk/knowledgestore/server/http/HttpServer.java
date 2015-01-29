@@ -82,6 +82,8 @@ public class HttpServer extends ForwardingKnowledgeStore implements Component {
 
     private static final UIConfig DEFAULT_UI_CONFIG = UIConfig.builder().build();
 
+    private static final long STOP_TIMEOUT = 1000; // wait 1 s before forcing closure
+
     private final KnowledgeStore delegate;
 
     private final Server server;
@@ -142,11 +144,12 @@ public class HttpServer extends ForwardingKnowledgeStore implements Component {
     @Override
     public void close() {
         try {
+            this.server.setStopTimeout(STOP_TIMEOUT);
             this.server.stop();
             LOGGER.info("Jetty {} stopped", Server.getVersion());
         } catch (final Exception ex) {
-            throw ex instanceof RuntimeException ? (RuntimeException) ex
-                    : new RuntimeException(ex);
+            // Just log a warning without additional detail, as Jetty already prints log info
+            LOGGER.warn("Jetty {} stopped (with errors)", Server.getVersion());
         } finally {
             this.delegate.close();
         }
@@ -166,7 +169,15 @@ public class HttpServer extends ForwardingKnowledgeStore implements Component {
         final ExecutorService scheduler = Data.getExecutor();
 
         // Create HTTP server
-        final Server server = new Server(new ExecutorThreadPool(scheduler));
+        final Server server = new Server(new ExecutorThreadPool(scheduler) {
+
+            @Override
+            protected void doStop() throws Exception {
+                // Do nothing (default behaviour is shutting down the supplied scheduler, which is
+                // something we do not want.
+            }
+
+        });
         server.setDumpAfterStart(false);
         server.setDumpBeforeStop(false);
         server.setStopAtShutdown(true);
