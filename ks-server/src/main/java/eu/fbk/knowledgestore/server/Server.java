@@ -300,29 +300,37 @@ public final class Server extends AbstractKnowledgeStore {
         }
 
         private boolean canTransform(final String fromType, final String toType) {
-            return toType.trim().toLowerCase().equals("text/html");
+            final String type = toType.trim().toLowerCase();
+            return type.equals("text/html") || type.equals("text/plain");
         }
 
         private InputStream transform(final String fromType, final String toType,
                 final InputStream fromStream) throws IOException {
-            // TODO inefficient + conversion to String may not work as charset is unknown
-            final byte[] data = ByteStreams.toByteArray(fromStream);
-            final String string = new String(data, Charsets.UTF_8);
-            final ByteArrayOutputStream out = new ByteArrayOutputStream();
-            final OutputStreamWriter writer = new OutputStreamWriter(out, Charsets.UTF_8);
-            writer.append("<html>\n");
-            writer.append("<head>\n");
-            writer.append("<meta http-equiv=\"Content-type\" "
-                    + "content=\"text/html;charset=UTF-8\"/>\n");
-            writer.append("</head>\n");
-            writer.append("<body>\n");
-            writer.append("<pre>");
-            writer.append(HtmlEscapers.htmlEscaper().escape(string));
-            writer.append("</pre>\n");
-            writer.append("</body>\n");
-            writer.append("</html>\n");
-            writer.close();
-            return new ByteArrayInputStream(out.toByteArray());
+            final String type = toType.trim().toLowerCase();
+            if (type.equals("text/html")) {
+                // TODO inefficient + conversion to String may not work as charset is unknown
+                final byte[] data = ByteStreams.toByteArray(fromStream);
+                final String string = new String(data, Charsets.UTF_8);
+                final ByteArrayOutputStream out = new ByteArrayOutputStream();
+                final OutputStreamWriter writer = new OutputStreamWriter(out, Charsets.UTF_8);
+                writer.append("<html>\n");
+                writer.append("<head>\n");
+                writer.append("<meta http-equiv=\"Content-type\" "
+                        + "content=\"text/html;charset=UTF-8\"/>\n");
+                writer.append("</head>\n");
+                writer.append("<body>\n");
+                writer.append("<pre>");
+                writer.append(HtmlEscapers.htmlEscaper().escape(string));
+                writer.append("</pre>\n");
+                writer.append("</body>\n");
+                writer.append("</html>\n");
+                writer.close();
+                return new ByteArrayInputStream(out.toByteArray());
+            } else if (type.equals("text/plain")) {
+                return fromStream; // pretend it can be interpreted as UTF-8 data
+            } else {
+                throw new UnsupportedOperationException();
+            }
         }
 
         @Override
