@@ -892,23 +892,28 @@ public class Root extends Resource {
     private List<Record> getEntityResources(final URI entityID, final int maxResults)
             throws Throwable {
 
-        final Stream<BindingSet> tupleStream = getSession().sparql(
-                "SELECT ?r (COUNT(*) AS ?n) "
-                        + "WHERE { $$ $$ ?m . BIND(IRI(STRBEFORE(STR(?m),'#')) AS ?r) } "
-                        + "GROUP BY ?r ORDER BY DESC(?r) LIMIT $$", entityID,
-                getUIConfig().getDenotedByProperty(), maxResults).execTuples();
-
+        // Retrieve up to maxResults IDs of resources mentioning the entity
         final Multiset<URI> resourceIDs = HashMultiset.create();
-        try {
-            for (final BindingSet tuple : tupleStream) {
-                final URI resourceID = (URI) tuple.getValue("r");
-                final int mentionCount = ((Literal) tuple.getValue("n")).intValue();
-                resourceIDs.add(resourceID, mentionCount);
+        try (Stream<URI> stream = getSession()
+                .sparql("SELECT ?m WHERE { $$ $$ ?m }", entityID,
+                        getUIConfig().getDenotedByProperty()).execTuples()
+                .transform(URI.class, true, "m")) {
+            for (final URI mentionID : stream) {
+                final String string = mentionID.stringValue();
+                final int index = string.indexOf("#");
+                if (index > 0) {
+                    final URI resourceID = Data.getValueFactory().createURI(
+                            string.substring(0, index));
+                    if (resourceIDs.elementSet().size() == maxResults
+                            && !resourceIDs.contains(resourceID)) {
+                        break;
+                    }
+                    resourceIDs.add(resourceID);
+                }
             }
-        } finally {
-            tupleStream.close();
         }
 
+        // Lookup the resources in the KS
         final List<Record> resources;
         resources = getSession().retrieve(KS.RESOURCE).ids(resourceIDs).exec().toList();
         for (final Record resource : resources) {
