@@ -59,11 +59,12 @@ Overview
 
     * {{{http://youtu.be/if1PRwSll5c}Demonstration video}} showing accessing the KnowledgeStore through the UI
 
-    * {{{https://knowledgestore.fbk.eu/nwr/worldcup/}KnowledgeStore instance}} for the global automotive industry use case (65K news, 2003-2013 - access restricted to NewsReader consortium)
+    * {{{https://knowledgestore.fbk.eu/nwr/worldcup/}KnowledgeStore instance}} for the global automotive industry use case (partial, 65K news, 2003-2013 - access restricted to NewsReader consortium)
 
     * {{{https://knowledgestore.fbk.eu/nwr/cars/}KnowlegeStore instance}} for the FIFA World Cup use case (212K news, 2004-2014 - access restricted to NewsReader consortium)
 
-
+    * {{{https://knowledgestore2.fbk.eu/nwr/worldcup/}KnowledgeStore instance}} for the global automotive industry use case (complete, 1.2M news, 2003-2013 - access restricted to NewsReader consortium)
+    
 * Publications
 
     * {{{http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=06693492}Interlinking Unstructured and Structured Knowledge in an Integrated Framework}} (Francesco Corcoglioniti, Marco Rospocher, Roldano Cattoni, Bernardo Magnini, Luciano Serafini), in The 7th IEEE International Conference on Semantic Computing (ICSC), Irvine, CA, USA, 2013 \[{{{http://knowledgestore.fbk.eu/files/icsc2013.pdf}pdf}}\] \[{{{http://knowledgestore.fbk.eu/files/icsc2013.bib}bib}}\]

@@ -88,7 +88,27 @@
             </properties>
         </developer>
         <developer>
-            <id>mostarda</id>
+            <id>corcoglio</id>
+            <name>Francesco Corcoglioniti</name>
+            <email>corcoglio@fbk.eu</email>
+            <roles>
+                <role>Developer</role>
+            </roles>
+            <timezone>+1</timezone>
+        </developer>
+        <developer>
+            <id>aprosio</id>
+            <name>Alessio Palmero Aprosio</name>
+            <email>aprosio@fbk.eu</email>
+            <roles>
+                <role>Developer</role>
+            </roles>
+            <timezone>+1</timezone>
+        </developer>
+    </developers>
+
+    <contributors>
+        <contributor>
             <name>Michele Mostarda</name>
             <email>mostarda@fbk.eu</email>
             <url>http://wed.fbk.eu/people/profile/mostarda</url>
@@ -99,9 +119,8 @@
             <properties>
                 <picUrl>https://my.fbk.eu/fbk-api/v2/picture/mostarda</picUrl>
             </properties>
-        </developer>
-        <developer>
-            <id>amadori</id>
+        </contributor>
+        <contributor>
             <name>Marco Amadori</name>
             <email>amadori@fbk.eu</email>
             <url>http://wed.fbk.eu/people/profile/amadori</url>
@@ -112,28 +131,15 @@
             <properties>
                 <picUrl>https://my.fbk.eu/fbk-api/v2/picture/amadori</picUrl>
             </properties>
-        </developer>
-        <developer>
-            <id>rmarroquin</id>
+        </contributor>
+        <contributor>
             <name>Renato Marroquin</name>
             <email>rmarroquin@apache.org</email>
             <roles>
                 <role>Developer</role>
             </roles>
             <timezone>-5</timezone>
-        </developer>
-        <developer>
-            <id>corcoglio</id>
-            <name>Francesco Corcoglioniti</name>
-            <email>corcoglio@fbk.eu</email>
-            <roles>
-                <role>Developer</role>
-            </roles>
-            <timezone>+1</timezone>
-        </developer>
-    </developers>
-
-    <contributors>
+        </contributor>
         <contributor>
             <name>Radim Nedbal</name>
             <email>nedbal@fbk.eu</email>
@@ -1800,14 +1806,6 @@
         <!-- Paths -->
         <parent-path>.</parent-path>
         <aggregate>true</aggregate>
-        <!--<site-path>file:///${basedir}/target/kswebsite/</site-path>-->
-
-        <!--
-        <site-path>scp://hlt-services7.fbk.eu/www/hlt-services7/html/</site-path>
-        <repo-path>scp://hlt-services7.fbk.eu/www/hlt-services7/html/mvnrepo/</repo-path>
-        -->
-        <!-- <site-path>dav:https://newsreader.fbk.eu/knowdav/data/</site-path> -->
-        <!-- <repo-path>dav:https://newsreader.fbk.eu/knowdav/data/mvnrepo/</repo-path> -->
 
         <!-- Build configuration -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
