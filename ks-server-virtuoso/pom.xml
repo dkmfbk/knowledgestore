@@ -132,12 +132,20 @@
     </dependency>
     <dependency>
       <groupId>com.openlinksw.virtuoso</groupId>
-      <artifactId>virtjdbc4</artifactId>
+      <artifactId>virtjdbc4_1</artifactId>
     </dependency>
     <dependency>
-      <groupId>eu.fbk.knowledgestore</groupId>
+      <groupId>com.openlinksw.virtuoso</groupId>
       <artifactId>virt_sesame2</artifactId>
     </dependency>
+    <!-- <dependency> -->
+    <!-- <groupId>com.openlinksw.virtuoso</groupId> -->
+    <!-- <artifactId>virtjdbc4</artifactId> -->
+    <!-- </dependency> -->
+    <!-- <dependency> -->
+    <!-- <groupId>eu.fbk.knowledgestore</groupId> -->
+    <!-- <artifactId>virt_sesame2</artifactId> -->
+    <!-- </dependency> -->
     <dependency>
       <groupId>eu.fbk.knowledgestore</groupId>
       <artifactId>ks-core</artifactId>

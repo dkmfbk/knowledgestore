@@ -8,7 +8,7 @@
   <div class="form-group">
     <div class="input-group" style="max-width: 700px">
       <span class="input-group-addon">ID</span>
-      <input id="id" class="form-control input-sm" name="id" type="text" size="128" placeholder="Enter URI" {{#id}}value={{id}}{{/id}}>
+      <input id="id" class="form-control input-sm" name="id" type="text" size="128" placeholder="Enter URI" {{#id}}value="{{id}}"{{/id}}>
     </div>
   </div>
   &nbsp;
@@ -41,6 +41,15 @@
 <div class="col-md-12">
 <div style="float: left"><strong>Resource text</strong></div>
 <div style="float: right">
+<span class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">Download<b class="caret"></b></a>
+<ul class="dropdown-menu pull-right">
+  <li><a target="_blank" href="files?id=&lt;{{id}}&gt;">original version</a></li>
+  <li><a target="_blank" href="files?id=&lt;{{id}}&gt;&amp;accept=text/html">as HTML</a></li>
+  <li><a target="_blank" href="files?id=&lt;{{id}}&gt;&amp;accept=text/plain">as plain text</a></li>
+</ul>
+</span>
+&nbsp;&nbsp;&nbsp;
 <a href="#" onclick="select('')">Select resource metadata</a>
 {{#resourceEntitiesCount}}
 &nbsp;&nbsp;&nbsp;
@@ -115,7 +124,7 @@
 </div>
 </div>
 
-{{#mentionEntityLinks}}
+{{#mentionEntityTriples}}
 <div class="row">
 <div class="col-md-12">
 <div style="float: left">
@@ -126,7 +135,7 @@ Mention referent: {{{mentionEntityLink}}}
 {{^mentionEntityLink}}
 Mention referents: {{{mentionEntityLinks}}}&nbsp;&nbsp;-&nbsp;&nbsp;first one shown
 {{/mentionEntityLink}}
-({{mentionEntityTriplesCount}} triples, max {{maxTriples}})
+({{mentionEntityTriplesShown}} triples out of {{mentionEntityTriplesTotal}})
 </strong>
 </div>
 <br/>
@@ -135,14 +144,14 @@ Mention referents: {{{mentionEntityLinks}}}&nbsp;&nbsp;-&nbsp;&nbsp;first one sh
 </div>
 </div>
 </div>
-{{/mentionEntityLinks}}
+{{/mentionEntityTriples}}
 {{/mention}}
 
 {{#entity}}
 {{#entityResources}}
 <div class="row">
 <div class="col-md-12">
-<div style="float: left"><strong>Entity occurrences ({{entityResourcesCount}}, max {{maxTriples}})</strong></div>
+<div style="float: left"><strong>Resources mentioning the entity ({{entityResourcesShown}} out of {{entityResourcesCount}})&nbsp;&nbsp;-&nbsp;&nbsp;{{entityMentionsCount}} mentions total</strong></div>
 <br/>
 <div class="panel panel-default">
 {{{entityResources}}}
@@ -154,7 +163,7 @@ Mention referents: {{{mentionEntityLinks}}}&nbsp;&nbsp;-&nbsp;&nbsp;first one sh
 {{#entityTriples}}
 <div class="row">
 <div class="col-md-12">
-<div style="float: left"><strong>Entity description ({{entityTriplesCount}} triples, max {{maxTriples}})</strong></div>
+<div style="float: left"><strong>Triples describing the entity ({{entityTriplesShown}} out of {{entityTriplesTotal}})</strong></div>
 <br/>
 <div class="panel panel-default">
 {{{entityTriples}}}
@@ -166,7 +175,7 @@ Mention referents: {{{mentionEntityLinks}}}&nbsp;&nbsp;-&nbsp;&nbsp;first one sh
 {{#entityGraph}}
 <div class="row">
 <div class="col-md-12">
-<div style="float: left"><strong>Entity graph ({{entityGraphCount}} triples, max {{maxTriples}})</strong></div>
+<div style="float: left"><strong>Graph associated to the entity ({{entityGraphShown}} triples out of {{entityGraphTotal}})</strong></div>
 <br/>
 <div class="panel panel-default">
 {{{entityGraph}}}

@@ -175,12 +175,12 @@ public class SynchronizedTripleStore extends ForwardingTripleStore {
         try {
             for (final TripleTransaction transaction : transactionsToEnd) {
                 try {
-                    LOGGER.warn("Forcing rollback of TripleTransaction " + transaction
-                            + "due to closure of TripleStore");
+                    LOGGER.warn("Forcing rollback of tx " + transaction
+                            + " due to closure of TripleStore");
                     transaction.end(false);
                 } catch (final Throwable ex) {
-                    LOGGER.error("Exception caught while ending TripleTransaction " + transaction
-                            + "(rollback assumed): " + ex.getMessage(), ex);
+                    LOGGER.error("Exception caught while ending tx " + transaction
+                            + " (rollback assumed): " + ex.getMessage(), ex);
                 }
             }
         } finally {

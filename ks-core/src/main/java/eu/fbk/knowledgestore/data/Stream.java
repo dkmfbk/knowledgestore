@@ -4,6 +4,7 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Enumeration;
@@ -145,7 +146,7 @@ import eu.fbk.knowledgestore.internal.Util;
  * completion of a terminal operation automatically causes the Stream to be closed (as it cannot
  * be used in any other way).
  * </p>
- * 
+ *
  * @param <T>
  *            the type of element returned by the Stream
  */
@@ -173,7 +174,7 @@ public abstract class Stream<T> implements Iterable<T>, Closeable {
      * Creates a new Stream for the supplied elements. Use this method without arguments to
      * produce an <i>empty</i> Stream, or with a single argument to produce a <i>singleton</i>
      * Stream.
-     * 
+     *
      * @param elements
      *            the elements to be returned by the Stream, not null
      * @param <T>
@@ -195,7 +196,7 @@ public abstract class Stream<T> implements Iterable<T>, Closeable {
      * {@code Iterable} is a {@code Stream}, it will be returned unchanged. If the supplied
      * {@code Iterable} implements {@code Closeable}, method {@link Closeable#close()} will be
      * called when the {@code Stream} is closed.
-     * 
+     *
      * @param iterable
      *            an {@code Iterable} of non-null elements, possibly empty but not null
      * @param <T>
@@ -216,7 +217,7 @@ public abstract class Stream<T> implements Iterable<T>, Closeable {
 
     /**
      * Creates a new Stream over the elements returned by the supplied Iterator.
-     * 
+     *
      * @param iterator
      *            an Iterator returning non-null elements
      * @param <T>
@@ -233,7 +234,7 @@ public abstract class Stream<T> implements Iterable<T>, Closeable {
 
     /**
      * Creates a new Stream over the elements returned by the supplied Sesame Iteration.
-     * 
+     *
      * @param iteration
      *            the Iteration
      * @param <T>
@@ -246,7 +247,7 @@ public abstract class Stream<T> implements Iterable<T>, Closeable {
 
     /**
      * Creates a new Stream over the elements returned by the supplied Enumeration.
-     * 
+     *
      * @param enumeration
      *            an Enumeration of non-null elements
      * @param <T>
@@ -264,7 +265,7 @@ public abstract class Stream<T> implements Iterable<T>, Closeable {
     /**
      * Returns a Stream concatenating zero or more Iterables. If an input Iterable is a Stream, it
      * is closed as soon as exhausted or as iteration completes.
-     * 
+     *
      * @param iterables
      *            an Iterable with the Iterables or Streams to concatenate
      * @param <T>
@@ -278,7 +279,7 @@ public abstract class Stream<T> implements Iterable<T>, Closeable {
     /**
      * Returns a Stream concatenating zero or more Iterables. If an input Iterable is a Stream, it
      * is closed as soon as exhausted or as iteration completes.
-     * 
+     *
      * @param iterables
      *            a vararg array with the Iterables or Streams to concatenate
      * @param <T>
@@ -295,7 +296,7 @@ public abstract class Stream<T> implements Iterable<T>, Closeable {
      * satisfy the specified predicate. If {@code parallelism > 1}, up to {@code parallelism}
      * evaluations of the predicate are simultaneously performed in background threads for greater
      * throughput.
-     * 
+     *
      * @param predicate
      *            the predicate, never called with a null input
      * @param parallelism
@@ -319,7 +320,7 @@ public abstract class Stream<T> implements Iterable<T>, Closeable {
      * function is never called with a null input; in case it returns a null output, it is ignored
      * and iteration moves to the next element (this feature can be used to combine filtering with
      * transformation).
-     * 
+     *
      * @param function
      *            the function, not null
      * @param parallelism
@@ -342,7 +343,7 @@ public abstract class Stream<T> implements Iterable<T>, Closeable {
      * supplied transformation functions to the {@code Iterator} and {@code Handler} returned /
      * accepted by this Stream. At least a function must be supplied. If both of them are
      * supplied, make sure that they perform the same transformation.
-     * 
+     *
      * @param iteratorFunction
      *            the transformation function responsible to adapt the {@code Iterator} returned
      *            by this Stream
@@ -374,7 +375,7 @@ public abstract class Stream<T> implements Iterable<T>, Closeable {
      * found during the navigation are exploded and their elements individually considered. The
      * {@code lenient} parameters controls whether conversion errors should be ignored or result
      * in an exception being thrown by the returned Stream.
-     * 
+     *
      * @param type
      *            the class resulting elements should be converted to
      * @param lenient
@@ -400,7 +401,7 @@ public abstract class Stream<T> implements Iterable<T>, Closeable {
      * Duplicates are removed lazily during the iteration. Note that duplicate removal requires to
      * keep track of the elements seen, so an amount of memory proportional to the number of
      * elements in the Stream is required.
-     * 
+     *
      * @return a Stream over de-duplicated elements
      */
     public final Stream<T> distinct() {
@@ -414,7 +415,7 @@ public abstract class Stream<T> implements Iterable<T>, Closeable {
      * Intermediate operation returning a Stream with max {@code limit} elements with index
      * starting at {@code offset} taken from this Stream. After those elements are returned, the
      * wrapped Stream is automatically closed.
-     * 
+     *
      * @param offset
      *            the offset where to start returning elements from, not negative
      * @param limit
@@ -431,7 +432,7 @@ public abstract class Stream<T> implements Iterable<T>, Closeable {
     /**
      * Intermediate operation returning a Stream of elements chunks of the specified size obtained
      * from this Stream (the last chunk may be smaller).
-     * 
+     *
      * @param chunkSize
      *            the chunk size, positive
      * @return a Stream wrapping this Stream and returning chunks of elements
@@ -449,7 +450,7 @@ public abstract class Stream<T> implements Iterable<T>, Closeable {
      * small cost (due to {@code Iterator} and {@code Handler} wrapping, this feature must be
      * explicitly requested and is not offered as part of the default feature set of
      * {@code Stream}.
-     * 
+     *
      * @param counter
      *            the variable where to hold the number of returned elements, possibly null
      * @param eof
@@ -469,7 +470,7 @@ public abstract class Stream<T> implements Iterable<T>, Closeable {
      * Terminal operation returning the number of elements in this Stream. Note that only few
      * elements are materialized at any time, so it is safe to use this method with arbitrarily
      * large Streams.
-     * 
+     *
      * @return the number of elements in this Stream
      */
     public final long count() {
@@ -515,7 +516,7 @@ public abstract class Stream<T> implements Iterable<T>, Closeable {
      * Terminal operations that forwards all the elements of this Stream to the Handler specified.
      * No explicit mechanism is provided for interrupting the Iteration, although many Streams may
      * react to the standard {@link Thread#interrupt()} signal to stop iteration.
-     * 
+     *
      * @param handler
      *            the Handler where to forward elements
      */
@@ -547,7 +548,7 @@ public abstract class Stream<T> implements Iterable<T>, Closeable {
     /**
      * Terminal operation returning an array of the specified type with all the elements of this
      * Stream. Call this method only if there is enough memory to hold the resulting array.
-     * 
+     *
      * @param elementClass
      *            the type of element to be stored in the array (necessary for the array creation)
      * @return the resulting array
@@ -560,7 +561,7 @@ public abstract class Stream<T> implements Iterable<T>, Closeable {
     /**
      * Terminal operation returning an immutable List with all the elements of this Stream. Call
      * this method only if there is enough memory to hold the resulting List.
-     * 
+     *
      * @return the resulting immutable List
      */
     public final List<T> toList() {
@@ -571,7 +572,7 @@ public abstract class Stream<T> implements Iterable<T>, Closeable {
      * Terminal operation returning an immutable Set with all the elements of this Stream. Call
      * this method only if there is enough memory to hold the resulting Set. Note that duplicate
      * elements are automatically removed from the resulting Set.
-     * 
+     *
      * @return the resulting immutable Set
      */
     public final Set<T> toSet() {
@@ -583,7 +584,7 @@ public abstract class Stream<T> implements Iterable<T>, Closeable {
      * using the supplied Comparator. Use {@link Ordering#natural()} to sort Comparable elements
      * based on {@link Comparable#compareTo(Object)} order. Call this method only if there is
      * enough memory to hold the resulting List.
-     * 
+     *
      * @param comparator
      *            the Comparator to sort elements, not null
      * @return the resulting immutable sorted list
@@ -604,7 +605,7 @@ public abstract class Stream<T> implements Iterable<T>, Closeable {
      * {@link Data#convert(Object, Class)}) and used for comparing the element with other element.
      * The {@code lenient} parameters controls whether conversion errors should be ignored or
      * result in an exception being thrown.
-     * 
+     *
      * @param type
      *            the class of the sort key
      * @param lenient
@@ -624,7 +625,7 @@ public abstract class Stream<T> implements Iterable<T>, Closeable {
      * sorted using the supplied {@code Comparator}. Use {@link Ordering#natural()} to sort
      * Comparable elements based on {@link Comparable#compareTo(Object)} order. Call this method
      * only if there is enough memory to hold the resulting SortedSet.
-     * 
+     *
      * @param comparator
      *            the {@code Comparator} to sort elements, not null
      * @return the resulting immutable SortedSet
@@ -637,7 +638,7 @@ public abstract class Stream<T> implements Iterable<T>, Closeable {
     /**
      * Terminal operation storing all the elements of this Stream in the supplied Collection. Call
      * this method only if the target Collection can hold all the remaining elements.
-     * 
+     *
      * @param collection
      *            the Collection where to store elements, not null
      * @param <C>
@@ -666,7 +667,7 @@ public abstract class Stream<T> implements Iterable<T>, Closeable {
      * mapped to the same key, only the most recently computed one will be stored. Use
      * {@link Functions#identity()} in case no transformation is required to extract the key
      * and/or the value.
-     * 
+     *
      * @param keyFunction
      *            the key function
      * @param valueFunction
@@ -691,7 +692,7 @@ public abstract class Stream<T> implements Iterable<T>, Closeable {
      * mapped to the same key, only the most recently computed one will be stored. Use
      * {@link Functions#identity()} in case no transformation is required to extract the key
      * and/or the value.
-     * 
+     *
      * @param keyFunction
      *            the key function
      * @param valueFunction
@@ -735,7 +736,7 @@ public abstract class Stream<T> implements Iterable<T>, Closeable {
      * value Functions are called for each element, producing the keys and values to store. If a
      * null key or value are produced, the element is discarded. Use {@link Functions#identity()}
      * in case no transformation is required to extract the key and/or the value.
-     * 
+     *
      * @param keyFunction
      *            the key function
      * @param valueFunction
@@ -759,7 +760,7 @@ public abstract class Stream<T> implements Iterable<T>, Closeable {
      * value functions are called for each element, producing the keys and values to store. If a
      * null key or value are produced, the element is discarded. Use {@link Functions#identity()}
      * in case no transformation is required to extract the key and/or the value.
-     * 
+     *
      * @param keyFunction
      *            the key function
      * @param valueFunction
@@ -800,7 +801,7 @@ public abstract class Stream<T> implements Iterable<T>, Closeable {
     /**
      * Terminal operation returning the only element in this Stream, or the default value
      * specified if there are no elements, multiple elements or an Exception occurs.
-     * 
+     *
      * @param defaultValue
      *            the default value to return if a unique value cannot be extracted
      * @return the only element in this Stream, or the default value in case that element does not
@@ -823,7 +824,7 @@ public abstract class Stream<T> implements Iterable<T>, Closeable {
      * no elements. An exception is thrown in case there is more than one element in the Stream.
      * This method is designed for being used with Streams that are expected to return exactly one
      * element, for which it embeds the check on the number of elements.
-     * 
+     *
      * @return the only element in the Stream
      * @throws IllegalStateException
      *             in case there are multiple elements in the Stream
@@ -858,7 +859,7 @@ public abstract class Stream<T> implements Iterable<T>, Closeable {
      * Returns a metadata property about the stream. Note that {@code Stream} wrappers obtained
      * through intermediate operations don't have their own properties, but instead access the
      * metadata properties of the source {@code Stream}.
-     * 
+     *
      * @param name
      *            the name of the property
      * @param type
@@ -887,7 +888,7 @@ public abstract class Stream<T> implements Iterable<T>, Closeable {
      * Sets a metadata property about the stream. Note that {@code Stream} wrappers obtained
      * through intermediate operations don't have their own properties, but instead access the
      * metadata properties of the source {@code Stream}.
-     * 
+     *
      * @param name
      *            the name of the property
      * @param value
@@ -910,7 +911,7 @@ public abstract class Stream<T> implements Iterable<T>, Closeable {
     /**
      * Gets a timeout possibly set on the {@code Stream} and represented by the absolute
      * milliseconds timestamp when the {@code Stream} will be closed.
-     * 
+     *
      * @return the milliseconds timestamp when this {@code Stream} will be closed, or null if no
      *         timeout has been set
      */
@@ -926,7 +927,7 @@ public abstract class Stream<T> implements Iterable<T>, Closeable {
      * will be forcedly closed. If the supplied value is null, any previously set timeout is
      * removed. In case the {@code Stream has already been closed}, or has just timed out due to a
      * previously set timeout, calling this method has no effect.
-     * 
+     *
      * @param timestamp
      *            the milliseconds timestamp when the {@code Stream} will be closed
      * @return this {@code Stream}, for call chaining
@@ -959,7 +960,7 @@ public abstract class Stream<T> implements Iterable<T>, Closeable {
     /**
      * Checks whether this Stream is available, i.e., intermediate and terminal operations can be
      * called. Invoking a terminal operation or closing the Stream will make it non-available.
-     * 
+     *
      * @return true, if the Stream is available
      */
     public final boolean isAvailable() {
@@ -971,7 +972,7 @@ public abstract class Stream<T> implements Iterable<T>, Closeable {
     /**
      * Checks whether this Stream has been closed. Note that a Stream is automatically closed when
      * consumption of its elements by a terminal operation completes.
-     * 
+     *
      * @return true, if the Stream has been closed
      */
     public final boolean isClosed() {
@@ -988,7 +989,7 @@ public abstract class Stream<T> implements Iterable<T>, Closeable {
      * called; any other type of object will be rejected resulting in an exception. In case the
      * {@code Stream} has already been closed, activation of supplied objects will be done
      * immediately.
-     * 
+     *
      * @param objects
      *            the objects to activate when the {@code Stream} will be closed
      * @return this {@code Stream}, for call chaining.
@@ -1051,7 +1052,7 @@ public abstract class Stream<T> implements Iterable<T>, Closeable {
      * Returns a string representation of this Stream. The resulting string depends on the actual
      * Stream class. For wrapper Streams, it shows the wrapper parameters and the wrapping
      * hierarchy.
-     * 
+     *
      * @return a string representation of this Stream
      */
     @Override
@@ -1110,7 +1111,7 @@ public abstract class Stream<T> implements Iterable<T>, Closeable {
      * This method is called by {@link #iterator()} with the guarantee that it is called at most
      * once and with the Stream in the <i>available</i> state. If the returned Iterator implements
      * the {@link Closeable} interface, it will be automatically closed when the Stream is closed.
-     * 
+     *
      * @return an Iterator over the elements of the Stream
      * @throws Throwable
      *             in case of failure
@@ -1129,7 +1130,7 @@ public abstract class Stream<T> implements Iterable<T>, Closeable {
      * {@link Thread#interrupt()} requests and stop iteration, if possible; also remember to call
      * {@link Handler#handle(Object)} with a null argument after the last element is reached, in
      * order to signal the end of the sequence.
-     * 
+     *
      * @param handler
      *            the {@code Handler} where to forward elements
      * @throws Throwable
@@ -1150,7 +1151,7 @@ public abstract class Stream<T> implements Iterable<T>, Closeable {
      * Implementation method supporting the generation of a string representation of this Stream.
      * The method should return any parameter / state characterizing this {@code Stream}, which is
      * then included within angular brackets in the String denoting the {@code Stream} structure.
-     * 
+     *
      * @return an optional string with the arguments / state characterizing this {@code Stream},
      *         possibly null
      */
@@ -1162,7 +1163,7 @@ public abstract class Stream<T> implements Iterable<T>, Closeable {
     /**
      * Implementation method responsible of closing optional resources associated to this Stream.
      * The default implementation does nothing.
-     * 
+     *
      * @throws Throwable
      *             in case of failure
      */
@@ -1246,21 +1247,27 @@ public abstract class Stream<T> implements Iterable<T>, Closeable {
 
         private final State state;
 
+        private boolean exhausted;
+
         CheckedIterator(final Iterator<T> iterator, final Stream<T> stream) {
             this.iterator = iterator;
             this.stream = stream;
             this.state = stream.state;
+            this.exhausted = false;
         }
 
         @Override
         public boolean hasNext() {
-            checkState();
             boolean result = false;
-            try {
-                result = this.iterator.hasNext();
-            } finally {
-                if (!result) {
-                    this.stream.close();
+            if (!this.exhausted) {
+                checkState();
+                try {
+                    result = this.iterator.hasNext();
+                } finally {
+                    if (!result) {
+                        this.stream.close();
+                        this.exhausted = true;
+                    }
                 }
             }
             return result;
@@ -2035,7 +2042,14 @@ public abstract class Stream<T> implements Iterable<T>, Closeable {
                     for (; index < ChunkStream.this.chunkSize && iterator.hasNext(); ++index) {
                         this.chunk[index] = iterator.next();
                     }
-                    return index == 0 ? null : (List<T>) ImmutableList.copyOf(this.chunk);
+                    if (index == 0) {
+                        return null;
+                    } else if (index == ChunkStream.this.chunkSize) {
+                        return (List<T>) ImmutableList.copyOf(this.chunk);
+                    } else {
+                        return (List<T>) ImmutableList.copyOf(Arrays.asList(this.chunk).subList(0,
+                                index));
+                    }
                 }
 
             };

@@ -496,13 +496,24 @@
 
             <dependency>
                 <groupId>com.openlinksw.virtuoso</groupId>
+                <artifactId>virtjdbc4_1</artifactId>
+                <version>${virtuoso-jdbc4_1.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.openlinksw.virtuoso</groupId>
+                <artifactId>virt_sesame2</artifactId>
+                <version>${virtuoso-sesame2.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.openlinksw.virtuoso</groupId>
                 <artifactId>virtjdbc4</artifactId>
                 <version>${virtuoso-jdbc4.version}</version>
             </dependency>
             <dependency>
                 <groupId>eu.fbk.knowledgestore</groupId>
                 <artifactId>virt_sesame2</artifactId>
-                <version>${virtuoso-sesame2.version}</version>
+                <version>${virtuoso-sesame2-patched.version}</version>
             </dependency>
 
             <dependency>
@@ -1819,7 +1830,9 @@
         <sesame.version>2.7.11</sesame.version>
         <semargl.version>0.6.1</semargl.version>
         <virtuoso-jdbc4.version>2012-03-15</virtuoso-jdbc4.version>
-        <virtuoso-sesame2.version>2013-11-20</virtuoso-sesame2.version>
+        <virtuoso-jdbc4_1.version>2015-01-26</virtuoso-jdbc4_1.version>
+        <virtuoso-sesame2.version>2015-01-26</virtuoso-sesame2.version>
+        <virtuoso-sesame2-patched.version>2013-11-20</virtuoso-sesame2-patched.version>
         <hadoop.version>1.0.4</hadoop.version>
         <hbase.version>0.94.10</hbase.version>
         <omid.version>2013-03-21</omid.version>

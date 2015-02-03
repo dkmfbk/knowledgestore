@@ -476,7 +476,7 @@ public final class Launcher {
             final JoranConfigurator configurator = new JoranConfigurator();
             configurator.setContext(context);
             context.reset();
-			configurator.doConfigure(retrieveURL(logConfig));
+            configurator.doConfigure(retrieveURL(logConfig));
         } catch (final JoranException je) {
             StatusPrinter.printInCaseOfErrorsOrWarnings(context);
         }
@@ -513,6 +513,8 @@ public final class Launcher {
     }
 
     private static void stop() {
+
+        LOGGER.info("Stopping service ...");
 
         if (component == null) {
             return;

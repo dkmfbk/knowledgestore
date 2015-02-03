@@ -493,13 +493,15 @@ public final class Application extends javax.ws.rs.core.Application {
                 }
             }
             final long ts = System.currentTimeMillis();
+            long counterSnapshot;
             synchronized (Application.class) {
                 ++invocationCounter;
                 if (invocationCounter < ts) {
                     invocationCounter = ts;
                 }
+                counterSnapshot = invocationCounter;
             }
-            return Data.getValueFactory().createURI("req:" + Long.toString(invocationCounter, 32));
+            return Data.getValueFactory().createURI("req:" + Long.toString(counterSnapshot, 32));
         }
 
         private static URI extractObjectID(final ContainerRequestContext request) {

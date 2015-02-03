@@ -51,6 +51,8 @@ public abstract class AbstractSession implements Session {
 
     private static final long GRACE_PERIOD = 5000; // 5 sec in addition to the timeout set
 
+    private static final long CLOSE_WAIT_TIME = 1000;
+
     private static long invocationCounter = 0;
 
     // Session-scoped variables
@@ -691,7 +693,8 @@ public abstract class AbstractSession implements Session {
                 if (this.interruptThread != null) {
                     this.interruptThread.interrupt(); // attempt interrupting current operation
                     try {
-                        this.closed.wait();
+                        this.closed.wait(CLOSE_WAIT_TIME);
+
                     } catch (final InterruptedException ex) {
                         // ignore and proceed with closing resources
                     }
