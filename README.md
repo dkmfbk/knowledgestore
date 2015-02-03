@@ -8,3 +8,5 @@ KnowledgeStore* is a scalable, fault-tolerant, and Semantic Web grounded storage
 retrieve, and semantically query, both structured and unstructured data. The KnowledgeStore plays a central role in the
 [NewsReader](http://www.newsreader-project.eu/) EU project: it stores all contents that have to be processed and produced in order to extract knowledge from
 news, and it provides a shared data space through which NewsReader components cooperate.
+
+If you want to have more information about the project, watch the [demonstration video](http://youtu.be/if1PRwSll5c) showing accessing the KnowledgeStore through the UI
