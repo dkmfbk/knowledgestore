@@ -1,23 +1,122 @@
-# Download instructions
+#set( $H3 = '###' )
 
-COMING SOON
+Downloads
+=========
+
+$H3 KnowledgeStore
+
+KnowledgeStore artifacts are published via the [Maven central repository](http://repo1.maven.org/maven2/eu/fbk/knowledgestore).
+They include binaries, test binaries, sources and javadocs of each software module of the KnowledgeStore as well as the source and binary `tar.gz` archives listed in the following table.
+The binary archives include all you need to run and populate a KnowledgeStore instance. They require a Java 7+ virtual machine, with startup scripts tested only on Linux and Mac OS X.
+
+<table>
+<thead>
+<tr>
+<th style="width: 10%">Archive</th>
+<th style="width: 60%">Description</th>
+<th>Version</th>
+<th>Files</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>server</th>
+<td>KnowledgeStore server Java 7 binaries, including startup scripts and configuration files. Includes also the NAF populator (see below).</td>
+<td>${project-version} (latest)</td>
+<td><a href="${site-root}files/release/${project-version}/ks-distribution-${project-version}-server.tar.gz">ks-distribution-${project-version}-server.tar.gz</a></td>
+</tr>
+<tr>
+<th>tools</th>
+<td>NAF populator binaries, including startup scripts and configuration files.</td>
+<td>${project-version} (latest)</td>
+<td><a href="${site-root}files/release/${project-version}/ks-distribution-${project-version}-tools.tar.gz">ks-distribution-${project-version}-tools.tar.gz</a></td>
+</tr>
+<tr>
+<th>client</th>
+<td>KnowledgeStore Java 7 client library, for non-Maven users.</td>
+<td>${project-version} (latest)</td>
+<td><a href="${site-root}files/release/${project-version}/ks-distribution-${project-version}-client.tar.gz">ks-distribution-${project-version}-client.tar.gz</a></td>
+</tr>
+<tr>
+<th>sources</th>
+<td>KnowledgeStore source code, organized as a Maven multi-module project.</td>
+<td>${project-version} (latest)</td>
+<td><a href="${site-root}files/release/${project-version}/ks-distribution-${project-version}-src.tar.gz">ks-distribution-${project-version}-src.tar.gz</a></td>
+</tr>
+</tbody>
+</table>
+<a style="display: block; width: 100%; text-align: right;" href="${site-root}files/release/">[browse old versions]</a>
 
 
-<!--
-	The KnowledgeStore source code and binaries can be downloaded from the Web site of
-XXX
+$H3 Background Knowledge
 
-	{{http://xxx}}
-	
-	The KnowledgeStore is distributed in several packages:
-	
-	* XXX
-	  
-	* XXX
-	 	
- 	[]
- 
-	The source package includes also a local MAVEN repository (/mvnrepo)
-containing JAR files for libraries not available on public MAVEN repositories
-at the time the KnowledgeStore was built.
--->
+We use the following RDF datasets as background knowledge in the KnowledgeStore, obtained by processing selected [DBpedia](http://dbpedia.org/) dump files using [RDFpro](https://github.com/dkmfbk/rdfpro).
+
+Data is smushed so to use a single URI for coreferring entities, then the RDFS closure is computed and triples are placed in named graphs linked (via `dct:source`) to the different source DBpedia chapters they come from.
+More details on the dataset generation process are included in NewsReader Deliverable D6.2.2.
+
+For each dataset we provide the data, its [VOID](http://www.w3.org/TR/void/) statistics and the RDFpro-based shell script (and supporting files) for downloading the necessary DBpedia files and producing the dataset.
+
+<table>
+<thead>
+<tr>
+<th style="width: 10%">Dataset</th>
+<th style="width: 50%">Description</th>
+<th>Version</th>
+<th>Triples</th>
+<th>Entities</th>
+<th>Files</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>en_2014</th>
+<td>EN data from DBpedia 2014 EN chapter.</td>
+<td>2014/12/22</td>
+<td style="text-align: right">75.837.282</td>
+<td style="text-align: right">4.634.402</td>
+<td>
+<a href="${site-root}files/bk/en_2014.tql.gz" title="1.21 GiB, TQL format">data</a>&nbsp;&nbsp;
+<a href="${site-root}files/bk/en_2014.stats.tql.gz" title="0.42 MiB, TQL format">stats</a>&nbsp;&nbsp;
+<a href="${site-root}files/bk/en_2014.script.tar.gz" title="4.82 KiB">script</a>
+</td>
+</tr>
+<tr>
+<th>en_ext_2014</th>
+<td>EN data from DBpedia 2014 in all chapters, using EN URIs.</td>
+<td>2014/12/22</td>
+<td style="text-align: right">95.910.347</td>
+<td style="text-align: right">4.863.236</td>
+<td>
+<a href="${site-root}files/bk/en_ext_2014.tql.gz" title="1.54 GiB, TQL format">data</a>&nbsp;&nbsp;
+<a href="${site-root}files/bk/en_ext_2014.stats.tql.gz" title="1.20 MiB, TQL format">stats</a>&nbsp;&nbsp;
+<a href="${site-root}files/bk/en_ext_2014.script.tar.gz" title="10.37 KiB">script</a>
+</td>
+</tr>
+<tr>
+<th>ml_2014</th>
+<td>EN/ES/IT/NL data from DBpedia 2014 in these chapters, using EN URIs were possible and ES/IT/NL URIs otherwise.</td>
+<td>2014/12/22</td>
+<td style="text-align: right">122.672.893</td>
+<td style="text-align: right">6.606.109</td>
+<td>
+<a href="${site-root}files/bk/ml_2014.tql.gz" title="1.98 GiB, TQL format">data</a>&nbsp;&nbsp;
+<a href="${site-root}files/bk/ml_2014.stats.tql.gz" title="0.67 MiB, TQL format">stats</a>&nbsp;&nbsp;
+<a href="${site-root}files/bk/ml_2014.script.tar.gz" title="6.84 KiB">script</a>
+</td>
+</tr>
+<tr>
+<th>ml_ext_2014</th>
+<td>EN/ES/IT/NL data from DBpedia 2014 in all its chapters, using EN URIs were possible and ES/IT/NL URIs otherwise.</td>
+<td>2014/12/22</td>
+<td style="text-align: right">134.384.805</td>
+<td style="text-align: right">6.738.541</td>
+<td>
+<a href="${site-root}files/bk/ml_ext_2014.tql.gz" title="2.21 GiB, TQL format">data</a>&nbsp;&nbsp;
+<a href="${site-root}files/bk/ml_ext_2014.stats.tql.gz" title="1.23 MiB, TQL format">stats</a>&nbsp;&nbsp;
+<a href="${site-root}files/bk/ml_ext_2014.script.tar.gz" title="11.46 KiB">script</a>
+</td>
+</tr>
+</tbody>
+</table>
+

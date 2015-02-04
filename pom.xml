@@ -1226,6 +1226,7 @@
                     <autoReleaseAfterClose>true</autoReleaseAfterClose>
                 </configuration>
             </plugin>
+            <!--
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
@@ -1240,7 +1241,7 @@
                     </execution>
                 </executions>
             </plugin>
-
+            -->
 
             <plugin>
                 <!-- The following goal is necessary in order to allow child modules to
@@ -1807,6 +1808,7 @@
         <parent-path>.</parent-path>
         <aggregate>true</aggregate>
         <site-root>${site.root}</site-root>
+        <project-version>${project.version}</project-version>
 
         <!-- Build configuration -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
