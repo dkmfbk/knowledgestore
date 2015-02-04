@@ -88,6 +88,15 @@
             </properties>
         </developer>
         <developer>
+            <id>corcoglio</id>
+            <name>Francesco Corcoglioniti</name>
+            <email>corcoglio@fbk.eu</email>
+            <roles>
+                <role>Developer</role>
+            </roles>
+            <timezone>+1</timezone>
+        </developer>
+        <developer>
             <id>aprosio</id>
             <name>Alessio Palmero Aprosio</name>
             <email>aprosio@fbk.eu</email>
