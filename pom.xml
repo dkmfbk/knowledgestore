@@ -1806,6 +1806,7 @@
         <!-- Paths -->
         <parent-path>.</parent-path>
         <aggregate>true</aggregate>
+        <site-root>${site.root}</site-root>
 
         <!-- Build configuration -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

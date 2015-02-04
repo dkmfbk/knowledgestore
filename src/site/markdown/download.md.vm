@@ -1,9 +1,9 @@
- --------
- Download
- --------
+# Download instructions
 
-Download instructions
+COMING SOON
 
+
+<!--
 	The KnowledgeStore source code and binaries can be downloaded from the Web site of
 XXX
 
@@ -20,3 +20,4 @@ XXX
 	The source package includes also a local MAVEN repository (/mvnrepo)
 containing JAR files for libraries not available on public MAVEN repositories
 at the time the KnowledgeStore was built.
+-->

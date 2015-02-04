@@ -1,83 +1,87 @@
 # Overview
-***
 
-Despite the widespread diffusion of structured data sources and the public acclaim of the Linked Open Data initiative, a preponderant amount of information remains nowadays available only in unstructured form, both on the Web and within organizations. While different in form, structured and unstructured contents speak about the very same entities of the world, their properties and relations; still, frameworks for their seamless integration are lacking. The <<NewsReader KnowledgeStore>> is a scalable, fault-tolerant, and Semantic Web grounded storage system to jointly store, manage, retrieve, and semantically query, both structured and unstructured data. The KnowledgeStore plays a central role in the [NewsReader](http://www.newsreader-project.eu) EU project: it stores all contents that have to be processed and produced in order to extract knowledge from news, and it provides a shared data space through which NewsReader components cooperate.
+Despite the widespread diffusion of structured data sources and the public acclaim of the Linked Open Data initiative,
+a preponderant amount of information remains nowadays available only in unstructured form, both on the Web and within
+organizations. While different in form, structured and unstructured contents speak about the very same entities of the
+world, their properties and relations; still, frameworks for their seamless integration are lacking.
+The **NewsReader KnowledgeStore** is a scalable, fault-tolerant, and Semantic Web grounded storage system to jointly
+store, manage, retrieve, and semantically query, both structured and unstructured data. The KnowledgeStore plays a
+central role in the [NewsReader](http://www.newsreader-project.eu) EU project: it stores all contents that have to be
+processed and produced in order to extract knowledge from news, and it provides a shared data space through which
+NewsReader components cooperate.
 
-## Downloads
+##Downloads
+##---
+##
+##The KnowledgeStore source code and binaries (available under the terms of the Apache License, version 2.0) can be
+##downloaded here:
+##
+##  * [KnowledgeStore server](http://knowledgestore.fbk.eu/files/ks-dist-server.tar.gz) (~28 MB tar.gz)
+##  * [KnowledgeStore Java client library](http://knowledgestore.fbk.eu/files/ks-dist-client.tar.gz) (~6 MB tar.gz)
+##  * [NAF and RDF populators](http://knowledgestore.fbk.eu/files/ks-dist-tools.tar.gz) (~8 MB tar.gz)
+##  * [Source code](http://knowledgestore.fbk.eu/files/ks-dist-src.tar.gz) (~1 MB tar.gz)
+##
+##Background knowledge
+##---
+##
+##Selected fragment of DBPedia EN, ES, IT, NL used as background knowledge
+##
+##  * DBpedia EN, ES, IT, NL, with alignments to Yago, UMBEL, Schema.org (264M triples, 2.68 GB trig.gz)-
+##    [dataset](http://knowledgestore.fbk.eu/files/dbpedia-4lang-ext.trig.gz),
+##    [full tbox](http://knowledgestore.fbk.eu/files/dbpedia-4lang-ext-statistics-full.rdf.gz),
+##    [partial tbox](http://knowledgestore.fbk.eu/files/dbpedia-4lang-ext-statistics-partial.rdf.gz),
+##    [imported files](http://knowledgestore.fbk.eu/files/dbpedia-4lang-ext-urls.txt.gz)
+##
+##  * DBpedia EN, ES, IT, NL, without alignments and redundant triples (194M triples, 2.28 GB trig.gz) -
+##    [dataset](http://knowledgestore.fbk.eu/files/dbpedia-4lang.trig.gz),
+##    [full tbox](http://knowledgestore.fbk.eu/files/dbpedia-4lang-statistics-full.rdf.gz),
+##    [partial tbox](http://knowledgestore.fbk.eu/files/dbpedia-4lang-statistics-partial.rdf.gz),
+##    [imported files](http://knowledgestore.fbk.eu/files/dbpedia-4lang-urls.txt.gz)
+##
+##  * DBpedia EN without alignments and redundant triples (105M triples, 1.25 GB trig.gz) -
+##    [dataset](http://knowledgestore.fbk.eu/files/dbpedia-en.trig.gz),
+##    [full tbox](http://knowledgestore.fbk.eu/files/dbpedia-en-statistics-full.rdf.gz),
+##    [partial tbox](http://knowledgestore.fbk.eu/files/dbpedia-en-statistics-partial.rdf.gz),
+##    [imported files](http://knowledgestore.fbk.eu/files/dbpedia-en-urls.txt.gz)
+##
+##  * note: the partial TBox (concepts with more than 100 instances) files contains also examples and statistics and be
+##    imported in Protégé (use vstat:label for concept label)
 
-* The KnowledgeStore source code and binaries (available under the terms of the Apache License, version 2.0)
+<h3>Resources</h3>
 
-    * [KnowledgeStore server](http://knowledgestore.fbk.eu/files/ks-dist-server.tar.gz) (~28 MB tar.gz)
-
-    * [KnowledgeStore Java client library](http://knowledgestore.fbk.eu/files/ks-dist-client.tar.gz) (~6 MB tar.gz)
-
-    * [NAF and RDF populators](http://knowledgestore.fbk.eu/files/ks-dist-tools.tar.gz) (~8 MB tar.gz)
-
-    * [Source code](http://knowledgestore.fbk.eu/files/ks-dist-src.tar.gz) (~1 MB tar.gz)
-
-* Selected fragment of DBPedia EN, ES, IT, NL used as background knowledge
-
-    * DBpedia EN, ES, IT, NL, with alignments to Yago, UMBEL, Schema.org (264M triples, 2.68 GB trig.gz)-
-      [dataset](http://knowledgestore.fbk.eu/files/dbpedia-4lang-ext.trig.gz),
-      [full tbox](http://knowledgestore.fbk.eu/files/dbpedia-4lang-ext-statistics-full.rdf.gz),
-      [partial tbox](http://knowledgestore.fbk.eu/files/dbpedia-4lang-ext-statistics-partial.rdf.gz),
-      [imported files](http://knowledgestore.fbk.eu/files/dbpedia-4lang-ext-urls.txt.gz)
-
-    * DBpedia EN, ES, IT, NL, without alignments and redundant triples (194M triples, 2.28 GB trig.gz) -
-      [dataset](http://knowledgestore.fbk.eu/files/dbpedia-4lang.trig.gz),
-      [full tbox](http://knowledgestore.fbk.eu/files/dbpedia-4lang-statistics-full.rdf.gz),
-      [partial tbox](http://knowledgestore.fbk.eu/files/dbpedia-4lang-statistics-partial.rdf.gz),
-      [imported files](http://knowledgestore.fbk.eu/files/dbpedia-4lang-urls.txt.gz)
-
-    * DBpedia EN without alignments and redundant triples (105M triples, 1.25 GB trig.gz) -
-      [dataset](http://knowledgestore.fbk.eu/files/dbpedia-en.trig.gz),
-      [full tbox](http://knowledgestore.fbk.eu/files/dbpedia-en-statistics-full.rdf.gz),
-      [partial tbox](http://knowledgestore.fbk.eu/files/dbpedia-en-statistics-partial.rdf.gz),
-      [imported files](http://knowledgestore.fbk.eu/files/dbpedia-en-urls.txt.gz)
-
-    * note: the partial TBox (concepts with more than 100 instances) files contains also examples and statistics and be imported in Protégé (use vstat:label for concept label)
-
-* Documentation
-
-    * The KnowledgeStore [API JavaDoc](http://knowledgestore.fbk.eu/apidocs/index.html) and
-      [browsable source Code](http://knowledgestore.fbk.eu/xref/index.html)
-
-    * The KnowledgeStore Data Model ontologies:
-
-        * [Fixed Part](https://dkm.fbk.eu/ontologies/knowledgestore.html)
-
-        * [NewsReader Specialization](https://dkm.fbk.eu/ontologies/newsreader.html)
+  * The KnowledgeStore [API JavaDoc](http://knowledgestore.fbk.eu/apidocs/index.html) and [browsable source Code](http://knowledgestore.fbk.eu/xref/index.html)
+  * The KnowledgeStore Data Model ontologies:
+    * [Fixed Part](https://dkm.fbk.eu/ontologies/knowledgestore.html)
+    * [NewsReader Specialization](https://dkm.fbk.eu/ontologies/newsreader.html)
+  * [Download the KnowledgeStore](${site-root}download.html) (source code, prebuilt JARs, background knowledge, and much more)
+  * Have a look at the [project wiki](https://github.com/dkmfbk/knowledgestore/wiki)
+  * List of [scientific papers](${site-root}publications.html) related to the KnowledgeStore
 
 <!--* The KnowledgeStore [Access Patterns](http://knowledgestore.fbk.eu/files/ks_access_patterns.pdf) and their [refactoring](http://knowledgestore.fbk.eu/files/ks_access_patterns_refactored.pdf)-->
 
 
-* Demo
+<h3>Demo</h3>
 
-    * [Demonstration video](http://youtu.be/if1PRwSll5c) showing accessing the KnowledgeStore through the UI
+  * [Demonstration video](http://youtu.be/if1PRwSll5c) showing accessing the KnowledgeStore through the UI
+  * [KnowledgeStore instance](https://knowledgestore.fbk.eu/nwr/worldcup/) for the global automotive industry use case
+    (partial, 65K news, 2003-2013 - access restricted to NewsReader consortium)
+  * [KnowlegeStore instance](https://knowledgestore.fbk.eu/nwr/cars/) for the FIFA World Cup use case (212K news,
+    2004-2014 - access restricted to NewsReader consortium)
+  * [KnowledgeStore instance](https://knowledgestore2.fbk.eu/nwr/worldcup/) for the global automotive industry use case
+    (complete, 1.2M news, 2003-2013 - access restricted to NewsReader consortium)
 
-    * [KnowledgeStore instance](https://knowledgestore.fbk.eu/nwr/worldcup/) for the global automotive industry use case (partial, 65K news, 2003-2013 - access restricted to NewsReader consortium)
-
-    * [KnowlegeStore instance](https://knowledgestore.fbk.eu/nwr/cars/) for the FIFA World Cup use case (212K news, 2004-2014 - access restricted to NewsReader consortium)
-
-    * [KnowledgeStore instance](https://knowledgestore2.fbk.eu/nwr/worldcup/) for the global automotive industry use case (complete, 1.2M news, 2003-2013 - access restricted to NewsReader consortium)
-
-* Publications
-
-    * [Interlinking Unstructured and Structured Knowledge in an Integrated Framework](http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=06693492) (Francesco Corcoglioniti, Marco Rospocher, Roldano Cattoni, Bernardo Magnini, Luciano Serafini), in The 7th IEEE International Conference on Semantic Computing (ICSC), Irvine, CA, USA, 2013 \[[pdf](http://knowledgestore.fbk.eu/files/icsc2013.pdf)\] \[[bib](http://knowledgestore.fbk.eu/files/icsc2013.bib)\]
-
-    * The KnowledgeStore technical deliverables
-
-        * [D6.1: KnowledgeStore Design](http://www.newsreader-project.eu/files/2012/12/NewsReader-316404-D6.1_v1.6.pdf) (June 2013)
-
-        * [D6.2.1: KnowledgeStore version 1](http://www.newsreader-project.eu/files/2012/12/NewsReader-316404-D6.2.1.pdf) (December 2013)
+##<h3>Publications</h3>
+##
+##  * [Interlinking Unstructured and Structured Knowledge in an Integrated Framework](http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=06693492) (Francesco Corcoglioniti, Marco Rospocher, Roldano Cattoni,   Bernardo Magnini, Luciano Serafini), in The 7th IEEE International Conference on Semantic Computing (ICSC), Irvine, CA, USA, 2013 \[[pdf](http://knowledgestore.fbk.eu/files/icsc2013.pdf)\] \[[bib](http://  knowledgestore.fbk.eu/files/icsc2013.bib)\]
+##  * The KnowledgeStore technical deliverables
+##    * [D6.1: KnowledgeStore Design](http://www.newsreader-project.eu/files/2012/12/NewsReader-316404-D6.1_v1.6.pdf) (June 2013)
+##    * [D6.2.1: KnowledgeStore version 1](http://www.newsreader-project.eu/files/2012/12/NewsReader-316404-D6.2.1.pdf) (December 2014)
 
 
-* Projects
+<h3>Projects</h3>
 
-    Development of the KnowledgeStore has been supported by the following projects:
+Development of the KnowledgeStore has been supported by the following projects:
 
-
-![Newsreader](images/nwr.png)
-
-![LiveMemories](images/lm.png)
+<a href='http://www.newsreader-project.eu/'><img src='images/nwr.png' alt='Newsreader' style='height: 60px;' /></a>
+<a href='http://www.livememories.org/'><img src='images/lm.png' alt='LiveMemories' style='height: 60px;' /></a>
 
