@@ -136,7 +136,7 @@
             <html5Anchor>true</html5Anchor>
             <navbarInverse>true</navbarInverse>
             <markPageHeader>true</markPageHeader>
-            <protocolRelativeURLs>false</protocolRelativeURLs>
+            <protocolRelativeURLs>true</protocolRelativeURLs>
             <skinAttribution>true</skinAttribution>
             <brand>
                 <name>
