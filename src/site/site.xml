@@ -1,137 +1,165 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <project>
 
-  <publishDate position="bottom" format="yyyy/MM/dd" />
+    <publishDate position="bottom" format="yyyy/MM/dd"/>
 
-  <bannerLeft>
-    <name>KnowledgeStore</name>
-    <src>images/logo.png</src>
-    <href>index.html</href>
-  </bannerLeft>
-  <bannerRight>
-    <name>FBK - DKM &amp; HLT Units</name>
-    <src>images/fbk.png</src>
-    <href>http://www.fbk.eu/</href>
-  </bannerRight>
+    <bannerLeft>
+        <name>KnowledgeStore</name>
+        <src>images/logo.png</src>
+        <href>index.html</href>
+    </bannerLeft>
+    <bannerRight>
+        <name>FBK - DKM &amp; HLT Units</name>
+        <src>images/fbk.png</src>
+        <href>http://www.fbk.eu/</href>
+    </bannerRight>
 
-  <!-- Not used by reflow
-  <poweredBy>
-    <logo name="Maven" href="http://maven.apache.org/" img="http://maven.apache.org/images/logos/maven-feather.png" />
-  </poweredBy>
-  -->
-
-  <skin>
-    <groupId>lt.velykis.maven.skins</groupId>
-    <artifactId>reflow-maven-skin</artifactId>
-    <version>1.0.0-patched</version>
-  </skin>
-
-  <body>
-    <head/>
-
-    <!-- Currently not used; would end up in top navigation bar
-    <links>
-      <item name="NewsReader" href="http://www.newsreader-project.eu/" />
-    </links>
+    <!-- Not used by reflow
+    <poweredBy>
+      <logo name="Maven" href="http://maven.apache.org/" img="http://maven.apache.org/images/logos/maven-feather.png" />
+    </poweredBy>
     -->
-
-    <breadcrumbs>
-      <item name="KnowledgeStore" href="index.html" />
-    </breadcrumbs>
-
-    <!-- Top menus -->
-    <menu name="Project">
-      <item name="About" href="index.html" />
-      <item name="License" href="license.html" />
-      <!-- <item name="Download" href="download.html" /> -->
-      <!-- <item name="Build" href="build.html" /> -->
-      <item name="Team" href="team-list.html" />
-      <!-- <item name="Publications" href="publications.html" /> -->
-    </menu>
-    <menu name="Documentation">
-      <!-- <item name="Getting started" href="intro.html" /> -->
-      <item name="Server" href="server.html" /> <!-- overview, architecture, installation, configuration, administration, extension -->
-      <item name="Java Client" href="java-client.html" /> <!-- overview, code snippets -->
-      <item name="NAF populator" href="naf-populator.html" /> <!-- overview -->
-      <item name="RDF populator" href="rdf-populator.html" /> <!-- overview -->
-      <item name="Web API reference" href="ks-server-http/webdocs/webdocs.html" />
-      <item name="Javadoc reference" href="apidocs/index.html" />
-    </menu>
-    <menu name="Ontologies">
-      <item name="KnowledgeStore Core Data Model" href="https://dkm.fbk.eu/ontologies/knowledgestore.html" />
-      <item name="NewsReader Data Model" href="https://dkm.fbk.eu/ontologies/newsreader.html" />
-    </menu>
-
-    <menu name="Maven Resources" ref="reports" inherit="top"/>
-    <menu ref="modules" inherit="top"/>
-    <menu name="Contacts">
-        <item name="Email Us" href="mailto:knowledgestore@fbk.eu"/>
-    </menu>
-    <menu ref="parent" inherit="top"/>
+    
     <!--
-    <menu name="Resources" inherit="top">
-      <item name="TRAC Wiki" href="https://newsreader.fbk.eu/trac/wiki/KnowledgeStoreStartPage" />
-      <item name="Browse SVN" href="https://newsreader.fbk.eu/trac/browser/newsreader/Code/KnowledgeStore" />
-      <menu name="Maven Modules" ref="modules"/>
-      <menu name="Maven Information">
-      </menu>
-      <menu name="Maven Reports">
-      </menu>
-    </menu>
+    
+    Useful documentation:
+    * http://maven.apache.org/plugins/maven-site-plugin/examples/sitedescriptor.html
+    * http://andriusvelykis.github.io/reflow-maven-skin/
+    
+    Variable:
+    * site-root - Root folder of the website (to be supplied using -Dsite.root=...)
+    * project-version - Version of the project (defined in the POM file)
+    * site-path - Local path of the website (to be supplied using -Dsite-path=file:///...)
+    
+    Links to external folders:
+    /files -> http://knowledgestore.fbk.eu/files
+    /ontologies -> http://knowledgestore.fbk.eu/ontologies
+    /ks-server-http/webdocs -> http://knowledgestore.fbk.eu/ks-server-http/webdocs
+    (for webdocs: the Enunciate plugin is not compatible with Java 1.8)
+    
     -->
 
+    <skin>
+        <groupId>lt.velykis.maven.skins</groupId>
+        <artifactId>reflow-maven-skin</artifactId>
+        <version>1.0.0-patched</version>
+    </skin>
 
-    <!-- Bottom menus -->
-    <menu name="Project Links" inherit="top">
-      <item name="Home Page" href="https://knowledgestore.fbk.eu/"/>
-      <item name="NWR Wiki (restricted)" href="http://redmine.let.labs.vu.nl/projects/newsreader316404/wiki/Knowledge_Store_%28WP06%29"/>
-      <item name="FBK Wiki (restricted)" href="https://newsreader.fbk.eu/trac/wiki/KnowledgeStoreStartPage"/>
-    </menu>
-    <menu name="Supported by" inherit="top">
-      <item name="DKM unit @ FBK" href="https://dkm.fbk.eu/"/>
-      <item name="HLT unit @ FBK" href="https://hlt.fbk.eu/"/>
-      <item name="NewsReader Project" href="http://www.newsreader-project.eu/"/>
-      <item name="LiveMemories Project" href="http://www.livememories.org/"/>
-    </menu>
-  </body>
+    <body>
+        <head/>
 
-  <custom>
-    <reflowSkin>
-      <absoluteResourceURL>https://knowledgestore.fbk.eu/</absoluteResourceURL>
-      <!--<theme>bootswatch-spacelab</theme>-->
-      <highlightJs>true</highlightJs>
-      <highlightJsTheme>default</highlightJsTheme>
-      <imgLightbox>true</imgLightbox>
-      <smoothScroll>true</smoothScroll>
-      <bootstrapCss>true</bootstrapCss>
-      <bootstrapIcons>true</bootstrapIcons>
-      <html5Anchor>true</html5Anchor>
-      <navbarInverse>true</navbarInverse>
-      <markPageHeader>true</markPageHeader>
-      <protocolRelativeURLs>true</protocolRelativeURLs>
-      <skinAttribution>true</skinAttribution>
-      <brand>
-        <name>
-          <![CDATA[The <span class="color-highlight">KnowledgeStore</span> project]]></name>
-        <href>http://knowledgestore.fbk.eu/</href>
-      </brand>
-      <slogan>Scalable storage for text and RDF data</slogan>
-      <titleTemplate>%2$s | %1$s</titleTemplate>
-      <toc>none</toc>
-      <!--
-        <toc>top</toc>
-        <tocTopMax>6</tocTopMax>
-        <tocTopFlatten>false</tocTopFlatten>
-      -->
-      <topNav>Project|Documentation|Ontologies|Maven Resources|Modules|Parent Project|Contacts</topNav>
-      <bottomNav maxSpan="4">
-        <column>Project Links</column>
-        <column>Supported by</column>
-        <!--<column>Terms of Use</column>-->
-      </bottomNav>
-      <breadcrumbs>true</breadcrumbs>
-      <bottomDescription quote="true">
-        <![CDATA[
+        <!-- Currently not used; would end up in top navigation bar
+        <links>
+          <item name="NewsReader" href="http://www.newsreader-project.eu/" />
+        </links>
+        -->
+
+        <breadcrumbs>
+            <item name="KnowledgeStore" href="index.html"/>
+        </breadcrumbs>
+
+        <!-- Top menus -->
+        <menu name="Project">
+            <item name="About" href="index.html"/>
+            <item name="License" href="license.html"/>
+             <item name="Downloads" href="download.html" />
+            <!-- <item name="Build" href="build.html" /> -->
+            <item name="Team" href="team-list.html"/>
+            <item name="Publications" href="publications.html"/>
+            <item name="External resources" collapse="true" href="#">
+                <item name="RDFpro" href="http://fracor.bitbucket.org/rdfpro/"/>
+                <item name="Event Situation Ontology (ESO)" href="https://github.com/newsreader/eso"/>
+                <item name="ESO reasoner" href="https://github.com/dkmfbk/eso-reasoner"/>
+            </item>
+        </menu>
+        
+        <menu name="Documentation">
+            <!--<item name="Server" href="server.html"/>-->
+            <item name="Project wiki" href="https://github.com/dkmfbk/knowledgestore/wiki"/>
+            <!--<item name="Java Client" href="java-client.html"/>-->
+            <item name="NAF populator" href="naf-populator.html"/>
+            <!--<item name="RDF populator" href="rdf-populator.html"/>-->
+            <item name="Web API reference" href="ks-server-http/webdocs/webdocs.html"/>
+            <item name="Javadoc reference" href="apidocs/index.html"/>
+        </menu>
+        
+        <menu name="Ontologies">
+            <item name="KnowledgeStore Core Data Model" href="${site-root}ontologies/knowledgestore.html"/>
+            <item name="NewsReader Data Model" href="${site-root}ontologies/newsreader.html"/>
+        </menu>
+
+        <menu name="Maven Resources" ref="reports" inherit="top"/>
+        <menu ref="modules" inherit="top"/>
+        
+        <menu name="Contacts">
+            <item name="Email Us" href="mailto:knowledgestore@fbk.eu"/>
+        </menu>
+        <menu ref="parent" inherit="top"/>
+        <!--
+        <menu name="Resources" inherit="top">
+          <item name="TRAC Wiki" href="https://newsreader.fbk.eu/trac/wiki/KnowledgeStoreStartPage" />
+          <item name="Browse SVN" href="https://newsreader.fbk.eu/trac/browser/newsreader/Code/KnowledgeStore" />
+          <menu name="Maven Modules" ref="modules"/>
+          <menu name="Maven Information">
+          </menu>
+          <menu name="Maven Reports">
+          </menu>
+        </menu>
+        -->
+
+
+        <!-- Bottom menus -->
+        <menu name="Project Links" inherit="top">
+            <item name="Home Page" href="https://knowledgestore.fbk.eu/"/>
+            <item name="NWR Wiki (restricted)"
+                  href="http://redmine.let.labs.vu.nl/projects/newsreader316404/wiki/Knowledge_Store_%28WP06%29"/>
+            <item name="FBK Wiki (restricted)" href="https://newsreader.fbk.eu/trac/wiki/KnowledgeStoreStartPage"/>
+        </menu>
+        <menu name="Supported by" inherit="top">
+            <item name="DKM unit @ FBK" href="https://dkm.fbk.eu/"/>
+            <item name="HLT unit @ FBK" href="https://hlt.fbk.eu/"/>
+            <item name="NewsReader Project" href="http://www.newsreader-project.eu/"/>
+            <item name="LiveMemories Project" href="http://www.livememories.org/"/>
+        </menu>
+    </body>
+
+    <custom>
+        <reflowSkin>
+            <absoluteResourceURL>https://knowledgestore.fbk.eu/</absoluteResourceURL>
+            <!--<theme>bootswatch-spacelab</theme>-->
+            <highlightJs>true</highlightJs>
+            <highlightJsTheme>default</highlightJsTheme>
+            <imgLightbox>true</imgLightbox>
+            <smoothScroll>true</smoothScroll>
+            <bootstrapCss>true</bootstrapCss>
+            <bootstrapIcons>true</bootstrapIcons>
+            <html5Anchor>true</html5Anchor>
+            <navbarInverse>true</navbarInverse>
+            <markPageHeader>true</markPageHeader>
+            <protocolRelativeURLs>false</protocolRelativeURLs>
+            <skinAttribution>true</skinAttribution>
+            <brand>
+                <name>
+                    <![CDATA[The <span class="color-highlight">KnowledgeStore</span> project]]></name>
+                <href>${site-root}index.html</href>
+            </brand>
+            <slogan>Scalable storage for text and RDF data</slogan>
+            <titleTemplate>%2$s | %1$s</titleTemplate>
+            <toc>none</toc>
+            <!--
+              <toc>top</toc>
+              <tocTopMax>6</tocTopMax>
+              <tocTopFlatten>false</tocTopFlatten>
+            -->
+            <topNav>Project|Documentation|Ontologies|Maven Resources|Modules|Parent Project|Contacts</topNav>
+            <bottomNav maxSpan="4">
+                <column>Project Links</column>
+                <column>Supported by</column>
+                <!--<column>Terms of Use</column>-->
+            </bottomNav>
+            <breadcrumbs>true</breadcrumbs>
+            <bottomDescription quote="true">
+                <![CDATA[
         The KnowledgeStore provides scalable storage for unstructured documents and RDF data about them, supporting bulk access, contextual inference and SPARQL queries. It is a joint effort of <a href="https://dkm.fbk.eu/">DKM</a> and <a href="https://hlt.fbk.eu/">HLT</a> units of <a href="https://www.fbk.eu/">FBK-Irst</a>. The implementation is powered by:<br/><br/>
         <table border="0">
           <tr>
@@ -147,17 +175,17 @@
           </tr>
         </table>
         ]]>
-      </bottomDescription>
-      <!--<shortTitle>generate</shortTitle>-->
-      <titleTemplate>%1$s - %2$s</titleTemplate>
-      <pages>
-        <index>
-          <shortTitle>Home</shortTitle>
-        </index>
-        <taglist>
-          <html5Anchor>false</html5Anchor>
-        </taglist>
-      </pages>
-    </reflowSkin>
-  </custom>
+            </bottomDescription>
+            <!--<shortTitle>generate</shortTitle>-->
+            <titleTemplate>%1$s - %2$s</titleTemplate>
+            <pages>
+                <index>
+                    <shortTitle>Home</shortTitle>
+                </index>
+                <taglist>
+                    <html5Anchor>false</html5Anchor>
+                </taglist>
+            </pages>
+        </reflowSkin>
+    </custom>
 </project>
