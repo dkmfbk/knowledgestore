@@ -31,6 +31,12 @@
     * project-version - Version of the project (defined in the POM file)
     * site-path - Local path of the website (to be supplied using -Dsite-path=file:///...)
     
+    Links to external folders:
+    /files -> http://knowledgestore.fbk.eu/files
+    /ontologies -> http://knowledgestore.fbk.eu/ontologies
+    /ks-server-http/webdocs -> http://knowledgestore.fbk.eu/ks-server-http/webdocs
+    (for webdocs: the Enunciate plugin is not compatible with Java 1.8)
+    
     -->
 
     <skin>

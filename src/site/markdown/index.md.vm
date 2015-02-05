@@ -49,26 +49,29 @@ NewsReader components cooperate.
 
 <h3>Resources</h3>
 
-  * The KnowledgeStore [API JavaDoc](http://knowledgestore.fbk.eu/apidocs/index.html) and [browsable source Code](http://knowledgestore.fbk.eu/xref/index.html)
+  * The KnowledgeStore [API JavaDoc](${site-root}apidocs/index.html) and [browsable source Code](${site-root}xref/index.html)
   * The KnowledgeStore Data Model ontologies:
-    * [Fixed Part](https://dkm.fbk.eu/ontologies/knowledgestore.html)
-    * [NewsReader Specialization](https://dkm.fbk.eu/ontologies/newsreader.html)
+    * [Fixed Part](${site-root}ontologies/knowledgestore.html)
+    * [NewsReader Specialization](${site-root}ontologies/newsreader.html)
   * [Download the KnowledgeStore](${site-root}download.html) (source code, prebuilt JARs, background knowledge, and much more)
   * Have a look at the [project wiki](https://github.com/dkmfbk/knowledgestore/wiki)
-  * List of [scientific papers](${site-root}publications.html) related to the KnowledgeStore
+  * List of [publications](${site-root}publications.html) related to the KnowledgeStore
 
 <!--* The KnowledgeStore [Access Patterns](http://knowledgestore.fbk.eu/files/ks_access_patterns.pdf) and their [refactoring](http://knowledgestore.fbk.eu/files/ks_access_patterns_refactored.pdf)-->
 
 
-<h3>Demo</h3>
+<h3>KnowledgeStore in action</h3>
 
   * [Demonstration video](http://youtu.be/if1PRwSll5c) showing accessing the KnowledgeStore through the UI
-  * [KnowledgeStore instance](https://knowledgestore.fbk.eu/nwr/worldcup/) for the global automotive industry use case
-    (partial, 65K news, 2003-2013 - access restricted to NewsReader consortium)
-  * [KnowlegeStore instance](https://knowledgestore.fbk.eu/nwr/cars/) for the FIFA World Cup use case (212K news,
-    2004-2014 - access restricted to NewsReader consortium)
-  * [KnowledgeStore instance](https://knowledgestore2.fbk.eu/nwr/worldcup/) for the global automotive industry use case
-    (complete, 1.2M news, 2003-2013 - access restricted to NewsReader consortium)
+  * [KnowledgeStore instance](http://knowledgestore2.fbk.eu/nwr/wikinews/) using the WikiNews dataset
+    (18K news, 2004-2014)
+  * Access restricted to NewsReader consortium:
+    * [KnowledgeStore instance](https://knowledgestore.fbk.eu/nwr/cars/) for the global automotive industry use case
+      (version 1, 65K news, 2003-2013)
+    * [KnowledgeStore instance](https://knowledgestore.fbk.eu/nwr/worldcup/) for the FIFA World Cup use case (212K news,
+      2004-2014)
+    * [KnowledgeStore instance](https://knowledgestore2.fbk.eu/nwr/cars/) for the global automotive industry use case
+      (version 2, 1.2M news, 2003-2013)
 
 ##<h3>Publications</h3>
 ##

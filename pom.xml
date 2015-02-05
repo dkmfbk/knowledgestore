@@ -104,6 +104,9 @@
                 <role>Developer</role>
             </roles>
             <timezone>+1</timezone>
+            <properties>
+                <picUrl>https://my.fbk.eu/fbk-api/v2/picture/aprosio</picUrl>
+            </properties>
         </developer>
     </developers>
 
@@ -139,18 +142,6 @@
                 <role>Developer</role>
             </roles>
             <timezone>-5</timezone>
-        </contributor>
-        <contributor>
-            <name>Radim Nedbal</name>
-            <email>nedbal@fbk.eu</email>
-            <url>https://dkm.fbk.eu/index.php/Radim_Nedbal</url>
-            <roles>
-                <role>Developer</role>
-            </roles>
-            <timezone>+1</timezone>
-            <properties>
-                <picUrl>https://my.fbk.eu/fbk-api/v2/picture/nedbal</picUrl>
-            </properties>
         </contributor>
         <contributor>
             <name>Christian Girardi</name>
