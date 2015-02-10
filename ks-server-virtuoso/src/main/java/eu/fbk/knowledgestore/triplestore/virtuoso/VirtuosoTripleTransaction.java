@@ -61,7 +61,6 @@ final class VirtuosoTripleTransaction implements TripleTransaction {
         assert store != null;
 
         // try to connect to Virtuoso - under the hoods, a (pooled) JDBC connection is obtained
-        // note that there is no special read-only mode in Virtuoso
         final long ts = System.currentTimeMillis();
         final VirtuosoRepositoryConnection connection;
         try {
@@ -76,8 +75,14 @@ final class VirtuosoTripleTransaction implements TripleTransaction {
         this.ts = ts;
 
         try {
-            connection.begin();
-            connection.getQuadStoreConnection().prepareCall("log_enable(2)").execute();
+            // Following lines (that cause setAutoCommit(false) on underlying connection) will
+            // cause a major slow-down in some queries
+            // connection.begin();
+
+            connection.getQuadStoreConnection().setAutoCommit(true);
+            connection.getQuadStoreConnection().setReadOnly(readOnly);
+            // connection.getQuadStoreConnection().prepareCall("log_enable(2)").execute();
+
         } catch (final Throwable ex) {
             try {
                 connection.close();
