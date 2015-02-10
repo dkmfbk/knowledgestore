@@ -72,7 +72,7 @@ public final class LoggingTripleStore extends ForwardingTripleStore {
         if (LOGGER.isDebugEnabled()) {
             final long ts = System.currentTimeMillis();
             final TripleTransaction transaction = new LoggingTripleTransaction(
-                    super.begin(readOnly));
+                    super.begin(readOnly), ts);
             LOGGER.debug("{} - started in {} mode in {} ms", transaction, readOnly ? "read-only"
                     : "read-write", System.currentTimeMillis() - ts);
             return transaction;
@@ -107,8 +107,11 @@ public final class LoggingTripleStore extends ForwardingTripleStore {
 
         private final TripleTransaction delegate;
 
-        LoggingTripleTransaction(final TripleTransaction delegate) {
+        private final long ts;
+
+        LoggingTripleTransaction(final TripleTransaction delegate, final long ts) {
             this.delegate = Preconditions.checkNotNull(delegate);
+            this.ts = ts;
         }
 
         @Override
@@ -126,13 +129,34 @@ public final class LoggingTripleStore extends ForwardingTripleStore {
                 final long ts) {
             return iteration == null ? null : new IterationWrapper<T, E>(iteration) {
 
+                private int count = 0;
+
+                private boolean hasNext = true;
+
+                @Override
+                public boolean hasNext() throws E {
+                    this.hasNext = super.hasNext();
+                    return this.hasNext;
+                }
+
+                @Override
+                public T next() throws E {
+                    final T result = super.next();
+                    ++this.count;
+                    return result;
+                }
+
                 @Override
                 protected void handleClose() throws E {
                     try {
                         super.handleClose();
                     } finally {
-                        LOGGER.debug("{} - {} closed after {} ms", LoggingTripleTransaction.this,
-                                name, System.currentTimeMillis() - ts);
+                        if (LOGGER.isDebugEnabled()) {
+                            LOGGER.debug("{} - {} closed after {} ms, {} results retrieved{}",
+                                    LoggingTripleTransaction.this, name,
+                                    System.currentTimeMillis() - ts, this.count, this.hasNext ? ""
+                                            : " (exhausted)");
+                        }
                     }
                 }
 
@@ -146,7 +170,7 @@ public final class LoggingTripleStore extends ForwardingTripleStore {
                 throws IOException, IllegalStateException {
 
             if (LOGGER.isDebugEnabled()) {
-                final String name = "get() statement iteration for <" + format(subject) + ", "
+                final String name = "statement iteration for <" + format(subject) + ", "
                         + format(predicate) + ", " + format(object) + ", " + format(context) + ">";
                 final long ts = System.currentTimeMillis();
                 CloseableIteration<? extends Statement, ? extends Exception> result;
@@ -165,9 +189,9 @@ public final class LoggingTripleStore extends ForwardingTripleStore {
                 throws IOException, UnsupportedOperationException {
 
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Evaluating query ({} bindings, {} timeout):\n{}",
+                LOGGER.debug("{} - evaluating query ({} bindings, {} timeout):\n{}", this,
                         bindings == null ? 0 : bindings.size(), timeout, query);
-                final String name = "query() result iteration";
+                final String name = "query result iteration";
                 final long ts = System.currentTimeMillis();
                 CloseableIteration<BindingSet, QueryEvaluationException> result;
                 result = logClose(super.query(query, bindings, timeout), name, ts);
@@ -235,8 +259,9 @@ public final class LoggingTripleStore extends ForwardingTripleStore {
             if (LOGGER.isDebugEnabled()) {
                 final long ts = System.currentTimeMillis();
                 super.end(commit);
-                LOGGER.debug("{} - {} done in {} ms", this, commit ? "commit" : "rollback",
-                        System.currentTimeMillis() - ts);
+                final long ts2 = System.currentTimeMillis();
+                LOGGER.debug("{} - {} done in {} ms, tx duration {} ms", this, commit ? "commit"
+                        : "rollback", ts2 - ts, ts2 - this.ts);
             } else {
                 super.end(commit);
             }
