@@ -200,15 +200,22 @@
         </site>
     </distributionManagement>
 
+    <!--<repositories>-->
+        <!--<repository>-->
+            <!--<snapshots>-->
+                <!--<enabled>true</enabled>-->
+            <!--</snapshots>-->
+            <!--<id>local-repo</id>-->
+            <!--<name>Local Project Repository</name>-->
+            <!--<layout>default</layout>-->
+            <!--<url>file:///${basedir}/${parent-path}/mvnrepo</url>-->
+        <!--</repository>-->
+    <!--</repositories>-->
+
     <repositories>
         <repository>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-            <id>local-repo</id>
-            <name>Local Project Repository</name>
-            <layout>default</layout>
-            <url>file:///${basedir}/${parent-path}/mvnrepo</url>
+            <id>fbk-repo</id>
+            <url>https://raw.githubusercontent.com/fbk/mvn-repo/master/releases</url>
         </repository>
     </repositories>
 
