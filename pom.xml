@@ -166,28 +166,10 @@
     </licenses>
 
     <scm>
-        <!--<connection>scm:svn:https://newsreader.fbk.eu/svn/Code/KnowledgeStore/trunk</connection>-->
         <connection>scm:git:https://github.com/dkmfbk/knowledgestore.git</connection>
         <developerConnection>scm:git:https://github.com/dkmfbk/knowledgestore.git</developerConnection>
         <url>https://github.com/dkmfbk/knowledgestore</url>
     </scm>
-
-    <!--<distributionManagement>-->
-    <!--<repository>-->
-    <!--<id>repoks</id>-->
-    <!--<name>Repository for project output artifacts</name>-->
-    <!--<url>${repo-path}</url>-->
-    <!--<layout>default</layout>-->
-    <!--<uniqueVersion>false</uniqueVersion>-->
-    <!--</repository>-->
-    <!--<snapshotRepository>-->
-    <!--<id>repoks</id>-->
-    <!--<name>Repository for project output artifacts</name>-->
-    <!--<url>${repo-path}</url>-->
-    <!--<layout>default</layout>-->
-    <!--<uniqueVersion>false</uniqueVersion>-->
-    <!--</snapshotRepository>-->
-    <!--</distributionManagement>-->
 
     <distributionManagement>
         <snapshotRepository>
@@ -199,18 +181,6 @@
             <url>${site-path}/</url>
         </site>
     </distributionManagement>
-
-    <!--<repositories>-->
-        <!--<repository>-->
-            <!--<snapshots>-->
-                <!--<enabled>true</enabled>-->
-            <!--</snapshots>-->
-            <!--<id>local-repo</id>-->
-            <!--<name>Local Project Repository</name>-->
-            <!--<layout>default</layout>-->
-            <!--<url>file:///${basedir}/${parent-path}/mvnrepo</url>-->
-        <!--</repository>-->
-    <!--</repositories>-->
 
     <repositories>
         <repository>
@@ -326,15 +296,6 @@
                 <type>test-jar</type>
                 <version>${project.version}</version>
             </dependency>
-
-            <!--
-            <dependency>
-              <groupId>org.apache.tika</groupId>
-              <artifactId>tika-core</artifactId>
-              <version>${tika.version}</version>
-            </dependency>
-            -->
-
             <dependency>
                 <groupId>org.openrdf.sesame</groupId>
                 <artifactId>sesame-model</artifactId>
@@ -1212,33 +1173,6 @@
         </pluginManagement>
 
         <plugins>
-
-            <plugin>
-                <groupId>org.sonatype.plugins</groupId>
-                <artifactId>nexus-staging-maven-plugin</artifactId>
-                <version>1.6.3</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <serverId>ossrh</serverId>
-                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-gpg-plugin</artifactId>
-                <version>1.5</version>
-                <executions>
-                    <execution>
-                        <id>sign-artifacts</id>
-                        <phase>deploy</phase>
-                        <goals>
-                            <goal>sign</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
             <plugin>
                 <!-- The following goal is necessary in order to allow child modules to
                      inherit the site descriptor of the parent project -->
@@ -1361,6 +1295,40 @@
     </reporting>
 
     <profiles>
+
+        <profile>
+            <id>release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>nexus-staging-maven-plugin</artifactId>
+                        <version>1.6.3</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <serverId>ossrh</serverId>
+                            <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                            <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.5</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
 
         <!-- This profile is activated by default for the parent project and produces additional info
         pages specific to it. You may disable it to speed up the build process via -P !parent-info -->
