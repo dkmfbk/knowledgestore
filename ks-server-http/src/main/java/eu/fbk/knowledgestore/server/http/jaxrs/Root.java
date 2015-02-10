@@ -11,8 +11,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.annotation.Nullable;
 import javax.ws.rs.GET;
@@ -53,6 +51,8 @@ import org.openrdf.query.impl.ListBindingSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import jersey.repackaged.com.google.common.base.Objects;
+
 import eu.fbk.knowledgestore.OperationException;
 import eu.fbk.knowledgestore.Outcome;
 import eu.fbk.knowledgestore.data.Data;
@@ -83,9 +83,11 @@ public class Root extends Resource {
     private static final int MAX_FETCHED_RESULTS = 10000;
 
     private static final boolean CHAR_OFFSET_HACK = Boolean.parseBoolean(System.getProperty(
-            "ks.charOffsetHack", "false"));
+            "ks.charOffsetHack", "false"))
+            || Boolean.parseBoolean(Objects.firstNonNull(System.getenv("KS_CHAR_OFFSET_HACK"),
+                    "false"));
 
-    private static final Pattern NIF_OFFSET_PATTERN = Pattern.compile("char=(\\d+),(\\d+)");
+    // private static final Pattern NIF_OFFSET_PATTERN = Pattern.compile("char=(\\d+),(\\d+)");
 
     @GET
     public Response getStatus() {
@@ -846,31 +848,38 @@ public class Root extends Resource {
             entityIDs.add(entityID);
         }
 
-        builder = new StringBuilder();
-        builder.append("SELECT ?m ?e WHERE { VALUES ?p { sem:hasActor sem:hasTime sem:hasPlace } VALUES ?e0 {");
-        for (final URI entityID : entityIDs) {
-            builder.append(' ').append(Data.toString(entityID, null));
-        }
-        builder.append(" } ?e0 ?p ?e . ?e $$ ?m FILTER(STRSTARTS(STR(?m), $$)) }");
-        for (final BindingSet bindings : getSession().sparql(builder.toString(),
-                getUIConfig().getDenotedByProperty(), resourceID.stringValue()).execTuples()) {
-            final URI mentionID = (URI) bindings.getValue("m");
-            final URI entityID = (URI) bindings.getValue("e");
-            Record mention = mentions.get(mentionID);
-            if (mention == null) {
-                mention = Record.create(mentionID, KS.MENTION);
-                final Matcher matcher = NIF_OFFSET_PATTERN.matcher(mentionID.stringValue());
-                if (matcher.find()) {
-                    mention.set(NIF.BEGIN_INDEX, Integer.parseInt(matcher.group(1)));
-                    mention.set(NIF.END_INDEX, Integer.parseInt(matcher.group(2)));
-                }
-                mentions.put(mentionID, mention);
-            }
-            mention.add(KS.REFERS_TO, entityID);
-        }
+        // FOLLOWING CODE CAN INCREASE THE NUMBER OF MENTIONS RETRIEVED, BUT THE QUERY USED MAY
+        // TAKE UP TO SOME HUNDRED OF SECONDS (AND USING A TIMEOUT PRODUCES A NON-DETERMINISTIC
+        // OUTPUT
+        // if (!entityIDs.isEmpty()) {
+        // builder = new StringBuilder();
+        // builder.append("SELECT ?m ?e WHERE { "
+        // + "VALUES ?p { sem:hasActor sem:hasTime sem:hasPlace } VALUES ?e0 {");
+        // for (final URI entityID : entityIDs) {
+        // builder.append(' ').append(Data.toString(entityID, null));
+        // }
+        // builder.append(" } ?e0 ?p ?e . ?e $$ ?m FILTER(STRSTARTS(STR(?m), $$)) }");
+        // for (final BindingSet bindings : getSession()
+        // .sparql(builder.toString(), getUIConfig().getDenotedByProperty(),
+        // resourceID.stringValue()).timeout(1000L).execTuples()) {
+        // final URI mentionID = (URI) bindings.getValue("m");
+        // final URI entityID = (URI) bindings.getValue("e");
+        // Record mention = mentions.get(mentionID);
+        // if (mention == null) {
+        // mention = Record.create(mentionID, KS.MENTION);
+        // final Matcher matcher = NIF_OFFSET_PATTERN.matcher(mentionID.stringValue());
+        // if (matcher.find()) {
+        // mention.set(NIF.BEGIN_INDEX, Integer.parseInt(matcher.group(1)));
+        // mention.set(NIF.END_INDEX, Integer.parseInt(matcher.group(2)));
+        // }
+        // mentions.put(mentionID, mention);
+        // }
+        // mention.add(KS.REFERS_TO, entityID);
+        // }
+        // }
 
         final List<Record> sortedMentions = Lists.newArrayList(mentions.values());
-        sortedMentions.sort(new Comparator<Record>() {
+        Collections.sort(sortedMentions, new Comparator<Record>() {
 
             @Override
             public int compare(final Record r1, final Record r2) {
