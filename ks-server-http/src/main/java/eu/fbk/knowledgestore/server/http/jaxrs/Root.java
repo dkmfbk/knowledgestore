@@ -51,7 +51,7 @@ import org.openrdf.query.impl.ListBindingSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jersey.repackaged.com.google.common.base.Objects;
+import com.google.common.base.Objects;
 
 import eu.fbk.knowledgestore.OperationException;
 import eu.fbk.knowledgestore.Outcome;
