@@ -24,6 +24,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import com.google.common.base.Function;
+import com.google.common.base.Objects;
 import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
 import com.google.common.collect.HashMultiset;
@@ -50,8 +51,6 @@ import org.openrdf.query.BindingSet;
 import org.openrdf.query.impl.ListBindingSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.google.common.base.Objects;
 
 import eu.fbk.knowledgestore.OperationException;
 import eu.fbk.knowledgestore.Outcome;
@@ -789,9 +788,12 @@ public class Root extends Resource {
         final Record record = id == null ? null : getSession().retrieve(layer).ids(id).exec()
                 .getUnique();
         if (record != null && layer.equals(KS.MENTION)) {
+            final String template = "SELECT ?e WHERE { ?e $$ $$ "
+                    + (getUIConfig().isDenotedByAllowsGraphs() ? ""
+                            : "FILTER NOT EXISTS { GRAPH ?e { ?s ?p ?o } } ") + "}";
             for (final URI entityID : getSession()
-                    .sparql("SELECT ?e WHERE { ?e $$ $$ }", getUIConfig().getDenotedByProperty(),
-                            id).execTuples().transform(URI.class, true, "e")) {
+                    .sparql(template, getUIConfig().getDenotedByProperty(), id).execTuples()
+                    .transform(URI.class, true, "e")) {
                 record.add(KS.REFERS_TO, entityID);
             }
         }
@@ -833,14 +835,18 @@ public class Root extends Resource {
             }
         }
 
-        StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder();
         builder.append("SELECT ?m ?e WHERE { ?e ");
         builder.append(Data.toString(getUIConfig().getDenotedByProperty(), null));
         builder.append(" ?m VALUES ?m {");
         for (final URI mentionID : mentionIDs) {
             builder.append(' ').append(Data.toString(mentionID, null));
         }
-        builder.append(" } }");
+        builder.append(" } ");
+        if (!getUIConfig().isDenotedByAllowsGraphs()) {
+            builder.append("FILTER NOT EXISTS { GRAPH ?e { ?s ?p ?o } } ");
+        }
+        builder.append("}");
         for (final BindingSet bindings : getSession().sparql(builder.toString()).execTuples()) {
             final URI mentionID = (URI) bindings.getValue("m");
             final URI entityID = (URI) bindings.getValue("e");
