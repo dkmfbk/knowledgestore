@@ -542,8 +542,9 @@ public final class Client extends AbstractKnowledgeStore {
 
             // Encode timeout
             if (timeout != null) {
-                actualQuery = Strings.isNullOrEmpty(actualQuery) ? "?timeout=" + timeout
-                        : actualQuery + "&timeout=" + timeout;
+                final long timeoutInSeconds = Math.max(1, timeout / 1000);
+                actualQuery = Strings.isNullOrEmpty(actualQuery) ? "?timeout=" + timeoutInSeconds
+                        : actualQuery + "&timeout=" + timeoutInSeconds;
             }
 
             // Determine Accept MIME type based on expected (Java) response type
