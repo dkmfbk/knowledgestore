@@ -336,6 +336,7 @@ public final class VirtuosoJdbcTripleStore implements TripleStore {
             Connection connection = null;
             try {
                 connection = VirtuosoJdbcTripleStore.this.source.getConnection();
+                connection.setTransactionIsolation(Connection.TRANSACTION_READ_UNCOMMITTED);
                 connection.setReadOnly(readOnly);
                 connection.setAutoCommit(true);
             } catch (final SQLException ex) {
@@ -509,6 +510,7 @@ public final class VirtuosoJdbcTripleStore implements TripleStore {
 
                     // Create and configure the SQL Statement object for executing the query
                     this.statement = VirtuosoTransaction.this.connection.createStatement();
+                    this.statement.setFetchDirection(ResultSet.FETCH_FORWARD);
                     this.statement.setFetchSize(VirtuosoJdbcTripleStore.this.fetchSize);
                     if (timeout != null) {
                         // Set the client-side timeout in seconds for getting the first result
