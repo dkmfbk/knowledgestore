@@ -506,19 +506,22 @@ public final class Server extends AbstractKnowledgeStore {
         protected long doCount(@Nullable final Long timeout, final URI type,
                 @Nullable final XPath condition, @Nullable final Set<URI> ids) throws Throwable {
 
+            // Try to transform a retrieve with condition to a faster lookup, if possible
+            final Set<URI> actualIDs = ids != null ? ids : retrieveToLookup(type, condition);
+
             // If IDs have been supplied, we prefer to retrieve the records and apply the optional
             // condition locally (more efficient if few IDs are used)
-            if (ids != null) {
-                return doRetrieve(timeout, type, condition, ids, condition.getProperties(), null,
-                        null).count();
+            if (actualIDs != null) {
+                return doRetrieve(timeout, type, condition, actualIDs, condition.getProperties(),
+                        null, null).count();
             }
 
             // Otherwise, we resort to the count operation within a read-only datastore TX
-            final DataTransaction transaction = Server.this.dataStore.begin(true);
+            final DataTransaction tx = Server.this.dataStore.begin(true);
             try {
-                return transaction.count(type, condition);
+                return tx.count(type, condition);
             } finally {
-                transaction.end(true); // commit or rollback irrelevant
+                tx.end(true); // commit or rollback irrelevant
             }
         }
 
@@ -528,11 +531,14 @@ public final class Server extends AbstractKnowledgeStore {
                 @Nullable final Set<URI> properties, @Nullable final Long offset,
                 @Nullable final Long limit) throws Throwable {
 
+            // Try to transform a retrieve with condition to a faster lookup, if possible
+            final Set<URI> actualIDs = ids != null ? ids : retrieveToLookup(type, condition);
+
             // Start a read-only datastore TX that will end when the resulting cursor is closed
             final DataTransaction tx = Server.this.dataStore.begin(true);
 
             Stream<Record> stream;
-            if (ids == null) {
+            if (actualIDs == null) {
                 // 1st approach: do a retrieve() if no ID was supplied
                 stream = tx.retrieve(type, condition, properties);
 
@@ -543,7 +549,7 @@ public final class Server extends AbstractKnowledgeStore {
                         && !props.containsAll(condition.getProperties())) {
                     props = Sets.union(properties, condition.getProperties());
                 }
-                stream = tx.lookup(type, ids, props);
+                stream = tx.lookup(type, actualIDs, props);
                 if (condition != null) {
                     stream = stream.filter(condition.asPredicate(), 0);
                 }
@@ -569,6 +575,43 @@ public final class Server extends AbstractKnowledgeStore {
 
             // Attach the transaction to the cursor, so that it ends when the latter is closed
             return attach(tx, stream);
+        }
+
+        @SuppressWarnings({ "unchecked", "rawtypes" })
+        private Set<URI> retrieveToLookup(final URI type, @Nullable final XPath condition)
+                throws IOException {
+
+            if (condition == null) {
+                return null;
+            }
+
+            final Map<URI, Set<Object>> restrictions = Maps.newHashMap();
+            condition.decompose(restrictions);
+
+            DataTransaction tx = null;
+            Set<URI> ids = null;
+            try {
+                if (KS.RESOURCE.equals(type) && restrictions.containsKey(KS.HAS_MENTION)) {
+                    ids = Sets.newHashSet();
+                    tx = Server.this.dataStore.begin(true);
+                    tx.lookup(KS.MENTION, (Set) restrictions.get(KS.HAS_MENTION),
+                            ImmutableSet.of(KS.MENTION_OF))
+                            .transform(URI.class, true, KS.MENTION_OF).toCollection(ids);
+
+                } else if (KS.MENTION.equals(type) && restrictions.containsKey(KS.MENTION_OF)) {
+                    ids = Sets.newHashSet();
+                    tx = Server.this.dataStore.begin(true);
+                    tx.lookup(KS.RESOURCE, (Set) restrictions.get(KS.MENTION_OF),
+                            ImmutableSet.of(KS.HAS_MENTION))
+                            .transform(URI.class, true, KS.HAS_MENTION).toCollection(ids);
+                }
+            } finally {
+                if (tx != null) {
+                    tx.end(false);
+                }
+            }
+
+            return ids;
         }
 
         @Override

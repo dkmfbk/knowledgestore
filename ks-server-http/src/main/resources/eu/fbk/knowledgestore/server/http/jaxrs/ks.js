@@ -6,9 +6,10 @@ $(function() {
 
 // Selection
 
-if (window.location.href.indexOf("selection=") >= 0) {
-	window.location.href = "#selection";
-}
+// commented as it doesn't work properly
+// if (window.location.href.indexOf("selection=") >= 0) {
+// 	window.location.href = "#selection";
+// }
 
 function select(id) {
 	var url = window.location.href;
