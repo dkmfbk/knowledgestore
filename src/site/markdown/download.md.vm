@@ -5,9 +5,11 @@ Downloads
 
 $H3 KnowledgeStore
 
-KnowledgeStore artifacts are published via the [Maven central repository](http://repo1.maven.org/maven2/eu/fbk/knowledgestore).
+<p>KnowledgeStore artifacts are published via the [Maven central repository](http://repo1.maven.org/maven2/eu/fbk/knowledgestore).
 They include binaries, test binaries, sources and javadocs of each software module of the KnowledgeStore as well as the source and binary `tar.gz` archives listed in the following table.
-The binary archives include all you need to run and populate a KnowledgeStore instance. They require a Java 7+ virtual machine, with startup scripts tested only on Linux and Mac OS X.
+The binary archives include all you need to run and populate a KnowledgeStore instance. They require a Java 7+ virtual machine, with startup scripts tested only on Linux and Mac OS X.</p>
+
+<p>You can also browse the sources and fork the project on our <a href="https://github.com/dkmfbk/knowledgestore">GitHub page</a>.</p>
 
 <table>
 <thead>
