@@ -63,7 +63,7 @@ NewsReader components cooperate.
 
 <h3>KnowledgeStore in action</h3>
 
-  * [Demonstration video](http://youtu.be/if1PRwSll5c) showing accessing the KnowledgeStore through the UI
+  * [Demonstration video](http://youtu.be/YVOQaljLta4) showing accessing the KnowledgeStore through the UI
   * [KnowledgeStore instance](http://knowledgestore2.fbk.eu/nwr/wikinews/) using the WikiNews dataset
     (18K news, 2004-2014)
   * Access restricted to NewsReader consortium:
