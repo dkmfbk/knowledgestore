@@ -4,6 +4,7 @@ import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.AbstractMap;
 import java.util.AbstractSet;
 import java.util.Arrays;
@@ -63,6 +64,7 @@ import org.openrdf.model.vocabulary.XMLSchema;
 
 import eu.fbk.knowledgestore.internal.Util;
 import eu.fbk.knowledgestore.internal.rdf.CompactValueFactory;
+import eu.fbk.rdfpro.util.Namespaces;
 
 // TODO: RDF conversion
 // TODO: bytes
@@ -127,7 +129,7 @@ import eu.fbk.knowledgestore.internal.rdf.CompactValueFactory;
  * of record properties. Method {@link #parseValue(String, Map)} allow parsing a {@code Value} out
  * of a Turtle / TriG string, such as the ones produced by {@code toString(...)} methods.</li>
  * </ul>
- * 
+ *
  * <p style="color:red">
  * TODO: this class needs urgent refactoring
  * </p>
@@ -138,9 +140,9 @@ public final class Data {
 
     private static final Comparator<Object> PARTIAL_ORDERING = new PartialOrdering(TOTAL_ORDERING);
 
-    private static final Map<String, String> COMMON_NAMESPACES;
+    private static final Map<String, String> COMMON_NAMESPACES = Namespaces.DEFAULT.uriMap();
 
-    private static final Map<String, String> COMMON_PREFIXES;
+    private static final Map<String, String> COMMON_PREFIXES = Namespaces.DEFAULT.prefixMap();
 
     private static final Set<String> UNCOMPRESSIBLE_MIME_TYPES;
 
@@ -182,28 +184,6 @@ public final class Data {
 
     static {
         try {
-            final ImmutableMap.Builder<String, String> nsToPrefixBuilder;
-            final ImmutableMap.Builder<String, String> prefixToNsBuilder;
-
-            nsToPrefixBuilder = ImmutableMap.builder();
-            prefixToNsBuilder = ImmutableMap.builder();
-
-            for (final String line : Resources.readLines(Data.class.getResource("prefixes"),
-                    Charsets.UTF_8)) {
-                final Iterator<String> i = Splitter.on(' ').omitEmptyStrings().split(line)
-                        .iterator();
-                final String uri = i.next();
-                final String prefix = i.next();
-                nsToPrefixBuilder.put(uri, prefix);
-                prefixToNsBuilder.put(prefix, uri);
-                while (i.hasNext()) {
-                    prefixToNsBuilder.put(i.next(), uri);
-                }
-            }
-
-            COMMON_NAMESPACES = prefixToNsBuilder.build();
-            COMMON_PREFIXES = nsToPrefixBuilder.build();
-
             final ImmutableSet.Builder<String> uncompressibleMtsBuilder = ImmutableSet.builder();
             final ImmutableMap.Builder<String, String> extToMtIndexBuilder = ImmutableMap
                     .builder();
@@ -244,7 +224,7 @@ public final class Data {
      * {@link #setExecutor(ScheduledExecutorService)}, an executor is automatically created using
      * the thread number and naming given by system properties
      * {@code eu.fbk.knowledgestore.threadCount} and {@code eu.fbk.knowledgestore.threadNumber}.
-     * 
+     *
      * @return the shared executor
      */
     public static ListeningScheduledExecutorService getExecutor() {
@@ -270,7 +250,7 @@ public final class Data {
      * Setup the executor shared by KnowledgeStore components. If another executor was previously
      * in use, it will not be used anymore; in case it was the executor automatically created by
      * the system, it will be shutdown.
-     * 
+     *
      * @param newExecutor
      *            the new executor
      */
@@ -295,7 +275,7 @@ public final class Data {
      * used for this purpose (including the {@link ValueFactoryImpl} shipped with Sesame), the
      * factory returned by this method has been optimized to create objects that minimize the use
      * of memory, thus allowing to keep more objects / records in memory.
-     * 
+     *
      * @return a singleton {@code ValueFactory}
      */
     public static ValueFactory getValueFactory() {
@@ -305,7 +285,7 @@ public final class Data {
     /**
      * Returns a {@code DatatypeFactory} for creating {@code XMLGregorianCalendar} instances and
      * instances of other XML schema structured types.
-     * 
+     *
      * @return a singleton {@code DatatypeFactory}
      */
     public static DatatypeFactory getDatatypeFactory() {
@@ -323,7 +303,7 @@ public final class Data {
      * Note that comparison of dates follows the XML Schema specification with the only exception
      * that incomparable dates according to this specification (due to unknown timezone) are
      * considered equal.
-     * 
+     *
      * @return a singleton comparator imposing a total order over objects of the data model
      */
     public static Comparator<Object> getTotalComparator() {
@@ -336,7 +316,7 @@ public final class Data {
      * {@link #getTotalComparator()} but in case objects belong to different groups (e.g., an
      * integer and a string) an exception is thrown rather than applying group sorting, thus
      * resulting in a more strict comparison that may be useful, e.g., for checking conditions.
-     * 
+     *
      * @return a singleton comparator imposing a partial order over objects of the data model
      */
     public static Comparator<Object> getPartialComparator() {
@@ -347,7 +327,7 @@ public final class Data {
      * Returns a map of common prefix-to-namespace mappings, taken from a {@code prefix.cc} dump.
      * The returned map provides multiple prefixes for some namespace; it also support fast
      * reverse prefix lookup via {@link #namespaceToPrefix(String, Map)}.
-     * 
+     *
      * @return a singleton map of common prefix-to-namespace mappings
      */
     public static Map<String, String> getNamespaceMap() {
@@ -357,7 +337,7 @@ public final class Data {
     /**
      * Creates a new, empty prefix-to-namespace map that supports fast reverse prefix lookup via
      * {@link #namespaceToPrefix(String, Map)}.
-     * 
+     *
      * @return the created prefix-to-namespace map, empty
      */
     public static Map<String, String> newNamespaceMap() {
@@ -369,7 +349,7 @@ public final class Data {
      * in the {@code primaryNamespaceMap} take precedence, while the {@code secondaryNamespaceMap}
      * is accessed only if a mapping is not found in the primary map. Modification operations
      * target exclusively the {@code primaryNamespaceMap}.
-     * 
+     *
      * @param primaryNamespaceMap
      *            the primary prefix-to-namespace map, not null
      * @param secondaryNamespaceMap
@@ -398,7 +378,7 @@ public final class Data {
      * {@link #newNamespaceMap()} or the map of common prefix-to-namespace declarations); as a
      * result, calling this method may be significantly faster than manually looping over all the
      * prefix-to-namespace entries.
-     * 
+     *
      * @param namespace
      *            the namespace the corresponding prefix should be looked up
      * @param namespaceMap
@@ -441,7 +421,7 @@ public final class Data {
 
     /**
      * Checks whether the specific MIME type can be compressed.
-     * 
+     *
      * @param mimeType
      *            the MIME type
      * @return true if compression can reduce size of data belonging to the specified MIME type,
@@ -459,7 +439,7 @@ public final class Data {
     /**
      * Returns the MIME type for the file extension specified, if known. If the parameter contains
      * a full file name, its extension is extracted and used for the lookup.
-     * 
+     *
      * @param fileNameOrExtension
      *            the file extension or file name (from which the extension is extracted)
      * @return the corresponding MIME type; null if the file extension specified is not contained
@@ -477,7 +457,7 @@ public final class Data {
      * Returns the file extensions commonly associated to the specified MIME type. Extensions are
      * reported without a leading {@code '.'} (e.g., {@code txt}). In case multiple extensions are
      * returned, it is safe to consider the first one as the most common and preferred.
-     * 
+     *
      * @param mimeType
      *            the MIME type
      * @return a list with the extensions mapped to the MIME type, if known; an empty list
@@ -494,7 +474,7 @@ public final class Data {
     /**
      * Returns the language URI for the ISO 639 code (2-letters, 3-letters) specified. The
      * returned URI is in the form {@code http://lexvo.org/id/iso639-3/XYZ}.
-     * 
+     *
      * @param code
      *            the ISO 639 language code, possibly null
      * @return the corresponding URI, or null if the input is null
@@ -526,7 +506,7 @@ public final class Data {
     /**
      * Returns the 2-letter ISO 639 code for the language URI supplied. The URI must be in the
      * form {@code http://lexvo.org/id/iso639-3/XYZ}.
-     * 
+     *
      * @param uri
      *            the language URI, possibly null
      * @return the corresponding ISO 639 2-letter code, or null if the input URI is null
@@ -550,7 +530,7 @@ public final class Data {
      * Utility method to compute an hash string from a vararg list of objects. The returned string
      * is 16 characters long, starts with {@code A-Za-z} and contains only characters
      * {@code A-Za-z0-9}.
-     * 
+     *
      * @param objects
      *            the objects to compute the hash from
      * @return the computed hash string
@@ -652,7 +632,7 @@ public final class Data {
      * </tbody>
      * </table>
      * </blockquote>
-     * 
+     *
      * @param object
      *            the object to convert, possibly null
      * @param clazz
@@ -686,7 +666,7 @@ public final class Data {
      * General conversion facility, with fall back to default value. This method operates as
      * {@link #convert(Object, Class)}, but in case the input is null or conversion is not
      * supported returns the specified default value.
-     * 
+     *
      * @param object
      *            the object to convert, possibly null
      * @param clazz
@@ -1019,7 +999,7 @@ public final class Data {
      * null is returned if length is 0; {@link IllegalArgumentException} is thrown otherwise;</li>
      * <li>in all the other cases, conversion to {@code Value} is performed.</li>
      * </ul>
-     * 
+     *
      * @param object
      *            the object to normalize, possibly an array or iterable
      * @return the corresponding object of the data model
@@ -1069,7 +1049,7 @@ public final class Data {
      * {@code normalize()} is called for each of them, using the same collection supplied);</li>
      * <li>in all the other cases, conversion to {@code Value} is performed.</li>
      * </ul>
-     * 
+     *
      * @param object
      *            the object to normalize, possibly an array or iterable
      * @param collection
@@ -1122,10 +1102,162 @@ public final class Data {
     }
 
     /**
+     * Check that the supplied string is a legal IRI (as per RFC 3987).
+     *
+     * @param string
+     *            the IRI string to check
+     * @throws IllegalArgumentException
+     *             in case the IRI is illegal
+     */
+    public static void validateIRI(@Nullable final String string) throws IllegalArgumentException {
+
+        // TODO: currently we check only the characters forming the IRI, not its structure
+
+        // Ignore null input
+        if (string == null) {
+            return;
+        }
+
+        // Illegal characters should be percent encoded. Illegal IRI characters are all the
+        // character that are not 'unreserved' (A-Z a-z 0-9 - . _ ~ 0xA0-0xD7FF 0xF900-0xFDCF
+        // 0xFDF0-0xFFEF) or 'reserved' (! # $ % & ' ( ) * + , / : ; = ? @ [ ])
+
+        for (int i = 0; i < string.length(); ++i) {
+            final char c = string.charAt(i);
+            if (c >= 'a' && c <= 'z' || c >= '?' && c <= '[' || c >= '&' && c <= ';' || c == '#'
+                    || c == '$' || c == '!' || c == '=' || c == ']' || c == '_' || c == '~'
+                    || c >= 0xA0 && c <= 0xD7FF || c >= 0xF900 && c <= 0xFDCF || c >= 0xFDF0
+                    && c <= 0xFFEF) {
+                // character is OK
+            } else if (c == '%') {
+                if (i >= string.length() - 2 || Character.digit(string.charAt(i + 1), 16) < 0
+                        || Character.digit(string.charAt(i + 2), 16) < 0) {
+                    throw new IllegalArgumentException("Illegal IRI '" + string
+                            + "' (invalid percent encoding at index " + i + ")");
+                }
+            } else {
+                throw new IllegalArgumentException("Illegal IRI '" + string
+                        + "' (illegal character at index " + i + ")");
+            }
+        }
+    }
+
+    /**
+     * Clean an illegal IRI string, trying to make it legal (as per RFC 3987).
+     *
+     * @param string
+     *            the IRI string to clean
+     * @return the cleaned IRI string (possibly the input unchanged) upon success
+     * @throws IllegalArgumentException
+     *             in case the supplied input cannot be transformed into a legal IRI
+     */
+    @Nullable
+    public static String cleanIRI(@Nullable final String string) throws IllegalArgumentException {
+
+        // TODO: we only replace illegal characters, but we should also check and fix the IRI
+        // structure
+
+        // We implement the cleaning suggestions provided at the following URL (section 'So what
+        // exactly should I do?'), extended to deal with IRIs instead of URIs:
+        // https://unspecified.wordpress.com/2012/02/12/how-do-you-escape-a-complete-uri/
+
+        // Handle null input
+        if (string == null) {
+            return null;
+        }
+
+        // Illegal characters should be percent encoded. Illegal IRI characters are all the
+        // character that are not 'unreserved' (A-Z a-z 0-9 - . _ ~ 0xA0-0xD7FF 0xF900-0xFDCF
+        // 0xFDF0-0xFFEF) or 'reserved' (! # $ % & ' ( ) * + , / : ; = ? @ [ ])
+        final StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < string.length(); ++i) {
+            final char c = string.charAt(i);
+            if (c >= 'a' && c <= 'z' || c >= '?' && c <= '[' || c >= '&' && c <= ';' || c == '#'
+                    || c == '$' || c == '!' || c == '=' || c == ']' || c == '_' || c == '~'
+                    || c >= 0xA0 && c <= 0xD7FF || c >= 0xF900 && c <= 0xFDCF || c >= 0xFDF0
+                    && c <= 0xFFEF) {
+                builder.append(c);
+            } else if (c == '%' && i < string.length() - 2
+                    && Character.digit(string.charAt(i + 1), 16) >= 0
+                    && Character.digit(string.charAt(i + 2), 16) >= 0) {
+                builder.append('%'); // preserve valid percent encodings
+            } else {
+                builder.append('%').append(Character.forDigit(c / 16, 16))
+                        .append(Character.forDigit(c % 16, 16));
+            }
+        }
+
+        // Return the cleaned IRI (no Java validation as it is an IRI, not a URI)
+        return builder.toString();
+    }
+
+    /**
+     * Clean a possibly illegal URI string (in a way similar to what a browser does), returning
+     * the corresponding cleaned {@code URI} object if successfull. A null result is returned for
+     * a null input. Cleaning consists in (i) encode Unicode characters above U+0080 as UTF-8
+     * octet sequences and (ii) percent-encode all resulting characters that are illegal as per
+     * RFC 3896 (i.e., characters that are not 'reserved' or 'unreserved' according to the RFC).
+     * Note that relative URIs are rejected by this method.
+     *
+     * @param string
+     *            the input string
+     * @return the resulting cleaned URI
+     * @throws IllegalArgumentException
+     *             if the supplied string (after being cleaned) is still not valid (e.g., it does
+     *             not contain a valid URI scheme) or represent a relative URI
+     */
+    public static String cleanURI(final String string) throws IllegalArgumentException {
+
+        // We implement the cleaning suggestions provided at the following URL (section 'So what
+        // exactly should I do?'):
+        // https://unspecified.wordpress.com/2012/02/12/how-do-you-escape-a-complete-uri/
+
+        // Handle null input
+        if (string == null) {
+            return null;
+        }
+
+        // The input string should be first encoded as a sequence of UTF-8 bytes, so to deal with
+        // Unicode chars properly (this encoding is a non-standard, common practice)
+        final byte[] bytes = string.getBytes(Charset.forName("UTF-8"));
+
+        // Then illegal characters should be percent encoded. Illegal characters are all the
+        // character that are not 'unreserved' (A-Z a-z 0-9 - . _ ~) or 'reserved' (! # $ % & ' (
+        // ) * + , / : ; = ? @ [ ])
+        final StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < bytes.length; ++i) {
+            final int b = bytes[i] & 0xFF; // transform from signed to unsigned
+            if (b >= 'a' && b <= 'z' || b >= '?' && b <= '[' || b >= '&' && b <= ';' || b == '#'
+                    || b == '$' || b == '!' || b == '=' || b == ']' || b == '_' || b == '~') {
+                builder.append((char) b);
+            } else if (b == '%' && i < string.length() - 2
+                    && Character.digit(string.charAt(i + 1), 16) >= 0
+                    && Character.digit(string.charAt(i + 2), 16) >= 0) {
+                builder.append('%'); // preserve valid percent encodings
+            } else {
+                builder.append('%').append(Character.forDigit(b / 16, 16))
+                        .append(Character.forDigit(b % 16, 16));
+            }
+        }
+
+        // Can now create an URI object, letting Java do further validation on the URI structure
+        // (e.g., whether valid scheme, host, etc. have been provided)
+        final java.net.URI uri = java.net.URI.create(builder.toString()).normalize();
+
+        // We reject relative URIs, as they can cause problems downstream
+        if (!uri.isAbsolute()) {
+            throw new IllegalArgumentException("Not a valid absolute URI: " + uri);
+        }
+
+        // Can finally return the URI
+        return uri.toString();
+    }
+
+    /**
      * Parses an RDF value out of a string. The string can be in the Turtle / N3 / TriG format,
      * i.e., {@code "literal", "literal"^^^datatype, "literal"@lang", <uri>, _:bnode} (strings
      * produced by {@link #toString(Object, Map, boolean)} obey this format).
-     * 
+     *
      * @param string
      *            the string to parse, possibly null
      * @param namespaces
@@ -1201,7 +1333,7 @@ public final class Data {
      * supplied namespaces and including record properties. Supported objects are {@link Value},
      * {@link Statement}, {@link Record} instances and instances of scalar types that can be
      * converted to {@code Value}s (via {@link #convert(Object, Class)}).
-     * 
+     *
      * @param object
      *            the data model object, possibly null
      * @param namespaces
@@ -1254,7 +1386,7 @@ public final class Data {
      * Returns a string representation of the supplied data model object, optionally using the
      * supplied namespaces. This method is a shortcut for {@link #toString(Object, Map, boolean)}
      * when no record properties are desired in output.
-     * 
+     *
      * @param object
      *            the data model object, possibly null
      * @param namespaces

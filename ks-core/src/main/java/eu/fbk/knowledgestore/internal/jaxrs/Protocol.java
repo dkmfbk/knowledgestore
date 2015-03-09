@@ -11,8 +11,8 @@ import eu.fbk.knowledgestore.data.Record;
 import eu.fbk.knowledgestore.data.Stream;
 import eu.fbk.knowledgestore.internal.rdf.HtmlRDF;
 import eu.fbk.knowledgestore.internal.rdf.HtmlSparql;
-import eu.fbk.knowledgestore.internal.rdf.TQL;
 import eu.fbk.knowledgestore.vocabulary.KS;
+import eu.fbk.rdfpro.tql.TQL;
 
 public final class Protocol {
 
@@ -160,7 +160,11 @@ public final class Protocol {
     }
 
     static {
-        TQL.register();
+        try {
+            TQL.register();
+        } catch (Throwable ex) {
+            // ignore: RDFpro TQL lib not available
+        }
         HtmlRDF.register();
         HtmlSparql.register();
     }

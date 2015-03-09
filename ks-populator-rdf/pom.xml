@@ -131,11 +131,6 @@
       <artifactId>sesame-rio-turtle</artifactId>
       <scope>runtime</scope>
     </dependency>
-    <dependency>
-      <groupId>org.semarglproject</groupId>
-      <artifactId>semargl-jsonld</artifactId>
-      <scope>runtime</scope>
-    </dependency>
 
     <dependency>
       <groupId>com.google.guava</groupId>
@@ -154,12 +149,6 @@
     <dependency>
       <groupId>org.fusesource.jansi</groupId>
       <artifactId>jansi</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.commons</groupId>
-      <artifactId>commons-compress</artifactId>
       <scope>runtime</scope>
     </dependency>
 

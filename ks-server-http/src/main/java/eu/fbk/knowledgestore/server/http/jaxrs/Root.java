@@ -127,9 +127,10 @@ public class Root extends Resource {
 
         try {
             if ("lookup".equals(action)) {
-                final URI id = Data.convert(parameters.getFirst("id"), URI.class, null);
-                final URI selection = Data.convert(parameters.getFirst("selection"), URI.class,
-                        null);
+                final URI id = Data.convert( //
+                        Data.cleanIRI(parameters.getFirst("id")), URI.class, null);
+                final URI selection = Data.convert(
+                        Data.cleanIRI(parameters.getFirst("selection")), URI.class, null);
                 final Integer limit = Data.convert(parameters.getFirst("limit"), Integer.class,
                         null);
                 view = "/lookup";

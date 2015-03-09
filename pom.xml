@@ -287,6 +287,7 @@
                 <type>test-jar</type>
                 <version>${project.version}</version>
             </dependency>
+
             <dependency>
                 <groupId>org.openrdf.sesame</groupId>
                 <artifactId>sesame-model</artifactId>
@@ -434,20 +435,19 @@
             </dependency>
 
             <dependency>
-                <groupId>org.semarglproject</groupId>
-                <artifactId>semargl-core</artifactId>
-                <version>${semargl.version}</version>
+                <groupId>eu.fbk.rdfpro</groupId>
+                <artifactId>rdfpro-core</artifactId>
+                <version>${rdfpro.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.semarglproject</groupId>
-                <artifactId>semargl-jsonld</artifactId>
-                <version>${semargl.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.semarglproject</groupId>
-                        <artifactId>semargl-rdf</artifactId>
-                    </exclusion>
-                </exclusions>
+                <groupId>eu.fbk.rdfpro</groupId>
+                <artifactId>rdfpro-jsonld</artifactId>
+                <version>${rdfpro.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>eu.fbk.rdfpro</groupId>
+                <artifactId>rdfpro-tql</artifactId>
+                <version>${rdfpro.version}</version>
             </dependency>
 
             <dependency>
@@ -462,17 +462,6 @@
             </dependency>
 
             <dependency>
-                <groupId>com.openlinksw.virtuoso</groupId>
-                <artifactId>virtjdbc4</artifactId>
-                <version>${virtuoso-jdbc4.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>eu.fbk.knowledgestore</groupId>
-                <artifactId>virt_sesame2</artifactId>
-                <version>${virtuoso-sesame2-patched.version}</version>
-            </dependency>
-
-            <dependency>
                 <groupId>com.zaxxer</groupId>
                 <artifactId>HikariCP-java6</artifactId>
                 <version>${hikari.version}</version>
@@ -483,6 +472,14 @@
                 <artifactId>hadoop-core</artifactId>
                 <version>${hadoop.version}</version>
                 <exclusions>
+                    <exclusion>
+                        <groupId>commons-digester</groupId>
+                        <artifactId>commons-digester</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>commons-beanutils</groupId>
+                        <artifactId>commons-beanutils</artifactId>
+                    </exclusion>
                     <exclusion>
                         <groupId>commons-cli</groupId>
                         <artifactId>commons-cli</artifactId>
@@ -677,19 +674,16 @@
                 <artifactId>tephra</artifactId>
                 <version>${tephra.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>com.continuuity.tephra</groupId>
                 <artifactId>tephra-api</artifactId>
                 <version>${tephra.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>com.continuuity.tephra</groupId>
                 <artifactId>tephra-core</artifactId>
                 <version>${tephra.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>com.continuuity.tephra</groupId>
                 <artifactId>tephra-hbase-compat-0.94</artifactId>
@@ -863,41 +857,6 @@
                 <version>${jaxen.version}</version>
             </dependency>
 
-            <dependency>
-                <groupId>commons-daemon</groupId>
-                <artifactId>commons-daemon</artifactId>
-                <version>${commons-daemon.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-compress</artifactId>
-                <version>${commons-compress.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>commons-configuration</groupId>
-                <artifactId>commons-configuration</artifactId>
-                <version>${commons-configuration.version}</version>
-                <exclusions>
-                    <!--<exclusion>
-                      <groupId>commons-collections</groupId>
-                      <artifactId>commons-collections</artifactId>
-                    </exclusion>-->
-                    <exclusion>
-                        <groupId>commons-digester</groupId>
-                        <artifactId>commons-digester</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>commons-beanutils</groupId>
-                        <artifactId>commons-beanutils</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>commons-logging</groupId>
-                        <artifactId>commons-logging</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
@@ -1773,21 +1732,14 @@
         <junit.version>4.11</junit.version>
         <jsr305.version>2.0.3</jsr305.version>
         <enunciate.version>1.28</enunciate.version>
-        <commons-compress.version>1.8.1</commons-compress.version>
-        <commons-configuration.version>1.9</commons-configuration.version>
-        <commons-daemon.version>1.0.15</commons-daemon.version>
         <google-guava.version>17.0</google-guava.version>
         <paranamer.version>2.6</paranamer.version>
-        <tika.version>1.4</tika.version>
         <slf4j.version>1.7.7</slf4j.version>
         <logback.version>1.1.2</logback.version>
         <jansi.version>1.11</jansi.version>
         <sesame.version>2.7.11</sesame.version>
-        <semargl.version>0.6.1</semargl.version>
-        <virtuoso-jdbc4.version>2012-03-15</virtuoso-jdbc4.version>
         <virtuoso-jdbc4_1.version>2015-01-26</virtuoso-jdbc4_1.version>
         <virtuoso-sesame2.version>2015-01-26</virtuoso-sesame2.version>
-        <virtuoso-sesame2-patched.version>2013-11-20</virtuoso-sesame2-patched.version>
         <hadoop.version>1.0.4</hadoop.version>
         <hbase.version>0.94.10</hbase.version>
         <omid.version>2013-03-21</omid.version>
@@ -1805,6 +1757,7 @@
         <httpcore.version>4.3.2</httpcore.version>
         <jolokia.version>1.2.1</jolokia.version>
         <hikari.version>2.1.0</hikari.version>
+        <rdfpro.version>0.3</rdfpro.version>
 
         <!-- Build plugin versions -->
         <compiler-plugin.version>3.1</compiler-plugin.version>
