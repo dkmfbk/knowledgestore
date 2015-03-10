@@ -15,6 +15,7 @@ The KnowledgeStore includes a pair of tools for testing the data retrieval perfo
 These tools are shipped in the two archives
 <a href="${site-root}files/release/${project-version}/ks-distribution-${project-version}-tools.tar.gz">ks-distribution-${project-version}-tools.tar.gz</a> and
 <a href="${site-root}files/release/${project-version}/ks-distribution-${project-version}-server.tar.gz">ks-distribution-${project-version}-server.tar.gz</a>.
+They require Java 8 and use `gzip` for compression/decompression; they have been tested only on Linux and Mac OS X (in principle they should work also on Windows after installing the Unix Tools package, but we do not maintain batch script for this platform).
 In the following we describe the tools and their usage in more details, starting from the test driver for convenience of exposition, although in practice you would need to use the test generator first.
 Note that some reference information is also available by invoking these tools with option `--help`.
 
@@ -22,6 +23,7 @@ Note that some reference information is also available by invoking these tools w
 $H3 Test Driver
 
 The `ks-test-driver` tool accepts a single option `-c` that supplies the configuration file with all the settings necessary to run a test.
+The test consists of an optional *warmup* phase, where request mixes are submitted but their performances are not recorded, followed by a *measurement* phase where performances are actually recorded.
 The configuration file is a normal Java properties file as exemplified below, with comments describing the role of each property
 
     # the following properties provide the information required to connect to the KS under test
@@ -93,43 +95,44 @@ The configuration file is a normal Java properties file as exemplified below, wi
 
 The execution of the `ks-test-driver` tool (with a more complete configuration file) produces an output like the one shown below, with a final table reporting all the relevant test metrics computed during the test execution:
 
-    $ ./ks-test-driver -c /tmp/driver.properties
-    16:09:36.360(I) SUT: https://knowledgestore2.fbk.eu/nwr/test/ (authenticated access)
-    16:09:36.362(I) 10000 mix(es), 120 s warmup; 20000 mix(es), 900 s test; 16 client(s)
-    16:09:36.369(I) Input schema: (event, event_year, mention, resource, event_type, event_term, actor, actor_related, actor_type, actor_term, actor_property)
-    16:09:42.451(I) Parsed /tmp/data_1m.tsv.gz: 1000000 tuples (164609 tuple/s avg)
-    16:09:42.493(I) 14 queries enabled (16 defined): sparql1, sparql2, sparql3, sparql4, sparql5, sparql6, sparql7, sparql8, sparql9, sparql10, sparql11, sparql12, rmlookup, download
-    16:09:42.517(I) Output schema: 72 attributes
-    16:09:42.539(I) Test started
-    16:09:42.539(I) Warmup started (16 clients, 10000 mix(es), 14 queries/mix)
-    16:11:44.686(I) Completed 1196 query mixes (10 mixes/s avg)
-    16:11:44.690(I) Warmup completed in 122141 ms (client time: 120017-122141 ms; client mixes: 70-78)
-    16:11:44.692(I) Measurement started (16 clients, 20000 mix(es), 14 queries/mix)
-    16:26:46.698(I) Completed 9363 query mixes (10 mixes/s avg)
-    16:26:46.698(I) Measurement completed in 902004 ms (client time: 900049-901957 ms; client mixes: 562-604)
-    16:26:46.698(I) Test completed in 1024180 ms
+    $ ./ks-test-driver -c driver.properties
+    20:10:27.007(I) SUT: https://knowledgestore2.fbk.eu/nwr/wikinews/ (anonymous access)
+    20:10:27.009(I) 10000 mix(es), 30 s warmup; 20000 mix(es), 180 s test; 16 client(s)
+    20:10:27.017(I) Input schema: (event, event_year, mention, resource, event_type, event_term, actor, actor_related, actor_type, actor_term, actor_property)
+    20:10:33.093(I) Parsed /tmp/parameters.tsv.gz: 1000000 tuples (164744 tuple/s avg)
+    20:10:33.135(I) 14 queries enabled (16 defined): sparql1, sparql2, sparql3, sparql4, sparql5, sparql6, sparql7, sparql8, sparql9, sparql10, sparql11, sparql12, rmlookup, download
+    20:10:33.150(I) Output schema: 72 attributes
+    20:10:33.171(I) Test started
+    20:10:33.171(I) Warmup started (16 clients, 10000 mix(es), 14 queries/mix)
+    20:11:04.573(I) Completed 276 query mixes (10 mixes/s avg)
+    20:11:04.578(I) Warmup completed in 31394 ms (client time: 30080-31391 ms; client mixes: 15-19)
+    20:11:04.580(I) Measurement started (16 clients, 20000 mix(es), 14 queries/mix)
+    20:14:06.625(I) Completed 1758 query mixes (9 mixes/s avg)
+    20:14:06.626(I) Measurement completed in 182037 ms (client time: 180150-181968 ms; client mixes: 106-114)
+    20:14:06.626(I) Test completed in 213475 ms
 
                    Executions        Result size [solutions, triples or bytes]                       Execution time [ms]                                             Total time [ms]        Rate
                    Total   Error     Min      Q1      Q2      Q3     Max    Geom    Mean     Std     Min      Q1      Q2      Q3     Max    Geom    Mean     Std     Sum   Clock   Share    /Sec   /Hour
     ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    sparql1         9363       0       1       1       2       5      20       3       5       6      11      69     145     238    1420     123     169     128 1578350   98790    0.11   94.78  341196
-    sparql2         9363       0       1       1       2       7      20       3       6       6      10      58     127     208     847     107     148     112 1384280   86643    0.10  108.06  389031
-    sparql3         9363       0       1       1       2       3      20       2       3       2       9     124     189     262    3100     170     199     107 1865082  116736    0.13   80.21  288744
-    sparql4         9363       0       1       4      12      20      20       9      12       7      11      22      26      31     615      27      28      14  263799   16511    0.02  567.08 2041475
-    sparql5         9363       0       1       2       3       5      20       3       5       5       9      18      21      24    1378      22      23      20  217617   13620    0.02  687.44 2474802
-    sparql6         9363       0       1      20      20      20      20      19      19       3      15      52     107     152    1567      91     111      70 1039530   65064    0.07  143.90  518056
-    sparql7         9363       0       1      20      20      20      20      17      19       4      14     129     196     266    1426     175     203     103 1902503  119079    0.13   78.63  283063
-    sparql8         9363       0       1      12      20      20      20      12      16       7      15      78     156     237    1475     130     166     105 1555450   97356    0.11   96.17  346222
-    sparql9         9363       0       4       5       7      10     106       8       9       7      11      23      27      31     585      28      29      12  269785   16886    0.02  554.48 1996139
-    sparql10        9363       0      12      99     228     693    7702     296     960    1908      10      19      29     112    1432      50     125     221 1165795   72967    0.08  128.32  461946
-    sparql11        9363       0       1       2       5      16      20       5       8       7       6      14      17      21     607      18      19      14  179605   11241    0.01  832.93 2998559
-    sparql12        9363       0      11     107     320     396     851     202     271     163      11      22      35      72     702      40      51      38  475471   29760    0.03  314.62 1132621
-    rmlookup        9363       0      65    1583    2453    3808   23802    2088    2874    2084      16      85     122     170    1496     114     135      81 1262191   79001    0.09  118.52  426663
-    download        9363       0     263    1462    2090    3066   21207    2112    2467    1592      20     115     129     145    1617     129     134      54 1251687   78343    0.09  119.51  430246
+    sparql1         1758       0       1       1       2       5      20       3       5       6      13      86     191     289     960     148     202     138  354799   22325    0.12   78.75  283485
+    sparql2         1758       0       1       1       3       7      20       3       6       6      11      68     155     248     794     125     170     117  299702   18858    0.10   93.22  335603
+    sparql3         1758       0       1       1       2       3      20       2       3       2      14     167     239     290     696     201     230      99  404884   25477    0.14   69.00  248412
+    sparql4         1758       0       1       4      12      20      20       9      12       7      13      21      23      26     354      24      25      11   43792    2755    0.02  638.11 2297205
+    sparql5         1758       0       1       2       3       6      20       3       5       5      12      17      19      21      91      19      20       7   35184    2213    0.01  794.40 2859828
+    sparql6         1758       0       1      20      20      20      20      19      19       3      16      49     107     184     477      94     117      73  205461   12928    0.07  135.98  489542
+    sparql7         1758       0       1      20      20      20      20      17      19       4      15     168     238     289     588     201     229      96  402529   25328    0.14   69.41  249874
+    sparql8         1758       0       1      11      20      20      20      12      16       7      14      94     206     273     590     149     191     106  335295   21098    0.12   83.33  299972
+    sparql9         1758       0       4       5       7       9      91       7       8       6      11      22      24      27     260      25      26      11   46058    2898    0.02  606.63 2183851
+    sparql10        1758       0      19     100     209     657    7702     286     967    1954      11      17      22     104    1181      43     115     213  202636   12750    0.07  137.88  496376
+    sparql11        1758       0       1       2       5      14      20       5       8       7       9      13      15      17      98      15      16       8   28825    1813    0.01  969.66 3490789
+    sparql12        1758       0      11      96     305     398     851     196     267     163      11      19      31      70     205      37      48      35   84328    5306    0.03  331.32 1192763
+    rmlookup        1758       0      65    1575    2424    3793   16636    2090    2852    2023      15      58      83     119     389      80      93      52  164281   10337    0.06  170.07  612247
+    download        1758       0     263    1470    2124    3090   16468    2138    2470    1519      26     139     156     177     520     157     162      45  285171   17944    0.10   97.97  352697
     ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    query (avg)   131082       0       1       4      20     101   23802      24     477    1273       6      25      73     156    3100      67     110     11514411145  902004    1.00  145.32  523163
+    query (avg)    24612       0       1       4      20      99   16636      24     475    1263       9      22      71     187    1181      67     118     121 2892945  182037    1.00  135.20  486732
     ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    query mix       9363                                                                             513    1239    1480    1761    4820    1477    1539     45214411145  902004    1.00   10.38   37369
+    query mix       1758                                                                             460    1339    1608    1887    3735    1585    1646     448 2892945  182037    1.00    9.66   34767
+
 
 
 $H3 Test Generator
@@ -191,25 +194,39 @@ The configuration file is a normal Java properties file as exemplified below, wi
 
 The listing below shows an example of the output produced by the `ks-test-generator` tool.
 
-    $ ./ks-test-generator -c /tmp/generator.properties
-    16:08:01.087(I) SUT: https://knowledgestore2.fbk.eu/nwr/test/ (authenticated access)
-    16:08:01.091(I) 1000000 mix(es) to be written to /tmp/data_1m.tsv.gz
-    16:08:01.098(I) 7 queries enabled (7 defined): q1, q2, q3, q4, q5, q6, q7
-    16:08:32.030(I) Evaluated query q1: 4797 tuples (1002 tuple/s avg)
-    16:08:32.105(I) Parsed /tmp/events.tsv.gz (event, event_year, mention, resource): 4797 tuples (82706 tuple/s avg)
-    16:08:35.838(I) Evaluated query q2: 38153 tuples (12717 tuple/s avg)
-    16:08:35.965(I) Parsed /tmp/event_types.tsv.gz (event, event_type): 38153 tuples (307685 tuple/s avg)
-    16:08:37.206(I) Evaluated query q3: 8860 tuples (13067 tuple/s avg)
-    16:08:37.248(I) Parsed /tmp/event_terms.tsv.gz (event, event_term): 8860 tuples (268484 tuple/s avg)
-    16:08:38.237(I) Evaluated query q4: 15244 tuples (28282 tuple/s avg)
-    16:08:38.306(I) Parsed /tmp/event_actors.tsv.gz (event, actor, actor_related): 15244 tuples (230969 tuple/s avg)
-    16:08:39.360(I) Evaluated query q5: 5372 tuples (105333 tuple/s avg)
-    16:08:39.389(I) Parsed /tmp/actor_types.tsv.gz (actor, actor_type): 5372 tuples (214880 tuple/s avg)
-    16:08:40.798(I) Evaluated query q6: 4885 tuples (81416 tuple/s avg)
-    16:08:40.820(I) Parsed /tmp/actor_terms.tsv.gz (actor, actor_term): 4885 tuples (287352 tuple/s avg)
-    16:08:43.121(I) Evaluated query q7: 73491 tuples (41543 tuple/s avg)
-    16:08:43.260(I) Parsed /tmp/actor_properties.tsv.gz (actor, actor_property): 73491 tuples (540375 tuple/s avg)
-    16:08:43.295(I) Output schema: (event, event_year, mention, resource, event_type, event_term, actor, actor_related, actor_type, actor_term, actor_property)
-    16:08:49.699(I) Generated 1000000 tuples (156298 tuple/s avg)
-    16:08:49.699(I) Tuple generation statistics: 587153 attempts failed, 384904 duplicates
-    16:09:14.516(I) Written /tmp/data_1m.tsv.gz (event, event_year, mention, resource, event_type, event_term, actor, actor_related, actor_type, actor_term, actor_property): 1000000 tuples (40338 tuple/s avg)
+    $ ./ks-test-generator -c generator.properties
+    19:49:48.065(I) SUT: https://knowledgestore2.fbk.eu/nwr/wikinews/ (anonymous access)
+    19:49:48.070(I) 1000000 mix(es) to be written to /tmp/parameters.tsv.gz
+    19:49:48.077(I) 7 queries enabled (7 defined): q1, q2, q3, q4, q5, q6, q7
+    19:50:18.264(I) Evaluated query q1: 4797 tuples (793 tuple/s avg)
+    19:50:18.328(I) Parsed /tmp/events.tsv.gz (event, event_year, mention, resource): 4797 tuples (97897 tuple/s avg)
+    19:50:21.893(I) Evaluated query q2: 38153 tuples (13606 tuple/s avg)
+    19:50:22.042(I) Parsed /tmp/event_types.tsv.gz (event, event_type): 38153 tuples (264951 tuple/s avg)
+    19:50:23.315(I) Evaluated query q3: 8860 tuples (12549 tuple/s avg)
+    19:50:23.360(I) Parsed /tmp/event_terms.tsv.gz (event, event_term): 8860 tuples (227179 tuple/s avg)
+    19:50:24.664(I) Evaluated query q4: 15244 tuples (17623 tuple/s avg)
+    19:50:24.754(I) Parsed /tmp/event_actors.tsv.gz (event, actor, actor_related): 15244 tuples (175218 tuple/s avg)
+    19:50:25.886(I) Evaluated query q5: 5372 tuples (82646 tuple/s avg)
+    19:50:25.896(I) Parsed /tmp/actor_types.tsv.gz (actor, actor_type): 5372 tuples (671500 tuple/s avg)
+    19:50:27.706(I) Evaluated query q6: 4885 tuples (119146 tuple/s avg)
+    19:50:27.729(I) Parsed /tmp/actor_terms.tsv.gz (actor, actor_term): 4885 tuples (271388 tuple/s avg)
+    19:50:30.411(I) Evaluated query q7: 73491 tuples (35606 tuple/s avg)
+    19:50:30.591(I) Parsed /tmp/actor_properties.tsv.gz (actor, actor_property): 73491 tuples (417562 tuple/s avg)
+    19:50:30.611(I) Output schema: (event, event_year, mention, resource, event_type, event_term, actor, actor_related, actor_type, actor_term, actor_property)
+    19:50:37.111(I) Generated 1000000 tuples (154012 tuple/s avg)
+    19:50:37.112(I) Tuple generation statistics: 586546 attempts failed, 386651 duplicates
+    19:51:02.445(I) Written /tmp/parameters.tsv.gz (event, event_year, mention, resource, event_type, event_term, actor, actor_related, actor_type, actor_term, actor_property): 1000000 tuples (39513 tuple/s avg)
+
+
+$H3 Usage example
+
+You may try the test tools on the publicly available WikiNews KnowledgeStore instance, using this
+<a href="${site-root}files/test/generator.properties">generator configuration</a> and
+<a href="${site-root}files/test/driver.properties">driver configuration</a>.
+Instructions:
+
+  * download and extract the archive <a href="${site-root}files/release/${project-version}/ks-distribution-${project-version}-tools.tar.gz">ks-distribution-${project-version}-tools.tar.gz</a>
+  * execute `/path/to/knowledgestore/bin/ks-test-generator -c /path/to/generator.properties` to generate the parameters file `parameters.tsv.gz`
+  * if necessary, move `parameters.tsv.gz` in the same directory of `driver.properties` (or modify the latter to point to the parameters file)
+  * execute `/path/to/knowledgestore/bin/ks-test-driver -c /path/to/driver.properties` to run the test (30 s warmup, 180 s measurement) and obtain a table similar to the one reported in this page;
+    you will also get a file traces.tsv.gz with detailed information on all the requests submitted to the KnowledgeStore
