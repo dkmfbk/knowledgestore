@@ -29,7 +29,7 @@ The binary archives include all you need to run and populate a KnowledgeStore in
 </tr>
 <tr>
 <th>tools</th>
-<td>NAF populator binaries, including startup scripts and configuration files.</td>
+<td>KnowledgeStore client-side tools, including the NAF populator, the KS dump tool and the test tool used for performance assessment.</td>
 <td>${project-version} (latest)</td>
 <td><a href="${site-root}files/release/${project-version}/ks-distribution-${project-version}-tools.tar.gz">ks-distribution-${project-version}-tools.tar.gz</a></td>
 </tr>
@@ -121,4 +121,3 @@ For each dataset we provide the data, its [VOID](http://www.w3.org/TR/void/) sta
 </tr>
 </tbody>
 </table>
-

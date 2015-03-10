@@ -1,0 +1,215 @@
+#set( $H3 = '###' )
+
+Test Tools
+==========
+
+The KnowledgeStore includes a pair of tools for testing the data retrieval performances of a KnowledgeStore instance:
+
+  * The `ks-test-driver` tool simulates a number of concurrent clients each sending a sequence of *request mixes* to a populated KnowledgeStore instance.
+    A request mix is obtained by instantiating a predefined set of parametric requests to the SPARQL and/or CRUD endpoints of the KnowledgeStore with actual parameter values.
+    The requests of a mix are submitted sequentially by each simulated client, as a real user would do, and their execution time as well as the total throughput are measured by the `ks-test-driver` tool.
+  * The `ks-test-generator` tool produces the parameter values used to instantiate the request mixes used by the driver.
+    This is done by evaluating a set of SPARQL queries against the KnowledgeStore instance under test. Each query returns all the admissible values for a subset of parameters.
+    These values are then joined and the result is sampled to produce a configurable number of parameter tuples (each giving rise to a request mix)
+
+These tools are shipped in the two archives
+<a href="${site-root}files/release/${project-version}/ks-distribution-${project-version}-tools.tar.gz">ks-distribution-${project-version}-tools.tar.gz</a> and
+<a href="${site-root}files/release/${project-version}/ks-distribution-${project-version}-server.tar.gz">ks-distribution-${project-version}-server.tar.gz</a>.
+In the following we describe the tools and their usage in more details, starting from the test driver for convenience of exposition, although in practice you would need to use the test generator first.
+Note that some reference information is also available by invoking these tools with option `--help`.
+
+
+$H3 Test Driver
+
+The `ks-test-driver` tool accepts a single option `-c` that supplies the configuration file with all the settings necessary to run a test.
+The configuration file is a normal Java properties file as exemplified below, with comments describing the role of each property
+
+    # the following properties provide the information required to connect to the KS under test
+    test.url=http://localhost:8080/
+    test.username=ks
+    test.password=kspass
+
+    # this is the file with the parameter values produced by the ks-test-generator tool
+    test.data=parameters.tsv.gz
+
+    # this is the trace file to be written as a result of the test
+    test.out=output.tsv.gz
+
+    # the seed controls the selection of parameters in the supplied file;
+    # same seed = same request mixes submitted to the KS
+    test.seed=0
+
+    # the number of concurrent clients to simulate (a thread is allocated to each of them)
+    test.clients=16
+
+    # the maximum number of request mixes and the maximum time in seconds for the warmup phase
+    test.warmupmixes=10000
+    test.warmuptime=120
+
+    # the maximum number of request mixes and the maximum time in seconds for the actual test phase
+    test.testmixes=20000
+    test.testtime=900
+
+    # the timeout in ms for each request submitted by a simulated client (the request is aborted if the timeout expires)
+    test.timeout=30000
+
+    # the list of parametric requests enabled for the test;
+    # each name in the comma separated list must have a corresponding set of describing properties in the file
+    test.queries=sparql1,crud1,crud2
+
+    # the specification of a SPARQL request consists in a name.type property (value must be 'sparql') and a name.query
+    # property with the SPARQL query string; parameters in the query string are denoted with ${parameter_name} tokens
+    # that are replaced at run time with actual parameter values
+    sparql1.type=sparql
+    sparql1.query=\
+        SELECT ?actor (COUNT(DISTINCT ?event) AS ?count) ?comment \
+        WHERE { \
+          ?event sem:hasActor ?actor . \
+          ?g1 dct:source <http://dbpedia.org/> \
+          GRAPH ?g1 { ?actor a ${actor_type} } \
+          ?g2 dct:source <http://dbpedia.org/> \
+          GRAPH ?g2 { \
+            ?actor rdfs:label ?label . \
+            ?label bif:contains ${actor_term} \
+          } \
+          OPTIONAL { ?actor rdfs:comment ?comment } \
+        } \
+        GROUP BY ?actor ?comment \
+        ORDER BY desc(?count) \
+        LIMIT 20
+
+    # the specification of a metadata lookup operation that retrieves the description of a resource with all its mention
+    # note the use of parameter ${resource} for mandatory property 'name.id'
+    crud1.type=lookupall
+    crud1.id=${resource}
+
+    # the specification of a download operation that retrieves the raw text of a resource
+    # note again the use of parameter ${resource} for mandatory property 'name.id'
+    crud2.type=download
+    crud2.id=${resource}
+
+    # more requests can be specified below; in order to use them in the test,
+    # you have to include their name in the value of property 'test.queries'
+
+The execution of the `ks-test-driver` tool (with a more complete configuration file) produces an output like the one shown below, with a final table reporting all the relevant test metrics computed during the test execution:
+
+    $ ./ks-test-driver -c /tmp/driver.properties
+    16:09:36.360(I) SUT: https://knowledgestore2.fbk.eu/nwr/test/ (authenticated access)
+    16:09:36.362(I) 10000 mix(es), 120 s warmup; 20000 mix(es), 900 s test; 16 client(s)
+    16:09:36.369(I) Input schema: (event, event_year, mention, resource, event_type, event_term, actor, actor_related, actor_type, actor_term, actor_property)
+    16:09:42.451(I) Parsed /tmp/data_1m.tsv.gz: 1000000 tuples (164609 tuple/s avg)
+    16:09:42.493(I) 14 queries enabled (16 defined): sparql1, sparql2, sparql3, sparql4, sparql5, sparql6, sparql7, sparql8, sparql9, sparql10, sparql11, sparql12, rmlookup, download
+    16:09:42.517(I) Output schema: 72 attributes
+    16:09:42.539(I) Test started
+    16:09:42.539(I) Warmup started (16 clients, 10000 mix(es), 14 queries/mix)
+    16:11:44.686(I) Completed 1196 query mixes (10 mixes/s avg)
+    16:11:44.690(I) Warmup completed in 122141 ms (client time: 120017-122141 ms; client mixes: 70-78)
+    16:11:44.692(I) Measurement started (16 clients, 20000 mix(es), 14 queries/mix)
+    16:26:46.698(I) Completed 9363 query mixes (10 mixes/s avg)
+    16:26:46.698(I) Measurement completed in 902004 ms (client time: 900049-901957 ms; client mixes: 562-604)
+    16:26:46.698(I) Test completed in 1024180 ms
+
+                   Executions        Result size [solutions, triples or bytes]                       Execution time [ms]                                             Total time [ms]        Rate
+                   Total   Error     Min      Q1      Q2      Q3     Max    Geom    Mean     Std     Min      Q1      Q2      Q3     Max    Geom    Mean     Std     Sum   Clock   Share    /Sec   /Hour
+    ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    sparql1         9363       0       1       1       2       5      20       3       5       6      11      69     145     238    1420     123     169     128 1578350   98790    0.11   94.78  341196
+    sparql2         9363       0       1       1       2       7      20       3       6       6      10      58     127     208     847     107     148     112 1384280   86643    0.10  108.06  389031
+    sparql3         9363       0       1       1       2       3      20       2       3       2       9     124     189     262    3100     170     199     107 1865082  116736    0.13   80.21  288744
+    sparql4         9363       0       1       4      12      20      20       9      12       7      11      22      26      31     615      27      28      14  263799   16511    0.02  567.08 2041475
+    sparql5         9363       0       1       2       3       5      20       3       5       5       9      18      21      24    1378      22      23      20  217617   13620    0.02  687.44 2474802
+    sparql6         9363       0       1      20      20      20      20      19      19       3      15      52     107     152    1567      91     111      70 1039530   65064    0.07  143.90  518056
+    sparql7         9363       0       1      20      20      20      20      17      19       4      14     129     196     266    1426     175     203     103 1902503  119079    0.13   78.63  283063
+    sparql8         9363       0       1      12      20      20      20      12      16       7      15      78     156     237    1475     130     166     105 1555450   97356    0.11   96.17  346222
+    sparql9         9363       0       4       5       7      10     106       8       9       7      11      23      27      31     585      28      29      12  269785   16886    0.02  554.48 1996139
+    sparql10        9363       0      12      99     228     693    7702     296     960    1908      10      19      29     112    1432      50     125     221 1165795   72967    0.08  128.32  461946
+    sparql11        9363       0       1       2       5      16      20       5       8       7       6      14      17      21     607      18      19      14  179605   11241    0.01  832.93 2998559
+    sparql12        9363       0      11     107     320     396     851     202     271     163      11      22      35      72     702      40      51      38  475471   29760    0.03  314.62 1132621
+    rmlookup        9363       0      65    1583    2453    3808   23802    2088    2874    2084      16      85     122     170    1496     114     135      81 1262191   79001    0.09  118.52  426663
+    download        9363       0     263    1462    2090    3066   21207    2112    2467    1592      20     115     129     145    1617     129     134      54 1251687   78343    0.09  119.51  430246
+    ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    query (avg)   131082       0       1       4      20     101   23802      24     477    1273       6      25      73     156    3100      67     110     11514411145  902004    1.00  145.32  523163
+    ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    query mix       9363                                                                             513    1239    1480    1761    4820    1477    1539     45214411145  902004    1.00   10.38   37369
+
+
+$H3 Test Generator
+
+Also the `ks-test-driver` tool accepts a single option `-c` that supplies the configuration file with all the settings necessary to run the parameter generation process.
+The configuration file is a normal Java properties file as exemplified below, with comments describing the role of each property
+
+    # the following properties provide the information required to connect to the KS under test
+    test.url=http://localhost:8080/
+    test.username=ks
+    test.password=kspass
+
+    # the number of parameter tuples (i.e., request mixes) to generate
+    test.mixes=1000000
+
+    # the output file where to write generated tuples
+    test.out=data_1m.tsv.gz
+
+    # the names of the SPARQL SELECT queries to evaluate, each one producing the admissible values for a subset of parameters,
+    # which are then joined by the tool; the SELECT clause of each query specify the names of the parameters whose values are
+    # returned by the query, with parameters in common to queries previously listed in 'test.queries' coming first (this
+    # constraint is exploited by the generator tool to implement the join of query results more easily and efficiently)
+    test.queries=q1,q2
+
+    # each query must have two properties 'name.file' and 'name.query', the first providing the name of the file where to store
+    # data obtained by the query evaluation, the second specifying the query string; note that if the file already exists, its
+    # content is used as is and the query is not evaluated against the KnowledgeStore (this mechanism allows reusing the results
+    # of expensive queries)
+    q1.file=events.tsv.gz
+    q1.query=\
+      SELECT ?event ?event_year ?mention ?resource \
+      WHERE { \
+        { \
+          SELECT ?event (MIN(?y) AS ?event_year) \
+          WHERE { \
+            ?event sem:hasTime ?t . \
+            ?t owltime:inDateTime ?d . \
+            ?d owltime:year ?y . \
+            FILTER EXISTS { \
+              ?event sem:hasActor ?actor , ?actor2 . \
+              ?actor a dbo:Person . \
+              ?actor2 a dbo:Person . \
+              FILTER (?actor != ?actor2) \
+            } \
+          } \
+          GROUP BY ?event \
+        } \
+        { \
+          SELECT ?event (SAMPLE(?m) AS ?mention) \
+          WHERE { \
+            ?event gaf:denotedBy ?m \
+          } \
+          GROUP BY ?event \
+        } \
+        BIND (IRI(STRBEFORE(STR(?mention), "#")) AS ?resource) \
+      }
+
+    # other queries here, if necessary
+
+The listing below shows an example of the output produced by the `ks-test-generator` tool.
+
+    $ ./ks-test-generator -c /tmp/generator.properties
+    16:08:01.087(I) SUT: https://knowledgestore2.fbk.eu/nwr/test/ (authenticated access)
+    16:08:01.091(I) 1000000 mix(es) to be written to /tmp/data_1m.tsv.gz
+    16:08:01.098(I) 7 queries enabled (7 defined): q1, q2, q3, q4, q5, q6, q7
+    16:08:32.030(I) Evaluated query q1: 4797 tuples (1002 tuple/s avg)
+    16:08:32.105(I) Parsed /tmp/events.tsv.gz (event, event_year, mention, resource): 4797 tuples (82706 tuple/s avg)
+    16:08:35.838(I) Evaluated query q2: 38153 tuples (12717 tuple/s avg)
+    16:08:35.965(I) Parsed /tmp/event_types.tsv.gz (event, event_type): 38153 tuples (307685 tuple/s avg)
+    16:08:37.206(I) Evaluated query q3: 8860 tuples (13067 tuple/s avg)
+    16:08:37.248(I) Parsed /tmp/event_terms.tsv.gz (event, event_term): 8860 tuples (268484 tuple/s avg)
+    16:08:38.237(I) Evaluated query q4: 15244 tuples (28282 tuple/s avg)
+    16:08:38.306(I) Parsed /tmp/event_actors.tsv.gz (event, actor, actor_related): 15244 tuples (230969 tuple/s avg)
+    16:08:39.360(I) Evaluated query q5: 5372 tuples (105333 tuple/s avg)
+    16:08:39.389(I) Parsed /tmp/actor_types.tsv.gz (actor, actor_type): 5372 tuples (214880 tuple/s avg)
+    16:08:40.798(I) Evaluated query q6: 4885 tuples (81416 tuple/s avg)
+    16:08:40.820(I) Parsed /tmp/actor_terms.tsv.gz (actor, actor_term): 4885 tuples (287352 tuple/s avg)
+    16:08:43.121(I) Evaluated query q7: 73491 tuples (41543 tuple/s avg)
+    16:08:43.260(I) Parsed /tmp/actor_properties.tsv.gz (actor, actor_property): 73491 tuples (540375 tuple/s avg)
+    16:08:43.295(I) Output schema: (event, event_year, mention, resource, event_type, event_term, actor, actor_related, actor_type, actor_term, actor_property)
+    16:08:49.699(I) Generated 1000000 tuples (156298 tuple/s avg)
+    16:08:49.699(I) Tuple generation statistics: 587153 attempts failed, 384904 duplicates
+    16:09:14.516(I) Written /tmp/data_1m.tsv.gz (event, event_year, mention, resource, event_type, event_term, actor, actor_related, actor_type, actor_term, actor_property): 1000000 tuples (40338 tuple/s avg)

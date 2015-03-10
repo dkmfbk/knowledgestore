@@ -19,24 +19,24 @@
       <logo name="Maven" href="http://maven.apache.org/" img="http://maven.apache.org/images/logos/maven-feather.png" />
     </poweredBy>
     -->
-    
+
     <!--
-    
+
     Useful documentation:
     * http://maven.apache.org/plugins/maven-site-plugin/examples/sitedescriptor.html
     * http://andriusvelykis.github.io/reflow-maven-skin/
-    
+
     Variable:
     * site-root - Root folder of the website (to be supplied using -Dsite.root=...)
     * project-version - Version of the project (defined in the POM file)
     * site-path - Local path of the website (to be supplied using -Dsite-path=file:///...)
-    
+
     Links to external folders:
     /files -> http://knowledgestore.fbk.eu/files
     /ontologies -> http://knowledgestore.fbk.eu/ontologies
     /ks-server-http/webdocs -> http://knowledgestore.fbk.eu/ks-server-http/webdocs
     (for webdocs: the Enunciate plugin is not compatible with Java 1.8)
-    
+
     -->
 
     <skin>
@@ -46,7 +46,10 @@
     </skin>
 
     <body>
-        <head/>
+
+        <head>
+            <link rel="stylesheet" href="$resourcePath/css/ks.css"/>
+        </head>
 
         <!-- Currently not used; would end up in top navigation bar
         <links>
@@ -72,17 +75,18 @@
                 <item name="ESO reasoner" href="https://github.com/dkmfbk/eso-reasoner"/>
             </item>
         </menu>
-        
+
         <menu name="Documentation">
             <!--<item name="Server" href="server.html"/>-->
             <item name="Project wiki" href="https://github.com/dkmfbk/knowledgestore/wiki"/>
             <!--<item name="Java Client" href="java-client.html"/>-->
             <item name="NAF populator" href="naf-populator.html"/>
+            <item name="Test tools" href="test-tools.html"/>
             <!--<item name="RDF populator" href="rdf-populator.html"/>-->
             <item name="Web API reference" href="ks-server-http/webdocs/webdocs.html"/>
             <item name="Javadoc reference" href="apidocs/index.html"/>
         </menu>
-        
+
         <menu name="Ontologies">
             <item name="KnowledgeStore Core Data Model" href="${site-root}ontologies/knowledgestore.html"/>
             <item name="NewsReader Data Model" href="${site-root}ontologies/newsreader.html"/>
@@ -90,7 +94,7 @@
 
         <menu name="Maven Resources" ref="reports" inherit="top"/>
         <menu ref="modules" inherit="top"/>
-        
+
         <menu name="Contacts">
             <item name="Email Us" href="mailto:knowledgestore@fbk.eu"/>
         </menu>
@@ -125,7 +129,11 @@
 
     <custom>
         <reflowSkin>
+            <!--
             <absoluteResourceURL>https://knowledgestore.fbk.eu/</absoluteResourceURL>
+            <protocolRelativeURLs>true</protocolRelativeURLs>
+            -->
+
             <!--<theme>bootswatch-spacelab</theme>-->
             <highlightJs>true</highlightJs>
             <highlightJsTheme>default</highlightJsTheme>
@@ -136,7 +144,6 @@
             <html5Anchor>true</html5Anchor>
             <navbarInverse>true</navbarInverse>
             <markPageHeader>true</markPageHeader>
-            <protocolRelativeURLs>true</protocolRelativeURLs>
             <skinAttribution>true</skinAttribution>
             <brand>
                 <name>
@@ -185,6 +192,9 @@
                 <taglist>
                     <html5Anchor>false</html5Anchor>
                 </taglist>
+                <test-tools>
+                    <highlightJs>false</highlightJs>
+                </test-tools>
             </pages>
         </reflowSkin>
     </custom>
