@@ -34,6 +34,8 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Ordering;
+import com.google.common.collect.Sets;
 import com.google.common.primitives.Ints;
 import com.google.common.primitives.Longs;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
@@ -49,9 +51,6 @@ import org.openrdf.query.impl.MapBindingSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
-
-import jersey.repackaged.com.google.common.collect.Ordering;
-import jersey.repackaged.com.google.common.collect.Sets;
 
 import eu.fbk.knowledgestore.Operation.Sparql;
 import eu.fbk.knowledgestore.Session;

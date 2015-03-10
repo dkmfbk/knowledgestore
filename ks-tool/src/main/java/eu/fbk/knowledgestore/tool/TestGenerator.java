@@ -23,12 +23,11 @@ import com.google.common.base.Charsets;
 import com.google.common.base.Joiner;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
 import org.openrdf.query.BindingSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import jersey.repackaged.com.google.common.collect.Sets;
 
 import eu.fbk.knowledgestore.OperationException;
 import eu.fbk.knowledgestore.Session;
