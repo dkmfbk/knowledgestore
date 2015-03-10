@@ -1,5 +1,6 @@
 package eu.fbk.knowledgestore.data;
 
+import java.io.File;
 import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -731,6 +732,8 @@ public final class Data {
                     xmlCalendar, clazz);
         } else if (object instanceof Enum<?>) {
             return convertEnum((Enum<?>) object, clazz);
+        } else if (object instanceof File) {
+            return convertFile((File) object, clazz);
         }
         return null;
     }
@@ -846,6 +849,8 @@ public final class Data {
             }
             throw new IllegalArgumentException("Illegal " + clazz.getSimpleName() + " constant: "
                     + string);
+        } else if (clazz == File.class) {
+            return new File(string);
         }
         return null;
     }
@@ -959,6 +964,18 @@ public final class Data {
             return constant.name();
         } else if (clazz.isAssignableFrom(Literal.class)) {
             return getValueFactory().createLiteral(constant.name(), XMLSchema.STRING);
+        }
+        return null;
+    }
+
+    @Nullable
+    private static Object convertFile(final File file, final Class<?> clazz) {
+        if (clazz.isInstance(file)) {
+            return clazz.cast(file);
+        } else if (clazz.isAssignableFrom(URI.class)) {
+            return VALUE_FACTORY.createURI("file://" + file.getAbsolutePath());
+        } else if (clazz.isAssignableFrom(String.class)) {
+            return file.getAbsolutePath();
         }
         return null;
     }

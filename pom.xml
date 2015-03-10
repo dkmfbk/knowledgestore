@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
@@ -278,6 +277,17 @@
             </dependency>
             <dependency>
                 <groupId>eu.fbk.knowledgestore</groupId>
+                <artifactId>ks-tool</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>eu.fbk.knowledgestore</groupId>
+                <artifactId>ks-tool</artifactId>
+                <type>test-jar</type>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>eu.fbk.knowledgestore</groupId>
                 <artifactId>ks-distribution</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -448,6 +458,12 @@
                 <groupId>eu.fbk.rdfpro</groupId>
                 <artifactId>rdfpro-tql</artifactId>
                 <version>${rdfpro.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-math3</artifactId>
+                <version>${commons-math3.version}</version>
             </dependency>
 
             <dependency>
@@ -1758,6 +1774,7 @@
         <jolokia.version>1.2.1</jolokia.version>
         <hikari.version>2.1.0</hikari.version>
         <rdfpro.version>0.3</rdfpro.version>
+        <commons-math3.version>3.4.1</commons-math3.version>
 
         <!-- Build plugin versions -->
         <compiler-plugin.version>3.1</compiler-plugin.version>
@@ -1797,6 +1814,7 @@
         <module>ks-populator-naf</module>
         <module>ks-populator-rdf</module>
         <module>ks-distribution</module>
-    </modules>
+    <module>ks-tool</module>
+  </modules>
 
 </project>

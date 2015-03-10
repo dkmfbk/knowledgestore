@@ -21,8 +21,11 @@
       <fileMode>0755</fileMode>
       <lineEnding>unix</lineEnding>
       <includes>
-        <include>ksnaf.*</include>
-        <include>ksrdf.*</include>
+        <include>ks-dump*</include>
+        <include>ks-test-driver*</include>
+        <include>ks-test-generator*</include>
+        <include>ksnaf*</include>
+        <include>ksrdf*</include>
       </includes>
     </fileSet>
     <fileSet>
@@ -43,6 +46,7 @@
         <include>eu.fbk.knowledgestore:ks-client</include>
         <include>eu.fbk.knowledgestore:ks-populator-naf</include>
         <include>eu.fbk.knowledgestore:ks-populator-rdf</include>
+        <include>eu.fbk.knowledgestore:ks-tool</include>
         <include>org.slf4j:jul-to-slf4j</include>
         <include>org.slf4j:log4j-over-slf4j</include>
         <include>org.slf4j:jcl-over-slf4j</include>
