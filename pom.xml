@@ -478,6 +478,19 @@
             </dependency>
 
             <dependency>
+                <groupId>org.apache.lucene</groupId>
+                <artifactId>lucene-core</artifactId>
+                <version>${lucene.version}</version>
+            </dependency>
+            <!--
+            <dependency>
+                <groupId>org.apache.lucene</groupId>
+                <artifactId>lucene-analyzers-common</artifactId>
+                <version>${lucene.version}</version>
+            </dependency>
+            -->
+
+            <dependency>
                 <groupId>com.zaxxer</groupId>
                 <artifactId>HikariCP-java6</artifactId>
                 <version>${hikari.version}</version>
@@ -1772,6 +1785,8 @@
         <httpclient.version>4.3.3</httpclient.version>
         <httpcore.version>4.3.2</httpcore.version>
         <jolokia.version>1.2.1</jolokia.version>
+        <lucene.version>2.9.4</lucene.version>
+        <!--<lucene.version>5.0.0</lucene.version>-->
         <hikari.version>2.1.0</hikari.version>
         <rdfpro.version>0.3</rdfpro.version>
         <commons-math3.version>3.4.1</commons-math3.version>
