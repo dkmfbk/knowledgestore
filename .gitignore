@@ -29,3 +29,5 @@ ks-server-virtuoso/target
 */.classpath
 *.project
 */.settings
+
+ks-tool/ks-tool.iml
