@@ -129,10 +129,8 @@
 
     <custom>
         <reflowSkin>
-            <!--
-            <absoluteResourceURL>https://knowledgestore.fbk.eu/</absoluteResourceURL>
+            <absoluteResourceURL>${site-root}/</absoluteResourceURL>
             <protocolRelativeURLs>true</protocolRelativeURLs>
-            -->
 
             <!--<theme>bootswatch-spacelab</theme>-->
             <highlightJs>true</highlightJs>
