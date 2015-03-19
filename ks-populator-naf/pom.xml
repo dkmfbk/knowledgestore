@@ -8,7 +8,7 @@
   <parent>
     <groupId>eu.fbk.knowledgestore</groupId>
     <artifactId>ks</artifactId>
-    <version>1.4-SNAPSHOT</version>
+    <version>1.4</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
 
