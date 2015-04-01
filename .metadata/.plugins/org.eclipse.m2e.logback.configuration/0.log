@@ -1,0 +1,632 @@
+2015-03-31 11:36:51,565 [Worker-1] INFO  o.e.m.c.i.i.nexus.NexusIndexManager - Updating index for repository: central|http://repo.maven.apache.org/maven2
+2015-03-31 11:36:51,946 [Worker-1] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:37:01,062 [ModalContext] WARN  o.e.m.c.i.embedder.EclipseLogger - The POM for org.apache.maven.shared:maven-shared-incremental:jar:1.1 is invalid, transitive dependencies (if any) will not be available, enable debug logging for more details
+2015-03-31 11:37:01,118 [ModalContext] WARN  o.e.m.c.i.embedder.EclipseLogger - The POM for org.codehaus.plexus:plexus-compiler-api:jar:2.2 is invalid, transitive dependencies (if any) will not be available, enable debug logging for more details
+2015-03-31 11:37:01,163 [ModalContext] WARN  o.e.m.c.i.embedder.EclipseLogger - The POM for org.codehaus.plexus:plexus-compiler-manager:jar:2.2 is invalid, transitive dependencies (if any) will not be available, enable debug logging for more details
+2015-03-31 11:37:01,166 [ModalContext] WARN  o.e.m.c.i.embedder.EclipseLogger - The POM for org.codehaus.plexus:plexus-compiler-javac:jar:2.2 is invalid, transitive dependencies (if any) will not be available, enable debug logging for more details
+2015-03-31 11:37:09,805 [ModalContext] WARN  o.e.m.i.discovery.MavenDiscovery - CatalogItem org.eclipse.m2e.discovery.lifecyclemapping.m2e-egit does not contain lifecycle mapping metadata
+2015-03-31 11:37:09,807 [ModalContext] WARN  o.e.m.i.discovery.MavenDiscovery - CatalogItem org.eclipse.m2e.discovery.lifecyclemapping.m2e-subversive does not contain lifecycle mapping metadata
+2015-03-31 11:37:09,810 [ModalContext] WARN  o.e.m.i.discovery.MavenDiscovery - CatalogItem org.eclipse.m2e.discovery.lifecyclemapping.m2e-subclipse does not contain lifecycle mapping metadata
+2015-03-31 11:37:09,847 [ModalContext] WARN  o.e.m.i.discovery.MavenDiscovery - CatalogItem org.eclipse.xtext.m2e.xtextConfigurator does not contain lifecycle mapping metadata
+2015-03-31 11:39:15,992 [Worker-7] WARN  o.e.m.c.i.embedder.EclipseLogger - The POM for org.apache.maven.shared:maven-shared-incremental:jar:1.1 is invalid, transitive dependencies (if any) will not be available, enable debug logging for more details
+2015-03-31 11:39:16,060 [Worker-7] WARN  o.e.m.c.i.embedder.EclipseLogger - The POM for org.codehaus.plexus:plexus-compiler-api:jar:2.2 is invalid, transitive dependencies (if any) will not be available, enable debug logging for more details
+2015-03-31 11:39:16,063 [Worker-7] WARN  o.e.m.c.i.embedder.EclipseLogger - The POM for org.codehaus.plexus:plexus-compiler-manager:jar:2.2 is invalid, transitive dependencies (if any) will not be available, enable debug logging for more details
+2015-03-31 11:39:16,113 [Worker-7] WARN  o.e.m.c.i.embedder.EclipseLogger - The POM for org.codehaus.plexus:plexus-compiler-javac:jar:2.2 is invalid, transitive dependencies (if any) will not be available, enable debug logging for more details
+2015-03-31 11:39:18,783 [Worker-7] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-core:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-core/pom.xml.
+2015-03-31 11:39:21,088 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:39:26,873 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:39:27,399 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:39:28,556 [New I/O client worker #4-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/eu/fbk/rdfpro/rdfpro-core/0.3/rdfpro-core-0.3.pom
+2015-03-31 11:39:28,577 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:39:28,659 [New I/O client worker #5-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/eu/fbk/rdfpro/rdfpro-core/0.3/rdfpro-core-0.3.pom
+2015-03-31 11:39:28,661 [New I/O client worker #5-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/eu/fbk/rdfpro/rdfpro-core/0.3/rdfpro-core-0.3.pom
+2015-03-31 11:39:28,806 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:39:29,826 [New I/O client worker #6-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/eu/fbk/rdfpro/rdfpro/0.3/rdfpro-0.3.pom
+2015-03-31 11:39:29,844 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:39:29,876 [New I/O client worker #7-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/eu/fbk/rdfpro/rdfpro/0.3/rdfpro-0.3.pom
+2015-03-31 11:39:29,921 [New I/O client worker #7-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/eu/fbk/rdfpro/rdfpro/0.3/rdfpro-0.3.pom
+2015-03-31 11:39:30,108 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:39:31,109 [New I/O client worker #8-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/eu/fbk/rdfpro/rdfpro-jsonld/0.3/rdfpro-jsonld-0.3.pom
+2015-03-31 11:39:31,113 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:39:31,269 [New I/O client worker #9-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/eu/fbk/rdfpro/rdfpro-jsonld/0.3/rdfpro-jsonld-0.3.pom
+2015-03-31 11:39:31,270 [New I/O client worker #9-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/eu/fbk/rdfpro/rdfpro-jsonld/0.3/rdfpro-jsonld-0.3.pom
+2015-03-31 11:39:31,881 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:39:32,954 [New I/O client worker #10-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/eu/fbk/rdfpro/rdfpro-tql/0.3/rdfpro-tql-0.3.pom
+2015-03-31 11:39:33,007 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:39:33,248 [New I/O client worker #11-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/eu/fbk/rdfpro/rdfpro-tql/0.3/rdfpro-tql-0.3.pom
+2015-03-31 11:39:33,249 [New I/O client worker #11-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/eu/fbk/rdfpro/rdfpro-tql/0.3/rdfpro-tql-0.3.pom
+2015-03-31 11:39:35,055 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:39:36,424 [New I/O client worker #12-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/eu/fbk/rdfpro/rdfpro-core/0.3/rdfpro-core-0.3.jar
+2015-03-31 11:39:37,176 [New I/O client worker #12-3] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/eu/fbk/rdfpro/rdfpro-tql/0.3/rdfpro-tql-0.3.jar
+2015-03-31 11:39:37,181 [New I/O client worker #12-2] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/eu/fbk/rdfpro/rdfpro-jsonld/0.3/rdfpro-jsonld-0.3.jar
+2015-03-31 11:39:37,187 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:39:37,500 [New I/O client worker #13-2] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/eu/fbk/rdfpro/rdfpro-jsonld/0.3/rdfpro-jsonld-0.3.jar
+2015-03-31 11:39:37,504 [New I/O client worker #13-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/eu/fbk/rdfpro/rdfpro-core/0.3/rdfpro-core-0.3.jar
+2015-03-31 11:39:37,506 [New I/O client worker #13-2] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/eu/fbk/rdfpro/rdfpro-jsonld/0.3/rdfpro-jsonld-0.3.jar
+2015-03-31 11:39:37,509 [New I/O client worker #13-3] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/eu/fbk/rdfpro/rdfpro-tql/0.3/rdfpro-tql-0.3.jar
+2015-03-31 11:39:37,522 [New I/O client worker #13-3] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/eu/fbk/rdfpro/rdfpro-tql/0.3/rdfpro-tql-0.3.jar
+2015-03-31 11:39:37,780 [New I/O client worker #13-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/eu/fbk/rdfpro/rdfpro-core/0.3/rdfpro-core-0.3.jar
+2015-03-31 11:39:38,256 [Worker-7] WARN  o.e.m.c.i.embedder.EclipseLogger - Failed to dispatch repository event to org.eclipse.m2e.core.internal.embedder.EclipseRepositoryListener: null
+2015-03-31 11:39:39,544 [Worker-7] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-client:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-client/pom.xml.
+2015-03-31 11:39:42,749 [Worker-7] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-server:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-server/pom.xml.
+2015-03-31 11:39:42,804 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:39:43,770 [New I/O client worker #14-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/mysql/mysql-connector-java/5.1.23/mysql-connector-java-5.1.23.pom
+2015-03-31 11:39:43,781 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:39:43,836 [New I/O client worker #15-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/mysql/mysql-connector-java/5.1.23/mysql-connector-java-5.1.23.pom
+2015-03-31 11:39:43,836 [New I/O client worker #15-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/mysql/mysql-connector-java/5.1.23/mysql-connector-java-5.1.23.pom
+2015-03-31 11:39:43,916 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:39:45,362 [New I/O client worker #16-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/org/apache/lucene/lucene-core/2.9.4/lucene-core-2.9.4.pom
+2015-03-31 11:39:45,376 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:39:45,444 [New I/O client worker #17-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/apache/lucene/lucene-core/2.9.4/lucene-core-2.9.4.pom
+2015-03-31 11:39:45,444 [New I/O client worker #17-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/apache/lucene/lucene-core/2.9.4/lucene-core-2.9.4.pom
+2015-03-31 11:39:45,503 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:39:46,495 [New I/O client worker #18-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/org/apache/lucene/lucene-parent/2.9.4/lucene-parent-2.9.4.pom
+2015-03-31 11:39:46,555 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:39:46,625 [New I/O client worker #19-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/apache/lucene/lucene-parent/2.9.4/lucene-parent-2.9.4.pom
+2015-03-31 11:39:46,626 [New I/O client worker #19-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/apache/lucene/lucene-parent/2.9.4/lucene-parent-2.9.4.pom
+2015-03-31 11:39:46,747 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:39:47,721 [New I/O client worker #20-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/com/zaxxer/HikariCP-java6/2.1.0/HikariCP-java6-2.1.0.pom
+2015-03-31 11:39:47,726 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:39:47,783 [New I/O client worker #21-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/com/zaxxer/HikariCP-java6/2.1.0/HikariCP-java6-2.1.0.pom
+2015-03-31 11:39:47,784 [New I/O client worker #21-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/com/zaxxer/HikariCP-java6/2.1.0/HikariCP-java6-2.1.0.pom
+2015-03-31 11:39:47,846 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:39:48,829 [New I/O client worker #22-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/com/zaxxer/HikariCP-parent/2.1.0/HikariCP-parent-2.1.0.pom
+2015-03-31 11:39:48,857 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:39:48,904 [New I/O client worker #23-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/com/zaxxer/HikariCP-parent/2.1.0/HikariCP-parent-2.1.0.pom
+2015-03-31 11:39:48,904 [New I/O client worker #23-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/com/zaxxer/HikariCP-parent/2.1.0/HikariCP-parent-2.1.0.pom
+2015-03-31 11:39:50,357 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:39:52,269 [New I/O client worker #24-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/commons-configuration/commons-configuration/1.6/commons-configuration-1.6.pom
+2015-03-31 11:39:52,272 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:39:52,369 [New I/O client worker #25-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/commons-configuration/commons-configuration/1.6/commons-configuration-1.6.pom
+2015-03-31 11:39:52,388 [New I/O client worker #25-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/commons-configuration/commons-configuration/1.6/commons-configuration-1.6.pom
+2015-03-31 11:39:52,796 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:39:53,960 [New I/O client worker #26-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/commons-beanutils/commons-beanutils-core/1.8.0/commons-beanutils-core-1.8.0.pom
+2015-03-31 11:39:53,965 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:39:54,018 [New I/O client worker #27-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/commons-beanutils/commons-beanutils-core/1.8.0/commons-beanutils-core-1.8.0.pom
+2015-03-31 11:39:54,018 [New I/O client worker #27-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/commons-beanutils/commons-beanutils-core/1.8.0/commons-beanutils-core-1.8.0.pom
+2015-03-31 11:39:57,503 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:39:58,657 [New I/O client worker #28-5] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/commons-beanutils/commons-beanutils-core/1.8.0/commons-beanutils-core-1.8.0.jar
+2015-03-31 11:39:58,658 [New I/O client worker #28-3] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/com/zaxxer/HikariCP-java6/2.1.0/HikariCP-java6-2.1.0.jar
+2015-03-31 11:39:58,659 [New I/O client worker #28-2] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/org/apache/lucene/lucene-core/2.9.4/lucene-core-2.9.4.jar
+2015-03-31 11:39:58,662 [New I/O client worker #28-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/mysql/mysql-connector-java/5.1.23/mysql-connector-java-5.1.23.jar
+2015-03-31 11:39:58,680 [New I/O client worker #28-4] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/commons-configuration/commons-configuration/1.6/commons-configuration-1.6.jar
+2015-03-31 11:39:58,690 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:39:58,790 [New I/O client worker #29-2] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/apache/lucene/lucene-core/2.9.4/lucene-core-2.9.4.jar
+2015-03-31 11:39:58,819 [New I/O client worker #29-4] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/commons-configuration/commons-configuration/1.6/commons-configuration-1.6.jar
+2015-03-31 11:39:58,820 [New I/O client worker #29-5] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/commons-beanutils/commons-beanutils-core/1.8.0/commons-beanutils-core-1.8.0.jar
+2015-03-31 11:39:58,821 [New I/O client worker #29-3] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/com/zaxxer/HikariCP-java6/2.1.0/HikariCP-java6-2.1.0.jar
+2015-03-31 11:39:58,825 [New I/O client worker #29-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/mysql/mysql-connector-java/5.1.23/mysql-connector-java-5.1.23.jar
+2015-03-31 11:39:58,908 [New I/O client worker #29-3] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/com/zaxxer/HikariCP-java6/2.1.0/HikariCP-java6-2.1.0.jar
+2015-03-31 11:39:59,054 [New I/O client worker #29-5] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/commons-beanutils/commons-beanutils-core/1.8.0/commons-beanutils-core-1.8.0.jar
+2015-03-31 11:39:59,139 [New I/O client worker #29-4] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/commons-configuration/commons-configuration/1.6/commons-configuration-1.6.jar
+2015-03-31 11:39:59,765 [New I/O client worker #29-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/mysql/mysql-connector-java/5.1.23/mysql-connector-java-5.1.23.jar
+2015-03-31 11:39:59,878 [New I/O client worker #29-2] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/apache/lucene/lucene-core/2.9.4/lucene-core-2.9.4.jar
+2015-03-31 11:40:01,412 [Worker-7] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-server-http:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-server-http/pom.xml.
+2015-03-31 11:40:06,806 [Worker-7] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-server-virtuoso:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-server-virtuoso/pom.xml.
+2015-03-31 11:40:06,845 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:40:08,224 [New I/O client worker #30-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/com/openlinksw/virtuoso/virtjdbc4_1/2015-01-26/virtjdbc4_1-2015-01-26.pom
+2015-03-31 11:40:08,225 [New I/O client worker #30-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/com/openlinksw/virtuoso/virtjdbc4_1/2015-01-26/virtjdbc4_1-2015-01-26.pom
+2015-03-31 11:40:08,571 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:40:09,710 [New I/O client worker #31-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/com/openlinksw/virtuoso/virt_sesame2/2015-01-26/virt_sesame2-2015-01-26.pom
+2015-03-31 11:40:09,711 [New I/O client worker #31-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/com/openlinksw/virtuoso/virt_sesame2/2015-01-26/virt_sesame2-2015-01-26.pom
+2015-03-31 11:40:10,158 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:40:11,404 [New I/O client worker #32-2] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/com/openlinksw/virtuoso/virt_sesame2/2015-01-26/virt_sesame2-2015-01-26.jar
+2015-03-31 11:40:11,404 [New I/O client worker #32-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/com/openlinksw/virtuoso/virtjdbc4_1/2015-01-26/virtjdbc4_1-2015-01-26.jar
+2015-03-31 11:40:12,720 [New I/O client worker #32-2] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/com/openlinksw/virtuoso/virt_sesame2/2015-01-26/virt_sesame2-2015-01-26.jar
+2015-03-31 11:40:16,023 [New I/O client worker #32-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/com/openlinksw/virtuoso/virtjdbc4_1/2015-01-26/virtjdbc4_1-2015-01-26.jar
+2015-03-31 11:40:16,619 [Worker-7] WARN  o.e.m.c.i.embedder.EclipseLogger - Failed to dispatch repository event to org.eclipse.m2e.core.internal.embedder.EclipseRepositoryListener: null
+2015-03-31 11:40:16,782 [Worker-7] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-server-hbase:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-server-hbase/pom.xml.
+2015-03-31 11:40:18,755 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:40:21,380 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:40:22,776 [New I/O client worker #34-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/com/continuuity/tephra/tephra-core/0.2.0-ROL/tephra-core-0.2.0-ROL.pom
+2015-03-31 11:40:22,777 [New I/O client worker #34-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/com/continuuity/tephra/tephra-core/0.2.0-ROL/tephra-core-0.2.0-ROL.pom
+2015-03-31 11:40:23,096 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:40:24,251 [New I/O client worker #35-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/com/continuuity/tephra/tephra/0.2.0-ROL/tephra-0.2.0-ROL.pom
+2015-03-31 11:40:24,251 [New I/O client worker #35-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/com/continuuity/tephra/tephra/0.2.0-ROL/tephra-0.2.0-ROL.pom
+2015-03-31 11:40:24,611 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:40:26,177 [New I/O client worker #36-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/com/continuuity/tephra/tephra-api/0.2.0-ROL/tephra-api-0.2.0-ROL.pom
+2015-03-31 11:40:26,203 [New I/O client worker #36-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/com/continuuity/tephra/tephra-api/0.2.0-ROL/tephra-api-0.2.0-ROL.pom
+2015-03-31 11:40:27,042 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:40:28,015 [New I/O client worker #37-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/com/google/code/gson/gson/2.2.4/gson-2.2.4.pom
+2015-03-31 11:40:28,107 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:40:28,222 [New I/O client worker #38-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/com/google/code/gson/gson/2.2.4/gson-2.2.4.pom
+2015-03-31 11:40:28,223 [New I/O client worker #38-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/com/google/code/gson/gson/2.2.4/gson-2.2.4.pom
+2015-03-31 11:40:28,826 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:40:29,863 [New I/O client worker #39-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/com/google/inject/extensions/guice-assistedinject/3.0/guice-assistedinject-3.0.pom
+2015-03-31 11:40:29,868 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:40:30,019 [New I/O client worker #40-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/com/google/inject/extensions/guice-assistedinject/3.0/guice-assistedinject-3.0.pom
+2015-03-31 11:40:30,019 [New I/O client worker #40-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/com/google/inject/extensions/guice-assistedinject/3.0/guice-assistedinject-3.0.pom
+2015-03-31 11:40:30,156 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:40:31,142 [New I/O client worker #41-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/com/google/inject/extensions/extensions-parent/3.0/extensions-parent-3.0.pom
+2015-03-31 11:40:31,150 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:40:31,233 [New I/O client worker #42-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/com/google/inject/extensions/extensions-parent/3.0/extensions-parent-3.0.pom
+2015-03-31 11:40:31,237 [New I/O client worker #42-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/com/google/inject/extensions/extensions-parent/3.0/extensions-parent-3.0.pom
+2015-03-31 11:40:31,306 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:40:32,263 [New I/O client worker #43-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/org/apache/thrift/libthrift/0.9.0/libthrift-0.9.0.pom
+2015-03-31 11:40:32,267 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:40:32,342 [New I/O client worker #44-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/apache/thrift/libthrift/0.9.0/libthrift-0.9.0.pom
+2015-03-31 11:40:32,342 [New I/O client worker #44-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/apache/thrift/libthrift/0.9.0/libthrift-0.9.0.pom
+2015-03-31 11:40:32,430 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:40:33,871 [New I/O client worker #45-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/it/unimi/dsi/fastutil/6.5.6/fastutil-6.5.6.pom
+2015-03-31 11:40:33,876 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:40:33,936 [New I/O client worker #46-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/it/unimi/dsi/fastutil/6.5.6/fastutil-6.5.6.pom
+2015-03-31 11:40:33,937 [New I/O client worker #46-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/it/unimi/dsi/fastutil/6.5.6/fastutil-6.5.6.pom
+2015-03-31 11:40:33,992 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:40:34,958 [New I/O client worker #47-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/org/apache/twill/twill-common/0.4.0-incubating/twill-common-0.4.0-incubating.pom
+2015-03-31 11:40:34,962 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:40:35,093 [New I/O client worker #48-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/apache/twill/twill-common/0.4.0-incubating/twill-common-0.4.0-incubating.pom
+2015-03-31 11:40:35,094 [New I/O client worker #48-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/apache/twill/twill-common/0.4.0-incubating/twill-common-0.4.0-incubating.pom
+2015-03-31 11:40:35,218 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:40:36,624 [New I/O client worker #49-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/org/apache/twill/twill-parent/0.4.0-incubating/twill-parent-0.4.0-incubating.pom
+2015-03-31 11:40:36,694 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:40:36,840 [New I/O client worker #50-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/apache/twill/twill-parent/0.4.0-incubating/twill-parent-0.4.0-incubating.pom
+2015-03-31 11:40:36,929 [New I/O client worker #50-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/apache/twill/twill-parent/0.4.0-incubating/twill-parent-0.4.0-incubating.pom
+2015-03-31 11:40:37,087 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:40:38,096 [New I/O client worker #51-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/org/apache/twill/twill-core/0.4.0-incubating/twill-core-0.4.0-incubating.pom
+2015-03-31 11:40:38,189 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:40:38,586 [New I/O client worker #52-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/apache/twill/twill-core/0.4.0-incubating/twill-core-0.4.0-incubating.pom
+2015-03-31 11:40:38,639 [New I/O client worker #52-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/apache/twill/twill-core/0.4.0-incubating/twill-core-0.4.0-incubating.pom
+2015-03-31 11:40:39,099 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:40:40,147 [New I/O client worker #53-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/org/apache/twill/twill-api/0.4.0-incubating/twill-api-0.4.0-incubating.pom
+2015-03-31 11:40:40,281 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:40:40,465 [New I/O client worker #54-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/apache/twill/twill-api/0.4.0-incubating/twill-api-0.4.0-incubating.pom
+2015-03-31 11:40:40,466 [New I/O client worker #54-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/apache/twill/twill-api/0.4.0-incubating/twill-api-0.4.0-incubating.pom
+2015-03-31 11:40:41,002 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:40:41,995 [New I/O client worker #55-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/org/apache/twill/twill-discovery-api/0.4.0-incubating/twill-discovery-api-0.4.0-incubating.pom
+2015-03-31 11:40:42,281 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:40:42,427 [New I/O client worker #56-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/apache/twill/twill-discovery-api/0.4.0-incubating/twill-discovery-api-0.4.0-incubating.pom
+2015-03-31 11:40:42,517 [New I/O client worker #56-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/apache/twill/twill-discovery-api/0.4.0-incubating/twill-discovery-api-0.4.0-incubating.pom
+2015-03-31 11:40:42,807 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:40:43,744 [New I/O client worker #57-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/org/apache/twill/twill-zookeeper/0.4.0-incubating/twill-zookeeper-0.4.0-incubating.pom
+2015-03-31 11:40:43,779 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:40:43,908 [New I/O client worker #58-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/apache/twill/twill-zookeeper/0.4.0-incubating/twill-zookeeper-0.4.0-incubating.pom
+2015-03-31 11:40:43,909 [New I/O client worker #58-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/apache/twill/twill-zookeeper/0.4.0-incubating/twill-zookeeper-0.4.0-incubating.pom
+2015-03-31 11:40:44,570 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:40:45,628 [New I/O client worker #59-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/org/apache/twill/twill-discovery-core/0.4.0-incubating/twill-discovery-core-0.4.0-incubating.pom
+2015-03-31 11:40:45,770 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:40:45,897 [New I/O client worker #60-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/apache/twill/twill-discovery-core/0.4.0-incubating/twill-discovery-core-0.4.0-incubating.pom
+2015-03-31 11:40:45,898 [New I/O client worker #60-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/apache/twill/twill-discovery-core/0.4.0-incubating/twill-discovery-core-0.4.0-incubating.pom
+2015-03-31 11:40:46,094 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:40:47,387 [New I/O client worker #61-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/org/ow2/asm/asm-all/5.0.2/asm-all-5.0.2.pom
+2015-03-31 11:40:47,401 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:40:47,520 [New I/O client worker #62-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/ow2/asm/asm-all/5.0.2/asm-all-5.0.2.pom
+2015-03-31 11:40:47,522 [New I/O client worker #62-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/ow2/asm/asm-all/5.0.2/asm-all-5.0.2.pom
+2015-03-31 11:40:48,173 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:40:49,166 [New I/O client worker #63-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/org/mortbay/jetty/jetty/6.1.26/jetty-6.1.26.pom
+2015-03-31 11:40:49,242 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:40:49,338 [New I/O client worker #64-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/mortbay/jetty/jetty/6.1.26/jetty-6.1.26.pom
+2015-03-31 11:40:49,339 [New I/O client worker #64-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/mortbay/jetty/jetty/6.1.26/jetty-6.1.26.pom
+2015-03-31 11:40:49,962 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:40:51,047 [New I/O client worker #65-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/org/mortbay/jetty/project/6.1.26/project-6.1.26.pom
+2015-03-31 11:40:51,316 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:40:51,642 [New I/O client worker #66-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/mortbay/jetty/project/6.1.26/project-6.1.26.pom
+2015-03-31 11:40:51,814 [New I/O client worker #66-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/mortbay/jetty/project/6.1.26/project-6.1.26.pom
+2015-03-31 11:40:52,561 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:40:53,803 [New I/O client worker #67-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/org/mortbay/jetty/jetty-util/6.1.26/jetty-util-6.1.26.pom
+2015-03-31 11:40:54,039 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:40:54,094 [New I/O client worker #68-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/mortbay/jetty/jetty-util/6.1.26/jetty-util-6.1.26.pom
+2015-03-31 11:40:54,094 [New I/O client worker #68-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/mortbay/jetty/jetty-util/6.1.26/jetty-util-6.1.26.pom
+2015-03-31 11:40:55,174 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:40:56,892 [New I/O client worker #69-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/org/jruby/jruby-complete/1.6.5/jruby-complete-1.6.5.pom
+2015-03-31 11:40:57,081 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:40:57,175 [New I/O client worker #70-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/jruby/jruby-complete/1.6.5/jruby-complete-1.6.5.pom
+2015-03-31 11:40:57,175 [New I/O client worker #70-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/jruby/jruby-complete/1.6.5/jruby-complete-1.6.5.pom
+2015-03-31 11:40:57,577 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:40:58,316 [New I/O client worker #71-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/org/jruby/jruby-common/1.6.5/jruby-common-1.6.5.pom
+2015-03-31 11:40:58,915 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:40:59,555 [New I/O client worker #72-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/jruby/jruby-common/1.6.5/jruby-common-1.6.5.pom
+2015-03-31 11:40:59,805 [New I/O client worker #72-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/jruby/jruby-common/1.6.5/jruby-common-1.6.5.pom
+2015-03-31 11:41:00,636 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:01,349 [New I/O client worker #73-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/org/jruby/shared/1.6.5/shared-1.6.5.pom
+2015-03-31 11:41:01,597 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:01,652 [New I/O client worker #74-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/jruby/shared/1.6.5/shared-1.6.5.pom
+2015-03-31 11:41:01,653 [New I/O client worker #74-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/jruby/shared/1.6.5/shared-1.6.5.pom
+2015-03-31 11:41:02,689 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:03,274 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:04,390 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:04,807 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:05,728 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:06,512 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:07,410 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:07,979 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:08,661 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:09,181 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:09,826 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:10,110 [New I/O client worker #85-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/org/codehaus/jackson/jackson-core-asl/1.8.8/jackson-core-asl-1.8.8.pom
+2015-03-31 11:41:10,256 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:10,325 [New I/O client worker #86-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/codehaus/jackson/jackson-core-asl/1.8.8/jackson-core-asl-1.8.8.pom
+2015-03-31 11:41:10,325 [New I/O client worker #86-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/codehaus/jackson/jackson-core-asl/1.8.8/jackson-core-asl-1.8.8.pom
+2015-03-31 11:41:10,848 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:11,186 [New I/O client worker #87-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/org/codehaus/jackson/jackson-jaxrs/1.8.8/jackson-jaxrs-1.8.8.pom
+2015-03-31 11:41:11,441 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:12,017 [New I/O client worker #88-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/codehaus/jackson/jackson-jaxrs/1.8.8/jackson-jaxrs-1.8.8.pom
+2015-03-31 11:41:12,018 [New I/O client worker #88-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/codehaus/jackson/jackson-jaxrs/1.8.8/jackson-jaxrs-1.8.8.pom
+2015-03-31 11:41:12,366 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:12,906 [New I/O client worker #89-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/org/codehaus/jackson/jackson-xc/1.8.8/jackson-xc-1.8.8.pom
+2015-03-31 11:41:13,735 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:14,173 [New I/O client worker #90-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/codehaus/jackson/jackson-xc/1.8.8/jackson-xc-1.8.8.pom
+2015-03-31 11:41:14,322 [New I/O client worker #90-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/codehaus/jackson/jackson-xc/1.8.8/jackson-xc-1.8.8.pom
+2015-03-31 11:41:14,996 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:15,332 [New I/O client worker #91-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/org/slf4j/slf4j-log4j12/1.4.3/slf4j-log4j12-1.4.3.pom
+2015-03-31 11:41:15,605 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:15,650 [New I/O client worker #92-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/slf4j/slf4j-log4j12/1.4.3/slf4j-log4j12-1.4.3.pom
+2015-03-31 11:41:15,651 [New I/O client worker #92-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/slf4j/slf4j-log4j12/1.4.3/slf4j-log4j12-1.4.3.pom
+2015-03-31 11:41:16,365 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:16,813 [New I/O client worker #93-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/org/slf4j/slf4j-parent/1.4.3/slf4j-parent-1.4.3.pom
+2015-03-31 11:41:16,977 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:17,041 [New I/O client worker #94-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/slf4j/slf4j-parent/1.4.3/slf4j-parent-1.4.3.pom
+2015-03-31 11:41:17,042 [New I/O client worker #94-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/slf4j/slf4j-parent/1.4.3/slf4j-parent-1.4.3.pom
+2015-03-31 11:41:18,410 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:18,699 [New I/O client worker #95-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/log4j/log4j/1.2.13/log4j-1.2.13.pom
+2015-03-31 11:41:18,937 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:18,998 [New I/O client worker #96-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/log4j/log4j/1.2.13/log4j-1.2.13.pom
+2015-03-31 11:41:18,999 [New I/O client worker #96-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/log4j/log4j/1.2.13/log4j-1.2.13.pom
+2015-03-31 11:41:19,472 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:19,737 [New I/O client worker #97-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/tomcat/jasper-compiler/5.5.23/jasper-compiler-5.5.23.pom
+2015-03-31 11:41:20,012 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:20,077 [New I/O client worker #98-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/tomcat/jasper-compiler/5.5.23/jasper-compiler-5.5.23.pom
+2015-03-31 11:41:20,077 [New I/O client worker #98-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/tomcat/jasper-compiler/5.5.23/jasper-compiler-5.5.23.pom
+2015-03-31 11:41:20,630 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:20,953 [New I/O client worker #99-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/tomcat/tomcat-parent/5.5.23/tomcat-parent-5.5.23.pom
+2015-03-31 11:41:21,176 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:21,243 [New I/O client worker #100-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/tomcat/tomcat-parent/5.5.23/tomcat-parent-5.5.23.pom
+2015-03-31 11:41:21,244 [New I/O client worker #100-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/tomcat/tomcat-parent/5.5.23/tomcat-parent-5.5.23.pom
+2015-03-31 11:41:21,670 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:21,959 [New I/O client worker #101-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/tomcat/jasper-runtime/5.5.23/jasper-runtime-5.5.23.pom
+2015-03-31 11:41:22,601 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:22,986 [New I/O client worker #102-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/tomcat/jasper-runtime/5.5.23/jasper-runtime-5.5.23.pom
+2015-03-31 11:41:22,987 [New I/O client worker #102-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/tomcat/jasper-runtime/5.5.23/jasper-runtime-5.5.23.pom
+2015-03-31 11:41:23,510 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:23,875 [New I/O client worker #103-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/org/jamon/jamon-runtime/2.3.1/jamon-runtime-2.3.1.pom
+2015-03-31 11:41:24,061 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:24,105 [New I/O client worker #104-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/jamon/jamon-runtime/2.3.1/jamon-runtime-2.3.1.pom
+2015-03-31 11:41:24,438 [New I/O client worker #104-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/jamon/jamon-runtime/2.3.1/jamon-runtime-2.3.1.pom
+2015-03-31 11:41:24,796 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:25,162 [New I/O client worker #105-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/org/jamon/jamon-project/1.0.2/jamon-project-1.0.2.pom
+2015-03-31 11:41:25,346 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:25,396 [New I/O client worker #106-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/jamon/jamon-project/1.0.2/jamon-project-1.0.2.pom
+2015-03-31 11:41:25,397 [New I/O client worker #106-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/jamon/jamon-project/1.0.2/jamon-project-1.0.2.pom
+2015-03-31 11:41:26,027 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:26,304 [New I/O client worker #107-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/com/sun/jersey/jersey-core/1.8/jersey-core-1.8.pom
+2015-03-31 11:41:26,685 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:26,762 [New I/O client worker #108-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/com/sun/jersey/jersey-core/1.8/jersey-core-1.8.pom
+2015-03-31 11:41:26,763 [New I/O client worker #108-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/com/sun/jersey/jersey-core/1.8/jersey-core-1.8.pom
+2015-03-31 11:41:27,368 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:27,746 [New I/O client worker #109-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/com/sun/jersey/jersey-project/1.8/jersey-project-1.8.pom
+2015-03-31 11:41:27,896 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:27,952 [New I/O client worker #110-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/com/sun/jersey/jersey-project/1.8/jersey-project-1.8.pom
+2015-03-31 11:41:27,969 [New I/O client worker #110-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/com/sun/jersey/jersey-project/1.8/jersey-project-1.8.pom
+2015-03-31 11:41:28,407 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:28,711 [New I/O client worker #111-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/com/sun/jersey/jersey-json/1.8/jersey-json-1.8.pom
+2015-03-31 11:41:28,902 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:29,141 [New I/O client worker #112-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/com/sun/jersey/jersey-json/1.8/jersey-json-1.8.pom
+2015-03-31 11:41:29,726 [New I/O client worker #112-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/com/sun/jersey/jersey-json/1.8/jersey-json-1.8.pom
+2015-03-31 11:41:30,919 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:31,536 [New I/O client worker #113-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/org/codehaus/jettison/jettison/1.1/jettison-1.1.pom
+2015-03-31 11:41:31,949 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:32,016 [New I/O client worker #114-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/codehaus/jettison/jettison/1.1/jettison-1.1.pom
+2015-03-31 11:41:32,016 [New I/O client worker #114-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/codehaus/jettison/jettison/1.1/jettison-1.1.pom
+2015-03-31 11:41:33,517 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:35,014 [New I/O client worker #115-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/javax/xml/bind/jaxb-api/2.2.2/jaxb-api-2.2.2.pom
+2015-03-31 11:41:35,192 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:35,224 [New I/O client worker #116-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/javax/xml/bind/jaxb-api/2.2.2/jaxb-api-2.2.2.pom
+2015-03-31 11:41:35,225 [New I/O client worker #116-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/javax/xml/bind/jaxb-api/2.2.2/jaxb-api-2.2.2.pom
+2015-03-31 11:41:35,753 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:36,094 [New I/O client worker #117-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/javax/xml/stream/stax-api/1.0-2/stax-api-1.0-2.pom
+2015-03-31 11:41:36,266 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:36,342 [New I/O client worker #118-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/javax/xml/stream/stax-api/1.0-2/stax-api-1.0-2.pom
+2015-03-31 11:41:36,342 [New I/O client worker #118-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/javax/xml/stream/stax-api/1.0-2/stax-api-1.0-2.pom
+2015-03-31 11:41:36,815 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:37,116 [New I/O client worker #119-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/org/codehaus/jackson/jackson-core-asl/1.7.1/jackson-core-asl-1.7.1.pom
+2015-03-31 11:41:37,513 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:37,605 [New I/O client worker #120-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/codehaus/jackson/jackson-core-asl/1.7.1/jackson-core-asl-1.7.1.pom
+2015-03-31 11:41:37,606 [New I/O client worker #120-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/codehaus/jackson/jackson-core-asl/1.7.1/jackson-core-asl-1.7.1.pom
+2015-03-31 11:41:38,087 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:38,373 [New I/O client worker #121-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/org/codehaus/jackson/jackson-mapper-asl/1.7.1/jackson-mapper-asl-1.7.1.pom
+2015-03-31 11:41:38,684 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:38,970 [New I/O client worker #122-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/codehaus/jackson/jackson-mapper-asl/1.7.1/jackson-mapper-asl-1.7.1.pom
+2015-03-31 11:41:39,007 [New I/O client worker #122-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/codehaus/jackson/jackson-mapper-asl/1.7.1/jackson-mapper-asl-1.7.1.pom
+2015-03-31 11:41:39,548 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:39,862 [New I/O client worker #123-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/org/codehaus/jackson/jackson-jaxrs/1.7.1/jackson-jaxrs-1.7.1.pom
+2015-03-31 11:41:40,075 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:40,170 [New I/O client worker #124-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/codehaus/jackson/jackson-jaxrs/1.7.1/jackson-jaxrs-1.7.1.pom
+2015-03-31 11:41:40,171 [New I/O client worker #124-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/codehaus/jackson/jackson-jaxrs/1.7.1/jackson-jaxrs-1.7.1.pom
+2015-03-31 11:41:40,600 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:40,997 [New I/O client worker #125-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/org/codehaus/jackson/jackson-xc/1.7.1/jackson-xc-1.7.1.pom
+2015-03-31 11:41:41,146 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:41,232 [New I/O client worker #126-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/codehaus/jackson/jackson-xc/1.7.1/jackson-xc-1.7.1.pom
+2015-03-31 11:41:41,233 [New I/O client worker #126-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/codehaus/jackson/jackson-xc/1.7.1/jackson-xc-1.7.1.pom
+2015-03-31 11:41:41,714 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:42,003 [New I/O client worker #127-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/com/sun/jersey/jersey-server/1.8/jersey-server-1.8.pom
+2015-03-31 11:41:42,242 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:42,330 [New I/O client worker #128-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/com/sun/jersey/jersey-server/1.8/jersey-server-1.8.pom
+2015-03-31 11:41:42,719 [New I/O client worker #128-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/com/sun/jersey/jersey-server/1.8/jersey-server-1.8.pom
+2015-03-31 11:41:43,042 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:43,403 [New I/O client worker #129-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/asm/asm/3.1/asm-3.1.pom
+2015-03-31 11:41:43,409 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:43,505 [New I/O client worker #130-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/asm/asm/3.1/asm-3.1.pom
+2015-03-31 11:41:43,676 [New I/O client worker #130-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/asm/asm/3.1/asm-3.1.pom
+2015-03-31 11:41:43,921 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:44,215 [New I/O client worker #131-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/asm/asm-parent/3.1/asm-parent-3.1.pom
+2015-03-31 11:41:44,253 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:44,333 [New I/O client worker #132-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/asm/asm-parent/3.1/asm-parent-3.1.pom
+2015-03-31 11:41:44,333 [New I/O client worker #132-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/asm/asm-parent/3.1/asm-parent-3.1.pom
+2015-03-31 11:41:44,489 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:44,859 [New I/O client worker #133-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/com/continuuity/tephra/tephra-hbase-compat-0.94/0.2.0-ROL/tephra-hbase-compat-0.94-0.2.0-ROL.pom
+2015-03-31 11:41:44,877 [New I/O client worker #133-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/com/continuuity/tephra/tephra-hbase-compat-0.94/0.2.0-ROL/tephra-hbase-compat-0.94-0.2.0-ROL.pom
+2015-03-31 11:41:48,009 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:49,169 [New I/O client worker #134-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/com/continuuity/tephra/tephra-core/0.2.0-ROL/tephra-core-0.2.0-ROL.jar
+2015-03-31 11:41:49,476 [New I/O client worker #134-2] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/org/apache/twill/twill-discovery-core/0.4.0-incubating/twill-discovery-core-0.4.0-incubating.jar
+2015-03-31 11:41:49,476 [New I/O client worker #134-5] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/org/apache/twill/twill-common/0.4.0-incubating/twill-common-0.4.0-incubating.jar
+2015-03-31 11:41:49,477 [New I/O client worker #134-2] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/com/google/code/gson/gson/2.2.4/gson-2.2.4.jar
+2015-03-31 11:41:49,518 [New I/O client worker #134-6] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/org/apache/twill/twill-core/0.4.0-incubating/twill-core-0.4.0-incubating.jar
+2015-03-31 11:41:49,529 [New I/O client worker #134-5] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/org/jruby/jruby-complete/1.6.5/jruby-complete-1.6.5.jar
+2015-03-31 11:41:49,530 [New I/O client worker #134-6] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/org/mortbay/jetty/jetty/6.1.26/jetty-6.1.26.jar
+2015-03-31 11:41:49,531 [New I/O client worker #134-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/org/apache/twill/twill-discovery-api/0.4.0-incubating/twill-discovery-api-0.4.0-incubating.jar
+2015-03-31 11:41:49,531 [New I/O client worker #134-7] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/org/apache/twill/twill-api/0.4.0-incubating/twill-api-0.4.0-incubating.jar
+2015-03-31 11:41:49,532 [New I/O client worker #134-3] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/org/apache/twill/twill-zookeeper/0.4.0-incubating/twill-zookeeper-0.4.0-incubating.jar
+2015-03-31 11:41:49,532 [New I/O client worker #134-7] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/org/mortbay/jetty/jetty-util/6.1.26/jetty-util-6.1.26.jar
+2015-03-31 11:41:49,537 [New I/O client worker #134-4] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/it/unimi/dsi/fastutil/6.5.6/fastutil-6.5.6.jar
+2015-03-31 11:41:49,537 [New I/O client worker #134-3] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/com/google/inject/extensions/guice-assistedinject/3.0/guice-assistedinject-3.0.jar
+2015-03-31 11:41:49,537 [New I/O client worker #134-8] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/org/ow2/asm/asm-all/5.0.2/asm-all-5.0.2.jar
+2015-03-31 11:41:49,538 [New I/O client worker #134-4] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/org/apache/hbase/hbase/0.94.10/hbase-0.94.10-tests.jar
+2015-03-31 11:41:50,101 [New I/O client worker #134-8] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/org/codehaus/jackson/jackson-jaxrs/1.8.8/jackson-jaxrs-1.8.8.jar
+2015-03-31 11:41:50,112 [New I/O client worker #134-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/tomcat/jasper-runtime/5.5.23/jasper-runtime-5.5.23.jar
+2015-03-31 11:41:50,115 [New I/O client worker #134-3] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/com/sun/jersey/jersey-core/1.8/jersey-core-1.8.jar
+2015-03-31 11:41:50,115 [New I/O client worker #134-8] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/org/codehaus/jettison/jettison/1.1/jettison-1.1.jar
+2015-03-31 11:41:50,115 [New I/O client worker #134-7] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/com/sun/jersey/jersey-json/1.8/jersey-json-1.8.jar
+2015-03-31 11:41:50,115 [New I/O client worker #134-6] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/tomcat/jasper-compiler/5.5.23/jasper-compiler-5.5.23.jar
+2015-03-31 11:41:50,117 [New I/O client worker #134-7] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/org/jamon/jamon-runtime/2.3.1/jamon-runtime-2.3.1.jar
+2015-03-31 11:41:50,117 [New I/O client worker #134-6] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/org/codehaus/jackson/jackson-xc/1.8.8/jackson-xc-1.8.8.jar
+2015-03-31 11:41:50,117 [New I/O client worker #134-3] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/com/sun/jersey/jersey-server/1.8/jersey-server-1.8.jar
+2015-03-31 11:41:50,117 [New I/O client worker #134-5] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/org/slf4j/slf4j-log4j12/1.4.3/slf4j-log4j12-1.4.3.jar
+2015-03-31 11:41:50,118 [New I/O client worker #134-4] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/asm/asm/3.1/asm-3.1.jar
+2015-03-31 11:41:50,123 [New I/O client worker #134-4] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/com/continuuity/tephra/tephra-api/0.2.0-ROL/tephra-api-0.2.0-ROL.jar
+2015-03-31 11:41:50,123 [New I/O client worker #134-4] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/com/continuuity/tephra/tephra-api/0.2.0-ROL/tephra-api-0.2.0-ROL.jar
+2015-03-31 11:41:50,274 [New I/O client worker #134-5] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/com/continuuity/tephra/tephra-hbase-compat-0.94/0.2.0-ROL/tephra-hbase-compat-0.94-0.2.0-ROL.jar
+2015-03-31 11:41:50,323 [New I/O client worker #134-5] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/com/continuuity/tephra/tephra-hbase-compat-0.94/0.2.0-ROL/tephra-hbase-compat-0.94-0.2.0-ROL.jar
+2015-03-31 11:41:50,997 [New I/O client worker #134-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/com/continuuity/tephra/tephra-core/0.2.0-ROL/tephra-core-0.2.0-ROL.jar
+2015-03-31 11:41:52,375 [Worker-7] WARN  o.e.m.c.i.embedder.EclipseLogger - Failed to dispatch repository event to org.eclipse.m2e.core.internal.embedder.EclipseRepositoryListener: null
+2015-03-31 11:41:52,501 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:41:52,593 [New I/O client worker #135-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/com/google/code/gson/gson/2.2.4/gson-2.2.4.jar
+2015-03-31 11:41:52,634 [New I/O client worker #135-2] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/com/google/inject/extensions/guice-assistedinject/3.0/guice-assistedinject-3.0.jar
+2015-03-31 11:41:52,635 [New I/O client worker #135-3] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/it/unimi/dsi/fastutil/6.5.6/fastutil-6.5.6.jar
+2015-03-31 11:41:52,635 [New I/O client worker #135-7] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/ow2/asm/asm-all/5.0.2/asm-all-5.0.2.jar
+2015-03-31 11:41:52,634 [New I/O client worker #135-5] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/mortbay/jetty/jetty/6.1.26/jetty-6.1.26.jar
+2015-03-31 11:41:52,636 [New I/O client worker #135-6] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/mortbay/jetty/jetty-util/6.1.26/jetty-util-6.1.26.jar
+2015-03-31 11:41:52,640 [New I/O client worker #135-4] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/apache/twill/twill-common/0.4.0-incubating/twill-common-0.4.0-incubating.jar
+2015-03-31 11:41:52,667 [New I/O client worker #135-4] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/apache/twill/twill-common/0.4.0-incubating/twill-common-0.4.0-incubating.jar
+2015-03-31 11:41:52,675 [New I/O client worker #135-3] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/apache/hbase/hbase/0.94.10/hbase-0.94.10-tests.jar
+2015-03-31 11:41:52,697 [New I/O client worker #135-4] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/jruby/jruby-complete/1.6.5/jruby-complete-1.6.5.jar
+2015-03-31 11:41:52,698 [New I/O client worker #135-2] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/com/google/inject/extensions/guice-assistedinject/3.0/guice-assistedinject-3.0.jar
+2015-03-31 11:41:52,710 [New I/O client worker #135-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/apache/twill/twill-discovery-core/0.4.0-incubating/twill-discovery-core-0.4.0-incubating.jar
+2015-03-31 11:41:52,710 [New I/O client worker #135-2] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/apache/twill/twill-zookeeper/0.4.0-incubating/twill-zookeeper-0.4.0-incubating.jar
+2015-03-31 11:41:52,710 [New I/O client worker #135-6] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/apache/twill/twill-api/0.4.0-incubating/twill-api-0.4.0-incubating.jar
+2015-03-31 11:41:52,782 [New I/O client worker #135-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/apache/twill/twill-discovery-core/0.4.0-incubating/twill-discovery-core-0.4.0-incubating.jar
+2015-03-31 11:41:52,954 [New I/O client worker #135-8] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/apache/twill/twill-discovery-api/0.4.0-incubating/twill-discovery-api-0.4.0-incubating.jar
+2015-03-31 11:41:52,955 [New I/O client worker #135-8] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/apache/twill/twill-discovery-api/0.4.0-incubating/twill-discovery-api-0.4.0-incubating.jar
+2015-03-31 11:41:52,976 [New I/O client worker #135-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/com/google/code/gson/gson/2.2.4/gson-2.2.4.jar
+2015-03-31 11:41:52,991 [New I/O client worker #135-5] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/apache/twill/twill-core/0.4.0-incubating/twill-core-0.4.0-incubating.jar
+2015-03-31 11:41:53,110 [New I/O client worker #135-6] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/apache/twill/twill-api/0.4.0-incubating/twill-api-0.4.0-incubating.jar
+2015-03-31 11:41:53,390 [New I/O client worker #135-2] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/apache/twill/twill-zookeeper/0.4.0-incubating/twill-zookeeper-0.4.0-incubating.jar
+2015-03-31 11:41:53,610 [New I/O client worker #135-6] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/mortbay/jetty/jetty-util/6.1.26/jetty-util-6.1.26.jar
+2015-03-31 11:41:54,038 [New I/O client worker #135-7] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/ow2/asm/asm-all/5.0.2/asm-all-5.0.2.jar
+2015-03-31 11:41:54,264 [New I/O client worker #135-5] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/apache/twill/twill-core/0.4.0-incubating/twill-core-0.4.0-incubating.jar
+2015-03-31 11:41:54,315 [New I/O client worker #135-2] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/codehaus/jackson/jackson-xc/1.8.8/jackson-xc-1.8.8.jar
+2015-03-31 11:41:54,316 [New I/O client worker #135-8] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/codehaus/jackson/jackson-jaxrs/1.8.8/jackson-jaxrs-1.8.8.jar
+2015-03-31 11:41:54,320 [New I/O client worker #135-2] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/slf4j/slf4j-log4j12/1.4.3/slf4j-log4j12-1.4.3.jar
+2015-03-31 11:41:54,336 [New I/O client worker #135-6] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/jamon/jamon-runtime/2.3.1/jamon-runtime-2.3.1.jar
+2015-03-31 11:41:54,339 [New I/O client worker #135-2] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/slf4j/slf4j-log4j12/1.4.3/slf4j-log4j12-1.4.3.jar
+2015-03-31 11:41:54,339 [New I/O client worker #135-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/tomcat/jasper-runtime/5.5.23/jasper-runtime-5.5.23.jar
+2015-03-31 11:41:54,347 [New I/O client worker #135-6] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/codehaus/jettison/jettison/1.1/jettison-1.1.jar
+2015-03-31 11:41:54,350 [New I/O client worker #135-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/com/sun/jersey/jersey-core/1.8/jersey-core-1.8.jar
+2015-03-31 11:41:54,353 [New I/O client worker #135-4] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/tomcat/jasper-compiler/5.5.23/jasper-compiler-5.5.23.jar
+2015-03-31 11:41:54,364 [New I/O client worker #135-7] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/com/sun/jersey/jersey-json/1.8/jersey-json-1.8.jar
+2015-03-31 11:41:54,625 [New I/O client worker #135-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/asm/asm/3.1/asm-3.1.jar
+2015-03-31 11:41:54,625 [New I/O client worker #135-8] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/com/sun/jersey/jersey-server/1.8/jersey-server-1.8.jar
+2015-03-31 11:41:54,647 [New I/O client worker #135-8] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/codehaus/jackson/jackson-jaxrs/1.8.8/jackson-jaxrs-1.8.8.jar
+2015-03-31 11:41:54,647 [New I/O client worker #135-6] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/jamon/jamon-runtime/2.3.1/jamon-runtime-2.3.1.jar
+2015-03-31 11:41:55,032 [New I/O client worker #135-6] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/codehaus/jettison/jettison/1.1/jettison-1.1.jar
+2015-03-31 11:41:55,389 [New I/O client worker #135-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/asm/asm/3.1/asm-3.1.jar
+2015-03-31 11:41:55,431 [New I/O client worker #135-2] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/codehaus/jackson/jackson-xc/1.8.8/jackson-xc-1.8.8.jar
+2015-03-31 11:41:55,433 [New I/O client worker #135-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/tomcat/jasper-runtime/5.5.23/jasper-runtime-5.5.23.jar
+2015-03-31 11:41:55,748 [New I/O client worker #135-5] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/mortbay/jetty/jetty/6.1.26/jetty-6.1.26.jar
+2015-03-31 11:41:55,777 [New I/O client worker #135-7] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/com/sun/jersey/jersey-json/1.8/jersey-json-1.8.jar
+2015-03-31 11:41:57,481 [New I/O client worker #135-8] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/com/sun/jersey/jersey-server/1.8/jersey-server-1.8.jar
+2015-03-31 11:41:58,915 [New I/O client worker #135-3] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/apache/hbase/hbase/0.94.10/hbase-0.94.10-tests.jar
+2015-03-31 11:42:00,442 [New I/O client worker #135-4] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/tomcat/jasper-compiler/5.5.23/jasper-compiler-5.5.23.jar
+2015-03-31 11:42:00,900 [New I/O client worker #135-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/com/sun/jersey/jersey-core/1.8/jersey-core-1.8.jar
+2015-03-31 11:42:11,797 [New I/O client worker #135-4] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/jruby/jruby-complete/1.6.5/jruby-complete-1.6.5.jar
+2015-03-31 11:42:19,126 [New I/O client worker #135-3] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/it/unimi/dsi/fastutil/6.5.6/fastutil-6.5.6.jar
+2015-03-31 11:42:19,495 [Worker-7] WARN  o.e.m.c.i.embedder.EclipseLogger - Failed to dispatch repository event to org.eclipse.m2e.core.internal.embedder.EclipseRepositoryListener: null
+2015-03-31 11:42:20,594 [Worker-7] WARN  o.e.m.c.i.embedder.EclipseLogger - Failed to dispatch repository event to org.eclipse.m2e.core.internal.embedder.EclipseRepositoryListener: null
+2015-03-31 11:42:22,629 [Worker-7] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-populator-naf:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-populator-naf/pom.xml.
+2015-03-31 11:42:23,135 [Worker-7] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-populator-rdf:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-populator-rdf/pom.xml.
+2015-03-31 11:42:23,275 [Worker-7] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-distribution:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-distribution/pom.xml.
+2015-03-31 11:42:23,360 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:42:24,548 [New I/O client worker #136-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/org/apache/commons/commons-math3/3.4.1/commons-math3-3.4.1.pom
+2015-03-31 11:42:24,559 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:42:24,643 [New I/O client worker #137-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/apache/commons/commons-math3/3.4.1/commons-math3-3.4.1.pom
+2015-03-31 11:42:24,670 [New I/O client worker #137-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/apache/commons/commons-math3/3.4.1/commons-math3-3.4.1.pom
+2015-03-31 11:42:24,761 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:42:25,974 [New I/O client worker #138-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/org/apache/commons/commons-parent/34/commons-parent-34.pom
+2015-03-31 11:42:26,027 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:42:26,084 [New I/O client worker #139-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/apache/commons/commons-parent/34/commons-parent-34.pom
+2015-03-31 11:42:26,129 [New I/O client worker #139-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/apache/commons/commons-parent/34/commons-parent-34.pom
+2015-03-31 11:42:26,932 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:42:28,098 [New I/O client worker #140-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://raw.githubusercontent.com/fbk/mvn-repo/master/releases/org/apache/commons/commons-math3/3.4.1/commons-math3-3.4.1.jar
+2015-03-31 11:42:28,100 [Worker-7] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-03-31 11:42:28,184 [New I/O client worker #141-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/org/apache/commons/commons-math3/3.4.1/commons-math3-3.4.1.jar
+2015-03-31 11:42:29,657 [New I/O client worker #141-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/apache/commons/commons-math3/3.4.1/commons-math3-3.4.1.jar
+2015-03-31 11:42:29,764 [Worker-7] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-tool:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-tool/pom.xml.
+2015-03-31 11:42:57,355 [Worker-0] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-client:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-client/pom.xml.
+2015-03-31 11:43:03,253 [Worker-7] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /ks-core/src/main/java
+2015-03-31 11:43:03,254 [Worker-7] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /ks-core/src/main/resources
+2015-03-31 11:43:03,450 [Worker-7] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /ks-core/src/test/java
+2015-03-31 11:43:03,450 [Worker-7] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /ks-core/src/test/resources
+2015-03-31 11:43:05,184 [Worker-0] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-core:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-core/pom.xml.
+2015-03-31 11:43:07,361 [Worker-0] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-populator-naf:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-populator-naf/pom.xml.
+2015-03-31 11:43:08,124 [Worker-0] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-populator-rdf:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-populator-rdf/pom.xml.
+2015-03-31 11:43:12,322 [Worker-0] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-server:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-server/pom.xml.
+2015-03-31 11:43:18,207 [Worker-0] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-server-hbase:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-server-hbase/pom.xml.
+2015-03-31 11:43:28,871 [Worker-0] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-server-http:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-server-http/pom.xml.
+2015-03-31 11:43:38,077 [Worker-0] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-server-virtuoso:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-server-virtuoso/pom.xml.
+2015-03-31 11:43:52,533 [Worker-7] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /ks-client/src/main/java
+2015-03-31 11:43:52,536 [Worker-7] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /ks-client/src/test/java
+2015-03-31 11:43:52,536 [Worker-7] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /ks-client/src/test/resources
+2015-03-31 11:43:54,286 [Worker-7] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /ks-tool/src/main/java
+2015-03-31 11:43:54,287 [Worker-7] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /ks-tool/src/test/java
+2015-03-31 11:43:54,544 [Worker-7] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /ks-server/src/main/java
+2015-03-31 11:43:54,544 [Worker-7] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /ks-server/src/main/resources
+2015-03-31 11:43:54,554 [Worker-7] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /ks-server/src/test/java
+2015-03-31 11:43:54,555 [Worker-7] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /ks-server/src/test/resources
+2015-03-31 11:43:56,896 [Worker-7] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /ks-server-http/src/main/java
+2015-03-31 11:43:56,896 [Worker-7] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /ks-server-http/src/main/resources
+2015-03-31 11:43:56,906 [Worker-7] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /ks-server-http/src/test/java
+2015-03-31 11:43:56,906 [Worker-7] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /ks-server-http/src/test/resources
+2015-03-31 11:44:00,757 [Worker-7] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /ks-populator-rdf/src/main/java
+2015-03-31 11:44:00,758 [Worker-7] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /ks-populator-rdf/src/main/resources
+2015-03-31 11:44:00,804 [Worker-7] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /ks-populator-rdf/src/test/java
+2015-03-31 11:44:01,332 [Worker-7] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /ks-server-virtuoso/src/main/java
+2015-03-31 11:44:01,476 [Worker-7] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /ks-server-virtuoso/src/test/java
+2015-03-31 11:44:02,428 [Worker-7] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /ks-populator-naf/src/main/java
+2015-03-31 11:44:02,429 [Worker-7] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /ks-populator-naf/src/main/resources
+2015-03-31 11:44:02,475 [Worker-7] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /ks-populator-naf/src/test/java
+2015-03-31 11:44:02,475 [Worker-7] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /ks-populator-naf/src/test/resources
+2015-03-31 11:44:03,060 [Worker-7] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /ks-server-hbase/src/main/java
+2015-03-31 11:44:03,125 [Worker-7] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /ks-server-hbase/src/test/java
+2015-03-31 11:44:03,125 [Worker-7] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /ks-server-hbase/src/test/resources
+2015-03-31 11:44:07,450 [Worker-7] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /ks-distribution/src/main/java
+2015-03-31 11:44:07,482 [Worker-7] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /ks-distribution/src/test/java
+2015-03-31 11:44:08,169 [Worker-7] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Project import completed 358 sec
+2015-03-31 11:44:20,869 [Worker-14] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Update started
+2015-03-31 11:44:20,926 [Worker-14] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Update completed: 0 sec
+2015-03-31 11:44:36,472 [Worker-14] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-client:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-client/pom.xml.
+2015-03-31 11:44:45,573 [Worker-14] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-core:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-core/pom.xml.
+2015-03-31 11:44:47,913 [Worker-13] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-core:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-core/pom.xml.
+2015-03-31 11:44:51,197 [Worker-13] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-03-31 11:44:51,201 [Worker-11] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-client:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-client/pom.xml.
+2015-03-31 11:44:51,523 [Worker-13] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 4 resources
+2015-03-31 11:44:51,876 [Worker-13] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-03-31 11:44:51,876 [Worker-13] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2015-03-31 11:44:55,760 [Worker-8] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-client:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-client/pom.xml.
+2015-03-31 11:44:57,807 [Worker-8] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-03-31 11:44:57,807 [Worker-8] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-client/src/main/resources
+2015-03-31 11:44:57,808 [Worker-8] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-03-31 11:44:57,811 [Worker-8] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 7 resources
+2015-03-31 11:44:58,208 [Worker-10] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-client:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-client/pom.xml.
+2015-03-31 11:44:59,031 [Worker-10] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-core:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-core/pom.xml.
+2015-03-31 11:45:00,383 [Worker-10] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-populator-naf:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-populator-naf/pom.xml.
+2015-03-31 11:45:01,013 [Worker-7] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-populator-naf:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-populator-naf/pom.xml.
+2015-03-31 11:45:01,560 [Worker-7] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-03-31 11:45:01,561 [Worker-7] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2015-03-31 11:45:01,577 [Worker-7] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-03-31 11:45:01,588 [Worker-7] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 17 resources
+2015-03-31 11:45:01,974 [Worker-8] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-client:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-client/pom.xml.
+2015-03-31 11:45:02,629 [Worker-8] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-core:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-core/pom.xml.
+2015-03-31 11:45:03,276 [Worker-8] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-populator-naf:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-populator-naf/pom.xml.
+2015-03-31 11:45:03,583 [Worker-8] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-populator-rdf:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-populator-rdf/pom.xml.
+2015-03-31 11:45:05,173 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-03-31 11:45:05,222 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2015-03-31 11:45:05,224 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-03-31 11:45:05,264 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 17 resources
+2015-03-31 11:45:05,339 [Worker-8] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-server:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-server/pom.xml.
+2015-03-31 11:45:05,418 [Worker-4] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-populator-rdf:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-populator-rdf/pom.xml.
+2015-03-31 11:45:06,947 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-03-31 11:45:06,949 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 4 resources
+2015-03-31 11:45:07,085 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-03-31 11:45:07,085 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-populator-rdf/src/test/resources
+2015-03-31 11:45:12,603 [Worker-4] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-server:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-server/pom.xml.
+2015-03-31 11:45:15,860 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-03-31 11:45:15,861 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2015-03-31 11:45:15,897 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-03-31 11:45:15,898 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 4 resources
+2015-03-31 11:45:16,543 [Worker-14] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-client:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-client/pom.xml.
+2015-03-31 11:45:16,822 [Worker-14] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-core:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-core/pom.xml.
+2015-03-31 11:45:18,288 [Worker-14] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-populator-naf:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-populator-naf/pom.xml.
+2015-03-31 11:45:19,305 [Worker-14] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-populator-rdf:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-populator-rdf/pom.xml.
+2015-03-31 11:45:20,689 [Worker-14] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-server:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-server/pom.xml.
+2015-03-31 11:45:22,296 [Worker-14] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-server-hbase:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-server-hbase/pom.xml.
+2015-03-31 11:45:22,949 [Worker-4] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-server-hbase:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-server-hbase/pom.xml.
+2015-03-31 11:45:33,219 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-03-31 11:45:33,262 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-server-hbase/src/main/resources
+2015-03-31 11:45:33,264 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-03-31 11:45:33,265 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 3 resources
+2015-03-31 11:45:33,693 [Worker-15] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-client:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-client/pom.xml.
+2015-03-31 11:45:34,019 [Worker-15] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-core:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-core/pom.xml.
+2015-03-31 11:45:34,734 [Worker-15] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-populator-naf:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-populator-naf/pom.xml.
+2015-03-31 11:45:35,274 [Worker-15] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-populator-rdf:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-populator-rdf/pom.xml.
+2015-03-31 11:45:35,950 [Worker-15] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-server:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-server/pom.xml.
+2015-03-31 11:45:36,437 [Worker-15] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-server-hbase:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-server-hbase/pom.xml.
+2015-03-31 11:45:37,048 [Worker-15] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-server-http:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-server-http/pom.xml.
+2015-03-31 11:45:38,322 [Worker-4] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-server-http:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-server-http/pom.xml.
+2015-03-31 11:45:42,719 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-03-31 11:45:42,721 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 14 resources
+2015-03-31 11:45:42,961 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-03-31 11:45:42,961 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 4 resources
+2015-03-31 11:45:43,388 [Worker-4] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-server-virtuoso:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-server-virtuoso/pom.xml.
+2015-03-31 11:45:43,836 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-03-31 11:45:43,836 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-server-virtuoso/src/main/resources
+2015-03-31 11:45:43,837 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-03-31 11:45:43,837 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-server-virtuoso/src/test/resources
+2015-03-31 11:45:44,522 [Worker-15] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-client:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-client/pom.xml.
+2015-03-31 11:45:44,734 [Worker-4] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-tool:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-tool/pom.xml.
+2015-03-31 11:45:45,413 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-03-31 11:45:45,414 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-tool/src/main/resources
+2015-03-31 11:45:45,415 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-03-31 11:45:45,415 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-tool/src/test/resources
+2015-03-31 11:45:45,842 [Worker-4] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-distribution:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-distribution/pom.xml.
+2015-03-31 11:45:46,775 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-03-31 11:45:46,776 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-distribution/src/main/resources
+2015-03-31 11:45:46,777 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-03-31 11:45:46,777 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-distribution/src/test/resources
+2015-03-31 11:45:47,808 [Worker-15] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-client:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-client/pom.xml.
+2015-03-31 11:45:48,098 [Worker-15] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-core:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-core/pom.xml.
+2015-03-31 11:45:48,534 [Worker-15] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-populator-naf:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-populator-naf/pom.xml.
+2015-03-31 11:45:48,805 [Worker-15] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-populator-rdf:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-populator-rdf/pom.xml.
+2015-03-31 11:45:49,123 [Worker-15] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-server:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-server/pom.xml.
+2015-03-31 11:45:49,388 [Worker-15] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-server-hbase:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-server-hbase/pom.xml.
+2015-03-31 11:45:50,217 [Worker-15] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-server-http:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-server-http/pom.xml.
+2015-03-31 11:45:50,614 [Worker-15] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-server-virtuoso:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-server-virtuoso/pom.xml.
+2015-03-31 11:45:50,861 [Worker-15] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-distribution:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-distribution/pom.xml.
+2015-03-31 11:45:51,606 [Worker-15] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: eu.fbk.knowledgestore:ks-tool:1.4 @ /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-tool/pom.xml.
+2015-03-31 11:45:53,279 [Worker-11] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-03-31 11:45:53,279 [Worker-11] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2015-03-31 11:45:53,280 [Worker-11] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-03-31 11:45:53,280 [Worker-11] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2015-03-31 11:45:53,291 [Worker-11] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-03-31 11:45:53,291 [Worker-11] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-client/src/main/resources
+2015-03-31 11:45:53,292 [Worker-11] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-03-31 11:45:53,292 [Worker-11] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2015-03-31 11:45:53,302 [Worker-11] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-03-31 11:45:53,303 [Worker-11] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2015-03-31 11:45:53,304 [Worker-11] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-03-31 11:45:53,304 [Worker-11] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2015-03-31 11:45:53,315 [Worker-11] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-03-31 11:45:53,315 [Worker-11] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2015-03-31 11:45:53,317 [Worker-11] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-03-31 11:45:53,317 [Worker-11] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-populator-rdf/src/test/resources
+2015-03-31 11:45:53,329 [Worker-11] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-03-31 11:45:53,329 [Worker-11] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2015-03-31 11:45:53,332 [Worker-11] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-03-31 11:45:53,332 [Worker-11] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2015-03-31 11:45:53,342 [Worker-11] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-03-31 11:45:53,343 [Worker-11] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-server-hbase/src/main/resources
+2015-03-31 11:45:53,344 [Worker-11] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-03-31 11:45:53,344 [Worker-11] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2015-03-31 11:45:53,357 [Worker-11] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-03-31 11:45:53,357 [Worker-11] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2015-03-31 11:45:53,358 [Worker-11] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-03-31 11:45:53,358 [Worker-11] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2015-03-31 11:45:53,366 [Worker-11] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-03-31 11:45:53,366 [Worker-11] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-server-virtuoso/src/main/resources
+2015-03-31 11:45:53,367 [Worker-11] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-03-31 11:45:53,367 [Worker-11] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-server-virtuoso/src/test/resources
+2015-03-31 11:45:53,375 [Worker-11] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-03-31 11:45:53,375 [Worker-11] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-tool/src/main/resources
+2015-03-31 11:45:53,376 [Worker-11] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-03-31 11:45:53,376 [Worker-11] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-tool/src/test/resources
+2015-03-31 11:45:53,385 [Worker-11] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-03-31 11:45:53,385 [Worker-11] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-distribution/src/main/resources
+2015-03-31 11:45:53,386 [Worker-11] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-03-31 11:45:53,386 [Worker-11] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/qwaider/Documents/Projects/NWR/knowledgestore/ks-distribution/src/test/resources
