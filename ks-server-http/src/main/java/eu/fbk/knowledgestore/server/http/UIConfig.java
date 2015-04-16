@@ -17,7 +17,6 @@ import org.openrdf.model.impl.URIImpl;
 import org.openrdf.model.vocabulary.DCTERMS;
 import org.openrdf.model.vocabulary.RDF;
 
-import eu.fbk.knowledgestore.data.Data;
 import eu.fbk.knowledgestore.data.XPath;
 import eu.fbk.knowledgestore.vocabulary.KS;
 
@@ -33,9 +32,8 @@ public final class UIConfig implements Serializable {
     private static final Set<URI> DEFAULT_MENTION_OVERVIEW_PROPERTIES = ImmutableSet.of( //
             RDF.TYPE, KS.REFERS_TO);
 
-    private static final URI DEFAULT_DENOTED_BY_PROPERTY = new URIImpl(Data.getNamespaceMap().get(
-            "gaf")
-            + "denotedBy");
+    private static final URI DEFAULT_DENOTED_BY_PROPERTY = new URIImpl(
+            "http://groundedannotationframework.org/gaf#denotedBy");
 
     private static final boolean DEFAULT_DENOTED_BY_ALLOWS_GRAPHS = true;
 
