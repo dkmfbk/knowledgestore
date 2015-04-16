@@ -3,7 +3,7 @@
 <obj:launcher>
     :threadCount 16 ;
     :threadName "ks-%d" ;
-    :logConfig "/Users/alessio/Documents/scripts/svn/Code/KnowledgeStore/trunk/ks-distribution/src/main/config/ks.log.xml" ;
+    :logConfig "ks.log.xml" ;
     :component <obj:httpServer> .
 
 <obj:httpServer>
@@ -14,20 +14,20 @@
     :httpPort 8080 ;
     :httpsPort 8443 ;
     :path "/" ;
-    :acceptors 2 ;
-    :selectors 2 ;
+    :acceptors 1 ;
+    :selectors 1 ;
     :debug false ;
     :keystoreConfig [
         a <java:eu.fbk.knowledgestore.server.http.KeystoreConfig> ;
-        :location "/Users/alessio/Documents/scripts/svn/Code/KnowledgeStore/trunk/ks-distribution/src/main/config/ks.jks" ;
+        :location "ks.jks" ;
         :password "kspass" ;
         :type "jks"
     ] ;
     :securityConfig [
         a <java:eu.fbk.knowledgestore.server.http.SecurityConfig> ;
         :realm "KnowledgeStore" ;
-        :userdbLocation "/Users/alessio/Documents/scripts/svn/Code/KnowledgeStore/trunk/ks-distribution/src/main/config/ks.userdb" ;
-        :anonymousRoles "sparql_reader" , "crud_reader" , "downloader" , "writer" 
+        :userdbLocation "ks.userdb" ;
+        :anonymousRoles "sparql_reader" , "crud_reader" , "downloader" , "writer" , "ui_user" 
     ] ;
     :uiConfig <obj:uiConfig> .    
     
