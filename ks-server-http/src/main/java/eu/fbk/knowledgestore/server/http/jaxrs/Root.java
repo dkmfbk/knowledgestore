@@ -19,26 +19,30 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.CacheControl;
-import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import com.google.common.base.Function;
-import com.google.common.base.Strings;
+import com.google.common.base.Predicate;
+import com.google.common.base.Predicates;
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multiset;
 import com.google.common.collect.Sets;
+import com.google.common.escape.Escaper;
+import com.google.common.net.UrlEscapers;
 
 import org.codehaus.enunciate.Facet;
 import org.glassfish.jersey.server.mvc.Viewable;
 import org.openrdf.model.Literal;
 import org.openrdf.model.Statement;
 import org.openrdf.model.URI;
+import org.openrdf.model.Value;
 import org.openrdf.model.impl.BooleanLiteralImpl;
 import org.openrdf.model.impl.URIImpl;
 import org.openrdf.query.BindingSet;
@@ -75,6 +79,8 @@ public class Root extends Resource {
 
     private static final int MAX_FETCHED_RESULTS = 10000;
 
+    private static final int MAX_FETCHED_MENTIONS = 10000;
+
     // private static final Pattern NIF_OFFSET_PATTERN = Pattern.compile("char=(\\d+),(\\d+)");
 
     @GET
@@ -87,7 +93,7 @@ public class Root extends Resource {
     }
 
     @GET
-    @Path("/static/{name}")
+    @Path("/static/{name:.*}")
     public Response download(@PathParam("name") final String name) throws Throwable {
         final InputStream stream = Root.class.getResourceAsStream(name);
         if (stream == null) {
@@ -111,40 +117,61 @@ public class Root extends Resource {
         model.put("maxTriples", getUIConfig().getResultLimit());
         String view = "/status";
 
-        final MultivaluedMap<String, String> parameters = getUriInfo().getQueryParameters();
-        final String action = parameters.getFirst("action");
+        final String action = getParameter("action", String.class, null, model);
+        final Long timeoutSec = getParameter("timeout", Long.class, null, model);
+        final Long timeout = timeoutSec == null ? null : timeoutSec * 1000;
+        final int limit = getParameter("limit", Integer.class, getUIConfig().getResultLimit(),
+                model);
 
         try {
             if ("lookup".equals(action)) {
-                final URI id = Data.convert( //
-                        Data.cleanIRI(parameters.getFirst("id")), URI.class, null);
-                final URI selection = Data.convert(
-                        Data.cleanIRI(parameters.getFirst("selection")), URI.class, null);
-                final Integer limit = Data.convert(parameters.getFirst("limit"), Integer.class,
-                        null);
+                final URI id = getParameter("id", URI.class, null, model);
+                final URI selection = getParameter("selection", URI.class, null, model);
                 view = "/lookup";
                 model.put("tabLookup", Boolean.TRUE);
                 uiLookup(model, id, selection, limit);
 
             } else if ("sparql".equals(action)) {
-                final String query = Strings.emptyToNull(parameters.getFirst("query"));
-                final String timeoutString = parameters.getFirst("timeout");
-                Long timeout = null;
-                if (parameters.containsKey("timeout")) {
-                    try {
-                        timeout = 1000 * Long.valueOf(timeoutString);
-                        model.put("timeout", timeoutString);
-                    } catch (final Throwable ex) {
-                        // ignore
-                    }
-                }
+                final String query = getParameter("query", String.class, null, model);
                 view = "/sparql";
                 model.put("tabSparql", Boolean.TRUE);
                 uiSparql(model, query, timeout);
 
+            } else if ("entity-mentions".equals(action)) {
+                final URI entityID = getParameter("entity", URI.class, null, model);
+                final URI property = getParameter("property", URI.class, null, model);
+                final Value value = getParameter("value", Value.class, null, model);
+                view = "/entity-mentions";
+                model.put("tabReports", Boolean.TRUE);
+                model.put("subtabEntityMentions", Boolean.TRUE);
+                uiReportEntityMentions(model, entityID, property, value, limit);
+
+            } else if ("entity-mentions-aggregate".equals(action)) {
+                final URI entityID = getParameter("entity", URI.class, null, model);
+                view = "/entity-mentions-aggregate";
+                model.put("tabReports", Boolean.TRUE);
+                model.put("subtabEntityMentionsAggregate", Boolean.TRUE);
+                uiReportEntityMentionsAggregate(model, entityID, limit);
+
+            } else if ("mention-value-occurrences".equals(action)) {
+                final URI entityID = getParameter("entity", URI.class, null, model);
+                final URI property = getParameter("property", URI.class, null, model);
+                view = "/mention-value-occurrences";
+                model.put("tabReports", Boolean.TRUE);
+                model.put("subtabMentionValueOccurrences", Boolean.TRUE);
+                uiReportMentionValueOccurrences(model, entityID, property);
+
+            } else if ("mention-property-occurrences".equals(action)) {
+                final URI entityID = getParameter("entity", URI.class, null, model);
+                view = "/mention-property-occurrences";
+                model.put("tabReports", Boolean.TRUE);
+                model.put("subtabMentionPropertyOccurrences", Boolean.TRUE);
+                uiReportMentionPropertyOccurrences(model, entityID);
+
             } else {
                 uiStatus(model);
             }
+
         } catch (final Throwable ex) {
             if (ex instanceof OperationException) {
                 final OperationException oex = (OperationException) ex;
@@ -159,6 +186,42 @@ public class Root extends Resource {
         }
 
         return new Viewable(view, model);
+    }
+
+    @SuppressWarnings("unchecked")
+    private <T> T getParameter(final String name, final Class<T> clazz,
+            @Nullable final T defaultValue, @Nullable final Map<String, Object> model) {
+        T result = defaultValue;
+        final String stringValue = getUriInfo().getQueryParameters().getFirst(name);
+        if (stringValue != null && !"".equals(stringValue)) {
+            if (Value.class.isAssignableFrom(clazz)) {
+                final char c = stringValue.charAt(0);
+                if (c == '\'' || c == '"' || c == '<' || //
+                        stringValue.indexOf(':') >= 0 && stringValue.indexOf('/') < 0) {
+                    try {
+                        final Value value = Data.parseValue(stringValue, Data.getNamespaceMap());
+                        if (clazz.isInstance(value)) {
+                            result = clazz.cast(value);
+                        }
+                    } catch (final Throwable ex) {
+                        // ignore
+                    }
+                }
+                if (result == defaultValue) {
+                    if (URI.class.equals(clazz)) {
+                        result = (T) Data.getValueFactory().createURI(Data.cleanIRI(stringValue));
+                    } else if (clazz.isAssignableFrom(Literal.class)) {
+                        result = (T) Data.getValueFactory().createLiteral(stringValue);
+                    }
+                }
+            } else {
+                result = Data.convert(stringValue, clazz, defaultValue);
+            }
+        }
+        if (result != null) {
+            model.put(name, result);
+        }
+        return result;
     }
 
     private void uiStatus(final Map<String, Object> model) {
@@ -227,9 +290,6 @@ public class Root extends Resource {
         // Emit the query and evaluate its results, if possible
         if (query != null) {
 
-            // Emit the query string
-            model.put("query", query);
-
             // Emit the query results (only partially materialized).
             final long ts = System.currentTimeMillis();
             final Stream<BindingSet> stream = sendQuery(query, timeout);
@@ -238,8 +298,10 @@ public class Root extends Resource {
             final Iterator<BindingSet> iterator = stream.iterator();
             final List<BindingSet> fetched = ImmutableList.copyOf(Iterators.limit(iterator,
                     MAX_FETCHED_RESULTS));
-            model.put("results",
-                    RenderUtils.render(vars, Iterables.concat(fetched, Stream.create(iterator))));
+            model.put(
+                    "results",
+                    RenderUtils.renderSolutionTable(vars,
+                            Iterables.concat(fetched, Stream.create(iterator))));
             final long elapsed = System.currentTimeMillis() - ts;
 
             // Emit the results message
@@ -258,20 +320,17 @@ public class Root extends Resource {
     }
 
     private void uiLookup(final Map<String, Object> model, @Nullable final URI id,
-            @Nullable final URI selection, @Nullable final Integer limit) throws Throwable {
+            @Nullable final URI selection, final int limit) throws Throwable {
 
         if (!getUIConfig().getLookupExamples().isEmpty()) {
             model.put("examplesCount", getUIConfig().getLookupExamples().size());
             model.put("examples", getUIConfig().getLookupExamples());
         }
 
-        final int actualLimit = limit == null ? getUIConfig().getResultLimit() : limit;
-
         if (id != null) {
-            model.put("id", id);
-            if (!uiLookupResource(model, id, selection, actualLimit) //
-                    && !uiLookupMention(model, id, actualLimit) //
-                    && !uiLookupEntity(model, id, actualLimit)) {
+            if (!uiLookupResource(model, id, selection, limit) //
+                    && !uiLookupMention(model, id, limit) //
+                    && !uiLookupEntity(model, id, limit)) {
                 model.put("text", "NO ENTRY FOR ID " + id);
             }
         }
@@ -328,11 +387,13 @@ public class Root extends Resource {
             final String text = representation.writeToString();
             final StringBuilder builder = new StringBuilder();
             if (!mentions.isEmpty()) {
-                RenderUtils.render(text, mentions, selection, true, false, getUIConfig(), builder);
+                RenderUtils.renderText(text, mentions, selection, true, false, getUIConfig(),
+                        builder);
             } else {
                 final Record metadata = representation.getMetadata();
                 model.put("resourcePrettyPrint", Boolean.TRUE);
-                RenderUtils.render(text, metadata.getUnique(NIE.MIME_TYPE, String.class), builder);
+                RenderUtils.renderText(text, metadata.getUnique(NIE.MIME_TYPE, String.class),
+                        builder);
             }
             model.put("resourceText", builder.toString());
         }
@@ -344,7 +405,7 @@ public class Root extends Resource {
             final int total = bindings.size() < limit ? bindings.size()
                     : countEntityDescribeTriples(selection);
             model.put("resourceDetailsBody",
-                    String.join("", RenderUtils.render(DESCRIBE_VARS, bindings)));
+                    String.join("", RenderUtils.renderSolutionTable(DESCRIBE_VARS, bindings)));
             model.put("resourceDetailsTitle", String.format("<strong> Entity %s "
                     + "(%d triples out of %d)</strong>", RenderUtils.render(selection),
                     bindings.size(), total));
@@ -404,7 +465,7 @@ public class Root extends Resource {
                 model.put("mentionResourceExcerpt", "RESOURCE CONTENT NOT AVAILABLE");
             } else {
                 final String text = representation.writeToString();
-                model.put("mentionResourceExcerpt", RenderUtils.render(text,
+                model.put("mentionResourceExcerpt", RenderUtils.renderText(text,
                         ImmutableList.of(mention), null, false, true, getUIConfig(),
                         new StringBuilder()));
             }
@@ -421,7 +482,7 @@ public class Root extends Resource {
                     : countEntityDescribeTriples(entityID);
             model.put("mentionEntityTriplesShown", describeTriples.size());
             model.put("mentionEntityTriplesTotal", total);
-            model.put("mentionEntityTriples", String.join("", RenderUtils.render( //
+            model.put("mentionEntityTriples", String.join("", RenderUtils.renderSolutionTable( //
                     ImmutableList.of("subject", "predicate", "object", "graph"), describeTriples)));
 
             // Emit the link(s) to the pages for all the denoted entities
@@ -460,7 +521,7 @@ public class Root extends Resource {
                     : countEntityDescribeTriples(entityID);
             model.put("entityTriplesShown", describeTriples.size());
             model.put("entityTriplesTotal", total);
-            model.put("entityTriples", String.join("", RenderUtils.render( //
+            model.put("entityTriples", String.join("", RenderUtils.renderSolutionTable( //
                     ImmutableList.of("subject", "predicate", "object", "graph"), describeTriples)));
         }
 
@@ -470,7 +531,7 @@ public class Root extends Resource {
                     : countEntityGraphTriples(entityID);
             model.put("entityGraphShown", graphTriples.size());
             model.put("entityGraphTotal", total);
-            model.put("entityGraph", String.join("", RenderUtils.render( //
+            model.put("entityGraph", String.join("", RenderUtils.renderSolutionTable( //
                     ImmutableList.of("subject", "predicate", "object"), graphTriples)));
         }
 
@@ -522,6 +583,99 @@ public class Root extends Resource {
 
         // Signal success
         return true;
+    }
+
+    private void uiReportEntityMentions(final Map<String, Object> model,
+            @Nullable final URI entityID, @Nullable final URI property,
+            @Nullable final Value value, final int limit) throws Throwable {
+
+        // Do nothing in case the entity ID is missing
+        if (entityID == null) {
+            return;
+        }
+
+        // Retrieve all the mentions satisfying the property[=value] optional filter
+        int numMentions = 0;
+        final List<Record> mentions = Lists.newArrayList();
+        for (final Record mention : getEntityMentions(entityID, Integer.MAX_VALUE, null)) {
+            if (property == null || !mention.isNull(property)
+                    && (value == null || mention.get(property).contains(value))) {
+                ++numMentions;
+                if (mentions.size() < limit) {
+                    mentions.add(mention);
+                }
+            }
+        }
+
+        // Render the mention table, including column toggling functionality
+        model.put("message", mentions.size() + " mentions shown out of " + numMentions);
+        model.put("mentionTable",
+                RenderUtils.renderRecordsTable(new StringBuilder(), mentions, null, null));
+    }
+
+    private void uiReportEntityMentionsAggregate(final Map<String, Object> model,
+            final URI entityID, final int limit) throws Throwable {
+
+        // Do nothing in case the entity ID is missing
+        if (entityID == null) {
+            return;
+        }
+
+        // Render the table
+        final Stream<Record> mentions = getEntityMentions(entityID, MAX_FETCHED_MENTIONS, null);
+        final Predicate<URI> filter = Predicates.not(Predicates.in(ImmutableSet.<URI>of(
+                NIF.BEGIN_INDEX, NIF.END_INDEX, KS.MENTION_OF)));
+        final String linkTemplate = "ui?action=entity-mentions&entity="
+                + UrlEscapers.urlFormParameterEscaper().escape(entityID.stringValue())
+                + "&property=${property}&value=${value}";
+        model.put("propertyValuesTable", RenderUtils.renderRecordsAggregateTable(
+                new StringBuilder(), mentions, filter, linkTemplate, null));
+    }
+
+    private void uiReportMentionValueOccurrences(final Map<String, Object> model,
+            final URI entityID, @Nullable final URI property) throws Throwable {
+
+        // Do nothing in case the entity ID is missing
+        if (entityID == null || property == null) {
+            return;
+        }
+
+        // Compute the # of occurrences of all the values of the given property in entity mentions
+        final Multiset<Value> propertyValues = HashMultiset.create();
+        for (final Record mention : getEntityMentions(entityID, MAX_FETCHED_MENTIONS, null)) {
+            propertyValues.addAll(mention.get(property, Value.class));
+        }
+
+        // Render the table
+        final Escaper esc = UrlEscapers.urlFormParameterEscaper();
+        final String linkTemplate = "ui?action=entity-mentions&entity="
+                + esc.escape(entityID.stringValue()) + "&property="
+                + esc.escape(Data.toString(property, Data.getNamespaceMap()))
+                + "&value=${element}";
+        model.put("valueOccurrencesTable", RenderUtils.renderMultisetTable(new StringBuilder(),
+                propertyValues, "Property value", "# Mentions", linkTemplate));
+    }
+
+    private void uiReportMentionPropertyOccurrences(final Map<String, Object> model,
+            final URI entityID) throws Throwable {
+
+        // Do nothing in case the entity ID is missing
+        if (entityID == null) {
+            return;
+        }
+
+        // Compute the # of occurrences of each property URI in entity mentions
+        final Multiset<URI> propertyURIs = HashMultiset.create();
+        for (final Record mention : getEntityMentions(entityID, MAX_FETCHED_MENTIONS, null)) {
+            propertyURIs.addAll(mention.getProperties());
+        }
+
+        // Render the table
+        final Escaper esc = UrlEscapers.urlFormParameterEscaper();
+        final String linkTemplate = "ui?action=entity-mentions&entity="
+                + esc.escape(entityID.stringValue()) + "&property=${element}";
+        model.put("propertyOccurrencesTable", RenderUtils.renderMultisetTable(new StringBuilder(),
+                propertyURIs, "Property", "# Mentions", linkTemplate));
     }
 
     // DATA ACCESS METHODS
@@ -645,6 +799,24 @@ public class Root extends Resource {
 
         });
         return sortedMentions;
+    }
+
+    private Stream<Record> getEntityMentions(final URI entityID, final int maxResults,
+            @Nullable final int[] numMentions) throws Throwable {
+
+        // First retrieve all the URIs of the mentions denoting the entity, via SPARQL query
+        final List<URI> mentionURIs = getSession()
+                .sparql("SELECT ?m WHERE { $$ $$ ?m}", entityID,
+                        getUIConfig().getDenotedByProperty()).execTuples()
+                .transform(URI.class, true, "m").toList();
+
+        // Return the total number of mentions, if an holder variable has been supplied
+        if (numMentions != null) {
+            numMentions[0] = mentionURIs.size();
+        }
+
+        // Then return a stream that returns the mention records as they are fetched from the KS
+        return getSession().retrieve(KS.MENTION).limit((long) maxResults).ids(mentionURIs).exec();
     }
 
     private List<Record> getEntityResources(final URI entityID, final int maxResults)

@@ -8,8 +8,19 @@
 <meta name="author" content="">
 <title>KnowledgeStore UI</title>
 <link rel="shortcut icon" href="static/favicon.ico">
-<link href="static/bootstrap.min.css" rel="stylesheet">
-<link href="static/ks.css" rel="stylesheet">
+<link href="static/css/bootstrap.min.css" rel="stylesheet">
+<link href="static/css/jquery.dataTables.css" rel="stylesheet">
+<!--<link href="static/css/dataTables.bootstrap.css" rel="stylesheet">-->
+<link href="static/css/dataTables.colReorder.css" rel="stylesheet">
+<link href="static/css/ks.css" rel="stylesheet">
+<script src="static/js/jquery-1.11.2.min.js"></script>
+<script src="static/js/jquery.tablesorter.min.js"></script>
+<script src="static/js/bootstrap.min.js"></script>
+<script src="static/js/prettify.js"></script>
+<script src="static/js/jquery.dataTables.min.js"></script>
+<!--<script src="static/js/dataTables.bootstrap.js"></script>-->
+<script src="static/js/dataTables.colReorder.min.js"></script>
+<script src="static/js/ks.js"></script>
 </head>
 <body>
 <div class="container-fluid">
@@ -28,6 +39,15 @@
     <ul class="nav navbar-nav navbar-right">
       <li {{#tabLookup}}class="active"{{/tabLookup}}><a href="ui?action=lookup">Lookup</a></li>
       <li {{#tabSparql}}class="active"{{/tabSparql}}><a href="ui?action=sparql">SPARQL query</a></li>
+      <li class="dropdown{{#tabReports}} active{{/tabReports}}">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reports<span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="ui?action=entity-mentions" {{#subtabEntityMentions}}class="active"{{/subtabEntityMentions}}>Entity mentions</a></li>
+          <li><a href="ui?action=entity-mentions-aggregate" {{#subtabEntityMentionsAggregate}}class="active"{{/subtabEntityMentionsAggregate}}>Entity mentions (aggregate)</a></li>
+          <li><a href="ui?action=mention-value-occurrences" {{#subtabMentionValueOccurrences}}class="active"{{/subtabMentionValueOccurrences}}>Mention value occurrences</a></li>
+          <li><a href="ui?action=mention-property-occurrences" {{#subtabMentionPropertyOccurrences}}class="active"{{/subtabMentionPropertyOccurrences}}>Mention property occurrences</a></li>
+        </ul>
+      </li>
     </ul>
   </div>
 </div>
@@ -53,14 +73,10 @@
     <li><a id="uriMenuLookup" href="#">Lookup in KS</a></li>
     <li><a id="uriMenuLookupNewTab" href="#" target="_blank">Lookup in KS (new tab)</a></li>
     <li><a id="uriMenuDereference" href="#" target="_blank">Dereference URI (new tab)</a></li>
+    <li><a id="uriMenuEntityMentions" href="#" target="_blank">Entity mentions (new tab)</a></li>
+    <li><a id="uriMenuEntityMentionsAggregate" href="#" target="_blank">Entity mentions - aggregate (new tab)</a></li>
   </ul>
 </div>
-
-<script src="static/jquery-1.11.0.min.js"></script>
-<script src="static/jquery.tablesorter.min.js"></script>
-<script src="static/bootstrap.min.js"></script>
-<script src="static/prettify.js"></script>
-<script src="static/ks.js"></script>
 
 </body>
 </html>
