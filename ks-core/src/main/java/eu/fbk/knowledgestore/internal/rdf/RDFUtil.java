@@ -21,7 +21,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import javax.annotation.Nullable;
 
 import com.google.common.base.Function;
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.base.Throwables;
@@ -845,7 +845,7 @@ public final class RDFUtil {
 
         DecouplingHandler(final RDFHandler handler, @Nullable final Integer queueSize) {
             this.handler = Preconditions.checkNotNull(handler);
-            this.queueSize = Objects.firstNonNull(queueSize, DEFAULT_QUEUE_SIZE);
+            this.queueSize = MoreObjects.firstNonNull(queueSize, DEFAULT_QUEUE_SIZE);
             this.queue = null;
             this.exception = null;
             this.future = null;
@@ -979,7 +979,7 @@ public final class RDFUtil {
                 @Nullable final Integer bufferSize) {
             this.handler = Preconditions.checkNotNull(handler);
             this.namespaces = Preconditions.checkNotNull(namespaces);
-            this.bufferSize = Objects.firstNonNull(bufferSize, DEFAULT_BUFFER_SIZE);
+            this.bufferSize = MoreObjects.firstNonNull(bufferSize, DEFAULT_BUFFER_SIZE);
             this.buffer = null;
             this.buffering = false;
             this.bindings = null;

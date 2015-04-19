@@ -1,6 +1,7 @@
 package eu.fbk.knowledgestore.datastore.hbase;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -12,7 +13,6 @@ import com.google.common.base.Throwables;
 import com.google.common.collect.AbstractIterator;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
-import com.google.common.collect.Iterators;
 import com.google.common.collect.Lists;
 
 import org.openrdf.model.URI;
@@ -56,6 +56,7 @@ public class HBaseIterator extends AbstractIterator<Record> {
      * @param properties
      *            the properties of records to return, null if all properties should be returned
      */
+    @SuppressWarnings("unchecked")
     public HBaseIterator(final AbstractHBaseUtils hbaseUtils, final String tableName,
             final Set<? extends URI> ids, @Nullable final Set<? extends URI> properties) {
 
@@ -66,8 +67,8 @@ public class HBaseIterator extends AbstractIterator<Record> {
         this.hbaseUtils = hbaseUtils;
         this.tableName = tableName;
         this.properties = properties == null ? null : Iterables.toArray(properties, URI.class);
-        this.idIterator = ImmutableList.copyOf(ids).iterator();
-        this.recordIterator = Iterators.emptyIterator();
+        this.idIterator = (Iterator<URI>) ImmutableList.copyOf(ids).iterator();
+        this.recordIterator = Collections.emptyIterator();
     }
 
     @Override

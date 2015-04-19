@@ -49,7 +49,7 @@ final class XPathNavigator extends DefaultNavigator {
                         value instanceof Boolean ? value : value.toString());
             }
         } else {
-            return Iterators.emptyIterator();
+            return Collections.emptyIterator();
         }
     }
 
@@ -57,7 +57,7 @@ final class XPathNavigator extends DefaultNavigator {
     public Iterator<?> getParentAxisIterator(final Object contextNode)
             throws UnsupportedAxisException {
         return contextNode instanceof Element ? new ParentIterator((Element) contextNode)
-                : Iterators.emptyIterator();
+                : Collections.emptyIterator();
     }
 
     @Override

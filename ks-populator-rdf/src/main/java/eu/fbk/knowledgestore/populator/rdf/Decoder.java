@@ -2,7 +2,7 @@ package eu.fbk.knowledgestore.populator.rdf;
 
 import javax.annotation.Nullable;
 
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
 
 import org.openrdf.model.Statement;
@@ -20,7 +20,7 @@ public class Decoder implements Handler<Statement> {
 
     Decoder(final Handler<? super Record> axiomHandler, @Nullable final URI globalURI) {
         this.axiomHandler = Preconditions.checkNotNull(axiomHandler);
-        this.globalURI = Objects.firstNonNull(globalURI, CKR.GLOBAL);
+        this.globalURI = MoreObjects.firstNonNull(globalURI, CKR.GLOBAL);
     }
 
     @Override

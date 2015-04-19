@@ -1,15 +1,32 @@
 package eu.fbk.knowledgestore.filestore;
 
-import com.google.common.base.Objects;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FilterOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
+import java.util.zip.ZipOutputStream;
+
+import javax.annotation.Nullable;
+
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Throwables;
 import com.google.common.collect.AbstractIterator;
-import eu.fbk.knowledgestore.data.Data;
-import eu.fbk.knowledgestore.data.Stream;
+
 import org.apache.hadoop.fs.FileStatus;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.IOUtils;
 import org.apache.lucene.analysis.WhitespaceAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
@@ -21,18 +38,8 @@ import org.apache.lucene.store.FSDirectory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.Nullable;
-import java.io.*;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
-import java.util.zip.ZipInputStream;
-import java.util.zip.ZipOutputStream;
+import eu.fbk.knowledgestore.data.Data;
+import eu.fbk.knowledgestore.data.Stream;
 
 /*
 *
@@ -101,8 +108,8 @@ public class HadoopMultiFileStore implements FileStore {
 			MAX_NUM_SMALL_FILES = numSmallFile;
 		}
 		this.fileSystem = Preconditions.checkNotNull(fileSystem);
-		this.rootPath = new Path(Objects.firstNonNull(path, DEFAULT_PATH)).makeQualified(this.fileSystem); // resolve wrt workdir
-		this.luceneFolder = new File(Objects.firstNonNull(lucenePath, DEFAULT_LUCENE_PATH));
+		this.rootPath = new Path(MoreObjects.firstNonNull(path, DEFAULT_PATH)).makeQualified(this.fileSystem); // resolve wrt workdir
+		this.luceneFolder = new File(MoreObjects.firstNonNull(lucenePath, DEFAULT_LUCENE_PATH));
 		this.smallFilesPath = new Path(this.rootPath.toString() + File.separator + SMALL_FILES_PATH).makeQualified(this.fileSystem);
 		LOGGER.info("{} configured, paths={};{}", getClass().getSimpleName(), this.rootPath, this.luceneFolder);
 	}

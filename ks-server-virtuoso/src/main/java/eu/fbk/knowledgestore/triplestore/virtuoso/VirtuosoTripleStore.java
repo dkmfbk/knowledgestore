@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import javax.annotation.Nullable;
 import javax.sql.ConnectionPoolDataSource;
 
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
 
 import org.apache.hadoop.fs.FileSystem;
@@ -127,15 +127,15 @@ public final class VirtuosoTripleStore implements TripleStore {
             @Nullable final String markerFilename) {
 
         // Apply default values
-        final String actualMarkerFilename = Objects.firstNonNull(markerFilename,
+        final String actualMarkerFilename = MoreObjects.firstNonNull(markerFilename,
                 DEFAULT_MARKER_FILENAME);
-        final String actualHost = Objects.firstNonNull(host, DEFAULT_HOST);
-        final int actualPort = Objects.firstNonNull(port, DEFAULT_PORT);
-        final String actualUsername = Objects.firstNonNull(username, DEFAULT_USERNAME);
-        final String actualPassword = Objects.firstNonNull(password, DEFAULT_PASSWORD);
-        final boolean actualPooling = Objects.firstNonNull(pooling, DEFAULT_POOLING);
-        final int actualBatchSize = Objects.firstNonNull(batchSize, DEFAULT_BATCH_SIZE);
-        final int actualFetchSize = Objects.firstNonNull(fetchSize, DEFAULT_FETCH_SIZE);
+        final String actualHost = MoreObjects.firstNonNull(host, DEFAULT_HOST);
+        final int actualPort = MoreObjects.firstNonNull(port, DEFAULT_PORT);
+        final String actualUsername = MoreObjects.firstNonNull(username, DEFAULT_USERNAME);
+        final String actualPassword = MoreObjects.firstNonNull(password, DEFAULT_PASSWORD);
+        final boolean actualPooling = MoreObjects.firstNonNull(pooling, DEFAULT_POOLING);
+        final int actualBatchSize = MoreObjects.firstNonNull(batchSize, DEFAULT_BATCH_SIZE);
+        final int actualFetchSize = MoreObjects.firstNonNull(fetchSize, DEFAULT_FETCH_SIZE);
 
         // Check parameters
         Preconditions.checkArgument(actualPort > 0 && actualPort < 65536);

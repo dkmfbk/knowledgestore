@@ -10,7 +10,7 @@ import java.util.zip.GZIPOutputStream;
 import javax.annotation.Nullable;
 
 import com.google.common.base.Function;
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
 
 import org.slf4j.Logger;
@@ -47,7 +47,7 @@ public final class GzippedFileStore extends ForwardingFileStore {
     /**
      * Creates a new instance wrapping the {@code FileStore} supplied and using the default
      * compression level and buffer size.
-     * 
+     *
      * @param delegate
      *            the wrapped {@code FileStore}
      * @see #GzippedFileStore(FileStore, Integer, Integer)
@@ -59,7 +59,7 @@ public final class GzippedFileStore extends ForwardingFileStore {
     /**
      * Creates a new instance wrapping the {@code FileStore} supplied and using the specified
      * compression level.
-     * 
+     *
      * @param delegate
      *            the wrapped {@code FileStore}, not null
      * @param compressionLevel
@@ -81,8 +81,9 @@ public final class GzippedFileStore extends ForwardingFileStore {
         Preconditions.checkArgument(bufferSize > 0);
 
         this.delegate = Preconditions.checkNotNull(delegate);
-        this.compressionLevel = Objects.firstNonNull(compressionLevel, DEFAULT_COMPRESSION_LEVEL);
-        this.bufferSize = Objects.firstNonNull(bufferSize, DEFAULT_BUFFER_SIZE);
+        this.compressionLevel = MoreObjects.firstNonNull(compressionLevel,
+                DEFAULT_COMPRESSION_LEVEL);
+        this.bufferSize = MoreObjects.firstNonNull(bufferSize, DEFAULT_BUFFER_SIZE);
 
         LOGGER.info("GZippedFileStore configured, compression={}, buffer={}", compressionLevel,
                 bufferSize);

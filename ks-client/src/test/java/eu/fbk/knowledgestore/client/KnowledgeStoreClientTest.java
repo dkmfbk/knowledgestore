@@ -8,7 +8,6 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;
 
-import org.apache.http.conn.EofSensorInputStream;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.openrdf.model.URI;
@@ -62,8 +61,6 @@ public class KnowledgeStoreClientTest {
             }
             System.out.println(Joiner.on('\n').join(Ordering.natural().sortedCopy(namespaces)));
             uris.close();
-
-            final EofSensorInputStream x;
 
         } finally {
             store.close();

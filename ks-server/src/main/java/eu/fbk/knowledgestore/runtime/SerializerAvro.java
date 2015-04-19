@@ -1,31 +1,47 @@
 package eu.fbk.knowledgestore.runtime;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.Set;
+import java.util.TimeZone;
+
+import javax.annotation.Nullable;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
+
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
-import eu.fbk.knowledgestore.data.Data;
-import eu.fbk.knowledgestore.data.Record;
+
 import org.apache.avro.Schema;
 import org.apache.avro.generic.GenericData;
 import org.apache.avro.generic.GenericDatumReader;
 import org.apache.avro.generic.GenericDatumWriter;
 import org.apache.avro.generic.GenericRecord;
-import org.apache.avro.io.*;
-import org.openrdf.model.*;
+import org.apache.avro.io.DatumReader;
+import org.apache.avro.io.DatumWriter;
+import org.apache.avro.io.Decoder;
+import org.apache.avro.io.DecoderFactory;
+import org.apache.avro.io.Encoder;
+import org.apache.avro.io.EncoderFactory;
+import org.openrdf.model.BNode;
+import org.openrdf.model.Literal;
+import org.openrdf.model.Resource;
+import org.openrdf.model.Statement;
+import org.openrdf.model.URI;
+import org.openrdf.model.Value;
+import org.openrdf.model.ValueFactory;
 import org.openrdf.model.vocabulary.RDF;
 import org.openrdf.model.vocabulary.XMLSchema;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import javax.annotation.Nullable;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
-import java.io.*;
-import java.util.GregorianCalendar;
-import java.util.List;
-import java.util.Set;
-import java.util.TimeZone;
+import eu.fbk.knowledgestore.data.Data;
+import eu.fbk.knowledgestore.data.Record;
 
 // NOTE: supports only serialization and deserialization of Record, URI, BNode, Literal,
 // Statement objects. For records, it is possible to specify which properties to serialize /
@@ -41,8 +57,6 @@ public final class SerializerAvro {
     private final ValueFactory factory;
 
     private final DatatypeFactory datatypeFactory;
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(SerializerAvro.class);
 
     public SerializerAvro() {
         this((Dictionary<URI>) null);

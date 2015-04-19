@@ -30,6 +30,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 import com.google.common.base.Charsets;
 import com.google.common.base.Function;
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Splitter;
@@ -231,7 +232,7 @@ public final class Data {
     public static ListeningScheduledExecutorService getExecutor() {
         synchronized (executorPrivate) {
             if (executor == null) {
-                final String threadName = Objects.firstNonNull(
+                final String threadName = MoreObjects.firstNonNull(
                         System.getProperty("eu.fbk.knowledgestore.threadName"), "worker-%02d");
                 int threadCount = 32;
                 try {

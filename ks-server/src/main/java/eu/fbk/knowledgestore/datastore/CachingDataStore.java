@@ -11,7 +11,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.annotation.Nullable;
 
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
@@ -127,9 +127,9 @@ public class CachingDataStore extends ForwardingDataStore {
     public CachingDataStore(final DataStore delegate, @Nullable final Integer maxSize,
             @Nullable final Integer maxChanges, @Nullable final Integer maxBufferedChanges) {
 
-        final int actualMaxSize = Objects.firstNonNull(maxSize, DEFAULT_MAX_SIZE);
-        final int actualMaxChanges = Objects.firstNonNull(maxChanges, DEFAULT_MAX_CHANGES);
-        final int actualMaxBufferedChanges = Objects.firstNonNull(maxBufferedChanges,
+        final int actualMaxSize = MoreObjects.firstNonNull(maxSize, DEFAULT_MAX_SIZE);
+        final int actualMaxChanges = MoreObjects.firstNonNull(maxChanges, DEFAULT_MAX_CHANGES);
+        final int actualMaxBufferedChanges = MoreObjects.firstNonNull(maxBufferedChanges,
                 DEFAULT_MAX_BUFFERED_CHANGES);
 
         Preconditions.checkArgument(actualMaxSize > 0);

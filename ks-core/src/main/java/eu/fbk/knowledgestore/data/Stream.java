@@ -6,6 +6,7 @@ import java.lang.reflect.Array;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.Iterator;
@@ -286,8 +287,8 @@ public abstract class Stream<T> implements Iterable<T>, Closeable {
      *            the type of elements
      * @return the resulting concatenated Stream
      */
-    public static <T> Stream<T> concat(
-            @SuppressWarnings("unchecked") final Iterable<? extends T>... iterables) {
+    @SafeVarargs
+    public static <T> Stream<T> concat(final Iterable<? extends T>... iterables) {
         return new ConcatStream<Iterable<? extends T>, T>(create(iterables));
     }
 
@@ -1378,7 +1379,7 @@ public abstract class Stream<T> implements Iterable<T>, Closeable {
 
         @Override
         protected Iterator<T> doIterator() {
-            return Iterators.emptyIterator();
+            return Collections.emptyIterator();
         }
 
         @Override

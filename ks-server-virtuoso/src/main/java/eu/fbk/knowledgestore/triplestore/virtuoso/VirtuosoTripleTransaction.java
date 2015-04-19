@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
@@ -143,7 +144,7 @@ final class VirtuosoTripleTransaction implements TripleTransaction {
             } else {
                 Iterator<Statement> iterator;
                 if (this.connection.hasStatement(subject, predicate, object, false, context)) {
-                    iterator = Iterators.emptyIterator();
+                    iterator = Collections.emptyIterator();
                 } else {
                     iterator = Iterators.<Statement>singletonIterator(new ContextStatementImpl(
                             subject, predicate, object, context));

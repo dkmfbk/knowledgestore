@@ -14,7 +14,7 @@ import java.util.Set;
 import javax.annotation.Nullable;
 
 import com.google.common.base.Joiner;
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
@@ -82,7 +82,7 @@ public final class CommandLine {
     }
 
     public <T> List<T> getOptionValues(final String letterOrName, final Class<T> type) {
-        final List<String> strings = Objects.firstNonNull(this.optionValues.get(letterOrName),
+        final List<String> strings = MoreObjects.firstNonNull(this.optionValues.get(letterOrName),
                 ImmutableList.<String>of());
         return convert(strings, type);
     }
@@ -288,7 +288,7 @@ public final class CommandLine {
                 }
 
                 // Check that mandatory options have been specified
-                for (String name : mandatoryOptions) {
+                for (final String name : this.mandatoryOptions) {
                     if (!cmd.hasOption(name)) {
                         System.err.println("SYNTAX ERROR: missing mandatory option " + name);
                         printHelp();
@@ -343,7 +343,7 @@ public final class CommandLine {
                     version = "(unknown)";
                 }
             }
-            final String name = Objects.firstNonNull(this.name, "Version");
+            final String name = MoreObjects.firstNonNull(this.name, "Version");
             System.out.println(String.format("%s %s\nJava %s bit (%s) %s\n", name, version,
                     System.getProperty("sun.arch.data.model"), System.getProperty("java.vendor"),
                     System.getProperty("java.version")));
@@ -352,7 +352,7 @@ public final class CommandLine {
         private void printHelp() {
             final HelpFormatter formatter = new HelpFormatter();
             final PrintWriter out = new PrintWriter(System.out);
-            final String name = Objects.firstNonNull(this.name, "java");
+            final String name = MoreObjects.firstNonNull(this.name, "java");
             formatter.printUsage(out, 80, name, this.options);
             if (this.header != null) {
                 out.println();

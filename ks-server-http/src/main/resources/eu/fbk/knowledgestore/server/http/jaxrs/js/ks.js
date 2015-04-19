@@ -112,7 +112,7 @@ $(document).ready(function() {
 	var href = $anchor.attr("href");
 	var selection = $anchor.data("sel");
 	var lookupHref = "ui?action=lookup&id=" + encodeURIComponent(href)
-			+ "&selection=" + encodeURIComponent(selection);
+			+ (selection == null ? "" : "&selection=" + encodeURIComponent(selection));
 	var entityMentionsHref = "ui?action=entity-mentions&entity=" + encodeURIComponent(href);
 	var entityMentionsAggregateHref = "ui?action=entity-mentions-aggregate&entity=" + encodeURIComponent(href);
 	// $("#uriMenuURI").text(href);

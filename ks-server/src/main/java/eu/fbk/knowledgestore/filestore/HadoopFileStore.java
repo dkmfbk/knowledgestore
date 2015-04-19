@@ -6,7 +6,7 @@ import java.io.OutputStream;
 
 import javax.annotation.Nullable;
 
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Throwables;
 import com.google.common.collect.AbstractIterator;
@@ -48,7 +48,7 @@ public class HadoopFileStore implements FileStore {
     /**
      * Creates a new {@code HadoopFileStore} storing files in the {@code FileSystem} and under the
      * {@code rootPath} specified.
-     * 
+     *
      * @param fileSystem
      *            the file system, not null
      * @param path
@@ -57,7 +57,7 @@ public class HadoopFileStore implements FileStore {
      */
     public HadoopFileStore(final FileSystem fileSystem, @Nullable final String path) {
         this.fileSystem = Preconditions.checkNotNull(fileSystem);
-        this.rootPath = new Path(Objects.firstNonNull(path, DEFAULT_PATH))
+        this.rootPath = new Path(MoreObjects.firstNonNull(path, DEFAULT_PATH))
                 .makeQualified(this.fileSystem); // resolve wrt workdir
         LOGGER.info("{} configured, path={}", getClass().getSimpleName(), this.rootPath);
     }
@@ -135,7 +135,7 @@ public class HadoopFileStore implements FileStore {
     }
 
     private Path getFullPath(final String fileName) {
-        final String typeDirectory = Objects.firstNonNull(Data.extensionToMimeType(fileName),
+        final String typeDirectory = MoreObjects.firstNonNull(Data.extensionToMimeType(fileName),
                 "application/octet-stream").replace('/', '_');
         final String bucketDirectory = Data.hash(fileName).substring(0, 2);
         return new Path(this.rootPath, typeDirectory + "/" + bucketDirectory + "/" + fileName);

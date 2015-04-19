@@ -12,7 +12,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
@@ -65,7 +65,7 @@ public abstract class Crud extends Resource {
             @QueryParam(Protocol.PARAMETER_LIMIT) final Long limit) throws OperationException {
 
         // Apply default limit, if not explicitly given
-        final long actualLimit = Objects.firstNonNull(limit, DEFAULT_RETRIEVE_LIMIT);
+        final long actualLimit = MoreObjects.firstNonNull(limit, DEFAULT_RETRIEVE_LIMIT);
 
         // Prepare the retrieve operation, returning an error if parameters are wrong
         final Operation.Retrieve operation;

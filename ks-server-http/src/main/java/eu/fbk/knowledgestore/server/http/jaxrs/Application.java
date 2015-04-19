@@ -37,7 +37,7 @@ import javax.ws.rs.ext.Provider;
 import javax.ws.rs.ext.WriterInterceptor;
 import javax.ws.rs.ext.WriterInterceptorContext;
 
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
@@ -319,7 +319,8 @@ public final class Application extends javax.ws.rs.core.Application {
             String accept = request.getUriInfo().getQueryParameters()
                     .getFirst(Protocol.PARAMETER_ACCEPT);
             if (accept == null) {
-                accept = Objects.firstNonNull(request.getHeaderString(HttpHeaders.ACCEPT), "*/*");
+                accept = MoreObjects.firstNonNull(request.getHeaderString(HttpHeaders.ACCEPT),
+                        "*/*");
             } else {
                 request.getHeaders().putSingle(HttpHeaders.ACCEPT, accept);
                 acceptTypes = Lists.newArrayList();

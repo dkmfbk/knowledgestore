@@ -10,6 +10,7 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
 import javax.annotation.Nullable;
+import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
@@ -27,7 +28,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Variant;
 
 import com.google.common.base.Charsets;
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableSet;
@@ -42,8 +43,9 @@ import org.apache.http.config.RegistryBuilder;
 import org.apache.http.conn.HttpClientConnectionManager;
 import org.apache.http.conn.socket.ConnectionSocketFactory;
 import org.apache.http.conn.socket.PlainConnectionSocketFactory;
+import org.apache.http.conn.ssl.DefaultHostnameVerifier;
+import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
-import org.apache.http.conn.ssl.X509HostnameVerifier;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.glassfish.jersey.apache.connector.ApacheClientProperties;
 import org.glassfish.jersey.apache.connector.ApacheConnectorProvider;
@@ -123,15 +125,15 @@ public final class Client extends AbstractKnowledgeStore {
         }
 
         final int timeout;
-        timeout = Objects.firstNonNull(builder.connectionTimeout, DEFAULT_CONNECTION_TIMEOUT);
+        timeout = MoreObjects.firstNonNull(builder.connectionTimeout, DEFAULT_CONNECTION_TIMEOUT);
         Preconditions.checkArgument(timeout >= 0, "Invalid connection timeout %d", timeout);
 
         this.serverURL = url;
-        this.compressionEnabled = Objects.firstNonNull(builder.compressionEnabled,
+        this.compressionEnabled = MoreObjects.firstNonNull(builder.compressionEnabled,
                 DEFAULT_COMPRESSION_ENABLED);
         this.connectionManager = createConnectionManager(
-                Objects.firstNonNull(builder.maxConnections, DEFAULT_MAX_CONNECTIONS),
-                Objects.firstNonNull(builder.validateServer, DEFAULT_VALIDATE_SERVER));
+                MoreObjects.firstNonNull(builder.maxConnections, DEFAULT_MAX_CONNECTIONS),
+                MoreObjects.firstNonNull(builder.validateServer, DEFAULT_VALIDATE_SERVER));
         this.client = createJaxrsClient(this.connectionManager, timeout, builder.proxy);
         this.targets = Maps.newConcurrentMap();
     }
@@ -160,11 +162,11 @@ public final class Client extends AbstractKnowledgeStore {
 
         // Setup SSLContext and HostnameVerifier based on validateServer parameter
         final SSLContext sslContext;
-        final X509HostnameVerifier hostVerifier;
+        HostnameVerifier hostVerifier;
         try {
             if (validateServer) {
                 sslContext = SSLContext.getDefault();
-                hostVerifier = SSLConnectionSocketFactory.BROWSER_COMPATIBLE_HOSTNAME_VERIFIER;
+                hostVerifier = new DefaultHostnameVerifier();
             } else {
                 sslContext = SSLContext.getInstance(Protocol.HTTPS_PROTOCOLS[0]);
                 sslContext.init(null, new TrustManager[] { new X509TrustManager() {
@@ -185,7 +187,7 @@ public final class Client extends AbstractKnowledgeStore {
                     }
 
                 } }, null);
-                hostVerifier = SSLConnectionSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER;
+                hostVerifier = NoopHostnameVerifier.INSTANCE;
             }
         } catch (final Throwable ex) {
             throw new RuntimeException("SSL configuration failed", ex);
@@ -208,6 +210,7 @@ public final class Client extends AbstractKnowledgeStore {
         // Setup max concurrent connections
         manager.setMaxTotal(maxConnections);
         manager.setDefaultMaxPerRoute(maxConnections);
+        manager.setValidateAfterInactivity(1000); // validate connection after 1s idle
         return manager;
     }
 
@@ -219,7 +222,6 @@ public final class Client extends AbstractKnowledgeStore {
         final RequestConfig requestConfig = RequestConfig.custom()//
                 .setExpectContinueEnabled(false) //
                 .setRedirectsEnabled(false) //
-                .setStaleConnectionCheckEnabled(false) //
                 .setConnectionRequestTimeout(connectionTimeout) //
                 .setConnectTimeout(connectionTimeout) //
                 .build();
@@ -253,8 +255,8 @@ public final class Client extends AbstractKnowledgeStore {
         SessionImpl(@Nullable final String username, @Nullable final String password) {
             super(Data.newNamespaceMap(Data.newNamespaceMap(), Data.getNamespaceMap()), username,
                     password);
-            final String actualUsername = Objects.firstNonNull(username, "");
-            final String actualPassword = Objects.firstNonNull(password, "");
+            final String actualUsername = MoreObjects.firstNonNull(username, "");
+            final String actualPassword = MoreObjects.firstNonNull(password, "");
             final String authorizationString = actualUsername + ":" + actualPassword;
             final byte[] authorizationBytes = authorizationString.getBytes(Charsets.ISO_8859_1);
             this.authorization = "Basic " + BaseEncoding.base64().encode(authorizationBytes);

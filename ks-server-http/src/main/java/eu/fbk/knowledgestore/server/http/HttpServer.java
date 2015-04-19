@@ -11,7 +11,7 @@ import java.util.concurrent.ExecutorService;
 import javax.annotation.Nullable;
 
 import com.google.common.base.Charsets;
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Sets;
@@ -158,10 +158,10 @@ public class HttpServer extends ForwardingKnowledgeStore implements Component {
     private Server createJettyServer(final Builder builder) {
 
         // Retrieve common attributes
-        final String host = Objects.firstNonNull(builder.host, DEFAULT_HOST);
-        String base = Objects.firstNonNull(builder.path, DEFAULT_PATH);
-        final int acceptors = Objects.firstNonNull(builder.acceptors, DEFAULT_ACCEPTORS);
-        final int selectors = Objects.firstNonNull(builder.selectors, DEFAULT_SELECTORS);
+        final String host = MoreObjects.firstNonNull(builder.host, DEFAULT_HOST);
+        String base = MoreObjects.firstNonNull(builder.path, DEFAULT_PATH);
+        final int acceptors = MoreObjects.firstNonNull(builder.acceptors, DEFAULT_ACCEPTORS);
+        final int selectors = MoreObjects.firstNonNull(builder.selectors, DEFAULT_SELECTORS);
         final boolean debug = Boolean.TRUE.equals(builder.debug);
         base = base.startsWith("/") ? base : "/" + base;
 
@@ -194,7 +194,7 @@ public class HttpServer extends ForwardingKnowledgeStore implements Component {
         String realm = DEFAULT_REALM;
         Set<String> anonymousRoles = SecurityConfig.ALL_ROLES;
         if (sc != null) {
-            realm = Objects.firstNonNull(sc.getRealm(), realm);
+            realm = MoreObjects.firstNonNull(sc.getRealm(), realm);
             anonymousRoles = sc.getAnonymousRoles();
             final String userdb = sc.getUserdbURL().toString();
             final HashLoginService login = new HashLoginService();
@@ -205,8 +205,8 @@ public class HttpServer extends ForwardingKnowledgeStore implements Component {
         }
 
         // add HTTP and HTTPS connectors
-        final int httpPort = Objects.firstNonNull(builder.httpPort, DEFAULT_HTTP_PORT);
-        final int httpsPort = Objects.firstNonNull(builder.httpsPort, DEFAULT_HTTPS_PORT);
+        final int httpPort = MoreObjects.firstNonNull(builder.httpPort, DEFAULT_HTTP_PORT);
+        final int httpsPort = MoreObjects.firstNonNull(builder.httpsPort, DEFAULT_HTTPS_PORT);
         if (httpPort > 0) {
             Preconditions.checkArgument(httpPort < 65536, "Invalid HTTP port %s", httpPort);
             server.addConnector(createServerConnector(server, host, httpPort, acceptors,
@@ -215,7 +215,7 @@ public class HttpServer extends ForwardingKnowledgeStore implements Component {
         if (httpsPort > 0) {
             Preconditions.checkArgument(httpsPort < 65536 && httpsPort != httpPort,
                     "Invalid HTTPS port %s", httpsPort);
-            final KeystoreConfig kc = Objects.firstNonNull(builder.keystoreConfig,
+            final KeystoreConfig kc = MoreObjects.firstNonNull(builder.keystoreConfig,
                     DEFAULT_KEYSTORE_CONFIG);
             server.addConnector(createServerConnector(server, host, httpsPort, acceptors,
                     selectors, createSSLConnectionFactory(kc),
@@ -239,7 +239,7 @@ public class HttpServer extends ForwardingKnowledgeStore implements Component {
         webappHandler.getServletContext().setAttribute(Application.STORE_ATTRIBUTE, this);
         webappHandler.getServletContext().setAttribute(Application.TRACING_ATTRIBUTE, debug);
         webappHandler.getServletContext().setAttribute(Application.UI_ATTRIBUTE,
-                Objects.firstNonNull(builder.uiConfig, DEFAULT_UI_CONFIG));
+                MoreObjects.firstNonNull(builder.uiConfig, DEFAULT_UI_CONFIG));
         webappHandler.getServletContext().setAttribute(
                 Application.RESOURCE_ATTRIBUTE,
                 ImmutableList.of(Root.class, Files.class,

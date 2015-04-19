@@ -21,7 +21,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import javax.annotation.Nullable;
 
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Throwables;
 import com.google.common.collect.Lists;
@@ -107,13 +107,13 @@ public final class VirtuosoJdbcTripleStore implements TripleStore {
         // Configure the data source
         // (see http://docs.openlinksw.com/virtuoso/VirtuosoDriverJDBC.html, section 7.4.4.2)
         this.source = new VirtuosoConnectionPoolDataSource();
-        this.source.setServerName(Objects.firstNonNull(host, DEFAULT_HOST));
-        this.source.setPortNumber(Objects.firstNonNull(port, DEFAULT_PORT));
-        this.source.setUser(Objects.firstNonNull(username, DEFAULT_USERNAME));
-        this.source.setPassword(Objects.firstNonNull(password, DEFAULT_PASSWORD));
+        this.source.setServerName(MoreObjects.firstNonNull(host, DEFAULT_HOST));
+        this.source.setPortNumber(MoreObjects.firstNonNull(port, DEFAULT_PORT));
+        this.source.setUser(MoreObjects.firstNonNull(username, DEFAULT_USERNAME));
+        this.source.setPassword(MoreObjects.firstNonNull(password, DEFAULT_PASSWORD));
 
         // Configure and validate other parameters
-        this.fetchSize = Objects.firstNonNull(fetchSize, DEFAULT_FETCH_SIZE);
+        this.fetchSize = MoreObjects.firstNonNull(fetchSize, DEFAULT_FETCH_SIZE);
         this.transactionCounter = new AtomicLong(0L);
         Preconditions.checkArgument(this.fetchSize > 0);
 
@@ -226,10 +226,10 @@ public final class VirtuosoJdbcTripleStore implements TripleStore {
         // Generate define directives for graphs in the FROM / FROM NAMED clauses
         if (dataset != null) {
             final Set<URI> empty = Collections.emptySet();
-            for (final URI uri : Objects.firstNonNull(dataset.getDefaultGraphs(), empty)) {
+            for (final URI uri : MoreObjects.firstNonNull(dataset.getDefaultGraphs(), empty)) {
                 builder.append(" define input:default-graph-uri <" + uri + "> \n");
             }
-            for (final URI uri : Objects.firstNonNull(dataset.getNamedGraphs(), empty)) {
+            for (final URI uri : MoreObjects.firstNonNull(dataset.getNamedGraphs(), empty)) {
                 builder.append(" define input:named-graph-uri <" + uri + "> \n");
             }
         }

@@ -10,7 +10,7 @@ import javax.annotation.Nullable;
 
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Predicate;
 import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
@@ -47,7 +47,7 @@ public final class RenderUtils {
 
     private static final boolean CHAR_OFFSET_HACK = Boolean.parseBoolean(System.getProperty(
             "ks.charOffsetHack", "false"))
-            || Boolean.parseBoolean(Objects.firstNonNull(System.getenv("KS_CHAR_OFFSET_HACK"),
+            || Boolean.parseBoolean(MoreObjects.firstNonNull(System.getenv("KS_CHAR_OFFSET_HACK"),
                     "false"));
 
     private static final AtomicInteger COUNTER = new AtomicInteger(0);
@@ -352,9 +352,9 @@ public final class RenderUtils {
 
         final String tableID = "table" + COUNTER.getAndIncrement();
         out.append("<table id=\"").append(tableID).append("\" class=\"display datatable\">\n");
-        out.append("<thead>\n<tr><th>").append(Objects.firstNonNull(elementHeader, "Value"))
+        out.append("<thead>\n<tr><th>").append(MoreObjects.firstNonNull(elementHeader, "Value"))
                 .append("</th><th>")
-                .append(Objects.firstNonNull(occurrencesHeader, "Occurrences"))
+                .append(MoreObjects.firstNonNull(occurrencesHeader, "Occurrences"))
                 .append("</th></tr>\n</thead>\n");
         out.append("<tbody>\n");
         for (final Object element : multiset.elementSet()) {

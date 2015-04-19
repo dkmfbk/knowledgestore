@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 
 import javax.annotation.Nullable;
 
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
@@ -99,7 +99,7 @@ public abstract class Operation {
 
     static XPath conditionFor(final URI property, final Object... allowedValues) {
         final String namespace = property.getNamespace();
-        final String prefix = Objects.firstNonNull(//
+        final String prefix = MoreObjects.firstNonNull(//
                 Data.namespaceToPrefix(namespace, Data.getNamespaceMap()), "ns");
         return XPath.parse(
                 String.format("with %s: <%s> : %s:%s = {}", prefix, namespace, prefix,

@@ -1,6 +1,7 @@
 package eu.fbk.knowledgestore.triplestore;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Iterator;
 
 import javax.annotation.Nullable;
@@ -177,7 +178,7 @@ public final class RepositoryTripleStore implements TripleStore {
                 } else {
                     Iterator<Statement> iterator;
                     if (this.connection.hasStatement(subject, predicate, object, true, context)) {
-                        iterator = Iterators.emptyIterator();
+                        iterator = Collections.emptyIterator();
                     } else {
                         iterator = Iterators
                                 .<Statement>singletonIterator(new ContextStatementImpl(subject,

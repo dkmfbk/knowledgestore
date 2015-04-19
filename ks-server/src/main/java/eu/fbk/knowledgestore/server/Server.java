@@ -20,7 +20,7 @@ import javax.annotation.Nullable;
 import com.google.common.base.Charsets;
 import com.google.common.base.Function;
 import com.google.common.base.Functions;
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Throwables;
 import com.google.common.collect.AbstractIterator;
@@ -109,8 +109,8 @@ public final class Server extends AbstractKnowledgeStore {
         this.tripleStore = Preconditions.checkNotNull(builder.tripleStore);
 
         try {
-            this.chunkSize = Objects.firstNonNull(builder.chunkSize, DEFAULT_CHUNK_SIZE);
-            this.bufferSize = Objects.firstNonNull(builder.bufferSize, DEFAULT_BUFFER_SIZE);
+            this.chunkSize = MoreObjects.firstNonNull(builder.chunkSize, DEFAULT_CHUNK_SIZE);
+            this.bufferSize = MoreObjects.firstNonNull(builder.bufferSize, DEFAULT_BUFFER_SIZE);
             Preconditions.checkArgument(this.chunkSize > 0);
             Preconditions.checkArgument(this.bufferSize > 0);
 
@@ -271,7 +271,7 @@ public final class Server extends AbstractKnowledgeStore {
                     // Transformation required: do it and return a subset of metadata
                     final String ext = Iterables.getFirst(
                             Data.mimeTypeToExtensions(transformToType), "bin");
-                    final String name = Objects.firstNonNull(
+                    final String name = MoreObjects.firstNonNull(
                             metadata.getUnique(NFO.FILE_NAME, String.class, null), "download")
                             + "." + ext;
                     stream = transform(fileTypeString, transformToType, stream);
@@ -569,8 +569,8 @@ public final class Server extends AbstractKnowledgeStore {
 
             // Apply offset and limit directives
             if (offset != null || limit != null) {
-                stream = stream.slice(Objects.firstNonNull(offset, 0L),
-                        Objects.firstNonNull(limit, Long.MAX_VALUE));
+                stream = stream.slice(MoreObjects.firstNonNull(offset, 0L),
+                        MoreObjects.firstNonNull(limit, Long.MAX_VALUE));
             }
 
             // Attach the transaction to the cursor, so that it ends when the latter is closed
@@ -887,7 +887,7 @@ public final class Server extends AbstractKnowledgeStore {
                 // Compute what to removed (oldRel/oldProp.) and to add (newRel/newProp.)
                 final Record oldRel = oldMap.get(id);
                 final Record newRel = newMap.get(id);
-                final URI type = Objects.firstNonNull(oldRel, newRel).getSystemType();
+                final URI type = MoreObjects.firstNonNull(oldRel, newRel).getSystemType();
                 if (oldRel != null && newRel != null) {
                     for (final URI property : oldRel.getProperties()) {
                         final List<URI> newValues = newRel.get(property, URI.class);
@@ -1022,10 +1022,10 @@ public final class Server extends AbstractKnowledgeStore {
             if (defaultGraphs != null || namedGraphs != null) {
                 final DatasetImpl ds = new DatasetImpl();
                 final Set<URI> emptyGraphs = ImmutableSet.of();
-                for (final URI graph : Objects.firstNonNull(defaultGraphs, emptyGraphs)) {
+                for (final URI graph : MoreObjects.firstNonNull(defaultGraphs, emptyGraphs)) {
                     ds.addDefaultGraph(graph);
                 }
-                for (final URI graph : Objects.firstNonNull(namedGraphs, emptyGraphs)) {
+                for (final URI graph : MoreObjects.firstNonNull(namedGraphs, emptyGraphs)) {
                     ds.addNamedGraph(graph);
                 }
                 dataset = ds;
