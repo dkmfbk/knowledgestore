@@ -11,8 +11,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.annotation.Nullable;
 import javax.ws.rs.GET;
@@ -26,6 +24,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import com.google.common.base.Function;
+import com.google.common.base.Objects;
 import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
 import com.google.common.collect.HashMultiset;
@@ -83,9 +82,11 @@ public class Root extends Resource {
     private static final int MAX_FETCHED_RESULTS = 10000;
 
     private static final boolean CHAR_OFFSET_HACK = Boolean.parseBoolean(System.getProperty(
-            "ks.charOffsetHack", "false"));
+            "ks.charOffsetHack", "false"))
+            || Boolean.parseBoolean(Objects.firstNonNull(System.getenv("KS_CHAR_OFFSET_HACK"),
+                    "false"));
 
-    private static final Pattern NIF_OFFSET_PATTERN = Pattern.compile("char=(\\d+),(\\d+)");
+    // private static final Pattern NIF_OFFSET_PATTERN = Pattern.compile("char=(\\d+),(\\d+)");
 
     @GET
     public Response getStatus() {
@@ -126,9 +127,10 @@ public class Root extends Resource {
 
         try {
             if ("lookup".equals(action)) {
-                final URI id = Data.convert(parameters.getFirst("id"), URI.class, null);
-                final URI selection = Data.convert(parameters.getFirst("selection"), URI.class,
-                        null);
+                final URI id = Data.convert( //
+                        Data.cleanIRI(parameters.getFirst("id")), URI.class, null);
+                final URI selection = Data.convert(
+                        Data.cleanIRI(parameters.getFirst("selection")), URI.class, null);
                 final Integer limit = Data.convert(parameters.getFirst("limit"), Integer.class,
                         null);
                 view = "/lookup";
@@ -787,9 +789,12 @@ public class Root extends Resource {
         final Record record = id == null ? null : getSession().retrieve(layer).ids(id).exec()
                 .getUnique();
         if (record != null && layer.equals(KS.MENTION)) {
+            final String template = "SELECT ?e WHERE { ?e $$ $$ "
+                    + (getUIConfig().isDenotedByAllowsGraphs() ? ""
+                            : "FILTER NOT EXISTS { GRAPH ?e { ?s ?p ?o } } ") + "}";
             for (final URI entityID : getSession()
-                    .sparql("SELECT ?e WHERE { ?e $$ $$ }", getUIConfig().getDenotedByProperty(),
-                            id).execTuples().transform(URI.class, true, "e")) {
+                    .sparql(template, getUIConfig().getDenotedByProperty(), id).execTuples()
+                    .transform(URI.class, true, "e")) {
                 record.add(KS.REFERS_TO, entityID);
             }
         }
@@ -831,14 +836,18 @@ public class Root extends Resource {
             }
         }
 
-        StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder();
         builder.append("SELECT ?m ?e WHERE { ?e ");
         builder.append(Data.toString(getUIConfig().getDenotedByProperty(), null));
         builder.append(" ?m VALUES ?m {");
         for (final URI mentionID : mentionIDs) {
             builder.append(' ').append(Data.toString(mentionID, null));
         }
-        builder.append(" } }");
+        builder.append(" } ");
+        if (!getUIConfig().isDenotedByAllowsGraphs()) {
+            builder.append("FILTER NOT EXISTS { GRAPH ?e { ?s ?p ?o } } ");
+        }
+        builder.append("}");
         for (final BindingSet bindings : getSession().sparql(builder.toString()).execTuples()) {
             final URI mentionID = (URI) bindings.getValue("m");
             final URI entityID = (URI) bindings.getValue("e");
@@ -846,31 +855,38 @@ public class Root extends Resource {
             entityIDs.add(entityID);
         }
 
-        builder = new StringBuilder();
-        builder.append("SELECT ?m ?e WHERE { VALUES ?p { sem:hasActor sem:hasTime sem:hasPlace } VALUES ?e0 {");
-        for (final URI entityID : entityIDs) {
-            builder.append(' ').append(Data.toString(entityID, null));
-        }
-        builder.append(" } ?e0 ?p ?e . ?e $$ ?m FILTER(STRSTARTS(STR(?m), $$)) }");
-        for (final BindingSet bindings : getSession().sparql(builder.toString(),
-                getUIConfig().getDenotedByProperty(), resourceID.stringValue()).execTuples()) {
-            final URI mentionID = (URI) bindings.getValue("m");
-            final URI entityID = (URI) bindings.getValue("e");
-            Record mention = mentions.get(mentionID);
-            if (mention == null) {
-                mention = Record.create(mentionID, KS.MENTION);
-                final Matcher matcher = NIF_OFFSET_PATTERN.matcher(mentionID.stringValue());
-                if (matcher.find()) {
-                    mention.set(NIF.BEGIN_INDEX, Integer.parseInt(matcher.group(1)));
-                    mention.set(NIF.END_INDEX, Integer.parseInt(matcher.group(2)));
-                }
-                mentions.put(mentionID, mention);
-            }
-            mention.add(KS.REFERS_TO, entityID);
-        }
+        // FOLLOWING CODE CAN INCREASE THE NUMBER OF MENTIONS RETRIEVED, BUT THE QUERY USED MAY
+        // TAKE UP TO SOME HUNDRED OF SECONDS (AND USING A TIMEOUT PRODUCES A NON-DETERMINISTIC
+        // OUTPUT
+        // if (!entityIDs.isEmpty()) {
+        // builder = new StringBuilder();
+        // builder.append("SELECT ?m ?e WHERE { "
+        // + "VALUES ?p { sem:hasActor sem:hasTime sem:hasPlace } VALUES ?e0 {");
+        // for (final URI entityID : entityIDs) {
+        // builder.append(' ').append(Data.toString(entityID, null));
+        // }
+        // builder.append(" } ?e0 ?p ?e . ?e $$ ?m FILTER(STRSTARTS(STR(?m), $$)) }");
+        // for (final BindingSet bindings : getSession()
+        // .sparql(builder.toString(), getUIConfig().getDenotedByProperty(),
+        // resourceID.stringValue()).timeout(1000L).execTuples()) {
+        // final URI mentionID = (URI) bindings.getValue("m");
+        // final URI entityID = (URI) bindings.getValue("e");
+        // Record mention = mentions.get(mentionID);
+        // if (mention == null) {
+        // mention = Record.create(mentionID, KS.MENTION);
+        // final Matcher matcher = NIF_OFFSET_PATTERN.matcher(mentionID.stringValue());
+        // if (matcher.find()) {
+        // mention.set(NIF.BEGIN_INDEX, Integer.parseInt(matcher.group(1)));
+        // mention.set(NIF.END_INDEX, Integer.parseInt(matcher.group(2)));
+        // }
+        // mentions.put(mentionID, mention);
+        // }
+        // mention.add(KS.REFERS_TO, entityID);
+        // }
+        // }
 
         final List<Record> sortedMentions = Lists.newArrayList(mentions.values());
-        sortedMentions.sort(new Comparator<Record>() {
+        Collections.sort(sortedMentions, new Comparator<Record>() {
 
             @Override
             public int compare(final Record r1, final Record r2) {

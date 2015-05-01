@@ -36,7 +36,6 @@ public final class Logging {
     private Logging() {
     }
 
-    @SuppressWarnings("unchecked")
     @Nullable
     public static Map<String, String> getMDC() {
         try {

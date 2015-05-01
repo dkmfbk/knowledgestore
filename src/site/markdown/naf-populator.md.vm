@@ -1,0 +1,31 @@
+# NAF populator documentation
+
+```
+usage: eu.fbk.knowledgestore.populator.naf.nafPopulator [-b <arg>] [-d <arg>]
+       [-f <arg>] [-h] [-n <arg>] [-o <arg>] [-p] [-r] [-spi] [-v] [-x <arg>]
+
+Options
+  -b,--batchsize <arg>             Insert the number of files to be submitted in
+                                   the single KS call, -1 all list of
+                                   files(heavymemory), 1 is default.
+  -d,--naf_directory <arg>         Enter the path to the naf directory to be
+                                   processed.
+  -f,--file <arg>                  Enter the path to a file, each line contains
+                                   a naf file path.
+  -h,--help                        display usage information, then exit.
+  -n,--naf_file <arg>              Enter the path to the naf file to be
+                                   processed.
+  -o,--outputreportfilepath <arg>  Enter the path to a file, each line contains
+                                   a naf file path.
+  -p,--printToFile                 write the mentions to a file 'mentions.txt'
+                                   under the populator path.
+  -r,--recursive                   if the path is folder, with this option the
+                                   process will be recursive for all the under
+                                   path directories.
+  -spi,--store_partial_info        Store partial information in case of error
+                                   'maximizing storing the data', default:false.
+  -v,--version                     display version and copyright information,
+                                   then exit.
+  -x,--exclude <arg>               Insert the layers in which you won't populate
+                                   to the KS. -x <Resource|Entity|Mention>
+```

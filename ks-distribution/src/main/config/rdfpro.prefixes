@@ -1,0 +1,7 @@
+#
+# Add below your custom namespace/prefix bindings
+# (they will override RDFpro builtin ones, in case of clash)
+# 
+# line format: namespaceURI prefix1 prefix2 ...
+# example:     http://dbpedia.org/ontology/ dbo dbpediaowl dbpo
+#

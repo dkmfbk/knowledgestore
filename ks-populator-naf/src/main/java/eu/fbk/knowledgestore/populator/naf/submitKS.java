@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import org.openrdf.model.URI;
+import org.openrdf.model.impl.URIImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,7 +28,7 @@ public class submitKS {
 	List<Record> resources=null;
 	List<Record> mentions=null;
 	try {
-			
+		checkResourceFoundInKS(session,batchList);
 	    // Clear all resources stored in the KS
 	    // session.delete(KS.RESOURCE).exec();
 
@@ -66,8 +67,46 @@ public class submitKS {
 	}
 		
     }
+    
+    private static boolean doSubmitToKS(KSPresentation tmp){
+        //Default 1=discard the new, 2=ignore repopulate, 3=delete repopulate
+    	if(nafPopulator.KSresourceReplacement==1&&!tmp.isFoundInKS())
+    		return true;
+    	if(nafPopulator.KSresourceReplacement==2)
+    		return true;
+    	if(nafPopulator.KSresourceReplacement==3){
+    		if(tmp.isFoundInKS()){
+    			//TODO do the deletion of the previous ks resources then return true;
+    		}
+    		return true;
+    	}
+    		
+    	return false;
+    }
 	
-    private static void rollback(Session session, List<Record> resources, List<Record> mentions){
+    private static void checkResourceFoundInKS(
+			Session session, Hashtable<String, KSPresentation> batchList) {
+    	if(nafPopulator.KSresourceReplacement!=2){
+    	for (KSPresentation tmp : batchList.values()) {
+    	    try {
+    			long cc = session.count(tmp.getNewsResource().getID()).exec();
+    			if(cc>0)
+    				tmp.setFoundInKS(true);
+    			else
+    				tmp.setFoundInKS(false);
+    			
+    		} catch (IllegalStateException e) {
+    			tmp.setFoundInKS(false);
+    		    logger.error(e.getMessage(), e);
+    		} catch (OperationException e) {
+    			tmp.setFoundInKS(false);
+    		    logger.error(e.getMessage(), e);
+    		}
+    	  }
+    	}
+	}
+
+	private static void rollback(Session session, List<Record> resources, List<Record> mentions){
 	List<URI> idsIT;
 	
 	try {
@@ -157,6 +196,7 @@ public class submitKS {
     private static List<Record> getAllResourceType(Hashtable<String, KSPresentation> batchList) throws IOException {
 	List<Record> temp = new LinkedList<Record>();
 	for (KSPresentation tmp : batchList.values()) {
+		if(doSubmitToKS(tmp)){
 	    temp.add(tmp.getNewsResource());
 	    temp.add(tmp.getNaf());
 	    /*inout.append(tmp.getNewsResource().toString(Data.getNamespaceMap(),
@@ -164,6 +204,7 @@ public class submitKS {
 	      + "\n");
 	      inout.append(tmp.getNaf().toString(Data.getNamespaceMap(), true)
 	      + "\n");*/
+		}
 	}
 	return temp;
     }
@@ -171,7 +212,9 @@ public class submitKS {
     private static Hashtable<URI, String> getAllNafResources(Hashtable<String, KSPresentation> batchList) {
 	Hashtable<URI, String> temp = new Hashtable<URI, String>();
 	for (KSPresentation tmp : batchList.values()) {
+		if(doSubmitToKS(tmp)){
 	    temp.put(tmp.getNaf().getID(), tmp.getNaf_file_path());
+		}
 	}
 	return temp;
     }
@@ -179,7 +222,9 @@ public class submitKS {
     private static Hashtable<URI, String> getAllResources(Hashtable<String, KSPresentation> batchList) {
 	Hashtable<URI, String> temp = new Hashtable<URI, String>();
 	for (KSPresentation tmp : batchList.values()) {
+		if(doSubmitToKS(tmp)){
 	    temp.put(tmp.getNewsResource().getID(), tmp.getNews());
+		}
 	}
 	return temp;
     }
@@ -187,7 +232,9 @@ public class submitKS {
     private static List<Record> getAllMentionType(Hashtable<String, KSPresentation> batchList) {
 	List<Record> temp = new LinkedList<Record>();
 	for (KSPresentation tmp : batchList.values()) {
+		if(doSubmitToKS(tmp)){
 	    temp.addAll(tmp.getMentions().values());
+		}
 	}
 	return temp;
     }

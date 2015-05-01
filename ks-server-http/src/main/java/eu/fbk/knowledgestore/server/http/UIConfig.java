@@ -37,6 +37,8 @@ public final class UIConfig implements Serializable {
             "gaf")
             + "denotedBy");
 
+    private static final boolean DEFAULT_DENOTED_BY_ALLOWS_GRAPHS = true;
+
     private static final boolean DEFAULT_REFERS_TO_FUNCTIONAL = true;
 
     private final int resultLimit;
@@ -52,6 +54,8 @@ public final class UIConfig implements Serializable {
     private final List<Example> sparqlExamples;
 
     private final URI denotedByProperty;
+
+    private final boolean denotedByAllowsGraphs;
 
     private final boolean refersToFunctional;
 
@@ -69,6 +73,8 @@ public final class UIConfig implements Serializable {
                 : ImmutableList.copyOf(builder.sparqlExamples);
         this.denotedByProperty = builder.denotedByProperty == null ? DEFAULT_DENOTED_BY_PROPERTY
                 : builder.denotedByProperty;
+        this.denotedByAllowsGraphs = builder.denotedByAllowsGraphs == null ? DEFAULT_DENOTED_BY_ALLOWS_GRAPHS
+                : builder.denotedByAllowsGraphs;
         this.refersToFunctional = builder.refersToFunctional == null ? DEFAULT_REFERS_TO_FUNCTIONAL
                 : builder.refersToFunctional;
     }
@@ -103,6 +109,10 @@ public final class UIConfig implements Serializable {
 
     public URI getDenotedByProperty() {
         return this.denotedByProperty;
+    }
+
+    public boolean isDenotedByAllowsGraphs() {
+        return this.denotedByAllowsGraphs;
     }
 
     public boolean isRefersToFunctional() {
@@ -301,7 +311,10 @@ public final class UIConfig implements Serializable {
         private URI denotedByProperty;
 
         @Nullable
-        private Boolean refersToFunctional = true;
+        private Boolean denotedByAllowsGraphs;
+
+        @Nullable
+        private Boolean refersToFunctional;
 
         public Builder resultLimit(@Nullable final Integer resultLimit) {
             this.resultLimit = resultLimit;
@@ -338,6 +351,11 @@ public final class UIConfig implements Serializable {
 
         public Builder denotedByProperty(@Nullable final URI denotedByProperty) {
             this.denotedByProperty = denotedByProperty;
+            return this;
+        }
+
+        public Builder denotedByAllowsGraphs(@Nullable final Boolean denotedByAllowsGraphs) {
+            this.denotedByAllowsGraphs = denotedByAllowsGraphs;
             return this;
         }
 

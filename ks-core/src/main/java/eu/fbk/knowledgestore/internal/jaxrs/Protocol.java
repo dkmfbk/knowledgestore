@@ -5,15 +5,14 @@ import javax.ws.rs.core.GenericType;
 import org.openrdf.model.Statement;
 import org.openrdf.model.URI;
 import org.openrdf.query.BindingSet;
-import org.openrdf.rio.RDFFormat;
 
 import eu.fbk.knowledgestore.Outcome;
 import eu.fbk.knowledgestore.data.Record;
 import eu.fbk.knowledgestore.data.Stream;
 import eu.fbk.knowledgestore.internal.rdf.HtmlRDF;
 import eu.fbk.knowledgestore.internal.rdf.HtmlSparql;
-import eu.fbk.knowledgestore.internal.rdf.TQL;
 import eu.fbk.knowledgestore.vocabulary.KS;
+import eu.fbk.rdfpro.tql.TQL;
 
 public final class Protocol {
 
@@ -98,7 +97,7 @@ public final class Protocol {
     public static final String PARAMETER_ACCEPT = "accept";
 
     public static final String PARAMETER_TIMEOUT = "timeout";
-    
+
     public static final String PARAMETER_ID = "id";
 
     public static final String PARAMETER_CONDITION = "condition";
@@ -131,15 +130,15 @@ public final class Protocol {
             "TLS_DHE_DSS_WITH_AES_128_CBC_SHA", "SSL_DHE_DSS_WITH_3DES_EDE_CBC_SHA" };
 
     public static String pathFor(final URI type) {
-        if (type == KS.RESOURCE) {
+        if (KS.RESOURCE.equals(type)) {
             return PATH_RESOURCES;
-        } else if (type == KS.MENTION) {
+        } else if (KS.MENTION.equals(type)) {
             return PATH_MENTIONS;
-        } else if (type == KS.ENTITY) {
+        } else if (KS.ENTITY.equals(type)) {
             return PATH_ENTITIES;
-        } else if (type == KS.AXIOM) {
+        } else if (KS.AXIOM.equals(type)) {
             return PATH_AXIOMS;
-        } else if (type == KS.REPRESENTATION) {
+        } else if (KS.REPRESENTATION.equals(type)) {
             return PATH_REPRESENTATIONS;
         }
         throw new IllegalArgumentException("Invalid type " + type);
@@ -161,7 +160,11 @@ public final class Protocol {
     }
 
     static {
-        TQL.register();
+        try {
+            TQL.register();
+        } catch (Throwable ex) {
+            // ignore: RDFpro TQL lib not available
+        }
         HtmlRDF.register();
         HtmlSparql.register();
     }

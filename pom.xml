@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>eu.fbk.knowledgestore</groupId>
     <artifactId>ks</artifactId>
     <packaging>pom</packaging>
-    <version>1.3</version>
+    <version>1.4</version>
 
     <name>ks</name>
     <description>The KnowledgeStore</description>
-    <url>http://www.fbk.eu</url>
+    <url>http://knowledgestore.fbk.eu</url>
 
     <organization>
         <name>FBK-irst</name>
@@ -88,15 +87,6 @@
             </properties>
         </developer>
         <developer>
-            <id>corcoglio</id>
-            <name>Francesco Corcoglioniti</name>
-            <email>corcoglio@fbk.eu</email>
-            <roles>
-                <role>Developer</role>
-            </roles>
-            <timezone>+1</timezone>
-        </developer>
-        <developer>
             <id>aprosio</id>
             <name>Alessio Palmero Aprosio</name>
             <email>aprosio@fbk.eu</email>
@@ -104,6 +94,9 @@
                 <role>Developer</role>
             </roles>
             <timezone>+1</timezone>
+            <properties>
+                <picUrl>https://my.fbk.eu/fbk-api/v2/picture/aprosio</picUrl>
+            </properties>
         </developer>
     </developers>
 
@@ -141,18 +134,6 @@
             <timezone>-5</timezone>
         </contributor>
         <contributor>
-            <name>Radim Nedbal</name>
-            <email>nedbal@fbk.eu</email>
-            <url>https://dkm.fbk.eu/index.php/Radim_Nedbal</url>
-            <roles>
-                <role>Developer</role>
-            </roles>
-            <timezone>+1</timezone>
-            <properties>
-                <picUrl>https://my.fbk.eu/fbk-api/v2/picture/nedbal</picUrl>
-            </properties>
-        </contributor>
-        <contributor>
             <name>Christian Girardi</name>
             <email>cgirardi@fbk.eu</email>
             <url>http://hlt.fbk.eu/people/cgirardi</url>
@@ -175,28 +156,10 @@
     </licenses>
 
     <scm>
-        <!--<connection>scm:svn:https://newsreader.fbk.eu/svn/Code/KnowledgeStore/trunk</connection>-->
         <connection>scm:git:https://github.com/dkmfbk/knowledgestore.git</connection>
         <developerConnection>scm:git:https://github.com/dkmfbk/knowledgestore.git</developerConnection>
         <url>https://github.com/dkmfbk/knowledgestore</url>
     </scm>
-
-    <!--<distributionManagement>-->
-    <!--<repository>-->
-    <!--<id>repoks</id>-->
-    <!--<name>Repository for project output artifacts</name>-->
-    <!--<url>${repo-path}</url>-->
-    <!--<layout>default</layout>-->
-    <!--<uniqueVersion>false</uniqueVersion>-->
-    <!--</repository>-->
-    <!--<snapshotRepository>-->
-    <!--<id>repoks</id>-->
-    <!--<name>Repository for project output artifacts</name>-->
-    <!--<url>${repo-path}</url>-->
-    <!--<layout>default</layout>-->
-    <!--<uniqueVersion>false</uniqueVersion>-->
-    <!--</snapshotRepository>-->
-    <!--</distributionManagement>-->
 
     <distributionManagement>
         <snapshotRepository>
@@ -211,13 +174,8 @@
 
     <repositories>
         <repository>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-            <id>local-repo</id>
-            <name>Local Project Repository</name>
-            <layout>default</layout>
-            <url>file:///${basedir}/${parent-path}/mvnrepo</url>
+            <id>fbk-repo</id>
+            <url>https://raw.githubusercontent.com/fbk/mvn-repo/master/releases</url>
         </repository>
     </repositories>
 
@@ -319,6 +277,17 @@
             </dependency>
             <dependency>
                 <groupId>eu.fbk.knowledgestore</groupId>
+                <artifactId>ks-tool</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>eu.fbk.knowledgestore</groupId>
+                <artifactId>ks-tool</artifactId>
+                <type>test-jar</type>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>eu.fbk.knowledgestore</groupId>
                 <artifactId>ks-distribution</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -328,14 +297,6 @@
                 <type>test-jar</type>
                 <version>${project.version}</version>
             </dependency>
-
-            <!--
-            <dependency>
-              <groupId>org.apache.tika</groupId>
-              <artifactId>tika-core</artifactId>
-              <version>${tika.version}</version>
-            </dependency>
-            -->
 
             <dependency>
                 <groupId>org.openrdf.sesame</groupId>
@@ -484,20 +445,25 @@
             </dependency>
 
             <dependency>
-                <groupId>org.semarglproject</groupId>
-                <artifactId>semargl-core</artifactId>
-                <version>${semargl.version}</version>
+                <groupId>eu.fbk.rdfpro</groupId>
+                <artifactId>rdfpro-core</artifactId>
+                <version>${rdfpro.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.semarglproject</groupId>
-                <artifactId>semargl-jsonld</artifactId>
-                <version>${semargl.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.semarglproject</groupId>
-                        <artifactId>semargl-rdf</artifactId>
-                    </exclusion>
-                </exclusions>
+                <groupId>eu.fbk.rdfpro</groupId>
+                <artifactId>rdfpro-jsonld</artifactId>
+                <version>${rdfpro.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>eu.fbk.rdfpro</groupId>
+                <artifactId>rdfpro-tql</artifactId>
+                <version>${rdfpro.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-math3</artifactId>
+                <version>${commons-math3.version}</version>
             </dependency>
 
             <dependency>
@@ -512,15 +478,17 @@
             </dependency>
 
             <dependency>
-                <groupId>com.openlinksw.virtuoso</groupId>
-                <artifactId>virtjdbc4</artifactId>
-                <version>${virtuoso-jdbc4.version}</version>
+                <groupId>org.apache.lucene</groupId>
+                <artifactId>lucene-core</artifactId>
+                <version>${lucene.version}</version>
             </dependency>
+            <!--
             <dependency>
-                <groupId>eu.fbk.knowledgestore</groupId>
-                <artifactId>virt_sesame2</artifactId>
-                <version>${virtuoso-sesame2-patched.version}</version>
+                <groupId>org.apache.lucene</groupId>
+                <artifactId>lucene-analyzers-common</artifactId>
+                <version>${lucene.version}</version>
             </dependency>
+            -->
 
             <dependency>
                 <groupId>com.zaxxer</groupId>
@@ -533,6 +501,14 @@
                 <artifactId>hadoop-core</artifactId>
                 <version>${hadoop.version}</version>
                 <exclusions>
+                    <exclusion>
+                        <groupId>commons-digester</groupId>
+                        <artifactId>commons-digester</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>commons-beanutils</groupId>
+                        <artifactId>commons-beanutils</artifactId>
+                    </exclusion>
                     <exclusion>
                         <groupId>commons-cli</groupId>
                         <artifactId>commons-cli</artifactId>
@@ -727,19 +703,16 @@
                 <artifactId>tephra</artifactId>
                 <version>${tephra.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>com.continuuity.tephra</groupId>
                 <artifactId>tephra-api</artifactId>
                 <version>${tephra.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>com.continuuity.tephra</groupId>
                 <artifactId>tephra-core</artifactId>
                 <version>${tephra.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>com.continuuity.tephra</groupId>
                 <artifactId>tephra-hbase-compat-0.94</artifactId>
@@ -913,41 +886,6 @@
                 <version>${jaxen.version}</version>
             </dependency>
 
-            <dependency>
-                <groupId>commons-daemon</groupId>
-                <artifactId>commons-daemon</artifactId>
-                <version>${commons-daemon.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-compress</artifactId>
-                <version>${commons-compress.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>commons-configuration</groupId>
-                <artifactId>commons-configuration</artifactId>
-                <version>${commons-configuration.version}</version>
-                <exclusions>
-                    <!--<exclusion>
-                      <groupId>commons-collections</groupId>
-                      <artifactId>commons-collections</artifactId>
-                    </exclusion>-->
-                    <exclusion>
-                        <groupId>commons-digester</groupId>
-                        <artifactId>commons-digester</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>commons-beanutils</groupId>
-                        <artifactId>commons-beanutils</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>commons-logging</groupId>
-                        <artifactId>commons-logging</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
@@ -1214,34 +1152,6 @@
         </pluginManagement>
 
         <plugins>
-
-            <plugin>
-                <groupId>org.sonatype.plugins</groupId>
-                <artifactId>nexus-staging-maven-plugin</artifactId>
-                <version>1.6.3</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <serverId>ossrh</serverId>
-                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-gpg-plugin</artifactId>
-                <version>1.5</version>
-                <executions>
-                    <execution>
-                        <id>sign-artifacts</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>sign</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-
             <plugin>
                 <!-- The following goal is necessary in order to allow child modules to
                      inherit the site descriptor of the parent project -->
@@ -1292,36 +1202,6 @@
                 </executions>
             </plugin>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <configuration>
-                    <failOnError>false</failOnError>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>attach-javadocs</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
         </plugins>
     </build>
 
@@ -1364,6 +1244,69 @@
     </reporting>
 
     <profiles>
+
+        <profile>
+            <id>release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <configuration>
+                            <failOnError>false</failOnError>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>attach-javadocs</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>nexus-staging-maven-plugin</artifactId>
+                        <version>1.6.3</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <serverId>ossrh</serverId>
+                            <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                            <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.5</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
 
         <!-- This profile is activated by default for the parent project and produces additional info
         pages specific to it. You may disable it to speed up the build process via -P !parent-info -->
@@ -1806,6 +1749,8 @@
         <!-- Paths -->
         <parent-path>.</parent-path>
         <aggregate>true</aggregate>
+        <site-root>${site.root}</site-root>
+        <project-version>${project.version}</project-version>
 
         <!-- Build configuration -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -1816,21 +1761,14 @@
         <junit.version>4.11</junit.version>
         <jsr305.version>2.0.3</jsr305.version>
         <enunciate.version>1.28</enunciate.version>
-        <commons-compress.version>1.8.1</commons-compress.version>
-        <commons-configuration.version>1.9</commons-configuration.version>
-        <commons-daemon.version>1.0.15</commons-daemon.version>
         <google-guava.version>17.0</google-guava.version>
         <paranamer.version>2.6</paranamer.version>
-        <tika.version>1.4</tika.version>
         <slf4j.version>1.7.7</slf4j.version>
         <logback.version>1.1.2</logback.version>
         <jansi.version>1.11</jansi.version>
         <sesame.version>2.7.11</sesame.version>
-        <semargl.version>0.6.1</semargl.version>
-        <virtuoso-jdbc4.version>2012-03-15</virtuoso-jdbc4.version>
         <virtuoso-jdbc4_1.version>2015-01-26</virtuoso-jdbc4_1.version>
         <virtuoso-sesame2.version>2015-01-26</virtuoso-sesame2.version>
-        <virtuoso-sesame2-patched.version>2013-11-20</virtuoso-sesame2-patched.version>
         <hadoop.version>1.0.4</hadoop.version>
         <hbase.version>0.94.10</hbase.version>
         <omid.version>2013-03-21</omid.version>
@@ -1847,7 +1785,11 @@
         <httpclient.version>4.3.3</httpclient.version>
         <httpcore.version>4.3.2</httpcore.version>
         <jolokia.version>1.2.1</jolokia.version>
+        <lucene.version>2.9.4</lucene.version>
+        <!--<lucene.version>5.0.0</lucene.version>-->
         <hikari.version>2.1.0</hikari.version>
+        <rdfpro.version>0.3</rdfpro.version>
+        <commons-math3.version>3.4.1</commons-math3.version>
 
         <!-- Build plugin versions -->
         <compiler-plugin.version>3.1</compiler-plugin.version>
@@ -1887,6 +1829,7 @@
         <module>ks-populator-naf</module>
         <module>ks-populator-rdf</module>
         <module>ks-distribution</module>
-    </modules>
+    <module>ks-tool</module>
+  </modules>
 
 </project>

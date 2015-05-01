@@ -408,8 +408,8 @@ public abstract class XPath implements Serializable {
                 char c = string.charAt(i);
                 if (c == '\\') {
                     c = string.charAt(++i);
-                    if (c == '\'' || c == '\"') {
-                        final char d = c; // delimiter;
+                    if (c == '\'' || c == '\"' || c == '<') {
+                        final char d = c == '<' ? '>' : c; // delimiter;
                         final int start = i + 1;
                         do {
                             c = string.charAt(++i);

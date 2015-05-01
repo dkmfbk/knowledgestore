@@ -51,9 +51,10 @@ import org.slf4j.LoggerFactory;
 
 public class nafPopulator {
 
-    static statistics globalStats = new statistics();
+    public static int KSresourceReplacement = 1;     	//Default 1=discard the new, 2=ignore repopulate, 3=delete repopulate
+	static statistics globalStats = new statistics();
     static Writer out, mentionFile = null;
-    static int batchSize = 1, consumer_threads = 1;;
+    static int batchSize = 1, consumer_threads = 1;
     
     static String disabledItems = "", reportFileName = "report.txt", mentionsF = "records.txt";
     static boolean recursion = false, printToFile = false,JobFinished=false;
@@ -109,6 +110,9 @@ public class nafPopulator {
                 "the number of batch queue items to be hold in memory; defaults to 2.");
         options.addOption("ct", "consumerThreads", true,
                 "the number of consumer threads to be thrown simultaneously, 1 is default.");
+        options.addOption("ksm", "ksModality", true,
+                "Submitting to KS modality:  (1=discard the new,Default) , (2=ignore previous content and populate), (3=delete previous content and repopulate)");
+
         options.addOption("v", "version", false,
                 "display version and copyright information, then exit");
         options.addOption("h", "help", false, "display usage information, then exit");
@@ -224,7 +228,7 @@ public class nafPopulator {
                     TInFile=true;
                     INpath = cmd.getOptionValue('t');
                 }
-		//starting producer to produce messages in queue
+                //starting producer to produce messages in queue
                 new Thread(producer).start();
                 //starting consumer to consume messages from queue
               /*  ExecutorService threadPool = Executors.newFixedThreadPool(consumer_threads);

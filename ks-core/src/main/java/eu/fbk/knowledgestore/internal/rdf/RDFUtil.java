@@ -84,12 +84,15 @@ import eu.fbk.knowledgestore.data.Stream;
 import eu.fbk.knowledgestore.internal.Compression;
 import eu.fbk.knowledgestore.internal.Logging;
 import eu.fbk.knowledgestore.internal.Util;
+import eu.fbk.rdfpro.jsonld.JSONLD;
 
 // TODO: reorganize code in this class
 
 public final class RDFUtil {
 
-    public static String PROPERTY_VARIABLES = "variables";
+    public static final String PROPERTY_VARIABLES = "variables";
+
+    private static boolean jsonldDisabled = false;
 
     public static void toHtml(final Value value, @Nullable final Map<String, String> prefixes,
             final Appendable sink) throws IOException {
@@ -380,8 +383,12 @@ public final class RDFUtil {
             actualSettings.putAll(settings);
         }
         final Object types = stream.getProperty("types", Object.class);
-        if (types instanceof Set) {
-            actualSettings.put(JSONLD.ROOT_TYPES, types);
+        if (types instanceof Set && !jsonldDisabled) {
+            try {
+                actualSettings.put(JSONLD.ROOT_TYPES, types);
+            } catch (Throwable ex) {
+                jsonldDisabled = true; // rdfpro-jsonld not available
+            }
         }
 
         try {

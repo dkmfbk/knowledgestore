@@ -1,31 +1,41 @@
 package eu.fbk.knowledgestore.runtime;
 
-import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
-import eu.fbk.knowledgestore.data.Data;
-import eu.fbk.knowledgestore.data.Record;
-import org.apache.avro.Schema;
-import org.apache.avro.generic.GenericData;
-import org.apache.avro.generic.GenericDatumReader;
-import org.apache.avro.generic.GenericDatumWriter;
-import org.apache.avro.generic.GenericRecord;
-import org.apache.avro.io.*;
-import org.openrdf.model.*;
-import org.openrdf.model.vocabulary.RDF;
-import org.openrdf.model.vocabulary.XMLSchema;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.annotation.Nullable;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.EOFException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.math.BigInteger;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Set;
 import java.util.TimeZone;
+import java.util.zip.Deflater;
+import java.util.zip.DeflaterOutputStream;
+import java.util.zip.Inflater;
+import java.util.zip.InflaterInputStream;
+
+import javax.annotation.Nullable;
+import javax.xml.datatype.XMLGregorianCalendar;
+
+import com.google.common.base.Objects;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
+import com.google.common.io.ByteStreams;
+import com.google.common.primitives.Ints;
+import com.google.common.primitives.Longs;
+
+import org.openrdf.model.BNode;
+import org.openrdf.model.Literal;
+import org.openrdf.model.Resource;
+import org.openrdf.model.Statement;
+import org.openrdf.model.URI;
+import org.openrdf.model.Value;
+import org.openrdf.model.ValueFactory;
+import org.openrdf.model.vocabulary.XMLSchema;
+
+import eu.fbk.knowledgestore.data.Data;
+import eu.fbk.knowledgestore.data.Record;
 
 // NOTE: supports only serialization and deserialization of Record, URI, BNode, Literal,
 // Statement objects. For records, it is possible to specify which properties to serialize /
@@ -36,80 +46,83 @@ import java.util.TimeZone;
 
 public final class Serializer {
 
+    private static final String LANG_NS = "lang:";
+
+    private static final int TYPE_NULL = 0x00;
+
+    private static final int TYPE_LIST = 0x10;
+
+    private static final int TYPE_RECORD = 0x20;
+
+    private static final int TYPE_LIT_STRING = 0x40;
+
+    private static final int TYPE_LIT_STRING_LANG = 0x80;
+
+    private static final int TYPE_LIT_TRUE = 0x01;
+
+    private static final int TYPE_LIT_FALSE = 0x02;
+
+    private static final int TYPE_LIT_LONG = 0x03;
+
+    private static final int TYPE_LIT_INT = 0x04;
+
+    private static final int TYPE_LIT_SHORT = 0x05;
+
+    private static final int TYPE_LIT_BYTE = 0x06;
+
+    private static final int TYPE_LIT_DOUBLE = 0x07;
+
+    private static final int TYPE_LIT_FLOAT = 0x08;
+
+    private static final int TYPE_LIT_BIG_INTEGER = 0x09;
+
+    private static final int TYPE_LIT_BIG_DECIMAL = 0x0A;
+
+    private static final int TYPE_LIT_DATETIME = 0x0B;
+
+    private static final int TYPE_BNODE = 0x30;
+
+    private static final int TYPE_URI_PLAIN = 0xC0;
+
+    private static final int TYPE_URI_COMPRESSED = 0x0C;
+
+    private static final int TYPE_STATEMENT = 0x0D;
+
+    // Number serialization
+
+    // bits len hi mask layout
+    // 07 01 0x00 0x7F 0 7
+    // 14 02 0x80 0x3F 10 6 8
+    // 21 03 0xC0 0x1F 110 5 8 8
+    // 28 04 0xE0 0x0F 1110 4 8 8 8
+    // 35 05 0xF0 0x07 11110 3 8 8 8 8
+    // 42 06 0xF8 0x03 111110 2 8 8 8 8 8
+    // 49 07 0xFC 0x01 1111110 1 8 8 8 8 8 8
+    // 56 08 0xFE 0x00 11111110 8 8 8 8 8 8 8
+    // 64 09 0xFF 0x00 11111111 8 8 8 8 8 8 8 8
+
+    private final boolean compress;
+
+    @Nullable
     private final Dictionary<URI> dictionary;
 
     private final ValueFactory factory;
 
-    private final DatatypeFactory datatypeFactory;
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(Serializer.class);
-
     public Serializer() {
-        this((Dictionary) null);
+        this(false, null, null);
     }
 
-    public Serializer(@Nullable final Dictionary<URI> dictionary) {
+    public Serializer(final boolean compress, @Nullable final Dictionary<URI> dictionary,
+            @Nullable final ValueFactory factory) {
+        this.compress = compress;
         this.dictionary = dictionary;
-        this.factory = Data.getValueFactory();
-        this.datatypeFactory = Data.getDatatypeFactory();
-    }
-
-	public Serializer(String fileName) throws IOException {
-		this.dictionary = new Dictionary<URI>(URI.class, fileName);
-		this.factory = Data.getValueFactory();
-		this.datatypeFactory = Data.getDatatypeFactory();
-	}
-
-    public Dictionary<URI> getDictionary() {
-        return this.dictionary;
-    }
-
-    public byte[] compressURI(final URI uri) {
-        Preconditions.checkNotNull(uri);
-        try {
-            final ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            final Encoder encoder = EncoderFactory.get().directBinaryEncoder(stream, null);
-            final DatumWriter<Object> writer = new GenericDatumWriter<Object>(
-                    AvroSchemas.COMPRESSED_IDENTIFIER);
-            this.dictionary.keyFor(uri); // ensure a compressed version of URI is available
-            final Object generic = encodeIdentifier(uri);
-            writer.write(generic, encoder);
-            return stream.toByteArray();
-
-        } catch (final IOException ex) {
-            throw new Error("Unexpected exception (!): " + ex.getMessage(), ex);
-        }
-    }
-
-    public URI expandURI(final byte[] bytes) {
-        Preconditions.checkNotNull(bytes);
-        try {
-            final InputStream stream = new ByteArrayInputStream(bytes);
-            final Decoder decoder = DecoderFactory.get().directBinaryDecoder(stream, null);
-            final DatumReader<Object> reader = new GenericDatumReader<Object>(
-                    AvroSchemas.COMPRESSED_IDENTIFIER);
-            final Object generic = reader.read(null, decoder);
-            return (URI) decodeNode(generic);
-
-        } catch (final IOException ex) {
-            throw new Error("Unexpected exception (!): " + ex.getMessage(), ex);
-        }
+        this.factory = Objects.firstNonNull(factory, Data.getValueFactory());
     }
 
     public byte[] toBytes(final Object object) {
         try {
             final ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            this.toStream(stream, object);
-            return stream.toByteArray();
-        } catch (final IOException ex) {
-            throw new Error("Unexpected exception (!): " + ex.getMessage(), ex);
-        }
-    }
-
-    public byte[] toBytes(final Record object, @Nullable final Set<URI> propertiesToSerialize) {
-        try {
-            final ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            this.toStream(stream, object, propertiesToSerialize);
+            toStream(stream, object);
             return stream.toByteArray();
         } catch (final IOException ex) {
             throw new Error("Unexpected exception (!): " + ex.getMessage(), ex);
@@ -118,464 +131,406 @@ public final class Serializer {
 
     public Object fromBytes(final byte[] bytes) {
         try {
-            return this.fromStream(new ByteArrayInputStream(bytes));
-        } catch (final IOException ex) {
-            throw new Error("Unexpected exception (!): " + ex.getMessage(), ex);
-        }
-    }
-
-    public Record fromBytes(final byte[] bytes, final @Nullable Set<URI> propertiesToDeserialize) {
-        try {
-            return this.fromStream(new ByteArrayInputStream(bytes), propertiesToDeserialize);
+            return fromStream(new ByteArrayInputStream(bytes));
         } catch (final IOException ex) {
             throw new Error("Unexpected exception (!): " + ex.getMessage(), ex);
         }
     }
 
     public void toStream(final OutputStream stream, final Object object) throws IOException {
-        final Object generic = encodeNode(object);
-        final Encoder encoder = EncoderFactory.get().directBinaryEncoder(stream, null);
-        final DatumWriter<Object> writer = new GenericDatumWriter<Object>(AvroSchemas.NODE);
-        writer.write(generic, encoder);
-        encoder.flush();
-    }
-
-    public void toStream(final OutputStream stream, final Record object,
-            @Nullable final Set<URI> propertiesToSerialize) throws IOException {
-        final Object generic = encodeRecord(object, propertiesToSerialize);
-        final Encoder encoder = EncoderFactory.get().directBinaryEncoder(stream, null);
-        final DatumWriter<Object> writer = new GenericDatumWriter<Object>(AvroSchemas.NODE);
-        writer.write(generic, encoder);
-        encoder.flush();
+        if (this.compress) {
+            final Deflater deflater = new Deflater(Deflater.BEST_COMPRESSION, true);
+            final DeflaterOutputStream compressStream = new DeflaterOutputStream(stream, deflater);
+            writeObject(compressStream, object);
+            compressStream.finish();
+        } else {
+            writeObject(stream, object);
+        }
     }
 
     public Object fromStream(final InputStream stream) throws IOException {
-        final Decoder decoder = DecoderFactory.get().directBinaryDecoder(stream, null);
-        final DatumReader<Object> reader = new GenericDatumReader<Object>(AvroSchemas.NODE);
-        final Object generic = reader.read(null, decoder);
-        return decodeNode(generic);
+        if (this.compress) {
+            final Inflater inflater = new Inflater(true);
+            final InflaterInputStream compressStream = new InflaterInputStream(stream, inflater);
+            return readObject(compressStream);
+        } else {
+            return readObject(stream);
+        }
     }
 
-    public Record fromStream(final InputStream stream,
-            @Nullable final Set<URI> propertiesToDeserialize) throws IOException {
-        final Decoder decoder = DecoderFactory.get().directBinaryDecoder(stream, null);
-        final DatumReader<GenericRecord> reader = new GenericDatumReader<GenericRecord>(
-                AvroSchemas.NODE);
-        final GenericRecord generic = reader.read(null, decoder);
-        return decodeRecord(generic, propertiesToDeserialize);
-    }
+    private void writeObject(final OutputStream stream, final Object object) throws IOException {
 
-    private List<Object> decodeNodes(final Object generic) {
-        if (generic instanceof Iterable<?>) {
-            final Iterable<?> iterable = (Iterable<?>) generic;
+        if (object == null) {
+            writeHeader(stream, TYPE_NULL, 0);
+
+        } else if (object instanceof Iterable<?>) {
+            final Iterable<?> iterable = (Iterable<?>) object;
             final int size = Iterables.size(iterable);
-            final List<Object> nodes = Lists.<Object>newArrayListWithCapacity(size);
+            writeHeader(stream, TYPE_LIST, size);
             for (final Object element : iterable) {
-                nodes.add(decodeNode(element));
+                writeObject(stream, element);
             }
-            return nodes;
-        }
-        Preconditions.checkNotNull(generic);
-        return ImmutableList.of(decodeNode(generic));
-    }
 
-    private Object decodeNode(final Object generic) {
-        if (generic instanceof GenericRecord) {
-            final GenericRecord record = (GenericRecord) generic;
-            final Schema schema = record.getSchema();
-            if (schema.equals(AvroSchemas.RECORD)) {
-                return decodeRecord(record, null);
-            } else if (schema.equals(AvroSchemas.PLAIN_IDENTIFIER)
-                    || schema.equals(AvroSchemas.COMPRESSED_IDENTIFIER)) {
-                return decodeIdentifier(record);
-            } else if (schema.equals(AvroSchemas.STATEMENT)) {
-                return decodeStatement(record);
-            }
-        }
-        return decodeLiteral(generic);
-    }
-
-    @SuppressWarnings("unchecked")
-    private Record decodeRecord(final GenericRecord generic,
-            @Nullable final Set<URI> propertiesToDecode) {
-        final Record record = Record.create();
-        final GenericRecord encodedID = (GenericRecord) generic.get(0);
-        if (encodedID != null) {
-            record.setID((URI) decodeIdentifier(encodedID));
-        }
-        for (final GenericRecord prop : (Iterable<GenericRecord>) generic.get(1)) {
-            final URI property = (URI) decodeIdentifier((GenericRecord) prop.get(0));
-            final List<Object> values = decodeNodes(prop.get(1));
-            if (propertiesToDecode == null || propertiesToDecode.contains(property)) {
-                record.set(property, values);
-            }
-        }
-        return record;
-    }
-
-    private Value decodeValue(final Object generic) {
-        if (generic instanceof GenericRecord) {
-            final GenericRecord record = (GenericRecord) generic;
-            final Schema schema = record.getSchema();
-            if (schema.equals(AvroSchemas.COMPRESSED_IDENTIFIER)
-                    || schema.equals(AvroSchemas.PLAIN_IDENTIFIER)) {
-                return decodeIdentifier(record);
-            }
-        }
-        return decodeLiteral(generic);
-    }
-
-    private Resource decodeIdentifier(final GenericRecord record) {
-        final Schema schema = record.getSchema();
-        if (schema.equals(AvroSchemas.COMPRESSED_IDENTIFIER)) {
-            try {
-                return this.dictionary.objectFor((Integer) record.get(0));
-            } catch (final IOException ex) {
-                throw new IllegalStateException("Cannot access dictionary: " + ex.getMessage(), ex);
-            }
-        } else if (schema.equals(AvroSchemas.PLAIN_IDENTIFIER)) {
-            final String string = record.get(0).toString();
-            if (string.startsWith("_:")) {
-                return this.factory.createBNode(string.substring(2));
-            } else {
-                return this.factory.createURI(string);
-            }
-        }
-        throw new IllegalArgumentException("Unsupported encoded identifier: " + record);
-    }
-
-    private Literal decodeLiteral(final Object generic) {
-        if (generic instanceof GenericRecord) {
-            final GenericRecord record = (GenericRecord) generic;
-            final Schema schema = record.getSchema();
-            if (schema.equals(AvroSchemas.STRING_LANG)) {
-                final String label = record.get(0).toString(); // Utf8 class used
-                final Object language = record.get(1);
-                return this.factory.createLiteral(label, language.toString());
-            } else if (schema.equals(AvroSchemas.SHORT)) {
-                return this.factory.createLiteral(((Integer) record.get(0)).shortValue());
-            } else if (schema.equals(AvroSchemas.BYTE)) {
-                return this.factory.createLiteral(((Integer) record.get(0)).byteValue());
-            } else if (schema.equals(AvroSchemas.BIGINTEGER)) {
-                return this.factory.createLiteral(record.get(0).toString(), XMLSchema.INTEGER);
-            } else if (schema.equals(AvroSchemas.BIGDECIMAL)) {
-                return this.factory.createLiteral(record.get(0).toString(), XMLSchema.DECIMAL);
-            } else if (schema.equals(AvroSchemas.CALENDAR)) {
-                final int tz = (Integer) record.get(0);
-                final GregorianCalendar calendar = new GregorianCalendar();
-                calendar.setTimeInMillis((Long) record.get(1));
-                calendar.setTimeZone(TimeZone.getTimeZone(String.format("GMT%s%02d:%02d",
-                        tz >= 0 ? "+" : "-", Math.abs(tz) / 60, Math.abs(tz) % 60)));
-                return this.factory.createLiteral(this.datatypeFactory
-                        .newXMLGregorianCalendar(calendar));
-            }
-        } else if (generic instanceof CharSequence) {
-            return this.factory.createLiteral(generic.toString()); // Utf8 class used
-        } else if (generic instanceof Boolean) {
-            return this.factory.createLiteral((Boolean) generic);
-        } else if (generic instanceof Long) {
-            return this.factory.createLiteral((Long) generic);
-        } else if (generic instanceof Integer) {
-            return this.factory.createLiteral((Integer) generic);
-        } else if (generic instanceof Double) {
-            return this.factory.createLiteral((Double) generic);
-        } else if (generic instanceof Float) {
-            return this.factory.createLiteral((Float) generic);
-        }
-        Preconditions.checkNotNull(generic);
-        throw new IllegalArgumentException("Unsupported generic data: " + generic);
-    }
-
-    private Statement decodeStatement(final GenericRecord record) {
-        final Resource subj = decodeIdentifier((GenericRecord) record.get(0));
-        final URI pred = (URI) decodeIdentifier((GenericRecord) record.get(1));
-        final Value obj = decodeValue(record.get(2));
-        final Resource ctx = decodeIdentifier((GenericRecord) record.get(3));
-        if (ctx == null) {
-            return this.factory.createStatement(subj, pred, obj);
-        } else {
-            return this.factory.createStatement(subj, pred, obj, ctx);
-        }
-    }
-
-    private Object encodeNodes(final Iterable<? extends Object> nodes) {
-        final int size = Iterables.size(nodes);
-        if (size == 1) {
-            return encodeNode(Iterables.get(nodes, 0));
-        }
-        final List<Object> list = Lists.<Object>newArrayListWithCapacity(size);
-        for (final Object node : nodes) {
-            list.add(encodeNode(node));
-        }
-        return list;
-    }
-
-    private Object encodeNode(final Object node) {
-        if (node instanceof Record) {
-            return encodeRecord((Record) node, null);
-        } else if (node instanceof Literal) {
-            return encodeLiteral((Literal) node);
-        } else if (node instanceof Resource) {
-            return encodeIdentifier((Resource) node);
-        } else if (node instanceof Statement) {
-            return encodeStatement((Statement) node);
-        }
-        Preconditions.checkNotNull(node);
-        throw new IllegalArgumentException("Unsupported node: " + node);
-    }
-
-    private Object encodeRecord(final Record record, @Nullable final Set<URI> propertiesToEncode) {
-        final URI id = record.getID();
-        final Object encodedID = id == null ? null : encodeIdentifier(id);
-        final List<Object> props = Lists.newArrayList();
-        for (final URI property : record.getProperties()) {
-            if (propertiesToEncode == null || propertiesToEncode.contains(property)) {
-                ensureInDictionary(property);
+        } else if (object instanceof Record) {
+            final Record record = (Record) object;
+            writeHeader(stream, TYPE_RECORD, record.getProperties().size());
+            writeObject(stream, record.getID());
+            for (final URI property : record.getProperties()) {
+                writeCompressedURI(stream, property);
                 final List<? extends Object> nodes = record.get(property);
-                if (property.equals(RDF.TYPE)) {
-                    for (final Object value : nodes) {
-                        if (value instanceof URI) {
-                            ensureInDictionary((URI) value);
-                        }
-                    }
-                }
-                final GenericData.Record prop = new GenericData.Record(AvroSchemas.PROPERTY);
-                prop.put("propertyURI", encodeIdentifier(property));
-                prop.put("propertyValue", encodeNodes(nodes));
-                props.add(prop);
+                writeObject(stream, nodes.size() == 1 ? nodes.get(0) : nodes);
             }
-        }
-        return Serializer.newGenericRecord(AvroSchemas.RECORD, encodedID, props);
-    }
 
-    private Object encodeValue(final Value value) {
-        if (value instanceof Literal) {
-            return encodeLiteral((Literal) value);
-        } else if (value instanceof Resource) {
-            return encodeIdentifier((Resource) value);
-        } else {
-            throw new IllegalArgumentException("Unsupported value: " + value);
-        }
-    }
-
-    private Object encodeIdentifier(final Resource identifier) {
-        if (identifier instanceof URI) {
-            try {
-                final Integer key = this.dictionary.keyFor((URI) identifier, false);
-                if (key != null) {
-                    return Serializer.newGenericRecord(AvroSchemas.COMPRESSED_IDENTIFIER, key);
+        } else if (object instanceof Literal) {
+            final Literal literal = (Literal) object;
+            final URI datatype = literal.getDatatype();
+            if (datatype == null || datatype.equals(XMLSchema.STRING)) {
+                final String language = literal.getLanguage();
+                final byte[] label = encodeString(literal.getLabel());
+                if (language == null) {
+                    writeHeader(stream, TYPE_LIT_STRING, label.length);
+                } else {
+                    writeHeader(stream, TYPE_LIT_STRING_LANG, label.length);
+                    final URI langURI = this.factory.createURI("lang:" + language);
+                    writeCompressedURI(stream, langURI);
                 }
-            } catch (final IOException ex) {
-                throw new IllegalStateException("Cannot access dictionary: " + ex.getMessage(), ex);
-            }
-        }
-        final String id = identifier instanceof BNode ? "_:" + ((BNode) identifier).getID()
-                : identifier.stringValue();
-        return Serializer.newGenericRecord(AvroSchemas.PLAIN_IDENTIFIER, id);
-    }
-
-    private Object encodeLiteral(final Literal literal) {
-        final URI datatype = literal.getDatatype();
-        if (datatype == null || datatype.equals(XMLSchema.STRING)) {
-            final String language = literal.getLanguage();
-            if (language == null) {
-                return literal.getLabel();
+                stream.write(label);
+            } else if (datatype.equals(XMLSchema.BOOLEAN)) {
+                writeHeader(stream, literal.booleanValue() ? TYPE_LIT_TRUE : TYPE_LIT_FALSE, 0);
+            } else if (datatype.equals(XMLSchema.LONG)) {
+                writeHeader(stream, TYPE_LIT_LONG, 0);
+                writeNumber(stream, literal.longValue());
+            } else if (datatype.equals(XMLSchema.INT)) {
+                writeHeader(stream, TYPE_LIT_INT, 0);
+                writeNumber(stream, literal.longValue());
+            } else if (datatype.equals(XMLSchema.DOUBLE)) {
+                writeHeader(stream, TYPE_LIT_DOUBLE, 0);
+                stream.write(Longs.toByteArray(Double.doubleToLongBits(literal.doubleValue())));
+            } else if (datatype.equals(XMLSchema.FLOAT)) {
+                writeHeader(stream, TYPE_LIT_FLOAT, 0);
+                stream.write(Ints.toByteArray(Float.floatToIntBits(literal.floatValue())));
+            } else if (datatype.equals(XMLSchema.SHORT)) {
+                writeHeader(stream, TYPE_LIT_SHORT, 0);
+                writeNumber(stream, literal.longValue());
+            } else if (datatype.equals(XMLSchema.BYTE)) {
+                writeHeader(stream, TYPE_LIT_BYTE, 0);
+                writeNumber(stream, literal.longValue());
+            } else if (datatype.equals(XMLSchema.INTEGER)) {
+                writeHeader(stream, TYPE_LIT_BIG_INTEGER, 0);
+                final byte[] bytes = literal.integerValue().toByteArray();
+                writeNumber(stream, bytes.length);
+                stream.write(bytes);
+            } else if (datatype.equals(XMLSchema.DECIMAL)) {
+                writeHeader(stream, TYPE_LIT_BIG_DECIMAL, 0);
+                final byte[] bytes = encodeString(literal.decimalValue().toString());
+                writeNumber(stream, bytes.length);
+                stream.write(bytes);
+            } else if (datatype.equals(XMLSchema.DATETIME)) {
+                writeHeader(stream, TYPE_LIT_DATETIME, 0);
+                final XMLGregorianCalendar calendar = literal.calendarValue();
+                writeNumber(stream, calendar.getTimezone());
+                writeNumber(stream, calendar.toGregorianCalendar().getTimeInMillis());
             } else {
-                return Serializer.newGenericRecord(AvroSchemas.STRING_LANG,
-						literal.getLabel(), language);
+                throw new UnsupportedOperationException("Don't know how to serialize: " + literal);
             }
-        } else if (datatype.equals(XMLSchema.BOOLEAN)) {
-            return literal.booleanValue();
-        } else if (datatype.equals(XMLSchema.LONG)) {
-            return literal.longValue();
-        } else if (datatype.equals(XMLSchema.INT)) {
-            return literal.intValue();
-        } else if (datatype.equals(XMLSchema.DOUBLE)) {
-            return literal.doubleValue();
-        } else if (datatype.equals(XMLSchema.FLOAT)) {
-            return literal.floatValue();
-        } else if (datatype.equals(XMLSchema.SHORT)) {
-            return Serializer.newGenericRecord(AvroSchemas.SHORT, literal.intValue());
-        } else if (datatype.equals(XMLSchema.BYTE)) {
-            return Serializer.newGenericRecord(AvroSchemas.BYTE, literal.intValue());
-        } else if (datatype.equals(XMLSchema.INTEGER)) {
-            return Serializer.newGenericRecord(AvroSchemas.BIGINTEGER, literal.stringValue());
-        } else if (datatype.equals(XMLSchema.DECIMAL)) {
-            return Serializer.newGenericRecord(AvroSchemas.BIGDECIMAL, literal.stringValue());
-        } else if (datatype.equals(XMLSchema.DATETIME)) {
-            final XMLGregorianCalendar calendar = literal.calendarValue();
-            return Serializer.newGenericRecord(AvroSchemas.CALENDAR, calendar.getTimezone(),
-					calendar.toGregorianCalendar().getTimeInMillis());
-        }
-        throw new IllegalArgumentException("Unsupported literal: " + literal);
-    }
 
-    private Object encodeStatement(final Statement statement) {
-        return Serializer.newGenericRecord(AvroSchemas.STATEMENT,
-				encodeIdentifier(statement.getSubject()),
-				encodeIdentifier(statement.getPredicate()), //
-				encodeValue(statement.getObject()), //
-				encodeIdentifier(statement.getContext()));
-    }
+        } else if (object instanceof BNode) {
+            final byte[] id = encodeString(((BNode) object).getID());
+            writeHeader(stream, TYPE_BNODE, id.length);
+            stream.write(id);
 
-    private URI ensureInDictionary(final URI uri) {
-        try {
-            this.dictionary.keyFor(uri);
-            return uri;
-        } catch (final IOException ex) {
-            throw new IllegalStateException("Cannot access dictionary: " + ex.getMessage(), ex);
+        } else if (object instanceof URI) {
+            final URI uri = (URI) object;
+            final boolean isVocabTerm = Data.namespaceToPrefix(uri.getNamespace(),
+                    Data.getNamespaceMap()) != null;
+            if (isVocabTerm) {
+                writeHeader(stream, TYPE_URI_COMPRESSED, 0);
+                writeCompressedURI(stream, uri);
+            } else {
+                final byte[] string = encodeString(uri.stringValue());
+                writeHeader(stream, TYPE_URI_PLAIN, string.length);
+                stream.write(string);
+            }
+
+        } else if (object instanceof Statement) {
+            final Statement statement = (Statement) object;
+            writeHeader(stream, TYPE_STATEMENT, 0);
+            writeObject(stream, statement.getSubject());
+            writeObject(stream, statement.getPredicate());
+            writeObject(stream, statement.getObject());
+            writeObject(stream, statement.getContext());
+
+        } else {
+            throw new UnsupportedOperationException("Don't know how to serialize "
+                    + object.getClass());
         }
     }
 
-    private static GenericData.Record newGenericRecord(final Schema schema,
-            final Object... fieldValues) {
-
-        final GenericData.Record record = new GenericData.Record(schema);
-        for (int i = 0; i < fieldValues.length; ++i) {
-            record.put(i, fieldValues[i]);
+    private void writeHeader(final OutputStream stream, final int type, final int number)
+            throws IOException {
+        if ((type & 0xC0) != 0 && number <= 62) {
+            stream.write(type | number + 1);
+        } else if ((type & 0x30) != 0 && number <= 14) {
+            stream.write(type | number + 1);
+        } else if ((type & 0xF0) != 0) {
+            stream.write(type);
+            writeNumber(stream, number);
+        } else {
+            stream.write(type);
         }
-        return record;
     }
 
-	private static final class AvroSchemas {
+    private void writeCompressedURI(final OutputStream stream, final URI uri) throws IOException {
+        if (this.dictionary != null) {
+            final int key = this.dictionary.keyFor(uri, true);
+            writeNumber(stream, key);
+        } else {
+            final String ns = uri.getNamespace();
+            if (LANG_NS.equals(ns)) {
+                final byte[] utf8 = encodeString(uri.getLocalName());
+                writeNumber(stream, utf8.length << 2 | 1);
+                stream.write(utf8);
+            } else {
+                final String prefix = Data.namespaceToPrefix(uri.getNamespace(),
+                        Data.getNamespaceMap());
+                if (prefix != null) {
+                    final byte[] utf8 = encodeString(prefix + ":" + uri.getLocalName());
+                    writeNumber(stream, utf8.length << 2 | 3);
+                    stream.write(utf8);
+                } else {
+                    final byte[] utf8 = encodeString(uri.stringValue());
+                    writeNumber(stream, utf8.length << 1);
+                    stream.write(utf8);
+                }
+            }
+        }
+    }
 
-		/** The namespace for KS-specific AVRO schemas. */
-		public static final String NAMESPACE = "eu.fbk.knowledgestore";
+    private void writeNumber(final OutputStream stream, final long num) throws IOException {
+        if (num < 0L || num > 0xFFFFFFFFFFFFFFL /* 56 bit */) {
+            writeNumberHelper(stream, 9, 0xFF, num);
+        } else if (num <= 0x7FL /* 7 bit */) {
+            writeNumberHelper(stream, 1, 0x00, num);
+        } else if (num <= 0x3FFFL /* 14 bit */) {
+            writeNumberHelper(stream, 2, 0x80, num);
+        } else if (num <= 0x1FFFFFL /* 21 bit */) {
+            writeNumberHelper(stream, 3, 0xC0, num);
+        } else if (num <= 0xFFFFFFFL /* 28 bit */) {
+            writeNumberHelper(stream, 4, 0xE0, num);
+        } else if (num <= 0x7FFFFFFFFL /* 35 bit */) {
+            writeNumberHelper(stream, 5, 0xF0, num);
+        } else if (num <= 0x3FFFFFFFFFFL /* 42 bit */) {
+            writeNumberHelper(stream, 6, 0xF8, num);
+        } else if (num <= 0x1FFFFFFFFFFFFL /* 49 bit */) {
+            writeNumberHelper(stream, 7, 0xFC, num);
+        } else {
+            writeNumberHelper(stream, 8, 0xFE, num);
+        }
+    }
 
-		/** AVRO schema for NULL. */
-		public static final Schema NULL = Schema.create(Schema.Type.NULL);
+    private void writeNumberHelper(final OutputStream stream, final int len, final int mask,
+            final long num) throws IOException {
+        stream.write(mask | (int) (num >>> (len - 1) * 8));
+        for (int i = len - 2; i >= 0; --i) {
+            stream.write((int) (num >>> i * 8 & 0xFF));
+        }
+    }
 
-		/** AVRO schema for boolean literals. */
-		public static final Schema BOOLEAN = Schema.create(Schema.Type.BOOLEAN);
+    private Object readObject(final InputStream stream) throws IOException {
 
-		/** AVRO schema for string literals. */
-		public static final Schema STRING = Schema.create(Schema.Type.STRING);
+        // Read header: type and optional number used later for parsing
+        int type = stream.read();
+        if (type < 0) {
+            throw new EOFException();
+        }
+        int num = 0;
+        if ((type & 0xC0) != 0) {
+            final int n = type & 0x3F;
+            num = n > 0 ? n - 1 : (int) readNumber(stream);
+            type = type & 0xC0;
+        } else if ((type & 0x30) != 0) {
+            final int n = type & 0x0F;
+            num = n > 0 ? n - 1 : (int) readNumber(stream);
+            type = type & 0x30;
+        }
 
-		/** AVRO schema for string literals with a language. */
-		public static final Schema STRING_LANG = Schema.createRecord("stringlang", null,
-				AvroSchemas.NAMESPACE, false);
+        // Read the remainder based on parsed type
+        switch (type) {
+        case TYPE_NULL:
+            return null;
 
-		/** AVRO schema for long literals. */
-		public static final Schema LONG = Schema.create(Schema.Type.LONG);
+        case TYPE_LIST:
+            final List<Object> list = Lists.newArrayListWithCapacity(num);
+            for (int i = 0; i < num; ++i) {
+                list.add(readObject(stream));
+            }
+            return list;
 
-		/** AVRO schema for int literals. */
-		public static final Schema INT = Schema.create(Schema.Type.INT);
+        case TYPE_RECORD:
+            final Record record = Record.create();
+            record.setID((URI) readObject(stream));
+            for (int i = 0; i < num; ++i) {
+                final URI property = readCompressedURI(stream);
+                final Object value = readObject(stream);
+                record.set(property, value);
+            }
+            return record;
 
-		/** AVRO schema for short literals. */
-		public static final Schema SHORT = Schema.createRecord("short", null, AvroSchemas.NAMESPACE,
-				false);
+        case TYPE_BNODE:
+            final String bnodeID = decodeString(readBytes(stream, num));
+            return this.factory.createBNode(bnodeID);
 
-		/** AVRO schema for byte literals. */
-		public static final Schema BYTE = Schema.createRecord("byte", null, AvroSchemas.NAMESPACE,
-				false);
+        case TYPE_URI_COMPRESSED:
+            return readCompressedURI(stream);
 
-		/** AVRO schema for double literals. */
-		public static final Schema DOUBLE = Schema.create(Schema.Type.DOUBLE);
+        case TYPE_URI_PLAIN:
+            final String uriString = decodeString(readBytes(stream, num));
+            return this.factory.createURI(uriString);
 
-		/** AVRO schema for float literals. */
-		public static final Schema FLOAT = Schema.create(Schema.Type.FLOAT);
+        case TYPE_LIT_STRING:
+            final String plainLabel = decodeString(readBytes(stream, num));
+            return this.factory.createLiteral(plainLabel);
 
-		/** AVRO schema for big integer literals. */
-		public static final Schema BIGINTEGER = Schema.createRecord("biginteger", null,
-				AvroSchemas.NAMESPACE, false);
+        case TYPE_LIT_STRING_LANG:
+            final String lang = readCompressedURI(stream).getLocalName();
+            final String label = decodeString(readBytes(stream, num));
+            return this.factory.createLiteral(label, lang);
 
-		/** AVRO schema for big decimal literals. */
-		public static final Schema BIGDECIMAL = Schema.createRecord("bigdecimal", null,
-				AvroSchemas.NAMESPACE, false);
+        case TYPE_LIT_TRUE:
+            return this.factory.createLiteral(true);
 
-		/** AVRO schema for non-compressed IDs (URIs, BNodes). */
-		public static final Schema PLAIN_IDENTIFIER = Schema //
-				.createRecord("plainidentifier", null, AvroSchemas.NAMESPACE, false);
+        case TYPE_LIT_FALSE:
+            return this.factory.createLiteral(false);
 
-		/** AVRO schema for compressed ID (URIs, BNodes). */
-		public static final Schema COMPRESSED_IDENTIFIER = Schema //
-				.createRecord("compressedidentifier", null, AvroSchemas.NAMESPACE, false);
+        case TYPE_LIT_LONG:
+            final long longVal = readNumber(stream);
+            return this.factory.createLiteral(longVal);
 
-		/** AVRO schema for any ID (URIs, BNodes). */
-		public static final Schema IDENTIFIER = Schema.createUnion(ImmutableList.<Schema>of(
-				PLAIN_IDENTIFIER, COMPRESSED_IDENTIFIER));
+        case TYPE_LIT_INT:
+            final int intVal = (int) readNumber(stream);
+            return this.factory.createLiteral(intVal);
 
-		/** AVRO schema for calendar literals. */
-		public static final Schema CALENDAR = Schema.createRecord("calendar", null,
-				AvroSchemas.NAMESPACE, false);
+        case TYPE_LIT_SHORT:
+            final short shortVal = (short) readNumber(stream);
+            return this.factory.createLiteral(shortVal);
 
-		/** AVRO schema for RDF statements. */
-		public static final Schema STATEMENT = Schema.createRecord("statement", null,
-				AvroSchemas.NAMESPACE, false);
+        case TYPE_LIT_BYTE:
+            final byte byteVal = (byte) readNumber(stream);
+            return this.factory.createLiteral(byteVal);
 
-		/** AVRO schema for record nodes ({@code Record}). */
-		public static final Schema RECORD = Schema.createRecord("struct", null, AvroSchemas.NAMESPACE,
-				false);
+        case TYPE_LIT_DOUBLE:
+            final byte[] doubleBytes = readBytes(stream, 8);
+            final double doubleVal = Double.longBitsToDouble(Longs.fromByteArray(doubleBytes));
+            return this.factory.createLiteral(doubleVal);
 
-		/** AVRO schema for generic data model nodes. */
-		public static final Schema NODE = Schema.createUnion(ImmutableList.<Schema>of(
-				AvroSchemas.BOOLEAN, AvroSchemas.STRING, AvroSchemas.STRING_LANG, AvroSchemas.LONG,
-				AvroSchemas.INT, AvroSchemas.SHORT, AvroSchemas.BYTE, AvroSchemas.DOUBLE,
-				AvroSchemas.FLOAT, AvroSchemas.BIGINTEGER, AvroSchemas.BIGDECIMAL,
-				AvroSchemas.PLAIN_IDENTIFIER, AvroSchemas.COMPRESSED_IDENTIFIER, AvroSchemas.CALENDAR,
-				AvroSchemas.STATEMENT, AvroSchemas.RECORD));
+        case TYPE_LIT_FLOAT:
+            final byte[] floatBytes = readBytes(stream, 4);
+            final float floatVal = Float.intBitsToFloat(Ints.fromByteArray(floatBytes));
+            return this.factory.createLiteral(floatVal);
 
-		/** AVRO schema for lists of nodes. */
-		public static final Schema LIST = Schema.createArray(AvroSchemas.NODE);
+        case TYPE_LIT_BIG_INTEGER:
+            final int bigintLen = (int) readNumber(stream);
+            final String bigintVal = new BigInteger(readBytes(stream, bigintLen)).toString();
+            return this.factory.createLiteral(bigintVal, XMLSchema.INTEGER);
 
-		/** AVRO schema for properties of a record node. */
-		public static final Schema PROPERTY = Schema.createRecord("property", null,
-				AvroSchemas.NAMESPACE, false);
+        case TYPE_LIT_BIG_DECIMAL:
+            final int bigdecLen = (int) readNumber(stream);
+            final String bigdecVal = decodeString(readBytes(stream, bigdecLen));
+            return this.factory.createLiteral(bigdecVal, XMLSchema.DECIMAL);
 
-		private AvroSchemas() {
-		}
+        case TYPE_LIT_DATETIME:
+            final int tz = (int) readNumber(stream);
+            final long millis = readNumber(stream);
+            final GregorianCalendar calendar = new GregorianCalendar();
+            calendar.setTimeInMillis(millis);
+            calendar.setTimeZone(TimeZone.getTimeZone(String.format("GMT%s%02d:%02d",
+                    tz >= 0 ? "+" : "-", Math.abs(tz) / 60, Math.abs(tz) % 60)));
+            return this.factory.createLiteral(Data.getDatatypeFactory().newXMLGregorianCalendar(
+                    calendar));
 
-		static {
-			AvroSchemas.STRING_LANG.setFields(ImmutableList.<Schema.Field>of(new Schema.Field("label",
-					AvroSchemas.STRING, null, null), new Schema.Field("language", AvroSchemas.STRING, null,
-					null)));
-			AvroSchemas.SHORT.setFields(ImmutableList.<Schema.Field>of(new Schema.Field("short", AvroSchemas.INT,
-					null, null)));
-			AvroSchemas.BYTE.setFields(ImmutableList.<Schema.Field>of(new Schema.Field("byte", AvroSchemas.INT,
-					null, null)));
-			AvroSchemas.BIGINTEGER.setFields(ImmutableList.<Schema.Field>of(new Schema.Field("biginteger",
-					AvroSchemas.STRING, null, null)));
-			AvroSchemas.BIGDECIMAL.setFields(ImmutableList.<Schema.Field>of(new Schema.Field("bigdecimal",
-					AvroSchemas.STRING, null, null)));
-			AvroSchemas.PLAIN_IDENTIFIER.setFields(ImmutableList.<Schema.Field>of(new Schema.Field("identifier",
-					AvroSchemas.STRING, null, null)));
-			AvroSchemas.COMPRESSED_IDENTIFIER.setFields(ImmutableList.<Schema.Field>of(new Schema.Field(
-					"identifier", AvroSchemas.INT, null, null)));
-			AvroSchemas.CALENDAR.setFields(ImmutableList
-					.<Schema.Field>of(new Schema.Field("timezone", AvroSchemas.INT, null, null), new Schema.Field(
-							"timestamp", AvroSchemas.LONG, null, null)));
+        case TYPE_STATEMENT:
+            final Resource subj = (Resource) readObject(stream);
+            final URI pred = (URI) readObject(stream);
+            final Value obj = (Value) readObject(stream);
+            final Resource ctx = (Resource) readObject(stream);
+            return ctx == null ? this.factory.createStatement(subj, pred, obj) : this.factory
+                    .createStatement(subj, pred, obj, ctx);
 
-			AvroSchemas.STATEMENT.setFields(ImmutableList.<Schema.Field>of(
-					new Schema.Field("subject", AvroSchemas.IDENTIFIER, null, null),
-					new Schema.Field("predicate", AvroSchemas.IDENTIFIER, null, null),
-					new Schema.Field("object", Schema.createUnion(ImmutableList.<Schema>of(
-							AvroSchemas.BOOLEAN, AvroSchemas.STRING, AvroSchemas.STRING_LANG,
-							AvroSchemas.LONG, AvroSchemas.INT, AvroSchemas.SHORT, AvroSchemas.BYTE,
-							AvroSchemas.DOUBLE, AvroSchemas.FLOAT, AvroSchemas.BIGINTEGER,
-							AvroSchemas.BIGDECIMAL, AvroSchemas.CALENDAR,
-							AvroSchemas.PLAIN_IDENTIFIER, AvroSchemas.COMPRESSED_IDENTIFIER)), null,
-							null), //
-					new Schema.Field("context", AvroSchemas.IDENTIFIER, null, null)));
+        default:
+            throw new UnsupportedOperationException("Don't know how to deserialize type " + type);
+        }
+    }
 
-			AvroSchemas.PROPERTY
-					.setFields(ImmutableList.<Schema.Field>of(
-							new Schema.Field("propertyURI", AvroSchemas.COMPRESSED_IDENTIFIER, null, null),
-							new Schema.Field("propertyValue", Schema.createUnion(ImmutableList.<Schema>of(
-									AvroSchemas.BOOLEAN, AvroSchemas.STRING, AvroSchemas.STRING_LANG,
-									AvroSchemas.LONG, AvroSchemas.INT, AvroSchemas.SHORT,
-									AvroSchemas.BYTE, AvroSchemas.DOUBLE, AvroSchemas.FLOAT,
-									AvroSchemas.BIGINTEGER, AvroSchemas.BIGDECIMAL,
-									AvroSchemas.CALENDAR, AvroSchemas.PLAIN_IDENTIFIER,
-									AvroSchemas.COMPRESSED_IDENTIFIER, AvroSchemas.STATEMENT,
-									AvroSchemas.RECORD, AvroSchemas.LIST)), null, null)));
+    private byte[] readBytes(final InputStream stream, final int length) throws IOException {
+        final byte[] bytes = new byte[length];
+        ByteStreams.readFully(stream, bytes);
+        return bytes;
+    }
 
-			AvroSchemas.RECORD.setFields(ImmutableList.<Schema.Field>of(
-					new Schema.Field("id", Schema.createUnion(ImmutableList.<Schema>of(AvroSchemas.NULL,
-							AvroSchemas.PLAIN_IDENTIFIER, AvroSchemas.COMPRESSED_IDENTIFIER)), null,
-							null), //
-					new Schema.Field("properties", Schema.createArray(AvroSchemas.PROPERTY), null, null)));
-		}
+    private URI readCompressedURI(final InputStream stream) throws IOException {
+        if (this.dictionary != null) {
+            final int key = (int) readNumber(stream);
+            return this.dictionary.objectFor(key);
+        } else {
+            final int header = (int) readNumber(stream);
+            if ((header & 0x1) == 0) {
+                final String string = decodeString(readBytes(stream, header >> 1));
+                return this.factory.createURI(string);
+            } else {
+                final String string = decodeString(readBytes(stream, header >> 2));
+                return (header & 0x3) == 1 ? this.factory.createURI(LANG_NS, string) //
+                        : (URI) Data.parseValue(string, Data.getNamespaceMap());
+            }
+        }
+    }
 
-	}
+    private long readNumber(final InputStream stream) throws IOException {
+        final int b = stream.read();
+        if (b < 0) {
+            throw new EOFException();
+        }
+        if (b <= 0x00 + 0x7F) {
+            return readNumberHelper(stream, 1, b & 0x7F);
+        } else if (b <= 0x80 + 0x3F) {
+            return readNumberHelper(stream, 2, b & 0x3F);
+        } else if (b <= 0xC0 + 0x1F) {
+            return readNumberHelper(stream, 3, b & 0x1F);
+        } else if (b <= 0xE0 + 0x0F) {
+            return readNumberHelper(stream, 4, b & 0x0F);
+        } else if (b <= 0xF0 + 0x07) {
+            return readNumberHelper(stream, 5, b & 0x07);
+        } else if (b <= 0xF8 + 0x03) {
+            return readNumberHelper(stream, 6, b & 0x03);
+        } else if (b <= 0xFC + 0x01) {
+            return readNumberHelper(stream, 7, b & 0x01);
+        } else if (b <= 0xFE + 0x01) {
+            return readNumberHelper(stream, 8, b & 0x00);
+        } else {
+            return readNumberHelper(stream, 9, b & 0x00);
+        }
+    }
+
+    private long readNumberHelper(final InputStream stream, final int len, final int start)
+            throws IOException {
+        long num = start;
+        for (int i = 1; i < len; ++i) {
+            final int c = stream.read();
+            if (c < 0) {
+                throw new EOFException();
+            }
+            num = num << 8 | c & 0xFF;
+        }
+        return num;
+    }
+
+    private byte[] encodeString(final String string) {
+        // return string.getBytes(Charsets.UTF_8);
+        return Smaz.compress(string);
+    }
+
+    private String decodeString(final byte[] bytes) {
+        // return new String(bytes, Charsets.UTF_8);
+        return Smaz.decompress(bytes);
+    }
 
 }

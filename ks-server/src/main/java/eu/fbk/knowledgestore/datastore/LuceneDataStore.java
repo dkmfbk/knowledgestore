@@ -53,7 +53,7 @@ public class LuceneDataStore implements DataStore {
 	private HashMap<URI, IndexWriter> writers = new HashMap<>();
 	private HashMap<URI, AtomicInteger> writingOperations = new HashMap<>();
 
-	private Serializer serializer;
+	private SerializerAvro serializer;
 
 	private final int MAX_LUCENE_SEGMENTS = 100;
 
@@ -66,13 +66,13 @@ public class LuceneDataStore implements DataStore {
 
 	static Logger logger = LoggerFactory.getLogger(LuceneDataStore.class);
 
-	public LuceneDataStore(String folder, @Nullable Serializer serializer) {
+	public LuceneDataStore(String folder, @Nullable SerializerAvro serializer) {
 		this.mentionsFolder = folder + File.separator + "mentions";
 		this.resourcesFolder = folder + File.separator + "resources";
 		this.serializer = serializer;
 	}
 
-	public static byte[] serializeRecord(Record record, @Nullable Serializer serializer) throws IOException {
+	public static byte[] serializeRecord(Record record, @Nullable SerializerAvro serializer) throws IOException {
 		if (serializer == null) {
 			ObjectOutput out = null;
 			byte[] returnBytes;
@@ -94,7 +94,7 @@ public class LuceneDataStore implements DataStore {
 		}
 	}
 
-	public static Record unserializeRecord(byte[] bytes, @Nullable Serializer serializer) throws IOException {
+	public static Record unserializeRecord(byte[] bytes, @Nullable SerializerAvro serializer) throws IOException {
 		if (serializer == null) {
 			ObjectInput in = null;
 			Record returnRecord;
