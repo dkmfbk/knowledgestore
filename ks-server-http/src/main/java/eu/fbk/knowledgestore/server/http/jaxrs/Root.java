@@ -5,8 +5,10 @@ import java.lang.management.GarbageCollectorMXBean;
 import java.lang.management.ManagementFactory;
 import java.lang.management.MemoryPoolMXBean;
 import java.lang.management.MemoryUsage;
+import java.net.URL;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -62,6 +64,7 @@ import eu.fbk.knowledgestore.server.http.UIConfig.Example;
 import eu.fbk.knowledgestore.vocabulary.KS;
 import eu.fbk.knowledgestore.vocabulary.NIE;
 import eu.fbk.knowledgestore.vocabulary.NIF;
+import eu.fbk.rdfpro.util.Namespaces;
 
 @Path("/")
 @Facet(name = "internal")
@@ -151,7 +154,7 @@ public class Root extends Resource {
                 view = "/entity-mentions-aggregate";
                 model.put("tabReports", Boolean.TRUE);
                 model.put("subtabEntityMentionsAggregate", Boolean.TRUE);
-                uiReportEntityMentionsAggregate(model, entityID, limit);
+                uiReportEntityMentionsAggregate(model, entityID);
 
             } else if ("mention-value-occurrences".equals(action)) {
                 final URI entityID = getParameter("entity", URI.class, null, model);
@@ -614,7 +617,7 @@ public class Root extends Resource {
     }
 
     private void uiReportEntityMentionsAggregate(final Map<String, Object> model,
-            final URI entityID, final int limit) throws Throwable {
+            final URI entityID) throws Throwable {
 
         // Do nothing in case the entity ID is missing
         if (entityID == null) {
@@ -622,7 +625,7 @@ public class Root extends Resource {
         }
 
         // Render the table
-        final Stream<Record> mentions = getEntityMentions(entityID, MAX_FETCHED_MENTIONS, null);
+        final Stream<Record> mentions = getEntityMentions(entityID, Integer.MAX_VALUE, null);
         final Predicate<URI> filter = Predicates.not(Predicates.in(ImmutableSet.<URI>of(
                 NIF.BEGIN_INDEX, NIF.END_INDEX, KS.MENTION_OF)));
         final String linkTemplate = "ui?action=entity-mentions&entity="
@@ -642,7 +645,7 @@ public class Root extends Resource {
 
         // Compute the # of occurrences of all the values of the given property in entity mentions
         final Multiset<Value> propertyValues = HashMultiset.create();
-        for (final Record mention : getEntityMentions(entityID, MAX_FETCHED_MENTIONS, null)) {
+        for (final Record mention : getEntityMentions(entityID, Integer.MAX_VALUE, null)) {
             propertyValues.addAll(mention.get(property, Value.class));
         }
 
@@ -666,7 +669,7 @@ public class Root extends Resource {
 
         // Compute the # of occurrences of each property URI in entity mentions
         final Multiset<URI> propertyURIs = HashMultiset.create();
-        for (final Record mention : getEntityMentions(entityID, MAX_FETCHED_MENTIONS, null)) {
+        for (final Record mention : getEntityMentions(entityID, Integer.MAX_VALUE, null)) {
             propertyURIs.addAll(mention.getProperties());
         }
 
