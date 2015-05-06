@@ -643,8 +643,23 @@ public final class Client extends AbstractKnowledgeStore {
             // Otherwise, update targets map and either return response or fail
             Client.this.targets.put(action, uri);
             if (status / 100 == 2) {
-                return response.readEntity(responseType);
+                if (Representation.class.isAssignableFrom(responseType.getRawType())) {
+                    response.bufferEntity();
+                }
+                final T result = response.readEntity(responseType);
+                if (result instanceof Stream<?>) {
+                    ((Stream<?>) result).onClose(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            response.close();
+                        }
+
+                    });
+                }
+                return result;
             } else {
+                Util.closeQuietly(response);
                 throw new WebApplicationException(response);
             }
         }
