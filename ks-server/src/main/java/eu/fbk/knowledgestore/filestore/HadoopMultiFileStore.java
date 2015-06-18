@@ -261,40 +261,38 @@ public class HadoopMultiFileStore implements FileStore {
 		return new InterceptCloseOutputStream(stream, fileName);
 	}
 
-	@Override
-	public void delete(final String fileName) throws FileMissingException, IOException {
+    @Override
+    public void delete(final String fileName) throws FileMissingException, IOException {
 
-		synchronized (isWritingBigFile) {
-			writeBigFileLock.lock();
+        writeBigFileLock.lock();
+        try {
+            synchronized (isWritingBigFile) {
+                final Path path = getSmallPath(fileName);
+                if (this.fileSystem.exists(path)) {
+                    // It is a small file
+                    this.fileSystem.delete(path, false);
+                    LOGGER.debug("Deleted file {}", path.getName());
+                } else {
+                    Term s = new Term(FILENAME_FIELD_NAME, fileName);
+                    TermDocs termDocs = luceneReader.termDocs(s);
 
-			try {
-				final Path path = getSmallPath(fileName);
-				if (this.fileSystem.exists(path)) {
-					// It is a small file
-					this.fileSystem.delete(path, false);
-					LOGGER.debug("Deleted file {}", path.getName());
-				}
-				else {
-					Term s = new Term(FILENAME_FIELD_NAME, fileName);
-					TermDocs termDocs = luceneReader.termDocs(s);
+                    if (termDocs.next()) {
+                        Document doc = luceneReader.document(termDocs.doc());
+                        String zipFile = doc.get(ZIP_FIELD_NAME);
+                        Path inputFile = getFolderFromBigFile(zipFile);
 
-					if (termDocs.next()) {
-						Document doc = luceneReader.document(termDocs.doc());
-						String zipFile = doc.get(ZIP_FIELD_NAME);
-						Path inputFile = getFolderFromBigFile(zipFile);
+                        LOGGER.debug("The zip file is {}", inputFile.getName());
+                        deleteFromBigFile(fileName, inputFile);
+                        return;
+                    }
 
-						LOGGER.debug("The zip file is {}", inputFile.getName());
-						deleteFromBigFile(fileName, inputFile);
-						return;
-					}
-
-					throw new FileMissingException(fileName, "The file does not exist");
-				}
-			} finally {
-				writeBigFileLock.unlock();
-			}
-		}
-	}
+                    throw new FileMissingException(fileName, "The file does not exist");
+                }
+            }
+        } finally {
+            writeBigFileLock.unlock();
+        }
+    }
 
 	private synchronized void optimizeOnDemand() throws IOException {
 		if (!luceneReader.isOptimized()) {
@@ -317,15 +315,10 @@ public class HadoopMultiFileStore implements FileStore {
 
 	@Override
 	public void close() {
-		// Nothing to do here. FileSystems are cached and closed by Hadoop at shutdown.
 
-		while (isWritingBigFile.get()) {
-			try {
-				Thread.sleep(100);
-			} catch (Exception e) {
-				// ignored
-			}
-		}
+	    // This will wait for a pending SaveBigFile task to complete
+	    writeBigFileLock.lock();
+	    writeBigFileLock.unlock();
 
 		try {
 			luceneReader.close();
