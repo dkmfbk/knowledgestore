@@ -1,29 +1,11 @@
 package eu.fbk.knowledgestore.filestore;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FilterOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
-import java.util.zip.ZipOutputStream;
-
-import javax.annotation.Nullable;
-
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Throwables;
 import com.google.common.collect.AbstractIterator;
-
+import eu.fbk.knowledgestore.data.Data;
+import eu.fbk.knowledgestore.data.Stream;
 import org.apache.hadoop.fs.FileStatus;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
@@ -38,8 +20,19 @@ import org.apache.lucene.store.FSDirectory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import eu.fbk.knowledgestore.data.Data;
-import eu.fbk.knowledgestore.data.Stream;
+import javax.annotation.Nullable;
+import java.io.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
+import java.util.zip.ZipOutputStream;
 
 /*
 *
@@ -95,6 +88,8 @@ public class HadoopMultiFileStore implements FileStore {
 	private IndexReader luceneReader;
 	private IndexWriter luceneWriter;
 
+	private final Lock writeBigFileLock;
+
 	/**
 	 * Creates a new {@code HadoopFileStore} storing files in the {@code FileSystem} and under the
 	 * {@code rootPath} specified.
@@ -111,6 +106,7 @@ public class HadoopMultiFileStore implements FileStore {
 		this.rootPath = new Path(MoreObjects.firstNonNull(path, DEFAULT_PATH)).makeQualified(this.fileSystem); // resolve wrt workdir
 		this.luceneFolder = new File(MoreObjects.firstNonNull(lucenePath, DEFAULT_LUCENE_PATH));
 		this.smallFilesPath = new Path(this.rootPath.toString() + File.separator + SMALL_FILES_PATH).makeQualified(this.fileSystem);
+		this.writeBigFileLock = new ReentrantLock();
 		LOGGER.info("{} configured, paths={};{}", getClass().getSimpleName(), this.rootPath, this.luceneFolder);
 	}
 
@@ -267,27 +263,36 @@ public class HadoopMultiFileStore implements FileStore {
 
 	@Override
 	public void delete(final String fileName) throws FileMissingException, IOException {
-		final Path path = getSmallPath(fileName);
-		if (this.fileSystem.exists(path)) {
-			// It is a small file
-			this.fileSystem.delete(path, false);
-			LOGGER.debug("Deleted file {}", path.getName());
-		}
-		else {
-			Term s = new Term(FILENAME_FIELD_NAME, fileName);
-			TermDocs termDocs = luceneReader.termDocs(s);
 
-			if (termDocs.next()) {
-				Document doc = luceneReader.document(termDocs.doc());
-				String zipFile = doc.get(ZIP_FIELD_NAME);
-				Path inputFile = getFolderFromBigFile(zipFile);
+		synchronized (isWritingBigFile) {
+			writeBigFileLock.lock();
 
-				LOGGER.debug("The zip file is {}", inputFile.getName());
-				deleteFromBigFile(fileName, inputFile);
-				return;
+			try {
+				final Path path = getSmallPath(fileName);
+				if (this.fileSystem.exists(path)) {
+					// It is a small file
+					this.fileSystem.delete(path, false);
+					LOGGER.debug("Deleted file {}", path.getName());
+				}
+				else {
+					Term s = new Term(FILENAME_FIELD_NAME, fileName);
+					TermDocs termDocs = luceneReader.termDocs(s);
+
+					if (termDocs.next()) {
+						Document doc = luceneReader.document(termDocs.doc());
+						String zipFile = doc.get(ZIP_FIELD_NAME);
+						Path inputFile = getFolderFromBigFile(zipFile);
+
+						LOGGER.debug("The zip file is {}", inputFile.getName());
+						deleteFromBigFile(fileName, inputFile);
+						return;
+					}
+
+					throw new FileMissingException(fileName, "The file does not exist");
+				}
+			} finally {
+				writeBigFileLock.unlock();
 			}
-
-			throw new FileMissingException(fileName, "The file does not exist");
 		}
 	}
 
@@ -367,6 +372,7 @@ public class HadoopMultiFileStore implements FileStore {
 				if (files.length > MAX_NUM_SMALL_FILES) {
 					mustMerge = true;
 					isWritingBigFile.set(true);
+					writeBigFileLock.lock();
 				}
 			}
 			else {
@@ -410,6 +416,7 @@ public class HadoopMultiFileStore implements FileStore {
 				Data.getExecutor().schedule(new SaveBigFile(fileSystem, list, outputFile), 0, TimeUnit.MILLISECONDS);
 			} catch (Exception e) {
 				isWritingBigFile.set(false);
+				writeBigFileLock.unlock();
 				LOGGER.debug(e.getMessage());
 			}
 		}
@@ -453,6 +460,7 @@ public class HadoopMultiFileStore implements FileStore {
 			} catch (Exception e) {
 				LOGGER.debug("Unable to open ZIP file");
 				isWritingBigFile.set(false);
+				writeBigFileLock.unlock();
 				return;
 			}
 
@@ -530,6 +538,7 @@ public class HadoopMultiFileStore implements FileStore {
 			}
 
 			isWritingBigFile.set(false);
+			writeBigFileLock.unlock();
 			try {
 				checkSmallFilesAndMerge();
 			} catch (Exception e) {
