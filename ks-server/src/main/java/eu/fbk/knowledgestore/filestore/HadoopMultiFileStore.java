@@ -537,8 +537,10 @@ public class HadoopMultiFileStore implements FileStore {
 				}
 			}
 
+			if (isWritingBigFile.get()) {
+				writeBigFileLock.unlock();
+			}
 			isWritingBigFile.set(false);
-			writeBigFileLock.unlock();
 			try {
 				checkSmallFilesAndMerge();
 			} catch (Exception e) {
