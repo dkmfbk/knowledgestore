@@ -12,8 +12,19 @@ public class KSPresentation {
 	private Record naf;
 	private Record newsResource;
 	private statistics stats;
+	private boolean foundInKS = false;
     
-    public statistics getStats() {
+    public boolean isFoundInKS() {
+		return foundInKS;
+	}
+
+
+	public void setFoundInKS(boolean foundInKS) {
+		this.foundInKS = foundInKS;
+	}
+
+
+	public statistics getStats() {
         return stats;
     }
 
