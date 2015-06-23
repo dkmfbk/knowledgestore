@@ -40,6 +40,14 @@ public class submitKS {
 	    uploadNaf(batchList, session);
 	    //store mentions records, in a single operation
 	    mentions = submitMentions(batchList, session);
+	    LinkedList<KSPresentation> submittedFiles = getAllSubmittedFiles(batchList);
+        for (KSPresentation ksF : submittedFiles) {
+            nafPopulator.out.append("NAF: " + ksF.getNaf_file_path()).append(ksF.getStats().getStats())
+                    .append("\n");
+            nafPopulator.out.flush();
+            nafPopulator.updatestats(ksF.getStats());
+        }
+    
 	    return 1;
 	} catch (ParseException e) {
 	    //e.printStackTrace();
@@ -89,7 +97,7 @@ public class submitKS {
     	if(nafPopulator.KSresourceReplacement!=2){
     	for (KSPresentation tmp : batchList.values()) {
     	    try {
-    			long cc = session.count(tmp.getNewsResource().getID()).exec();
+    			long cc = session.count(KS.RESOURCE).ids(tmp.getNewsResource().getID()).exec();//TODO
     			if(cc>0)
     				tmp.setFoundInKS(true);
     			else
@@ -135,6 +143,7 @@ public class submitKS {
 
     private static List<Record> submitMentions(Hashtable<String, KSPresentation> batchList, Session session) throws ParseException, IllegalStateException, OperationException {
 	final List<Record> records = getAllMentionType(batchList);
+	if(records.size()>0)
 	session.merge(KS.MENTION).criteria("overwrite *").records(records)
 	    .exec();
 	// Count and print the number of resources in the KS
@@ -147,6 +156,7 @@ public class submitKS {
 
     private static List<Record> submitResources(Hashtable<String, KSPresentation> batchList, Session session) throws IllegalStateException, OperationException, IOException {
 	final List<Record> records = getAllResourceType(batchList);
+	if(records.size()>0)
 	session.merge(KS.RESOURCE).criteria("overwrite *").records(records)
 	    .exec();
 	// Count and print the number of resources in the KS
@@ -238,5 +248,15 @@ public class submitKS {
 	}
 	return temp;
     }
-
+    private static LinkedList<KSPresentation> getAllSubmittedFiles(Hashtable<String, KSPresentation> batchList) {
+    	LinkedList<KSPresentation> temp = new LinkedList<KSPresentation>();
+    	for (KSPresentation tmp : batchList.values()) {
+    		if(doSubmitToKS(tmp)){
+    	    temp.addLast(tmp);
+    		}else{
+    			logger.error("submitKS: NAF: "+tmp.getNaf_file_path()+" - File already exists in KS, discarded!");
+    		}
+    	}
+    	return temp;
+        }
 }

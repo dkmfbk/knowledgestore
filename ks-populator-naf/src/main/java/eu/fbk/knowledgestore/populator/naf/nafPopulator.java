@@ -53,7 +53,7 @@ public class nafPopulator {
 
     public static int KSresourceReplacement = 1;     	//Default 1=discard the new, 2=ignore repopulate, 3=delete repopulate
 	static statistics globalStats = new statistics();
-    static Writer out, mentionFile = null;
+    static Writer out, mentionFile;
     static int batchSize = 1, consumer_threads = 1;
     
     static String disabledItems = "", reportFileName = "report.txt", mentionsF = "records.txt";
@@ -64,8 +64,8 @@ public class nafPopulator {
     static boolean TInFile=false; //to keep track if the input is a compressed tar archive containing NAF files
     static String INpath="";
     private static String SERVER_URL = "";
-    private static String USERNAME = "";
-    private static String PASSWORD = "";
+     static String USERNAME = "";
+     static String PASSWORD = "";
     static Session session = null;
     static KnowledgeStore store = null;
 
@@ -134,6 +134,10 @@ public class nafPopulator {
 	    {
 		//check if we have many inputs in the same call, error and exit
 		int nafFileModalitiesCount = 0;
+		if (cmd.hasOption("ksm")) { 
+			KSresourceReplacement=Integer.parseInt(cmd.getOptionValue("ksm")) ;
+			}
+		
 		if (cmd.hasOption("n")) { nafFileModalitiesCount++;}
 		if (cmd.hasOption("d")) { nafFileModalitiesCount++;}
 		if (cmd.hasOption("f")) { nafFileModalitiesCount++;}
@@ -168,6 +172,9 @@ public class nafPopulator {
                 if(tst.exists()&&!tst.isFile()&&tst.isDirectory()){
                     reportFileName = reportFileName +"/report.txt";
                 }
+                nafPopulator.out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(
+                        // filePath.getPath(),
+                                    nafPopulator.reportFileName)), "utf-8"));
             }
             if (cmd.hasOption("or")) {
                 mentionsF = cmd.getOptionValue("or");
@@ -175,6 +182,9 @@ public class nafPopulator {
                 if(tst.exists()&&!tst.isFile()&&tst.isDirectory()){
                     mentionsF = mentionsF +"/records.txt";
                 }
+                nafPopulator.mentionFile = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(
+                        // filePath.getPath(),
+                                    nafPopulator.mentionsF)), "utf-8"));
             }
             
             if (cmd.hasOption("p")) {
@@ -278,8 +288,12 @@ public class nafPopulator {
 
     }
 
-    static void nullObjects() {
-
+    static void nullObjects() throws IOException {
+        nafPopulator.closeConnection();
+             nafPopulator.mentionFile.flush();
+             nafPopulator.mentionFile.close();
+             nafPopulator.out.flush();
+         nafPopulator.out.close();
         globalStats = null;
         out=null;
         mentionFile = null;
@@ -394,9 +408,13 @@ public class nafPopulator {
     }
 
     static void closeConnection() {
+    	if(session!=null && !session.isClosed()){
         // Close the session
         session.close();
+    	}
+    	if(store!=null&&!store.isClosed()){
         // Ensure to close the KS (will also close pending sessions)
         store.close();
+    	}
     }
 }

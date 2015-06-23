@@ -29,8 +29,12 @@ public class Consumer implements Runnable {
     public void run() {
         try {
             System.out.println("Start Consumer:"+cc);
+            int cN= cc;
             cc++;
-           
+            Session  session = null ;
+            if(nafPopulator.store!=null&&!nafPopulator.store.isClosed()){
+            	session = nafPopulator.store.newSession(nafPopulator.USERNAME, nafPopulator.PASSWORD);
+            }
             // consuming messages until exit message is received
                 while (!nafPopulator.JobFinished||queue.size()>0) {
                     // Thread.sleep(10);
@@ -38,8 +42,9 @@ public class Consumer implements Runnable {
                    // System.out.println("submitting Consumer");
                     Hashtable<String, KSPresentation> obl = queue.poll();
                     if(obl!=null){
+                       System.out.println("Consumer:"+cc+" is serving{"+obl.keySet()+"}");
                     if (!nafPopulator.printToFile) {
-                        submitCollectedData(obl);
+                        submitCollectedData(obl,session);
                         
                     } else {
                         appendCollectedDataToFile(obl);
@@ -68,44 +73,17 @@ public class Consumer implements Runnable {
                 
                 if(allThreadsDied())
                     footer();*/
+            
                 
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException | SecurityException | IOException  e) {
             e.printStackTrace();
         }
     }
     
-  private boolean allThreadsDied() {
-      boolean notFinished = true;
-       for(Thread tmp: nafPopulator.threads){
-           if(tmp.isAlive())
-               notFinished=false;
-           System.err.println("Threads("+tmp.getId()+") - alive:"+tmp.isAlive());
-       }
-       
-       System.err.println("Threads alive check: "+notFinished);
-        return notFinished;
-    }
 
-void  footer() throws IOException{
-        if(!called&&(nafPopulator.JobFinished&&queue.isEmpty())){
-            called=true;
-        nafPopulator.out.append("Global stats:\n").append(nafPopulator.globalStats.getStats());
-        nafPopulator.out.flush();
-        
-        if (!nafPopulator.printToFile&&(nafPopulator.JobFinished||queue.isEmpty())) {
-            nafPopulator.closeConnection();
-        }else{
-            nafPopulator.mentionFile.flush();
-            nafPopulator.mentionFile.close();
-        }
-       // out.append("Global stats:\n").append(globalStats.getStats());
-        //out.flush();
-        nafPopulator.out.close();
-        nafPopulator.nullObjects();
-        }
-    }
 
-    private static void submitCollectedData(Hashtable<String, KSPresentation> mentions) throws ClassNotFoundException,
+
+    private static void submitCollectedData(Hashtable<String, KSPresentation> mentions, Session session) throws ClassNotFoundException,
             InstantiationException, IllegalAccessException, NoSuchMethodException,
             SecurityException, IOException {
         String className = "eu.fbk.knowledgestore.populator.naf.submitKS";
@@ -114,15 +92,10 @@ void  footer() throws IOException{
         Method method = clazz.getMethod("init", parameters);
         Object obj = clazz.newInstance();
         try {
+
             nafPopulator.checkSession();
-            int status = (Integer) method.invoke(obj, mentions, nafPopulator.store_partial_info, nafPopulator.session);
-            if (status == 1) {
-                for (KSPresentation ksF : mentions.values()) {
-                    nafPopulator.out.append("NAF: " + ksF.getNaf_file_path()).append(ksF.getStats().getStats())
-                            .append("\n");
-                    nafPopulator.out.flush();
-                    nafPopulator.updatestats(ksF.getStats());
-                }
+            int status = (Integer) method.invoke(obj, mentions, nafPopulator.store_partial_info, session);
+            if (status == 1) {// resourse submitted and states updated in submitKS.java
             }
             if (status == 0) {
                 // error happens, rollback done. redo file by file,
@@ -133,10 +106,7 @@ void  footer() throws IOException{
                     int status2 = (Integer) method
                             .invoke(obj, mentmp, nafPopulator.store_partial_info, nafPopulator.session);
                     if (status2 == 1) {
-                        nafPopulator.out.append("NAF: " + rc.getValue().getNaf_file_path())
-                                .append(rc.getValue().getStats().getStats()).append("\n");
-                        nafPopulator.out.flush();
-                        nafPopulator.updatestats(rc.getValue().getStats());
+                    	// resourse submitted and states updated in submitKS.java
                         mentmp.clear();
                     }
                     if (status2 == 0) {
@@ -180,10 +150,7 @@ void  footer() throws IOException{
     }
 
     private static void appendCollectedDataToFile(Hashtable<String, KSPresentation> mentions) throws IOException {
-        if (nafPopulator.mentionFile == null) {
-            nafPopulator.mentionFile = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(
-                    nafPopulator.mentionsF)), "utf-8"));
-        }
+       
         for (Entry<String, KSPresentation> mn : mentions.entrySet()) {
             nafPopulator.out.append("NAF: " + mn.getValue().getNaf_file_path())
                     .append(mn.getValue().getStats().getStats()).append("\n");
