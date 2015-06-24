@@ -51,6 +51,7 @@ import eu.fbk.knowledgestore.internal.rdf.RDFUtil;
 import eu.fbk.knowledgestore.vocabulary.KS;
 import eu.fbk.knowledgestore.vocabulary.NFO;
 import eu.fbk.knowledgestore.vocabulary.NIE;
+import eu.fbk.rdfpro.tql.TQL;
 
 @Provider
 @Consumes(MediaType.WILDCARD)
@@ -124,7 +125,7 @@ public class Serializer implements MessageBodyReader<Object>, MessageBodyWriter<
                 return representation;
 
             } else if (isAssignable(genericType, Protocol.STREAM_OF_RECORDS.getType())) {
-                final RDFFormat format = RDFFormat.forMIMEType(mimeType);
+                final RDFFormat format = formatFor(mimeType);
                 final AtomicLong numStatements = new AtomicLong();
                 final AtomicLong numRecords = new AtomicLong();
                 Stream<Statement> statements = RDFUtil.readRDF(in, format, null, null, false);
@@ -136,7 +137,7 @@ public class Serializer implements MessageBodyReader<Object>, MessageBodyWriter<
                 return records;
 
             } else if (isAssignable(genericType, Protocol.STREAM_OF_OUTCOMES.getType())) {
-                final RDFFormat format = RDFFormat.forMIMEType(mimeType);
+                final RDFFormat format = formatFor(mimeType);
                 final AtomicLong numStatements = new AtomicLong();
                 final AtomicLong numOutcomes = new AtomicLong();
                 Stream<Statement> statements = RDFUtil.readRDF(in, format, null, null, false);
@@ -148,7 +149,7 @@ public class Serializer implements MessageBodyReader<Object>, MessageBodyWriter<
                 return outcomes;
 
             } else if (isAssignable(genericType, Protocol.STREAM_OF_STATEMENTS.getType())) {
-                final RDFFormat format = RDFFormat.forMIMEType(mimeType);
+                final RDFFormat format = formatFor(mimeType);
                 final AtomicLong numStatements = new AtomicLong();
                 Stream<Statement> statements = RDFUtil.readRDF(in, format, null, null, false);
                 statements = statements.track(numStatements, null);
@@ -205,7 +206,7 @@ public class Serializer implements MessageBodyReader<Object>, MessageBodyWriter<
             } else if (isAssignable(Protocol.STREAM_OF_RECORDS.getType(), genericType)) {
                 headers.putSingle(Protocol.HEADER_CHUNKED, "true");
                 final String mime = setupType(mimeType, Protocol.MIME_TYPES_RDF, headers);
-                final RDFFormat format = RDFFormat.forMIMEType(mime);
+                final RDFFormat format = formatFor(mime);
                 final AtomicLong recordCounter = new AtomicLong();
                 Stream<? extends Record> records = (Stream<? extends Record>) object;
                 records = records.track(recordCounter, null);
@@ -216,7 +217,7 @@ public class Serializer implements MessageBodyReader<Object>, MessageBodyWriter<
             } else if (isAssignable(Protocol.STREAM_OF_OUTCOMES.getType(), genericType)) {
                 headers.putSingle(Protocol.HEADER_CHUNKED, "true");
                 final String mime = setupType(mimeType, Protocol.MIME_TYPES_RDF, headers);
-                final RDFFormat format = RDFFormat.forMIMEType(mime);
+                final RDFFormat format = formatFor(mime);
                 final AtomicLong outcomeCounter = new AtomicLong();
                 Stream<? extends Outcome> outcomes = (Stream<? extends Outcome>) object;
                 outcomes = outcomes.track(outcomeCounter, null);
@@ -226,7 +227,7 @@ public class Serializer implements MessageBodyReader<Object>, MessageBodyWriter<
 
             } else if (isAssignable(Protocol.STREAM_OF_STATEMENTS.getType(), genericType)) {
                 final String mime = setupType(mimeType, Protocol.MIME_TYPES_RDF, headers);
-                final RDFFormat format = RDFFormat.forMIMEType(mime);
+                final RDFFormat format = formatFor(mime);
                 final Stream<? extends Statement> stmt = (Stream<? extends Statement>) object;
                 final long count = RDFUtil.writeRDF(out, format, namespaces, null, stmt);
                 logWrite(ts, out, count, "statement(s)");
@@ -451,6 +452,18 @@ public class Serializer implements MessageBodyReader<Object>, MessageBodyWriter<
             builder.append(elapsed).append(" ms");
             LOGGER.debug(builder.toString());
         }
+    }
+
+    private static RDFFormat formatFor(final String mimeType) {
+        final RDFFormat format = RDFFormat.forMIMEType(mimeType);
+        if (format == null) {
+            throw new IllegalArgumentException("No RDF format for MIME type '" + mimeType + "'");
+        }
+        return format;
+    }
+
+    static {
+        RDFFormat.register(TQL.FORMAT);
     }
 
 }

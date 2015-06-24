@@ -5,10 +5,8 @@ import java.lang.management.GarbageCollectorMXBean;
 import java.lang.management.ManagementFactory;
 import java.lang.management.MemoryPoolMXBean;
 import java.lang.management.MemoryUsage;
-import java.net.URL;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -64,7 +62,6 @@ import eu.fbk.knowledgestore.server.http.UIConfig.Example;
 import eu.fbk.knowledgestore.vocabulary.KS;
 import eu.fbk.knowledgestore.vocabulary.NIE;
 import eu.fbk.knowledgestore.vocabulary.NIF;
-import eu.fbk.rdfpro.util.Namespaces;
 
 @Path("/")
 @Facet(name = "internal")
@@ -81,8 +78,6 @@ public class Root extends Resource {
             "object", "graph");
 
     private static final int MAX_FETCHED_RESULTS = 10000;
-
-    private static final int MAX_FETCHED_MENTIONS = 10000;
 
     // private static final Pattern NIF_OFFSET_PATTERN = Pattern.compile("char=(\\d+),(\\d+)");
 
@@ -735,23 +730,25 @@ public class Root extends Resource {
             }
         }
 
-        final StringBuilder builder = new StringBuilder();
-        builder.append("SELECT ?m ?e WHERE { ?e ");
-        builder.append(Data.toString(getUIConfig().getDenotedByProperty(), null));
-        builder.append(" ?m VALUES ?m {");
-        for (final URI mentionID : mentionIDs) {
-            builder.append(' ').append(Data.toString(mentionID, null));
-        }
-        builder.append(" } ");
-        if (!getUIConfig().isDenotedByAllowsGraphs()) {
-            builder.append("FILTER NOT EXISTS { GRAPH ?e { ?s ?p ?o } } ");
-        }
-        builder.append("}");
-        for (final BindingSet bindings : getSession().sparql(builder.toString()).execTuples()) {
-            final URI mentionID = (URI) bindings.getValue("m");
-            final URI entityID = (URI) bindings.getValue("e");
-            mentions.get(mentionID).add(KS.REFERS_TO, entityID);
-            entityIDs.add(entityID);
+        for (final List<URI> ids : Stream.create(mentionIDs).chunk(128)) {
+            final StringBuilder builder = new StringBuilder();
+            builder.append("SELECT ?m ?e WHERE { ?e ");
+            builder.append(Data.toString(getUIConfig().getDenotedByProperty(), null));
+            builder.append(" ?m VALUES ?m {");
+            for (final URI mentionID : ids) {
+                builder.append(' ').append(Data.toString(mentionID, null));
+            }
+            builder.append(" } ");
+            if (!getUIConfig().isDenotedByAllowsGraphs()) {
+                builder.append("FILTER NOT EXISTS { GRAPH ?e { ?s ?p ?o } } ");
+            }
+            builder.append("}");
+            for (final BindingSet bindings : getSession().sparql(builder.toString()).execTuples()) {
+                final URI mentionID = (URI) bindings.getValue("m");
+                final URI entityID = (URI) bindings.getValue("e");
+                mentions.get(mentionID).add(KS.REFERS_TO, entityID);
+                entityIDs.add(entityID);
+            }
         }
 
         // FOLLOWING CODE CAN INCREASE THE NUMBER OF MENTIONS RETRIEVED, BUT THE QUERY USED MAY
