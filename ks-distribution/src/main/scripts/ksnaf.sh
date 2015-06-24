@@ -38,6 +38,6 @@ cd $BASEDIR
 exec "$JAVA" $JAVA_OPTS \
   -classpath "$CLASSPATH" \
   -Dfile.encoding=UTF-8 \
-  -Dlogback.configurationFile=ks.log.xml \
+  -Dlogback.configurationFile=ksnaf.log.xml \
   eu.fbk.knowledgestore.populator.naf.nafPopulator \
   "$@"
