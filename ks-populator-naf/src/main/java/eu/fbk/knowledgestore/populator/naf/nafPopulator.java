@@ -51,9 +51,10 @@ import org.slf4j.LoggerFactory;
 
 public class nafPopulator {
 
-    static statistics globalStats = new statistics();
-    static Writer out, mentionFile = null;
-    static int batchSize = 1, consumer_threads = 1;;
+    public static int KSresourceReplacement = 1;     	//Default 1=discard the new, 2=ignore repopulate, 3=delete repopulate
+	static statistics globalStats = new statistics();
+    static Writer out, mentionFile;
+    static int batchSize = 1, consumer_threads = 1;
     
     static String disabledItems = "", reportFileName = "report.txt", mentionsF = "records.txt";
     static boolean recursion = false, printToFile = false,JobFinished=false;
@@ -63,8 +64,8 @@ public class nafPopulator {
     static boolean TInFile=false; //to keep track if the input is a compressed tar archive containing NAF files
     static String INpath="";
     private static String SERVER_URL = "";
-    private static String USERNAME = "";
-    private static String PASSWORD = "";
+     static String USERNAME = "";
+     static String PASSWORD = "";
     static Session session = null;
     static KnowledgeStore store = null;
 
@@ -109,6 +110,9 @@ public class nafPopulator {
                 "the number of batch queue items to be hold in memory; defaults to 2.");
         options.addOption("ct", "consumerThreads", true,
                 "the number of consumer threads to be thrown simultaneously, 1 is default.");
+        options.addOption("ksm", "ksModality", true,
+                "Submitting to KS modality:  (1=discard the new,Default) , (2=ignore previous content and populate), (3=delete previous content and repopulate)");
+
         options.addOption("v", "version", false,
                 "display version and copyright information, then exit");
         options.addOption("h", "help", false, "display usage information, then exit");
@@ -130,6 +134,10 @@ public class nafPopulator {
 	    {
 		//check if we have many inputs in the same call, error and exit
 		int nafFileModalitiesCount = 0;
+		if (cmd.hasOption("ksm")) { 
+			KSresourceReplacement=Integer.parseInt(cmd.getOptionValue("ksm")) ;
+			}
+		
 		if (cmd.hasOption("n")) { nafFileModalitiesCount++;}
 		if (cmd.hasOption("d")) { nafFileModalitiesCount++;}
 		if (cmd.hasOption("f")) { nafFileModalitiesCount++;}
@@ -164,6 +172,9 @@ public class nafPopulator {
                 if(tst.exists()&&!tst.isFile()&&tst.isDirectory()){
                     reportFileName = reportFileName +"/report.txt";
                 }
+                nafPopulator.out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(
+                        // filePath.getPath(),
+                                    nafPopulator.reportFileName)), "utf-8"));
             }
             if (cmd.hasOption("or")) {
                 mentionsF = cmd.getOptionValue("or");
@@ -171,6 +182,9 @@ public class nafPopulator {
                 if(tst.exists()&&!tst.isFile()&&tst.isDirectory()){
                     mentionsF = mentionsF +"/records.txt";
                 }
+                nafPopulator.mentionFile = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(
+                        // filePath.getPath(),
+                                    nafPopulator.mentionsF)), "utf-8"));
             }
             
             if (cmd.hasOption("p")) {
@@ -224,7 +238,7 @@ public class nafPopulator {
                     TInFile=true;
                     INpath = cmd.getOptionValue('t');
                 }
-		//starting producer to produce messages in queue
+                //starting producer to produce messages in queue
                 new Thread(producer).start();
                 //starting consumer to consume messages from queue
               /*  ExecutorService threadPool = Executors.newFixedThreadPool(consumer_threads);
@@ -274,8 +288,12 @@ public class nafPopulator {
 
     }
 
-    static void nullObjects() {
-
+    static void nullObjects() throws IOException {
+        nafPopulator.closeConnection();
+             nafPopulator.mentionFile.flush();
+             nafPopulator.mentionFile.close();
+             nafPopulator.out.flush();
+         nafPopulator.out.close();
         globalStats = null;
         out=null;
         mentionFile = null;
@@ -390,9 +408,13 @@ public class nafPopulator {
     }
 
     static void closeConnection() {
+    	if(session!=null && !session.isClosed()){
         // Close the session
         session.close();
+    	}
+    	if(store!=null&&!store.isClosed()){
         // Ensure to close the KS (will also close pending sessions)
         store.close();
+    	}
     }
 }

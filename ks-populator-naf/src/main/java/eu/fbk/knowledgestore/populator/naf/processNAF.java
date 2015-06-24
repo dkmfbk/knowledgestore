@@ -13,7 +13,6 @@ import java.io.Writer;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -66,47 +65,6 @@ import eu.fbk.knowledgestore.vocabulary.NWR;
 
 public class processNAF {
 
-    static NAF doc;
-    static NafHeader nafHeader;
-    static int mentionCounter = 0;
-    static DCTERMS dct = new DCTERMS();
-    static String nafPublicId;
-    static URI NAF_file_id;
-    static URI news_file_id;
-    static String PREFIX = "http://www.newsreader-project.eu/data/cars";
-    static Terms globalTerms;
-    static Text globalText;
-    static Hashtable<String, URI> nafLayerMapper = new Hashtable<String, URI>();
-    static Hashtable<String, URI> entityTypeMapper = new Hashtable<String, URI>();
-    static Hashtable<String, URI> timex3TypeMapper = new Hashtable<String, URI>();
-    static Hashtable<String, URI> valueTypeMapper = new Hashtable<String, URI>();
-    static Hashtable<String, URI> certaintyMapper = new Hashtable<String, URI>();
-    static Hashtable<String, URI> factualityMapper = new Hashtable<String, URI>();
-    static Hashtable<String, URI> polarityMapper = new Hashtable<String, URI>();
-    static Hashtable<String, URI> partOfSpeechMapper = new Hashtable<String, URI>();
-    static Hashtable<String, URI> eventClassMapper = new Hashtable<String, URI>();
-    static Hashtable<String, URI> entityClassMapper = new Hashtable<String, URI>();
-    static Hashtable<String, URI> timex3ModifierMapper = new Hashtable<String, URI>();
-    static Hashtable<String, URI> funtionInDocumentMapper = new Hashtable<String, URI>();
-    static Hashtable<String, URI> syntacticTypeMapper = new Hashtable<String, URI>();
-    static Hashtable<String, URI> tenseMapper = new Hashtable<String, URI>();
-    static Hashtable<String, URI> aspectMapper = new Hashtable<String, URI>();
-    static Hashtable<String, URI> tLinkTypeMapper = new Hashtable<String, URI>();
-    static Hashtable<String, URI> srlExternalRefResourceTypeMapper = new Hashtable<String, URI>();
-    static Hashtable<String, Record> mentionListHash = new Hashtable<String, Record>();
-    static LinkedList<Record> entityMentions = new LinkedList<Record>();
-    private static Logger logger = LoggerFactory.getLogger(nafPopulator.class);
-    static Record newsFile2, nafFile2;
-    static Writer out;
-    static int entityMen = 0, corefMention = 0,corefMentionEvent = 0,corefMentionNotEvent = 0, timeMention = 0, srlMention = 0, entityMen2 = 0,
-            corefMention2 = 0, timeMention2 = 0, srlMention2 = 0, rolewithEntity = 0,
-            rolewithEntity2 = 0, rolewithoutEntity = 0, factualityMentions = 0,
-            factualityMentions2 = 0, roleMentions = 0;
-    static int PER = 0, LOC = 0, ORG = 0, PRO = 0, fin = 0, mix = 0, no_mapping = 0;
-    static boolean logDebugActive = true, logErrorActive = true;
-    static String rawText = "";
-    static boolean storePartialInforInCaseOfError = false;
-    static File filePath = null;
 
     public static void main(String[] args) throws JAXBException, IOException {
         // args[0] is the path, [args[1] is the disabled_Items]
@@ -120,164 +78,135 @@ public class processNAF {
                     .println("eu.fbk.knowledgestore.populator.naf.processNAF path disabled_items \ndisabled_items = [Entities|Mentions|Resources] ");
             System.exit(-1);
         }
-        analyzePathAndRunSystem(path, disabled_Items);
+    	processNAFVariables vars = new processNAFVariables();
+
+        analyzePathAndRunSystem(path, disabled_Items,vars);
     }
 
     public static KSPresentation init(String fPath, Writer inout, String disabled_Items,
             boolean store_partical_info) throws JAXBException, IOException {
-        storePartialInforInCaseOfError = store_partical_info;
-        out = inout;
-        statistics stat = readFile(fPath, disabled_Items);
+    	processNAFVariables vars = new processNAFVariables();
+    	vars.storePartialInforInCaseOfError = store_partical_info;
+    	vars.out = inout;
+        statistics stat = readFile(fPath, disabled_Items, vars);
         KSPresentation returned = new KSPresentation();
         returned.setNaf_file_path(fPath);
-        returned.setNews(rawText);
-        returned.setMentions(mentionListHash);
-        returned.setNaf(nafFile2);
-        returned.setNewsResource(newsFile2);
+        returned.setNews(vars.rawText);
+        returned.setMentions(vars.mentionListHash);
+        returned.setNaf(vars.nafFile2);
+        returned.setNewsResource(vars.newsFile2);
         returned.setStats(stat);
-        clearObjects();
         return returned;
     }
 
-    private static void clearObjects() {
-        doc = null;
-        nafHeader = null;
-        nafPublicId = null;
-        NAF_file_id = null;
-        news_file_id = null;
-        globalTerms = null;
-        globalText = null;
-        nafLayerMapper = null;
-        entityTypeMapper = null;
-        timex3TypeMapper = null;
-        valueTypeMapper = null;
-        certaintyMapper = null;
-        factualityMapper = null;
-        polarityMapper = null;
-        partOfSpeechMapper = null;
-        eventClassMapper = null;
-        entityClassMapper = null;
-        timex3ModifierMapper = null;
-        funtionInDocumentMapper = null;
-        syntacticTypeMapper = null;
-        tenseMapper = null;
-        aspectMapper = null;
-        tLinkTypeMapper = null;
-        srlExternalRefResourceTypeMapper = null;
-        mentionListHash = null;
-        entityMentions = null;
-        rawText = null;
-    }
-
-    private static void analyzePathAndRunSystem(String path, String disabled_Items)
+    
+    private static void analyzePathAndRunSystem(String path, String disabled_Items,processNAFVariables vars)
             throws JAXBException, IOException {
-        filePath = new File(path);
-        if (filePath.exists() && filePath.isDirectory()) {
+    	vars.filePath = new File(path);
+        if (vars.filePath.exists() && vars.filePath.isDirectory()) {
             // create report file in the same directory of running the system
-            out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(
-                    filePath.getPath(), "report.txt")), "utf-8"));
-            File[] listOfFiles = filePath.listFiles();
+        	vars.out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(
+            		vars.filePath.getPath(), "report.txt")), "utf-8"));
+            File[] listOfFiles = vars.filePath.listFiles();
             for (int i = 0; i < listOfFiles.length; i++) {
                 if (listOfFiles[i].isFile() && listOfFiles[i].getName().endsWith(".naf")) {
                     System.err.println(i + "=" + listOfFiles[i].getName());
-                    out.append("\n" + i + "=" + listOfFiles[i].getName() + "\n");
-                    readFile(listOfFiles[i].getPath(), disabled_Items);
+                    vars.out.append("\n" + i + "=" + listOfFiles[i].getName() + "\n");
+                    readFile(listOfFiles[i].getPath(), disabled_Items,vars);
                 }
-                out.flush();
-                clearObjects();
+                vars.out.flush();
                 System.gc();
                 Runtime.getRuntime().gc();
             }
-        } else if (filePath.exists() && filePath.isFile()) {
+        } else if (vars.filePath.exists() && vars.filePath.isFile()) {
             // create report file in the same directory of running the system
-            out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(
-                    filePath.getPath() + ".report.txt")), "utf-8"));
-            out.append(filePath.getPath() + "\n");
-            readFile(filePath.getPath(), disabled_Items);
+        	vars.out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(
+        			vars.filePath.getPath() + ".report.txt")), "utf-8"));
+        	vars.out.append(vars.filePath.getPath() + "\n");
+            readFile(vars.filePath.getPath(), disabled_Items,vars);
         }
-        out.flush();
-        out.close();
+        vars.out.flush();
+        vars.out.close();
     }
 
-    public static statistics readFile(String filepath, String disabled_Items) throws JAXBException,
+    public static statistics readFile(String filepath, String disabled_Items, processNAFVariables vars) throws JAXBException,
             IOException {
-        storePartialInforInCaseOfError = true;
-	filePath = new File(filepath);
-        logDebug("Start working with (" + filePath.getName() + ")");
+    	vars.storePartialInforInCaseOfError = true;
+    	vars.filePath = new File(filepath);
+        logDebug("Start working with (" + vars.filePath.getName() + ")",vars);
         String disabledItems = "";// Default empty so generate all layers of data
         if (disabled_Items != null
                 && (disabled_Items.matches("(?i)Entity") || disabled_Items.contains("(?i)Mention") || disabled_Items.contains("(?i)Resource"))) {
             disabledItems = disabled_Items;
-            logDebug("Disable layer: " + disabledItems);
+            logDebug("Disable layer: " + disabledItems,vars);
         }
-        init();
-        readNAFFile(filePath);
-        for (Object obj : doc
+        readNAFFile(vars.filePath,vars);
+        for (Object obj : vars.doc
                 .getNafHeaderOrRawOrTextOrTermsOrDepsOrChunksOrEntitiesOrCoreferencesOrConstituencyOrTimeExpressionsOrFactualitylayerOrTunitsOrLocationsOrDates()) {
             if (obj instanceof NafHeader) {
-                getNAFHEADERMentions((NafHeader) obj);
+                getNAFHEADERMentions((NafHeader) obj,vars);
             } else if (obj instanceof Raw) {
                 // raw text
-                rawText = ((Raw) obj).getvalue();
+            	vars.rawText = ((Raw) obj).getvalue();
             } else if (obj instanceof Text) {
-                globalText = (Text) obj;
+            	vars.globalText = (Text) obj;
             } else if (obj instanceof Entities) {
-		getEntitiesMentions((Entities) obj, disabledItems);
+		getEntitiesMentions((Entities) obj, disabledItems,vars);
             } 
 	    else if (obj instanceof Coreferences) {
-                getCoreferencesMentions((Coreferences) obj);
+                getCoreferencesMentions((Coreferences) obj,vars);
             } 
 	    else if (obj instanceof TimeExpressions) {
-                getTimeExpressionsMentions((TimeExpressions) obj);
+                getTimeExpressionsMentions((TimeExpressions) obj,vars);
             } 
 	    else if (obj instanceof Factualitylayer) {
-                getFactualityMentions((Factualitylayer) obj);
+                getFactualityMentions((Factualitylayer) obj,vars);
             }
 	    else if (obj instanceof Terms) {
-                globalTerms = (Terms) obj;
+	    	vars.globalTerms = (Terms) obj;
             } else {
                 // logError("Error:Uncatchable Object:"+obj);
             }
         }
-	getSRLMentions();
+	getSRLMentions(vars);
 
 	// logDebug("ROL1 before dumpStack()") ; Thread.currentThread().dumpStack();
 
-	fixMentions();
+	fixMentions(vars);
 
-        logDebug("End of NAF populating.");
+        logDebug("End of NAF populating.",vars);
         statistics st = new statistics();
-        st.setObjectMention((corefMention2+entityMen2));
-        st.setPER(PER);
-        st.setORG(ORG);
-        st.setLOC(LOC);
-        st.setFin(fin);
-        st.setMix(mix);
-        st.setPRO(PRO);
-        st.setNo_mapping(no_mapping);
-        st.setTimeMention(timeMention2);
-        st.setEventMention((factualityMentions2 + srlMention2));
-        st.setParticipationMention(rolewithEntity2);
-        st.setEntity(entityMen);
-        st.setCoref(corefMention);
-        st.setCorefMentionEvent(corefMentionEvent);
-        st.setCorefMentionNotEvent(corefMentionNotEvent);
-        st.setFactuality(factualityMentions);
-        st.setRole(roleMentions);
-        st.setRolewithEntity(rolewithEntity);
-        st.setRolewithoutEntity(rolewithoutEntity);
-        st.setSrl(srlMention);
-        st.setTimex(timeMention);
+        st.setObjectMention((vars.corefMention2+vars.entityMen2));
+        st.setPER(vars.PER);
+        st.setORG(vars.ORG);
+        st.setLOC(vars.LOC);
+        st.setFin(vars.fin);
+        st.setMix(vars.mix);
+        st.setPRO(vars.PRO);
+        st.setNo_mapping(vars.no_mapping);
+        st.setTimeMention(vars.timeMention2);
+        st.setEventMention((vars.factualityMentions2 + vars.srlMention2));
+        st.setParticipationMention(vars.rolewithEntity2);
+        st.setEntity(vars.entityMen);
+        st.setCoref(vars.corefMention);
+        st.setCorefMentionEvent(vars.corefMentionEvent);
+        st.setCorefMentionNotEvent(vars.corefMentionNotEvent);
+        st.setFactuality(vars.factualityMentions);
+        st.setRole(vars.roleMentions);
+        st.setRolewithEntity(vars.rolewithEntity);
+        st.setRolewithoutEntity(vars.rolewithoutEntity);
+        st.setSrl(vars.srlMention);
+        st.setTimex(vars.timeMention);
         
-        logDebug(st.getStats());
+        logDebug(st.getStats(),vars);
         return st;
     }
 
-    private static void getEntitiesMentions(Entities obj, String disabledItems) {
-        if (!checkHeaderTextTerms()) {
-            logError("Error: populating stopped");
+    private static void getEntitiesMentions(Entities obj, String disabledItems,processNAFVariables vars) {
+        if (!checkHeaderTextTerms(vars)) {
+            logError("Error: populating stopped",vars);
         } else {
-            logDebug("Start mapping the Entities mentions:");
+            logDebug("Start mapping the Entities mentions:",vars);
         }
         for (Entity entObj : ((Entities) obj).getEntity()) {
             String deg = "";
@@ -293,33 +222,33 @@ public class processNAF {
 		    */
                     referencesElements++;
                     if (((References) generalEntObj).getSpan().size() < 1) {
-                        logWarn("Every entity must contain a 'span' element inside 'references'");
+                        logWarn("Every entity must contain a 'span' element inside 'references'",vars);
                     }
                     if (((References) generalEntObj).getSpan().size() > 1) {
                         logWarn("xpath(///NAF/entities/entity/references/span/), spanSize("
                                 + ((References) generalEntObj).getSpan().size()
-                                + ") Every entity must contain a unique 'span' element inside 'references'");
+                                + ") Every entity must contain a unique 'span' element inside 'references'",vars);
                     }
                     for (Span spansObj : ((References) generalEntObj).getSpan()) {
 			boolean addMentionFlag = true;
 
                         if (spansObj.getTarget().size() < 1) {
 			    addMentionFlag = false;
-                            logWarn("Every span in an entity must contain at least one target inside");
+                            logWarn("Every span in an entity must contain at least one target inside",vars);
 			    continue;
                         }
                        
                         Record m = Record.create();
                         deg += "RDF.TYPE:OBJECT_MENTION,ENTITY_MENTION,MENTION";
                         m.add(RDF.TYPE, NWR.OBJECT_MENTION, NWR.ENTITY_MENTION, KS.MENTION);
-                        deg = "MENTION_OF:" + news_file_id.stringValue() + "|" + deg;
-                        m.add(KS.MENTION_OF, news_file_id);
+                        deg = "MENTION_OF:" + vars.news_file_id.stringValue() + "|" + deg;
+                        m.add(KS.MENTION_OF, vars.news_file_id);
 
                         if (((References) generalEntObj).getSpan().size() > 1) {
                             m.add(NWR.LOCAL_COREF_ID, entObj.getId());
                             deg += "|LOCAL_COREF_ID:" + entObj.getId();
                         }
-                        generateTheMIdAndSetID(spansObj, m);
+                        generateTheMIdAndSetID(spansObj, m,vars);
                         charS = m.getUnique(NIF.BEGIN_INDEX, Integer.class) + "," + m.getUnique(NIF.END_INDEX, Integer.class);
                         deg = "MentionId:" + m.getID() + "|" + deg;
 
@@ -327,48 +256,80 @@ public class processNAF {
 			/*
 			  don't use predefined types from guidelines but keep the mention with type provided in the NAF
 			*/
-			boolean keepEntityTypeProvidedByNaf = true;
-			String type3charLC = entObj.getType().substring(0, 3).toLowerCase();
-
+			boolean keepEntityTypeProvidedByNaf = true,dbpedia=true;
+			String type3charLC = "";
+			if(!dbpedia){
+			if(entObj.getType()!=null&&entObj.getType()!=""&&!entObj.getType().equalsIgnoreCase("misc")){
+			 type3charLC = entObj.getType().substring(0, 3).toLowerCase();
+			}else{
+				type3charLC = "misc";
+				entObj.setType("misc");
+			}
 			if (keepEntityTypeProvidedByNaf) {
 			    URI dynamicTypeUri = ValueFactoryImpl.getInstance().createURI(NWR.NAMESPACE, "entity_type_" + entObj.getType().toLowerCase());
 			    m.add(NWR.ENTITY_TYPE, dynamicTypeUri);
 			    deg += "|ENTITY_TYPE:" + dynamicTypeUri;
 			    logDebug("ROL1: <entity> added new mention for id " + entObj.getId() + ", charSpan |" 
-				    + getCharSpanFromSpan(spansObj) + "|, type " + dynamicTypeUri);
+				    + getCharSpanFromSpan(spansObj,vars) + "|, type " + dynamicTypeUri,vars);
 			} else {
-			    if (entityTypeMapper.containsKey(type3charLC)
-				&& entityTypeMapper.get(type3charLC) != null) {
-				m.add(NWR.ENTITY_TYPE, entityTypeMapper.get(type3charLC));
-				deg += "|ENTITY_TYPE:" + entityTypeMapper.get(type3charLC);
+			    if (vars.entityTypeMapper.containsKey(type3charLC)
+				&& vars.entityTypeMapper.get(type3charLC) != null) {
+				m.add(NWR.ENTITY_TYPE, vars.entityTypeMapper.get(type3charLC));
+				deg += "|ENTITY_TYPE:" + vars.entityTypeMapper.get(type3charLC);
 				logDebug("ROL1: <entity> STRANGE added new mention for id " + entObj.getId() + ", charSpan |" 
-					+ getCharSpanFromSpan(spansObj) + "|, type " + entityTypeMapper.get(type3charLC));
+					+ getCharSpanFromSpan(spansObj,vars) + "|, type " + vars.entityTypeMapper.get(type3charLC),vars);
 			    } else {
 				addMentionFlag = false;
 				logWarn("xpath(//NAF/entities/entity/@type),type(" + entObj.getType() + "), id(" 
-					+ entObj.getId() + ") NO mapping for it");
-				no_mapping++;
+					+ entObj.getId() + ") NO mapping for it",vars);
+				vars.no_mapping++;
 			    }
 			}
+			 }//dbpedia finish
+			else{
+				if(entObj.getType()==null||entObj.getType().equals("")){
+					type3charLC = "misc";
+					entObj.setType("misc");
+				}else{
+					if(entObj.getType().toLowerCase().contains("per")||entObj.getType().toLowerCase().contains("dbpedia:person")){
+						entObj.setType("person");
+						type3charLC = entObj.getType().substring(0, 3).toLowerCase();
+					}else if(entObj.getType().toLowerCase().contains("org")||entObj.getType().toLowerCase().contains("dbpedia:organisation")){
+						entObj.setType("organization");
+						type3charLC = entObj.getType().substring(0, 3).toLowerCase();
+					} else if(entObj.getType().toLowerCase().contains("loc")||entObj.getType().toLowerCase().contains("DBpedia:Place")){
+						entObj.setType("location");
+						type3charLC = entObj.getType().substring(0, 3).toLowerCase();
+					}else {
+						entObj.setType("misc");
+						type3charLC = "misc";
+					}
+				}
+			    URI dynamicTypeUri = ValueFactoryImpl.getInstance().createURI(NWR.NAMESPACE, "entity_type_" + entObj.getType().toLowerCase());
+			    m.add(NWR.ENTITY_TYPE, dynamicTypeUri);
+			    deg += "|ENTITY_TYPE:" + dynamicTypeUri;
+			    logDebug("ROL1: <entity> added new mention for id " + entObj.getId() + ", charSpan |" 
+				    + getCharSpanFromSpan(spansObj,vars) + "|, type " + dynamicTypeUri,vars);
 
-
+			}
 			if (addMentionFlag) {
-			    if (addOrMergeAMention(m)==1) {
-				entityMentions.addLast(m);
+			    if (addOrMergeAMention(m,vars)==1) {
+		            String charS2 = m.getUnique(NIF.BEGIN_INDEX, Integer.class) + "," + m.getUnique(NIF.END_INDEX, Integer.class);
+		            vars.entityMentions.put(charS2, m);
 				if (type3charLC.equalsIgnoreCase("PER"))
-				    PER++;
+					vars.PER++;
 				if (type3charLC.equalsIgnoreCase("LOC"))
-				    LOC++;
+					vars.LOC++;
 				if (type3charLC.equalsIgnoreCase("ORG"))
-				    ORG++;
+					vars.ORG++;
 				if (type3charLC.equalsIgnoreCase("PRO"))
-				    PRO++;
+					vars.PRO++;
 				if (type3charLC.equalsIgnoreCase("fin"))
-				    fin++;
-				if (type3charLC.equalsIgnoreCase("mix"))
-				    mix++;
-				entityMen2++;
-				entityMen++;
+					vars.fin++;
+				if (type3charLC.equalsIgnoreCase("mix")||type3charLC.equalsIgnoreCase("misc"))
+					vars.mix++;
+				vars.entityMen2++;
+				vars.entityMen++;
 			    }
 			}
                     }
@@ -382,9 +343,37 @@ public class processNAF {
 		    if (! disabledItems.matches("(?i)Entity")) {
 			boolean firstTimeFlag = true;
 			String chosenReferenceValue = null;
+			//modeactive is two filters should be applied to the externalRefs.
+			//1. Language For each entity, group externalRef(s) by language (using reftype) and use the first nonempty set, using this sorting: en, es, it, nl.
+			//2. Confidence Once the language is chosen, just take the externalRef having the higher confidence (and, of course, the language chosen).
+			boolean modeactive=true; 
+			if(modeactive){
+			LinkedList<ExternalRef> exrEn = new LinkedList<ExternalRef>();
+			LinkedList<ExternalRef> exrEs = new LinkedList<ExternalRef>();
+			LinkedList<ExternalRef> exrIt = new LinkedList<ExternalRef>();
+			LinkedList<ExternalRef> exrNl = new LinkedList<ExternalRef>();
+			
+			ExternalReferences obs = ((ExternalReferences) generalEntObj) ;
+			for (ExternalRef exRObj : obs.getExternalRef()) {
+				if(exRObj!=null)
+				getAllLayersOfExternalReferences( modeactive, exrEn,  exRObj, exrEs, exrIt,  exrNl,vars);
+			}
+			if(exrEn.size()>0)
+				chosenReferenceValue = new String(getHighConfidenceReferenceValue(exrEn));
+			else if(exrEs.size()>0)
+				chosenReferenceValue = new String(getHighConfidenceReferenceValue(exrEs));
+			else if(exrIt.size()>0)
+				chosenReferenceValue = new String(getHighConfidenceReferenceValue(exrIt));
+			else 
+				chosenReferenceValue = new String(getHighConfidenceReferenceValue(exrNl));
+			
+			
+			
+			}else{
 			for (ExternalRef exRObj : ((ExternalReferences) generalEntObj) .getExternalRef()) {
-			    if (referencesElements < 1) {
-				logWarn("Every entity must contain a 'references' element:not possible to add ExternalRef to null.");
+				
+				if (referencesElements < 1) {
+				logWarn("Every entity must contain a 'references' element:not possible to add ExternalRef to null.",vars);
 				continue;
 			    }
 			    String resourceValue = exRObj.getResource();
@@ -398,29 +387,91 @@ public class processNAF {
 				chosenReferenceValue = new String(referenceValue);
 			    }
 			}
+			}
+			
 
 			URIImpl chosenReferenceURI = new URIImpl(chosenReferenceValue);
-			if (charS != null)
-			    mentionListHash.get(charS).add(KS.REFERS_TO, chosenReferenceURI);
-			deg += "|REFERS_TO:" + chosenReferenceValue;
-			entityMentions.getLast().add(KS.REFERS_TO, chosenReferenceURI);
+			if (charS != null&&vars.mentionListHash.get(charS)!=null&&vars.mentionListHash.get(charS).get(KS.REFERS_TO).size()==0){
+				vars.mentionListHash.get(charS).add(KS.REFERS_TO, chosenReferenceURI);
+				//TODO mohammed if there already decided an externalRef don't add new one.
+				deg += "|REFERS_TO:" + chosenReferenceValue;
+				vars.entityMentions.get(charS).add(KS.REFERS_TO, chosenReferenceURI);
+			}else{
+				if (charS != null&&vars.mentionListHash.get(charS)!=null)
+				deg += "|REFERS_TO:" + vars.mentionListHash.get(charS).get(KS.REFERS_TO);
+
+			}
                     }
                 } // end of   if (generalEntObj instanceof ExternalReferences) {
 
             } // end of    for (Object generalEntObj  : entObj.getReferencesOrExternalReferences())
 
-            logDebug(deg);
+            logDebug(deg,vars);
             if (referencesElements < 1) {
-                logWarn("Every entity must contain a 'references' element");
+                logWarn("Every entity must contain a 'references' element",vars);
             }
         }
     }
 
-    private static void getTimeExpressionsMentions(TimeExpressions obj) {
-        if (!checkHeaderTextTerms()) {
-            logError("Error: populating interrupted");
+    private static void getAllLayersOfExternalReferences(boolean modeactive, LinkedList<ExternalRef> exrEn, ExternalRef exRObj, LinkedList<ExternalRef> exrEs, LinkedList<ExternalRef> exrIt, LinkedList<ExternalRef> exrNl,processNAFVariables vars) {
+			
+			
+		if(modeactive){
+			if(exRObj.getReftype()!=null){
+				switch(exRObj.getReftype()){
+				case "en": exrEn.addLast(exRObj); break;
+				case "es": exrEs.addLast(exRObj); break;
+				case "it": exrIt.addLast(exRObj); break;
+				case "nl": exrNl.addLast(exRObj); break;
+				}
+			}else if(exRObj.getReference().contains("dbpedia")){
+				
+				if(exRObj.getReference().contains("://dbpedia.org")){
+					exrEn.addLast(exRObj);
+				}else if(exRObj.getReference().contains("://es.dbpedia.org")){
+					exrEs.addLast(exRObj);
+				}else if(exRObj.getReference().contains("://it.dbpedia.org")){
+					exrIt.addLast(exRObj);
+				}else {
+					exrNl.addLast(exRObj);
+				}
+			}else{
+				logWarn("Every entity must contain a 'references' element with type or DBpedia reference: not possible to add ExternalRef to null.",vars);
+			}
+		}
+		
+		if(exRObj!=null&&exRObj.getExternalRef()!=null && exRObj.getExternalRef().size()>0){
+			for(ExternalRef ff :exRObj.getExternalRef()){
+			getAllLayersOfExternalReferences( modeactive, exrEn,  ff, exrEs, exrIt,  exrNl,vars);
+			}
+		}else
+			return;
+	}
+
+	private static String getHighConfidenceReferenceValue(
+			LinkedList<ExternalRef> exrl) {
+    	ExternalRef current=null;
+    	Double dt=0.0;
+		for(ExternalRef tmp:exrl){
+			Double co=Double.parseDouble(tmp.getConfidence());
+			if(current==null){
+				current = tmp;
+				dt=co;
+			}else{
+				if(co>dt){
+					current = tmp;
+					dt=co;
+				}
+			}
+		}
+		return current.getReference();
+	}
+
+	private static void getTimeExpressionsMentions(TimeExpressions obj,processNAFVariables vars) {
+        if (!checkHeaderTextTerms(vars)) {
+            logError("Error: populating interrupted",vars);
         } else {
-            logDebug("Start mapping the TimeExpressions mentions:");
+            logDebug("Start mapping the TimeExpressions mentions:",vars);
         }
         for (Timex3 tmxObj : ((TimeExpressions) obj).getTimex3()) {
 
@@ -430,7 +481,7 @@ public class processNAF {
 
 	    // patch for timex3 without <span>
 	    if ((tmxSpan == null) || (tmxSpan.getTarget().size() < 1)) {
-		logWarn("skipping timex3 without span, id is " + tmxObj.getId());
+		logWarn("skipping timex3 without span, id is " + tmxObj.getId(),vars);
 		continue;
 	    }
 
@@ -439,26 +490,26 @@ public class processNAF {
             m.add(RDF.TYPE, NWR.TIME_MENTION, NWR.TIME_OR_EVENT_MENTION, NWR.ENTITY_MENTION,
                     KS.MENTION);
             deg += "|TYPE:TIME_MENTION,TIME_OR_EVENT_MENTION,ENTITY_MENTION,MENTION";
-	    m.add(KS.MENTION_OF, news_file_id);
-            LinkedList<Wf> wordsL = fromSpanGetAllMentionsTmx(((Span) tmxSpan).getTarget());
-            generateMIDAndSetIdWF(wordsL, m);
+	    m.add(KS.MENTION_OF, vars.news_file_id);
+            LinkedList<Wf> wordsL = fromSpanGetAllMentionsTmx(((Span) tmxSpan).getTarget(), vars);
+            generateMIDAndSetIdWF(wordsL, m,vars);
             deg = "MentionId:" + m.getID() + deg;
 
 	    if (keepTimeTypeProvidedByNaf) {
 		URI dynamicTypeUri = ValueFactoryImpl.getInstance().createURI(NWR.NAMESPACE, "timex3_" + tmxTypeUC.toLowerCase());
                 m.add(NWR.TIME_TYPE, dynamicTypeUri);
                 deg += "|TIME_TYPE:" + dynamicTypeUri;
-		logDebug("ROL1: <timex3> added new mention for id " + tmxObj.getId() + ", type " + dynamicTypeUri);
+		logDebug("ROL1: <timex3> added new mention for id " + tmxObj.getId() + ", type " + dynamicTypeUri,vars);
 	    } else {
-		if (timex3TypeMapper.containsKey(tmxTypeUC)
-                    && timex3TypeMapper.get(tmxTypeUC) != null) {
-		    m.add(NWR.TIME_TYPE, timex3TypeMapper.get(tmxTypeUC));
-		    deg += "|TIME_TYPE:" + timex3TypeMapper.get(tmxTypeUC);
+		if (vars.timex3TypeMapper.containsKey(tmxTypeUC)
+                    && vars.timex3TypeMapper.get(tmxTypeUC) != null) {
+		    m.add(NWR.TIME_TYPE, vars.timex3TypeMapper.get(tmxTypeUC));
+		    deg += "|TIME_TYPE:" + vars.timex3TypeMapper.get(tmxTypeUC);
 		    logDebug("ROL1: <timex3> STRANGE added new mention for id " + tmxObj.getId() 
-			    + ", type " + timex3TypeMapper.get(tmxTypeUC));
+			    + ", type " + vars.timex3TypeMapper.get(tmxTypeUC),vars);
 		} else {
 		    logWarn("xpath(//NAF/timeExpressions/timex3/@type), type(" + tmxTypeUC
-			    + "), No mapping.");
+			    + "), No mapping.",vars);
 		}
 	    }
             if (tmxObj.getBeginPoint() != null) {
@@ -501,21 +552,22 @@ public class processNAF {
                 m.add(NWR.ANCHOR_TIME, tmxObj.getAnchorTimeID());
                 deg += "|ANCHOR_TIME:" + tmxObj.getAnchorTimeID();
             }
-            logDebug(deg);
-            int addedNew = addOrMergeAMention(m);
+            logDebug(deg,vars);
+            int addedNew = addOrMergeAMention(m,vars);
             if (addedNew==1){
-                timeMention2++;
-                timeMention++;
+            	vars.timeMention2++;
+            	vars.timeMention++;
             }
-            entityMentions.addLast(m);
+            String charS2 = m.getUnique(NIF.BEGIN_INDEX, Integer.class) + "," + m.getUnique(NIF.END_INDEX, Integer.class);
+            vars.entityMentions.put(charS2,m);
         }
     }
 
-    private static void getFactualityMentions(Factualitylayer obj) {
-        if (!checkHeaderTextTerms()) {
-            logError("Error: populating interrupted");
+    private static void getFactualityMentions(Factualitylayer obj,processNAFVariables vars) {
+        if (!checkHeaderTextTerms(vars)) {
+            logError("Error: populating interrupted",vars);
         } else {
-            logDebug("Start mapping the Factuality mentions:");
+            logDebug("Start mapping the Factuality mentions:",vars);
         }
         for (Factvalue fvObj : ((Factualitylayer) obj).getFactvalue()) {
             String deg = "";
@@ -523,13 +575,13 @@ public class processNAF {
             m.add(RDF.TYPE, NWR.EVENT_MENTION, NWR.TIME_OR_EVENT_MENTION, NWR.ENTITY_MENTION,
                     KS.MENTION);
             deg += "|TYPE:EVENT_MENTION,TIME_OR_EVENT_MENTION,ENTITY_MENTION,MENTION";
-	    m.add(KS.MENTION_OF, news_file_id);
+	    m.add(KS.MENTION_OF, vars.news_file_id);
             LinkedList<Target> tarlist = new LinkedList<Target>();
             Target tmp = new Target();
             tmp.setId(fvObj.getId());
             tarlist.addLast(tmp);
-            LinkedList<Wf> wordsL = fromSpanGetAllMentionsTmx(tarlist);
-            generateMIDAndSetIdWF(wordsL, m);
+            LinkedList<Wf> wordsL = fromSpanGetAllMentionsTmx(tarlist,vars);
+            generateMIDAndSetIdWF(wordsL, m,vars);
             deg = "MentionId:" + m.getID() + deg;
             // fvObj.getPrediction(); //TODO we need to verify the mapping here
             // m.add(NWR.CERTAINTY, fvObj.getPrediction());
@@ -538,13 +590,14 @@ public class processNAF {
                 m.add(NWR.FACTUALITY_CONFIDENCE, fvObj.getConfidence());
                 deg += "|FACTUALITY_CONFIDENCE:" + fvObj.getConfidence();
             }
-            logDebug(deg);
-            int addedNew = addOrMergeAMention(m);
+            logDebug(deg,vars);
+            int addedNew = addOrMergeAMention(m,vars);
             if (addedNew==1){
-                factualityMentions2++;
-                factualityMentions++;
+            	vars.factualityMentions2++;
+            	vars.factualityMentions++;
             }
-            entityMentions.addLast(m);
+            String charS2 = m.getUnique(NIF.BEGIN_INDEX, Integer.class) + "," + m.getUnique(NIF.END_INDEX, Integer.class);
+            vars.entityMentions.put(charS2,m);
 
         }
 
@@ -570,16 +623,16 @@ public class processNAF {
 	}
     }
 
-    private static void getSRLMentions() {
-        Srl obj = doc.getSrl();
-        if (!checkHeaderTextTerms()) {
-            logError("Error: populating interrupted");
+    private static void getSRLMentions(processNAFVariables vars) {
+        Srl obj = vars.doc.getSrl();
+        if (!checkHeaderTextTerms(vars)) {
+            logError("Error: populating interrupted",vars);
         } else {
-            logDebug("Start mapping the Srl mentions:");
+            logDebug("Start mapping the Srl mentions:",vars);
         }
 
 	if ((obj == null) || (((Srl) obj).getPredicate() == null)) {
-            logError("skipped missing xpath(//NAF/srl)");
+            logError("skipped missing xpath(//NAF/srl)",vars);
 	    return;
 	}
 	/* 
@@ -600,20 +653,20 @@ public class processNAF {
 	    */
             if (prdObj.getSpan() instanceof Span) {
                 if (firstSpanFound) {
-                    logWarn("Srl should have one span only! ");
+                    logWarn("Srl should have one span only! ",vars);
                 }
                 if (!firstSpanFound) {
                     firstSpanFound = true;
                 }
-		predicateCharSpan = getCharSpanFromSpan(prdObj.getSpan());
+		predicateCharSpan = getCharSpanFromSpan(prdObj.getSpan(),vars);
                 mtmp = Record.create();
                 mtmp.add(RDF.TYPE, NWR.EVENT_MENTION, NWR.TIME_OR_EVENT_MENTION,
                         NWR.ENTITY_MENTION, KS.MENTION);
                 deg = "|TYPE:EVENT_MENTION,TIME_OR_EVENT_MENTION,ENTITY_MENTION,MENTION";
-		mtmp.add(KS.MENTION_OF, news_file_id);
+		mtmp.add(KS.MENTION_OF, vars.news_file_id);
                 for (Target tars : prdObj.getSpan().getTarget()) {
                     tars.getId();
-                    Term eventTerm = getTermfromTermId((Term) tars.getId());
+                    Term eventTerm = getTermfromTermId((Term) tars.getId(),vars);
                     eventTermList.addLast(eventTerm);
                     if (eventTerm.getLemma() != null) {
                         mtmp.add(NWR.PRED, eventTerm.getLemma());
@@ -622,13 +675,13 @@ public class processNAF {
                     if (eventTerm.getPos() != null) {
 			URI posVal = (eventTerm.getPos().equals("V") || 
 				      eventTerm.getPos().equals("N")) 
-			    ? partOfSpeechMapper.get(eventTerm.getPos())
-			    : partOfSpeechMapper.get("");
+			    ? vars.partOfSpeechMapper.get(eventTerm.getPos())
+			    : vars.partOfSpeechMapper.get("");
                         mtmp.add(NWR.POS, posVal);
                         deg += "|POS:" + posVal;
                     }
                 }
-                generateTheMIdAndSetID(prdObj.getSpan(), mtmp);
+                generateTheMIdAndSetID(prdObj.getSpan(), mtmp,vars);
                 deg = "MentionId:" + mtmp.getID() + deg;
 
             }
@@ -645,7 +698,7 @@ public class processNAF {
                     boolean eventTypeFound = false;
                     if (predicatExtRef > 1) {
                         logWarn("more than one external ref for predicate:" + predicateID 
-				+ " size: " + predicatExtRef);
+				+ " size: " + predicatExtRef,vars);
                     }
                     predicatExtRef++;
                     for (ExternalRef exrObj : ((ExternalReferences) prdGObj).getExternalRef()) {
@@ -661,7 +714,7 @@ public class processNAF {
 				//
                                 if (!resourceValue.equalsIgnoreCase("EventType")) {
 
-				    URI resourceMappedValue = srlExternalRefResourceTypeMapper.get(resourceValue);
+				    URI resourceMappedValue = vars.srlExternalRefResourceTypeMapper.get(resourceValue);
 				    URIImpl valueURI;
 				    if (resourceMappedValue != null) {
 					valueURI = getUriForSrlExternalRefResource(resourceValue, referenceValue);
@@ -680,7 +733,7 @@ public class processNAF {
 				    //
 				    URI referenceMappedValue = null;
 				    if (referenceValue != null) { 
-					referenceMappedValue = eventClassMapper.get(referenceValue);
+					referenceMappedValue = vars.eventClassMapper.get(referenceValue);
 				    } 
 				    if (referenceMappedValue == null) {
 					// force this default value
@@ -695,38 +748,38 @@ public class processNAF {
 			    } else {
 				// resourceValue == null)
                                 logWarn("xpath(//NAF/srl/predicate/externalReferences/externalRef@Resource(NULL)): predicateID("
-                                        + predicateID + ")");
+                                        + predicateID + ")",vars);
                             }
                         } else {
                             logWarn("Mapping error - Mention null - xpath(NAF/srl/predicate/externalReferences/externalRef): predicateID("
-                                    + predicateID + ")");
+                                    + predicateID + ")",vars);
                         }
                     }
                     if (!eventTypeFound) {
-                        mtmp.add(NWR.EVENT_CLASS, eventClassMapper.get("contextual"));
-                        deg += "|EVENT_CLASS:" + eventClassMapper.get("contextual");
+                        mtmp.add(NWR.EVENT_CLASS, vars.eventClassMapper.get("contextual"));
+                        deg += "|EVENT_CLASS:" + vars.eventClassMapper.get("contextual");
                         eventTypeFound = true;
                     }
                     if (eventTypeFound) {
-                        logDebug(deg);
-                        int addedNew = addOrMergeAMention(mtmp);
+                        logDebug(deg,vars);
+                        int addedNew = addOrMergeAMention(mtmp,vars);
                         
 			logDebug("ROL1: <srl> <predicate> adding new event mention for id " 
-				+ predicateID + ", charSpan |" + predicateCharSpan + "|");
+				+ predicateID + ", charSpan |" + predicateCharSpan + "|",vars);
 			
                         if (addedNew==1){
-                            srlMention2++;
-                            srlMention++;
+                        	vars.srlMention2++;
+                        	vars.srlMention++;
                         }
-                        
-                        entityMentions.addLast(mtmp);
+                        String charS2 = mtmp.getUnique(NIF.BEGIN_INDEX, Integer.class) + "," + mtmp.getUnique(NIF.END_INDEX, Integer.class);
+                        vars.entityMentions.put(charS2,mtmp);
                         
                         eventMentionId = mtmp.getID().stringValue();
                     } else {
                         // if eventType not found or no mapping for it
                         // write error and discard this mention
                         logWarn("Mention discarded for predicateID(" + predicateID + ") - ID("
-                                + mtmp.getID().toString() + ")");
+                                + mtmp.getID().toString() + ")",vars);
                     }
                 } else 
 		    /*
@@ -748,7 +801,7 @@ public class processNAF {
 			LinkedList<Term> roleTermList = null;
 
 			Span roleSpan = ((Role) prdGObj).getSpan();
-			String roleCharSpan = getCharSpanFromSpan(roleSpan);
+			String roleCharSpan = getCharSpanFromSpan(roleSpan,vars);
 			boolean createTemporalexpressionMentionFlag = false;
 			boolean createTlinkFlag = false;
 			boolean createParticipationMentionFlag = false;
@@ -757,11 +810,11 @@ public class processNAF {
 			if ((semRole != null) && (semRole.equalsIgnoreCase("AM-TMP"))) {
 			    createTlinkFlag = true;
 			    createTemporalexpressionMentionFlag = true;
-			    logDebug(" ROL1: <srl> <role> found TLINK for |" + predicateCharSpan + "|" + roleCharSpan + "|");
+			    logDebug(" ROL1: <srl> <role> found TLINK for |" + predicateCharSpan + "|" + roleCharSpan + "|",vars);
 			} else {
-			    if (checkAlreadyAcceptedMention(roleCharSpan)) {
+			    if (checkAlreadyAcceptedMention(roleCharSpan,vars)) {
 				createParticipationMentionFlag = true;
-				logDebug(" ROL1: <srl> <role> found already existent mention for |" + roleCharSpan + "|");
+				logDebug(" ROL1: <srl> <role> found already existent mention for |" + roleCharSpan + "|",vars);
 			    }
 			}
 
@@ -770,28 +823,28 @@ public class processNAF {
 			  create a temporal-expression mention with span <role><span> if not already extracted
 			*/
 			if (createTemporalexpressionMentionFlag) {
-			    if (! checkAlreadyAcceptedMention(roleCharSpan)) {
+			    if (! checkAlreadyAcceptedMention(roleCharSpan,vars)) {
 				Record roleM = Record.create();
 				roleM.add(RDF.TYPE, NWR.TIME_MENTION, NWR.TIME_OR_EVENT_MENTION, 
 					  NWR.ENTITY_MENTION, KS.MENTION);
-				roleM.add(KS.MENTION_OF, news_file_id);
+				roleM.add(KS.MENTION_OF, vars.news_file_id);
 
 				//  compute the Term list for the <role>
 				roleTermList = new LinkedList<Term>();
 				for (Target rspnTar : ((Role) prdGObj).getSpan().getTarget()) {
-				    Term ttmp = getTermfromTermId((Term) rspnTar.getId());
+				    Term ttmp = getTermfromTermId((Term) rspnTar.getId(),vars);
 				    roleTermList.addLast(ttmp);
 				}
 			    
 				// generate and set ID of the mention
-				generateTheMIdAndSetID(roleSpan, roleM);
+				generateTheMIdAndSetID(roleSpan, roleM,vars);
 
 				// try to add the mention
-				if(addOrMergeAMention(roleM) == 1) {
-				    timeMention2++;
+				if(addOrMergeAMention(roleM,vars) == 1) {
+					vars.timeMention2++;
 				}
 
-				logDebug("   ROL1: created temporal-expression mention for |" + roleCharSpan + "|");
+				logDebug("   ROL1: created temporal-expression mention for |" + roleCharSpan + "|",vars);
 			    }
 			}
 
@@ -812,14 +865,14 @@ public class processNAF {
 				deg2 += "|SOURCE:" + eventMentionId;
 			    } else {
 				logWarn("//NAF/srl/predicate/role/ - a Role without Predicate roleID("
-					+ ((Role) prdGObj).getId() + ")");
+					+ ((Role) prdGObj).getId() + ")",vars);
 			    }
 
 			    /*
 			      set as NWR.TARGET of the relation mention the id of the role mention related to <role>
 			    */
 			    {
-				URI roleId = getMentionIDFromCharSpan(roleCharSpan);
+				URI roleId = getMentionIDFromCharSpan(roleCharSpan,vars);
 				relationM.add(NWR.TARGET, roleId);
 			    }
 
@@ -837,7 +890,7 @@ public class processNAF {
 					      NWR.RELATION_MENTION, KS.MENTION);
 				deg2 = "|TYPE:TLINK,RELATION_MENTION,MENTION|" + deg2;
 			    }
-			    relationM.add(KS.MENTION_OF, news_file_id);
+			    relationM.add(KS.MENTION_OF, vars.news_file_id);
 
 			    /* 
 			       generate and set ID of the relation mention
@@ -846,11 +899,11 @@ public class processNAF {
 			    if (roleTermList == null) {
 				roleTermList = new LinkedList<Term>();
 				for (Target rspnTar : ((Role) prdGObj).getSpan().getTarget()) {
-				    Term ttmp = getTermfromTermId((Term) rspnTar.getId());
+				    Term ttmp = getTermfromTermId((Term) rspnTar.getId(),vars);
 				    roleTermList.addLast(ttmp);
 				}
 			    }
-			    generateTheMIdAndSetID_forParticipationMention(eventTermList, roleTermList, relationM);
+			    generateTheMIdAndSetID_forParticipationMention(eventTermList, roleTermList, relationM,vars);
 			    deg2 = "MentionId:" + relationM.getID() + deg2;
 			    boolean create = false;
 
@@ -862,23 +915,23 @@ public class processNAF {
 
 			    charS = relationM.getUnique(NIF.BEGIN_INDEX, Integer.class) + "," + relationM.getUnique(NIF.END_INDEX, Integer.class);
 			    if (createParticipationMentionFlag) {
-				logDebug("  ROL1: <srl> <predicate> <role> adding new participation mention for |" + charS + "|");
+				logDebug("  ROL1: <srl> <predicate> <role> adding new participation mention for |" + charS + "|",vars);
 			    } else {
-				logDebug("  ROL1: <srl> <predicate> <role> adding new TLINK mention for |" + charS + "|");
+				logDebug("  ROL1: <srl> <predicate> <role> adding new TLINK mention for |" + charS + "|",vars);
 			    }
 
 			    /* 
 			       try to add the relation mention
 			    */
-			    addedNew = addOrMergeAMention(relationM);
+			    addedNew = addOrMergeAMention(relationM,vars);
 			    if (addedNew==1){
-				rolewithEntity++;
-				rolewithEntity2++;
-				roleMentions++;
+			    	vars.rolewithEntity++;
+			    	vars.rolewithEntity2++;
+			    	vars.roleMentions++;
 			    } else {
 				// if with entity and conflict or enriched, counted as discarded
 				if(create){
-				    rolewithoutEntity++;
+					vars.rolewithoutEntity++;
 				}
 			    }
 
@@ -896,7 +949,7 @@ public class processNAF {
 
 					if (resourceValue != null) {
 					    
-					    URI resourceMappedValue = srlExternalRefResourceTypeMapper.get(resourceValue);
+					    URI resourceMappedValue = vars.srlExternalRefResourceTypeMapper.get(resourceValue);
 					    URIImpl valueURI;
 					    if (resourceMappedValue != null) {
 						valueURI = getUriForSrlExternalRefResource(resourceValue, referenceValue);
@@ -909,19 +962,19 @@ public class processNAF {
 								       + resourceValue.toLowerCase() + "/" + referenceValue);
 					    }
 					    if (charS != null) {
-						mentionListHash.get(charS).add(resourceMappedValue, valueURI);
+					    	vars.mentionListHash.get(charS).add(resourceMappedValue, valueURI);
 					    }
 					    deg2 += "|" + resourceMappedValue + ":" + valueURI;
 					}  else {
 					    // resourceValue == null)
 					    logWarn("xpath(//NAF/srl/predicate/role/externalReferences/externalRef@Resource(NULL)): RoleID("
-						    + ((Role) prdGObj).getId() + ")");
+						    + ((Role) prdGObj).getId() + ")",vars);
 					}
 				    }
 				}
 			    } // end of adding info from <externalReferences> within <role>
 			}
-			logDebug(deg2);
+			logDebug(deg2,vars);
 			
 		    } // end of <role> processing
 
@@ -931,34 +984,34 @@ public class processNAF {
     }
 
 
-    private static void getNAFHEADERMentions(NafHeader obj) {
-        logDebug("Start reading the naf metadata:");
+    private static void getNAFHEADERMentions(NafHeader obj,processNAFVariables vars) {
+        logDebug("Start reading the naf metadata:",vars);
         String deg = "";
         Public publicProp = ((NafHeader) obj).getPublic();
-        initURIIDS(publicProp);
+        initURIIDS(publicProp,vars);
         Record newsFile = Record.create();
         Record nafFile = Record.create();
-        nafFile2 = nafFile;
-        newsFile2 = newsFile;
-        newsFile.setID(news_file_id);
-        nafFile.setID(NAF_file_id);
-        deg += "news_file_id:" + news_file_id;
+        vars.nafFile2 = nafFile;
+        vars.newsFile2 = newsFile;
+        newsFile.setID(vars.news_file_id);
+        nafFile.setID(vars.NAF_file_id);
+        deg += "news_file_id:" + vars.news_file_id;
         newsFile.add(RDF.TYPE, NWR.NEWS);
-        deg += "\nNAF_file_id:" + NAF_file_id;
+        deg += "\nNAF_file_id:" + vars.NAF_file_id;
 
         nafFile.add(RDF.TYPE, NWR.NAFDOCUMENT);
         nafFile.add(NWR.ANNOTATION_OF, newsFile.getID());
         newsFile.add(NWR.ANNOTATED_WITH, nafFile.getID());
-        if (doc.getVersion() != null) {
-            nafFile.add(NWR.VERSION, doc.getVersion());
-            deg += "\nVERSION:" + doc.getVersion();
+        if (vars.doc.getVersion() != null) {
+            nafFile.add(NWR.VERSION, vars.doc.getVersion());
+            deg += "\nVERSION:" + vars.doc.getVersion();
         }
 
 	/* 
 	   set DCTERMS.SOURCE according to the News URI
 	*/
 	URIImpl sourceURL;
-	if (PREFIX.matches("(?i)http://www.newsreader-project.eu/LNdata.*")) {
+	if (vars.PREFIX.matches("(?i)http://www.newsreader-project.eu/LNdata.*")) {
 	    // LexisNexis news
 	    String preStr = "http://www.lexisnexis.com/uk/nexis/docview/getDocForCuiReq?lni=";
 	    String postStr = "&csi=138620&perma=true";
@@ -966,7 +1019,7 @@ public class processNAF {
 	    sourceURL = new URIImpl(srcUrlstr);
 	} else {
 	    // non-LexisNexis news
-	    sourceURL = (URIImpl)news_file_id;
+	    sourceURL = (URIImpl)vars.news_file_id;
 	}
 	newsFile.add(DCTERMS.SOURCE, sourceURL);
 	
@@ -974,11 +1027,11 @@ public class processNAF {
             nafFile.add(DCTERMS.IDENTIFIER, publicProp.getPublicId());// NAF/nafHeader/public@publicId
             deg += "|IDENTIFIER:" + publicProp.getPublicId();
         }
-        if (doc.getXmlLang() != null) {
-            newsFile.add(DCTERMS.LANGUAGE, Data.languageCodeToURI(doc.getXmlLang()));
-            deg += "|LANGUAGE:" + Data.languageCodeToURI(doc.getXmlLang());
+        if (vars.doc.getXmlLang() != null) {
+            newsFile.add(DCTERMS.LANGUAGE, Data.languageCodeToURI(vars.doc.getXmlLang()));
+            deg += "|LANGUAGE:" + Data.languageCodeToURI(vars.doc.getXmlLang());
         } else {
-            logWarn("Language not catched:" + doc.getXmlLang());
+            logWarn("Language not catched:" + vars.doc.getXmlLang(),vars);
         }
         FileDesc fileDesc = null;
         if (((NafHeader) obj).getFileDesc() != null) {
@@ -1008,18 +1061,18 @@ public class processNAF {
                 deg += "|Pages:" + fileDesc.getPages();
             }
         } else {
-            logWarn("FileDesc: null");
+            logWarn("FileDesc: null",vars);
         }
         for (LinguisticProcessors lpObj : ((NafHeader) obj).getLinguisticProcessors()) {
             deg += "\n";
             if (lpObj.getLayer() != null) {
-                if (nafLayerMapper.containsKey(lpObj.getLayer())
-                        && nafLayerMapper.get(lpObj.getLayer()) != null) {
-                    nafFile.add(NWR.LAYER, nafLayerMapper.get(lpObj.getLayer()));
-                    deg += "LAYER:" + nafLayerMapper.get(lpObj.getLayer());
+                if (vars.nafLayerMapper.containsKey(lpObj.getLayer())
+                        && vars.nafLayerMapper.get(lpObj.getLayer()) != null) {
+                    nafFile.add(NWR.LAYER, vars.nafLayerMapper.get(lpObj.getLayer()));
+                    deg += "LAYER:" + vars.nafLayerMapper.get(lpObj.getLayer());
                 } else {
                     logWarn("xpath(//NAF/nafHeader/linguisticProcessors/@layer["
-                            + lpObj.getLayer() + "]),  unknown layer.");
+                            + lpObj.getLayer() + "]),  unknown layer.",vars);
                 }
             }
 
@@ -1035,7 +1088,7 @@ public class processNAF {
                     deg += "|VERSION:" + lpO.getVersion();
                 }
                 String namuri = java.net.URLEncoder.encode(lpO.getName());
-                String uri = PREFIX + (PREFIX.endsWith("/") ? "" : "/") + "lp/" + namuri + "/"
+                String uri = vars.PREFIX + (vars.PREFIX.endsWith("/") ? "" : "/") + "lp/" + namuri + "/"
                         + lpO.getVersion();
 
                 URI rId = new URIImpl(uri);
@@ -1045,15 +1098,15 @@ public class processNAF {
             }
         }
 
-        logDebug(deg);
+        logDebug(deg,vars);
     }
 
 
-    private static void getCoreferencesMentions(Coreferences obj) {
-        if (!checkHeaderTextTerms()) {
-            logError("Error: populating interrupted");
+    private static void getCoreferencesMentions(Coreferences obj,processNAFVariables vars) {
+        if (!checkHeaderTextTerms(vars)) {
+            logError("Error: populating interrupted",vars);
         } else {
-            logDebug("Start mapping the Coreferences mentions:");
+            logDebug("Start mapping the Coreferences mentions:",vars);
         }
         String deg = "\n";
 	
@@ -1063,7 +1116,7 @@ public class processNAF {
         for (Coref corefObj : ((Coreferences) obj).getCoref()) {
             deg = "";
             if (corefObj.getSpan().size() < 1) {
-                logWarn("Every coref must contain a 'span' element inside 'references'");
+                logWarn("Every coref must contain a 'span' element inside 'references'",vars);
             }
 	    
 	    /*
@@ -1084,17 +1137,17 @@ public class processNAF {
 		// check if at least one span includes (or is) a previously extracted mention
 		//
 		for (Span corefSpan : corefObj.getSpan()) {
-		    String corefCharSpan = getCharSpanFromSpan(corefSpan);
-		    Object[] retArray = checkSpanIncludesAnAlreadyAcceptedMention(corefCharSpan);
+		    String corefCharSpan = getCharSpanFromSpan(corefSpan,vars);
+		    Object[] retArray = checkSpanIncludesAnAlreadyAcceptedMention(corefCharSpan,vars);
 		    int inclFlag = ((Integer) retArray[0]).intValue();
 		    if ((inclFlag == 1) || (inclFlag == 2)) {
 			addMentionsFlag = true;
 			String includedMentionCharSpan = (String)retArray[1];
-			typesOfIncludedMention = getMentionTypeFromCharSpan(includedMentionCharSpan);
+			typesOfIncludedMention = getMentionTypeFromCharSpan(includedMentionCharSpan,vars);
 			logDebug("ROL1: <coref> id " + corefObj.getId() + ": found included mention for |" 
 				 + corefCharSpan + "|, included mention |" + includedMentionCharSpan 
 				 + "|, inclFlag " + inclFlag
-				 + ", types " + getTypeasString(typesOfIncludedMention));
+				 + ", types " + getTypeasString(typesOfIncludedMention),vars);
 			break;
 		    }
 		}
@@ -1102,16 +1155,16 @@ public class processNAF {
 
 	    if (addMentionsFlag) {
 		for (Span corefSpan : corefObj.getSpan()) {
-		    String corefCharSpan = getCharSpanFromSpan(corefSpan);
-		    if (checkAlreadyAcceptedMention(corefCharSpan)) {
+		    String corefCharSpan = getCharSpanFromSpan(corefSpan,vars);
+		    if (checkAlreadyAcceptedMention(corefCharSpan,vars)) {
 			logDebug("ROL1: <coref> id " + corefObj.getId() + ": skipping already existent mention with charSpan |" 
-				 + corefCharSpan + "|");
+				 + corefCharSpan + "|",vars);
 			continue;
 		    }
 		    deg = "";
 		    Record m = Record.create();
-		    m.add(KS.MENTION_OF, news_file_id);
-		    deg += "MENTION_OF:" + news_file_id;
+		    m.add(KS.MENTION_OF, vars.news_file_id);
+		    deg += "MENTION_OF:" + vars.news_file_id;
 		    if (corefObj.getSpan().size() > 1) {
 			m.add(NWR.LOCAL_COREF_ID, corefObj.getId());
 			deg += "|LOCAL_COREF_ID:" + corefObj.getId();
@@ -1133,26 +1186,26 @@ public class processNAF {
 			}
 		    }
 		    logDebug("ROL1: <coref> id " + corefObj.getId() + ": adding new mention with charSpan |" 
-			    + corefCharSpan + "|, and type " + m.get(RDF.TYPE));
+			    + corefCharSpan + "|, and type " + m.get(RDF.TYPE),vars);
 
 		    if (corefSpan.getTarget().size() < 1) {
-			logWarn("Every span in an entity must contain at least one target inside");
+			logWarn("Every span in an entity must contain at least one target inside",vars);
 		    }
 		    for (Target spTar : corefSpan.getTarget()) {
 			if (eventM) {
-			    Term eventTerm = getTermfromTermId((Term) spTar.getId());
+			    Term eventTerm = getTermfromTermId((Term) spTar.getId(),vars);
 			    m.add(NWR.PRED, eventTerm.getLemma());
 			    deg += "|PRED:" + eventTerm.getLemma();
 			    if (eventTerm.getPos() != null) {
 				URI posVal = (eventTerm.getPos().equals("V") || 
 					      eventTerm.getPos().equals("N")) 
-				    ? partOfSpeechMapper.get(eventTerm.getPos())
-				    : partOfSpeechMapper.get("");
+				    ? vars.partOfSpeechMapper.get(eventTerm.getPos())
+				    : vars.partOfSpeechMapper.get("");
 				m.add(NWR.POS, posVal);
 				deg += "|POS:" + posVal;
 			    } else {
 				logWarn("//NAF/coreferences/coref/span/target/@id/@getPOS[null], id("
-					+ eventTerm.getId() + ")");
+					+ eventTerm.getId() + ")",vars);
 			    }
 			}
 			if (!eventM && spTar.getHead() != null && spTar.getHead().equals("yes")) {
@@ -1161,44 +1214,45 @@ public class processNAF {
 				deg += "|SYNTACTIC_HEAD:" + spTar.getId();
 			    } else {
 				logWarn("//NAF/coreferences/coref/span/target[@head='yes']/@id[null], id("
-					+ spTar.getId() + ")");
+					+ spTar.getId() + ")",vars);
 			    }
 			}
 		    }
-		    generateTheMIdAndSetID(corefSpan, m);
+		    generateTheMIdAndSetID(corefSpan, m,vars);
 		    deg = "MentionId:" + m.getID() + deg;
-		    logDebug(deg);
+		    logDebug(deg,vars);
 
-		    int addedNew = addOrMergeAMention(m);
+		    int addedNew = addOrMergeAMention(m,vars);
                 
 		    if (!eventM){
 			// eventM == false
 			if(addedNew==1){
-			    corefMention2++;
-			    no_mapping++;
-			    corefMentionNotEvent++;
-			    corefMention++;
+			    vars.corefMention2++;
+			    vars.no_mapping++;
+			    vars.corefMentionNotEvent++;
+			    vars.corefMention++;
 			    // logWarn("xpath(//NAF/coreferences/coref/) add a new object mention, missing type.");
 			}
 		    } else {
 			// eventM == true
 			if(addedNew==1){
-			    srlMention2++;
-			    corefMentionEvent++;
-			    corefMention++;
+				vars.srlMention2++;
+				vars.corefMentionEvent++;
+				vars.corefMention++;
 			}
 		    }
-		    entityMentions.addLast(m);
+            String charS2 = m.getUnique(NIF.BEGIN_INDEX, Integer.class) + "," + m.getUnique(NIF.END_INDEX, Integer.class);
+		    vars.entityMentions.put(charS2,m);
 		}
 	    } else {
-		logDebug("ROL1: <coref> id " + corefObj.getId() + ": entirely skipped, NO included mentions");
+		logDebug("ROL1: <coref> id " + corefObj.getId() + ": entirely skipped, NO included mentions",vars);
 	    }
         }
     }
 
 
     private static LinkedList<Term> mergeTwoTermLists(LinkedList<Term> eventTermList,
-            LinkedList<Term> roleTermList) {
+            LinkedList<Term> roleTermList,processNAFVariables vars) {
 
         LinkedList<Term> merged = new LinkedList<Term>();
 	/* 
@@ -1212,14 +1266,14 @@ public class processNAF {
 	}
 	logDebug("Two lists merged: eventTermListSize(" + eventTermList.size()
 		 + ") + roleTermListSize(" + roleTermList.size() + ") = mergedListSize("
-		 + merged.size() + ").");
+		 + merged.size() + ").",vars);
 	return merged;
     }
 
     // given a charSpan (e.g. "321,325") check if there is an already accepted mention with such span
     //
-    private static boolean checkAlreadyAcceptedMention(String charSpan) {
-	return mentionListHash.containsKey(charSpan);
+    private static boolean checkAlreadyAcceptedMention(String charSpan,processNAFVariables vars) {
+	return vars.mentionListHash.containsKey(charSpan);
     }
 
 
@@ -1229,10 +1283,10 @@ public class processNAF {
     //   1, charSpan                if an already-accepted mention coincides with the charSpan
     //   2, chSpanOfIncludedMention if an already-accepted mention is stricly included in the charSpan
     //
-    private static Object[] checkSpanIncludesAnAlreadyAcceptedMention(String charSpan) {
+    private static Object[] checkSpanIncludesAnAlreadyAcceptedMention(String charSpan,processNAFVariables vars) {
 	Object[] retArray = new Object[2];
 	// check if an already-accepted mention coincides
-	if (checkAlreadyAcceptedMention(charSpan)) {
+	if (checkAlreadyAcceptedMention(charSpan,vars)) {
 	    retArray[0] = new Integer(1);
 	    retArray[1] = charSpan;
 	    return retArray;
@@ -1243,7 +1297,7 @@ public class processNAF {
 	int spanBeginC = Integer.parseInt(fields[0]);
 	int spanEndC   = Integer.parseInt(fields[1]);
 
-	Enumeration keys = mentionListHash.keys();
+	Enumeration keys = vars.mentionListHash.keys();
 	String[] kfields;
 	int kBeginC;
 	int kEndC;
@@ -1266,8 +1320,8 @@ public class processNAF {
 
     // given a Span object return its charSpan (e.g. "321,325")
     //
-    private static String getCharSpanFromSpan(Span sp) {
-        LinkedList<Wf> wordsL = fromSpanGetAllMentions(sp.getTarget());
+    private static String getCharSpanFromSpan(Span sp,processNAFVariables vars) {
+        LinkedList<Wf> wordsL = fromSpanGetAllMentions(sp.getTarget(),vars);
         String begin = wordsL.getFirst().getOffset();
 	Wf lastW = wordsL.getLast();
         int end = Integer.parseInt(lastW.getOffset()) + Integer.parseInt(lastW.getLength());
@@ -1277,9 +1331,9 @@ public class processNAF {
 
     // given a charSpan (e.g. "321,325") get the ID of the mention with such span if exists, otherwise return null
     //
-    private static URI getMentionIDFromCharSpan(String charSpan) {
-	if (mentionListHash.containsKey(charSpan)) {
-	    return mentionListHash.get(charSpan).getID();
+    private static URI getMentionIDFromCharSpan(String charSpan,processNAFVariables vars) {
+	if (vars.mentionListHash.containsKey(charSpan)) {
+	    return vars.mentionListHash.get(charSpan).getID();
 	} else {
 	    return null;
 	}
@@ -1287,9 +1341,9 @@ public class processNAF {
 
     // given a charSpan (e.g. "321,325") get the type of the mention with such span if exists, otherwise return null
     //
-    private static List<Object> getMentionTypeFromCharSpan(String charSpan) {
-	if (mentionListHash.containsKey(charSpan)) {
-	    return mentionListHash.get(charSpan).get(RDF.TYPE);
+    private static List<Object> getMentionTypeFromCharSpan(String charSpan,processNAFVariables vars) {
+	if (vars.mentionListHash.containsKey(charSpan)) {
+	    return vars.mentionListHash.get(charSpan).get(RDF.TYPE);
 	} else {
 	    return null;
 	}
@@ -1301,30 +1355,30 @@ public class processNAF {
 	0  if a previously accepted mention with the same span of input mention m was enriched
         <0 in case of problems (e.g. due to a conflict with previously accepted mention); input mention m was not added 
     */
-    private static Integer addOrMergeAMention(Record m) {
+    private static Integer addOrMergeAMention(Record m,processNAFVariables vars) {
         String charS = m.getUnique(NIF.BEGIN_INDEX, Integer.class) + "," + m.getUnique(NIF.END_INDEX, Integer.class);
-        if (mentionListHash.containsKey(charS)) {
+        if (vars.mentionListHash.containsKey(charS)) {
 	    /* 
 	       there is a previously accepted mention with the same span: try to enrich it
 	    */
-            boolean chk = checkClassCompatibility(mentionListHash.get(charS), m);
+            boolean chk = checkClassCompatibility(vars.mentionListHash.get(charS), m);
             if (!chk) {
 		/* 
 		   there is conflict between the input mention and the previously accepted mention with the same span:
 		   check if the new mention can replace the old one, otherwise report the error
 		*/
-		if (checkMentionReplaceability(mentionListHash.get(charS), m)){
+		if (checkMentionReplaceability(vars.mentionListHash.get(charS), m)){
 		    // replace the old mention with the new one
-		    mentionListHash.put(charS, m);
-		    logWarn("Replacement with Mention: " + m.getID()+", class("+getTypeasString(m.get(RDF.TYPE))+")");
+			vars.mentionListHash.put(charS, m);
+		    logWarn("Replacement with Mention: " + m.getID()+", class("+getTypeasString(m.get(RDF.TYPE))+")",vars);
 		    return 0;
 		}
 
                 String types =getTypeasString(m.get(RDF.TYPE));
                 if(types.contains(NWR.PARTICIPATION.stringValue())){
-                    logWarn("Participation collision error, mentionID("+m.getID()+") class1("+getTypeasString(m.get(RDF.TYPE))+"), class-pre-xtracted("+getTypeasString(mentionListHash.get(charS).get(RDF.TYPE))+")");
+                    logWarn("Participation collision error, mentionID("+m.getID()+") class1("+getTypeasString(m.get(RDF.TYPE))+"), class-pre-xtracted("+getTypeasString(vars.mentionListHash.get(charS).get(RDF.TYPE))+")",vars);
                 }else{
-                    logWarn("Generic collision error, mentionID("+m.getID()+") class1("+getTypeasString(m.get(RDF.TYPE))+"), class-pre-xtracted("+getTypeasString(mentionListHash.get(charS).get(RDF.TYPE))+")");
+                    logWarn("Generic collision error, mentionID("+m.getID()+") class1("+getTypeasString(m.get(RDF.TYPE))+"), class-pre-xtracted("+getTypeasString(vars.mentionListHash.get(charS).get(RDF.TYPE))+")",vars);
                 }
                 return -1;
             } else {
@@ -1334,7 +1388,7 @@ public class processNAF {
 		*/
                 String types =getTypeasString(m.get(RDF.TYPE));
                 if(types.contains(NWR.PARTICIPATION.stringValue())){//Rule: no enrichment for participation
-                    logWarn("Refused enrichment with participation mention, mentionID("+m.getID()+")");
+                    logWarn("Refused enrichment with participation mention, mentionID("+m.getID()+")",vars);
                     return -1;
                 }
 		// enrich mention
@@ -1343,10 +1397,10 @@ public class processNAF {
 		    URI mittmp = mit.next();
 		    
 		    for (Object pit : m.get(mittmp)) {
-			mentionListHash.get(charS).add(mittmp, pit);
+		    	vars.mentionListHash.get(charS).add(mittmp, pit);
 		    }
 		}
-		logWarn("Mention enrichment: " + m.getID()+", class("+getTypeasString(m.get(RDF.TYPE))+")");
+		logWarn("Mention enrichment: " + m.getID()+", class("+getTypeasString(m.get(RDF.TYPE))+")",vars);
 		return 0;
             }
             
@@ -1354,8 +1408,8 @@ public class processNAF {
 	    /* 
 	       the mention is new (there is no previously accepted mention with the same span)
 	    */
-	    mentionListHash.put(charS, m);
-	    logDebug("Created Mention: " + m.getID());
+        	vars.mentionListHash.put(charS, m);
+	    logDebug("Created Mention: " + m.getID(),vars);
 	    return 1;
 	}
     }
@@ -1363,18 +1417,18 @@ public class processNAF {
     // apply to all the mentions the following changes:
     //  - add the "extent" attribute as NIF.ANCHOR_OF
     //
-    private static void fixMentions() {
-	Enumeration keys = mentionListHash.keys();
+    private static void fixMentions(processNAFVariables vars) {
+	Enumeration keys = vars.mentionListHash.keys();
 	while( keys.hasMoreElements() ) {
 	    String key = (String) keys.nextElement();
-	    Record m = (Record) mentionListHash.get(key);
+	    Record m = (Record) vars.mentionListHash.get(key);
 
 	    // get charStartIndex and charEndIndex from the mention charSpan (= the key)
 	    //
 	    String[] csList = key.split(",");
 	    int cStart = Integer.parseInt(csList[0]);
 	    int cEnd = Integer.parseInt(csList[1]);
-	    String extentStr = rawText.substring(cStart, cEnd);
+	    String extentStr = vars.rawText.substring(cStart, cEnd);
 	    m.add(NIF.ANCHOR_OF, extentStr);
 	}
     }
@@ -1407,8 +1461,8 @@ public class processNAF {
 	*/
         List<Object> typesOld = oldM.get(RDF.TYPE);
         List<Object> typesNew = newM.get(RDF.TYPE);
-	boolean isGenericOldM = (typesOld.contains(NWR.OBJECT_MENTION) && (oldM.getUnique(NWR.ENTITY_TYPE) == null));
-	boolean isSpecificNewM = ((typesNew.contains(NWR.OBJECT_MENTION) && (newM.getUnique(NWR.ENTITY_TYPE) != null))
+	boolean isGenericOldM = (typesOld.contains(NWR.OBJECT_MENTION) && (oldM.get(NWR.ENTITY_TYPE) == null||oldM.get(NWR.ENTITY_TYPE).size() == 0));
+	boolean isSpecificNewM = ((typesNew.contains(NWR.OBJECT_MENTION) && (newM.get(NWR.ENTITY_TYPE) != null && oldM.get(NWR.ENTITY_TYPE).size() > 0))
 				  || typesNew.contains(NWR.TIME_MENTION)
 				  || typesNew.contains(NWR.EVENT_MENTION));
 	/*
@@ -1422,90 +1476,90 @@ public class processNAF {
 	}
     }
 
-    private static void initURIIDS(Public publicProp) {
+    private static void initURIIDS(Public publicProp,processNAFVariables vars) {
         if (publicProp.getPublicId() == null) {
-            logError("Corrupted Naf file: PublicId in the Naf header is missed");
+            logError("Corrupted Naf file: PublicId in the Naf header is missed",vars);
             System.exit(0);
         }
-        nafPublicId = publicProp.getPublicId();
+        vars.nafPublicId = publicProp.getPublicId();
         String uri = publicProp.getUri();
         //TODO remove it @mohammed Sept2014PREFIX
         //uri = PREFIX+uri;
-        news_file_id = new URIImpl(uri);
+        vars.news_file_id = new URIImpl(uri);
         String nafuri = uri + ".naf";
-        NAF_file_id = new URIImpl(nafuri);
-        logDebug("news_file_id: " + uri);
-        logDebug("NAF_file_id: " + nafuri);
+        vars.NAF_file_id = new URIImpl(nafuri);
+        logDebug("news_file_id: " + uri,vars);
+        logDebug("NAF_file_id: " + nafuri,vars);
 
 	// set the PREFIX given the news uri
 	try {
 	    URL nurl = new URL(uri);
 	    Path p = Paths.get(nurl.getPath());
-	    PREFIX = nurl.getProtocol() + "://" + nurl.getAuthority() + "/" + p.subpath(0,2);
+	    vars.PREFIX = nurl.getProtocol() + "://" + nurl.getAuthority() + "/" + p.subpath(0,2);
 	} catch (Exception me) {
-	    PREFIX = news_file_id.getNamespace();
+		vars.PREFIX = vars.news_file_id.getNamespace();
 	}
-        logDebug("PREFIX: " + PREFIX);
+        logDebug("PREFIX: " + vars.PREFIX,vars);
     }
 
-    static void generateMIDAndSetIdWF(LinkedList<Wf> wordsL, Record m) {
+    static void generateMIDAndSetIdWF(LinkedList<Wf> wordsL, Record m,processNAFVariables vars) {
         int begin = Integer.parseInt(wordsL.getFirst().getOffset());
         int end = (Integer.parseInt(wordsL.getLast().getOffset()) + Integer.parseInt(wordsL
                 .getLast().getLength()));
         m.add(NIF.BEGIN_INDEX, begin);
         m.add(NIF.END_INDEX, end);
-        String tmpid = news_file_id + "#char=" + begin + "," + end;
+        String tmpid = vars.news_file_id + "#char=" + begin + "," + end;
         URI mId = new URIImpl(tmpid);
         m.setID(mId);
     }
 
-    private static void logError(String error) {
-        if (logErrorActive) {
-            logger.error(filePath.getName() + " " + error);
+    private static void logError(String error,processNAFVariables vars) {
+        if (vars.logErrorActive) {
+        	vars.logger.error(vars.filePath.getName() + " " + error);
         }
-        if (!storePartialInforInCaseOfError) {
+        if (!vars.storePartialInforInCaseOfError) {
             System.exit(-1);
         }
 
     }
 
-    private static void logDebug(String error) {
-        if (logDebugActive) {
-            logger.debug(error);
+    private static void logDebug(String error,processNAFVariables vars) {
+        if (vars.logDebugActive) {
+        	vars.logger.debug(error);
         }
     }
-    private static void logWarn(String error) {
-        logger.warn(filePath.getName() + " "+error);
+    private static void logWarn(String error,processNAFVariables vars) {
+    	vars.logger.warn(vars.filePath.getName() + " "+error);
     }
 
-    private static boolean checkHeaderTextTerms() {
-        if (globalTerms == null) {
-            logWarn("Error: No term(s) has been catched!");
+    private static boolean checkHeaderTextTerms(processNAFVariables vars) {
+        if (vars.globalTerms == null) {
+            logWarn("Error: No term(s) has been catched!",vars);
             return false;
         }
-        if (globalText == null) {
-            logWarn("Error: No text(s) has been catched!");
+        if (vars.globalText == null) {
+            logWarn("Error: No text(s) has been catched!",vars);
             return false;
         }
         return true;
     }
 
-    public static Logger getLogger() {
-        return logger;
+    public static Logger getLogger(processNAFVariables vars) {
+        return vars.logger;
     }
 
-    public static void setLogger(final Logger logger) {
-        processNAF.logger = logger;
+    public static void setLogger(final Logger logger,processNAFVariables vars) {
+    	vars.logger = logger;
     }
 
-    private static void generateTheMIdAndSetID(Span spansObj, Record m) {
-        LinkedList<Wf> wordsL = fromSpanGetAllMentions(((Span) spansObj).getTarget());
+    private static void generateTheMIdAndSetID(Span spansObj, Record m,processNAFVariables vars) {
+        LinkedList<Wf> wordsL = fromSpanGetAllMentions(((Span) spansObj).getTarget(),vars);
         int begin = Integer.parseInt(wordsL.getFirst().getOffset());
         int end = (Integer.parseInt(wordsL.getLast().getOffset()) + Integer.parseInt(wordsL
                 .getLast().getLength()));
         m.add(NIF.BEGIN_INDEX, begin);
         m.add(NIF.END_INDEX, end);
-        String muri = news_file_id + "#char=" + begin + "," + end;
+        String muri = vars.news_file_id + "#char=" + begin + "," + end;
         URI mId = new URIImpl(muri);
         m.setID(mId);
     }
@@ -1515,9 +1569,9 @@ public class processNAF {
      */
     private static void generateTheMIdAndSetID_forParticipationMention(LinkedList<Term> eventTermList, 
 								       LinkedList<Term> roleTermList, 
-								       Record m) {
-	LinkedList<Wf> eventWordList = getTheWFListByThereTermsFromTargetList(eventTermList);
-	LinkedList<Wf> roleWordList = getTheWFListByThereTermsFromTargetList(roleTermList);
+								       Record m,processNAFVariables vars) {
+	LinkedList<Wf> eventWordList = getTheWFListByThereTermsFromTargetList(eventTermList,vars);
+	LinkedList<Wf> roleWordList = getTheWFListByThereTermsFromTargetList(roleTermList,vars);
 
         int charStartOfEvent = Integer.parseInt(eventWordList.getFirst().getOffset());
         int charEndOfEvent = Integer.parseInt(eventWordList.getLast().getOffset()) + Integer.parseInt(eventWordList.getLast().getLength());
@@ -1535,7 +1589,7 @@ public class processNAF {
         m.add(NIF.BEGIN_INDEX, beginIndex);
         m.add(NIF.END_INDEX, endIndex);
 	
-        String muri = news_file_id + "#char=" + beginIndex + "," + endIndex;
+        String muri = vars.news_file_id + "#char=" + beginIndex + "," + endIndex;
         URI mId = new URIImpl(muri);
         m.setID(mId);
     }
@@ -1545,9 +1599,9 @@ public class processNAF {
        similar to generateTheMIdAndSetID() but specific for ParticipationMention
      */
     private static String getExtentOfParticipationMention(LinkedList<Term> eventTermList, 
-							  LinkedList<Term> roleTermList) {
-	LinkedList<Wf> eventWordList = getTheWFListByThereTermsFromTargetList(eventTermList);
-	LinkedList<Wf> roleWordList = getTheWFListByThereTermsFromTargetList(roleTermList);
+							  LinkedList<Term> roleTermList,processNAFVariables vars) {
+	LinkedList<Wf> eventWordList = getTheWFListByThereTermsFromTargetList(eventTermList,vars);
+	LinkedList<Wf> roleWordList = getTheWFListByThereTermsFromTargetList(roleTermList,vars);
 
 	LinkedList<Wf> mergedWordList = new LinkedList<Wf>();
 
@@ -1581,53 +1635,50 @@ public class processNAF {
     /*
       return true if another mention exists with the same span
     */
-    private static boolean checkDuplicate(String muri) {
-        boolean re = false;
-        Iterator<Record> ml = entityMentions.iterator();
-        while (ml.hasNext()) {
-            Record mtmp = ml.next();
-            String charS2 = mtmp.getUnique(NIF.BEGIN_INDEX, Integer.class) + "," + mtmp.getUnique(NIF.END_INDEX, Integer.class);
-            if (charS2.equals(muri)) {
+    private static boolean checkDuplicate(String muri,processNAFVariables vars) {
+        boolean re = false;        
+       for(String keys:vars.entityMentions.keySet()){
+            if (keys.equals(muri)) {
             //if (mtmp.getID().stringValue().equals(muri)) {
                 re = true;
-		break;
+                break;
             }
         }
         return re;
     }
 
-    private static Term getTermfromTermId(Term termId) {
-        if (globalTerms != null) {
-            if (globalTerms.getTerm().contains(termId))
-                return globalTerms.getTerm().get(globalTerms.getTerm().indexOf(termId));
+    private static Term getTermfromTermId(Term termId,processNAFVariables vars) {
+        if (vars.globalTerms != null) {
+            if (vars.globalTerms.getTerm().contains(termId))
+                return vars.globalTerms.getTerm().get(vars.globalTerms.getTerm().indexOf(termId));
         } else {
-            Iterator<Object> ls = doc
+            Iterator<Object> ls = vars.doc
                     .getNafHeaderOrRawOrTextOrTermsOrDepsOrChunksOrEntitiesOrCoreferencesOrConstituencyOrTimeExpressionsOrFactualitylayerOrTunitsOrLocationsOrDates()
                     .iterator();
             while (ls.hasNext()) {
                 Object ltmp = ls.next();
                 if (ltmp instanceof Terms) {
                     if (((Terms) ltmp).getTerm().contains(termId))
-                        return globalTerms.getTerm().get(globalTerms.getTerm().indexOf(termId));
+                        return vars.globalTerms.getTerm().get(vars.globalTerms.getTerm().indexOf(termId));
                     break;
                 }
             }
 
         }
-        logWarn("Term is not found, searched TermId(" + termId.getId() + ")");
+        logWarn("Term is not found, searched TermId(" + termId.getId() + ")",vars);
         return null;
     }
 
-    private static LinkedList<Wf> fromSpanGetAllMentionsTmx(List<Target> list) {
+    private static LinkedList<Wf> fromSpanGetAllMentionsTmx(List<Target> list,processNAFVariables vars) {
         LinkedList<Wf> returned = new LinkedList<Wf>();
         LinkedList<Wf> wordsIDL = new LinkedList<Wf>();
         for (Target ltmp : list) {
             wordsIDL.addLast((Wf) ltmp.getId());
         }
-        if (globalText != null) {
+        if (vars.globalText != null) {
 
             int found = 0;
-            for (Wf wftmp : globalText.getWf()) {
+            for (Wf wftmp : vars.globalText.getWf()) {
                 if (wordsIDL.contains(wftmp)) {
                     returned.addLast(wftmp);
                     found++;
@@ -1637,7 +1688,7 @@ public class processNAF {
                 }
             }
         } else {
-            Iterator<Object> doci2 = doc
+            Iterator<Object> doci2 = vars.doc
                     .getNafHeaderOrRawOrTextOrTermsOrDepsOrChunksOrEntitiesOrCoreferencesOrConstituencyOrTimeExpressionsOrFactualitylayerOrTunitsOrLocationsOrDates()
                     .iterator();
             while (doci2.hasNext()) {
@@ -1659,190 +1710,15 @@ public class processNAF {
         return returned;
     }
 
-    private static void init() {
-        PER = 0;
-        LOC = 0;
-        ORG = 0;
-        PRO = 0;
-        fin = 0;
-        mix = 0;
-        no_mapping = 0;
-        entityMen2 = 0;
-        corefMention2 = 0;
-        timeMention2 = 0;
-        srlMention2 = 0;
-        rolewithEntity2 = 0;
-        factualityMentions2 = 0;
-        entityMen = 0;
-        corefMention = 0;
-        corefMentionEvent = 0;
-        corefMentionNotEvent = 0;
-        timeMention = 0;
-        srlMention = 0;
-        rolewithEntity = 0;
-        rolewithoutEntity = 0;
-        factualityMentions = 0;
-        roleMentions = 0;
-        rawText = "";
-        nafLayerMapper = new Hashtable<String, URI>();
-        entityTypeMapper = new Hashtable<String, URI>();
-        timex3TypeMapper = new Hashtable<String, URI>();
-        valueTypeMapper = new Hashtable<String, URI>();
-        certaintyMapper = new Hashtable<String, URI>();
-        factualityMapper = new Hashtable<String, URI>();
-        polarityMapper = new Hashtable<String, URI>();
-        partOfSpeechMapper = new Hashtable<String, URI>();
-        eventClassMapper = new Hashtable<String, URI>();
-        entityClassMapper = new Hashtable<String, URI>();
-        timex3ModifierMapper = new Hashtable<String, URI>();
-        funtionInDocumentMapper = new Hashtable<String, URI>();
-        syntacticTypeMapper = new Hashtable<String, URI>();
-        tenseMapper = new Hashtable<String, URI>();
-        aspectMapper = new Hashtable<String, URI>();
-        tLinkTypeMapper = new Hashtable<String, URI>();
-        srlExternalRefResourceTypeMapper = new Hashtable<String, URI>();
-        mentionListHash = new Hashtable<String, Record>();
-        entityMentions = new LinkedList<Record>();
+   
 
-        valueTypeMapper.put("", NWR.VALUE_PERCENT);
-        valueTypeMapper.put("", NWR.VALUE_MONEY);
-        valueTypeMapper.put("", NWR.VALUE_QUANTITY);
-
-        certaintyMapper.put("", NWR.CERTAIN);
-        certaintyMapper.put("", NWR.UNCERTAIN);
-
-        factualityMapper.put("", NWR.FACTUAL);
-        factualityMapper.put("", NWR.COUNTERFACTUAL);
-        factualityMapper.put("", NWR.NON_FACTUAL);
-
-        polarityMapper.put("", NWR.POLARITY_POS);
-        polarityMapper.put("", NWR.POLARITY_NEG);
-
-        partOfSpeechMapper.put("N", NWR.POS_NOUN);
-        partOfSpeechMapper.put("V", NWR.POS_VERB);
-        partOfSpeechMapper.put("", NWR.POS_OTHER);
-
-        eventClassMapper.put("cognition", NWR.EVENT_SPEECH_COGNITIVE);
-        eventClassMapper.put("cognitive", NWR.EVENT_SPEECH_COGNITIVE);
-        eventClassMapper.put("communication", NWR.EVENT_SPEECH_COGNITIVE);
-        eventClassMapper.put("grammatical", NWR.EVENT_GRAMMATICAL);
-        eventClassMapper.put("contextual", NWR.EVENT_OTHER);
-
-        timex3TypeMapper.put("DATE", NWR.TIMEX3_DATE);
-        timex3TypeMapper.put("TIME", NWR.TIMEX3_TIME);
-        timex3TypeMapper.put("DURATION", NWR.TIMEX3_DURATION);
-        timex3TypeMapper.put("SET", NWR.TIMEX3_SET);
-
-        entityClassMapper.put("", NWR.ENTITY_CLASS_SPC);
-        entityClassMapper.put("", NWR.ENTITY_CLASS_GEN);
-        entityClassMapper.put("", NWR.ENTITY_CLASS_USP);
-        entityClassMapper.put("", NWR.ENTITY_CLASS_NEG);
-
-        timex3ModifierMapper.put("", NWR.MOD_BEFORE);
-        timex3ModifierMapper.put("", NWR.MOD_ON_OR_BEFORE);
-        timex3ModifierMapper.put("", NWR.MOD_MID);
-        timex3ModifierMapper.put("", NWR.MOD_END);
-        timex3ModifierMapper.put("", NWR.MOD_AFTER);
-        timex3ModifierMapper.put("", NWR.MOD_ON_OR_AFTER);
-        timex3ModifierMapper.put("", NWR.MOD_LESS_THAN);
-        timex3ModifierMapper.put("", NWR.MOD_MORE_THAN);
-        timex3ModifierMapper.put("", NWR.MOD_EQUAL_OR_LESS);
-        timex3ModifierMapper.put("", NWR.MOD_EQUAL_OR_MORE);
-        timex3ModifierMapper.put("", NWR.MOD_START);
-        timex3ModifierMapper.put("", NWR.MOD_APPROX);
-
-        funtionInDocumentMapper.put("", NWR.FUNCTION_CREATION_TIME);
-        funtionInDocumentMapper.put("", NWR.FUNCTION_EXPIRATION_TIME);
-        funtionInDocumentMapper.put("", NWR.FUNCTION_MODIFICATION_TIME);
-        funtionInDocumentMapper.put("", NWR.FUNCTION_PUBLICATION_TIME);
-        funtionInDocumentMapper.put("", NWR.FUNCTION_RELEASE_TIME);
-        funtionInDocumentMapper.put("", NWR.FUNCTION_RECEPTION_TIME);
-        funtionInDocumentMapper.put("", NWR.FUNCTION_NONE);
-
-        syntacticTypeMapper.put("", NWR.SYNTACTIC_TYPE_NAM);
-        syntacticTypeMapper.put("", NWR.SYNTACTIC_TYPE_NOM);
-        syntacticTypeMapper.put("", NWR.SYNTACTIC_TYPE_PRO);
-        syntacticTypeMapper.put("", NWR.SYNTACTIC_TYPE_PTV);
-        syntacticTypeMapper.put("", NWR.SYNTACTIC_TYPE_PRE);
-        syntacticTypeMapper.put("", NWR.SYNTACTIC_TYPE_HLS);
-        syntacticTypeMapper.put("", NWR.SYNTACTIC_TYPE_CONJ);
-        syntacticTypeMapper.put("", NWR.SYNTACTIC_TYPE_APP);
-        syntacticTypeMapper.put("", NWR.SYNTACTIC_TYPE_ARC);
-
-        entityTypeMapper.put("per", NWR.ENTITY_TYPE_PER);
-        entityTypeMapper.put("loc", NWR.ENTITY_TYPE_LOC);
-        entityTypeMapper.put("org", NWR.ENTITY_TYPE_ORG);
-        entityTypeMapper.put("art", NWR.ENTITY_TYPE_PRO);
-        entityTypeMapper.put("pro", NWR.ENTITY_TYPE_PRO);
-        entityTypeMapper.put("fin", NWR.ENTITY_TYPE_FIN);
-        entityTypeMapper.put("mix", NWR.ENTITY_TYPE_MIX);
-
-        tenseMapper.put("", NWR.TENSE_FUTURE);
-        tenseMapper.put("", NWR.TENSE_PAST);
-        tenseMapper.put("", NWR.TENSE_PRESENT);
-        tenseMapper.put("", NWR.TENSE_INFINITIVE);
-        tenseMapper.put("", NWR.TENSE_PRESPART);
-        tenseMapper.put("", NWR.TENSE_PASTPART);
-        tenseMapper.put("", NWR.TENSE_NONE);
-
-        aspectMapper.put("", NWR.ASPECT_PROGRESSIVE);
-        aspectMapper.put("", NWR.ASPECT_PERFECTIVE);
-        aspectMapper.put("", NWR.ASPECT_PERFECTIVE_PROGRESSIVE);
-        aspectMapper.put("", NWR.ASPECT_NONE);
-
-        nafLayerMapper.put("raw", NWR.LAYER_RAW);
-        nafLayerMapper.put("text", NWR.LAYER_TEXT);
-        nafLayerMapper.put("terms", NWR.LAYER_TERMS);
-        nafLayerMapper.put("deps", NWR.LAYER_DEPS);
-        nafLayerMapper.put("chunks", NWR.LAYER_CHUNKS);
-        nafLayerMapper.put("entities", NWR.LAYER_ENTITIES);
-        nafLayerMapper.put("coreferences", NWR.LAYER_COREFERENCES);
-        nafLayerMapper.put("srl", NWR.LAYER_SRL);
-        nafLayerMapper.put("constituency", NWR.LAYER_CONSTITUENCY);
-        nafLayerMapper.put("timeExpressions", NWR.LAYER_TIME_EXPRESSIONS);
-        nafLayerMapper.put("factuality", NWR.LAYER_FACTUALITY);
-
-        nafLayerMapper.put("opinions",  NWR.LAYER_OPINIONS); 
-        nafLayerMapper.put("temporalRelations",  NWR.LAYER_TEMPORAL_RELATIONS); 
-        nafLayerMapper.put("causalRelations",  NWR.LAYER_CAUSAL_RELATIONS); 
-        nafLayerMapper.put("vua-multiword-tagger",  NWR.LAYER_VUA_MULTIWORD_TAGGER); 
-        nafLayerMapper.put("vua-event-coref-intradoc-lemma-baseline",  NWR.LAYER_VUA_EVENT_COREF_INTRADOC_LEMMA_BASELINE);
-
-	// patch for wrong value layer="coreference"
-        nafLayerMapper.put("coreference", NWR.LAYER_COREFERENCES);
-
-	// patch for wrong value layer="time_expressions" or layer="timex3"
-        nafLayerMapper.put("time_expressions", NWR.LAYER_TIME_EXPRESSIONS);
-        nafLayerMapper.put("timex3", NWR.LAYER_TIME_EXPRESSIONS);
-
-
-        tLinkTypeMapper.put("", NWR.TLINK_BEFORE);
-        tLinkTypeMapper.put("", NWR.TLINK_AFTER);
-        tLinkTypeMapper.put("", NWR.TLINK_INCLUDES);
-        tLinkTypeMapper.put("", NWR.TLINK_MEASURE);
-        tLinkTypeMapper.put("", NWR.TLINK_IS_INCLUDED);
-        tLinkTypeMapper.put("", NWR.TLINK_SIMULTANEOUS);
-        tLinkTypeMapper.put("", NWR.TLINK_IAFTER);
-        tLinkTypeMapper.put("", NWR.TLINK_IBEFORE);
-        tLinkTypeMapper.put("", NWR.TLINK_BEGINS);
-        tLinkTypeMapper.put("", NWR.TLINK_ENDS);
-        tLinkTypeMapper.put("", NWR.TLINK_BEGUN_BY);
-        tLinkTypeMapper.put("", NWR.TLINK_ENDED_BY);
-
-        srlExternalRefResourceTypeMapper.put("PropBank", NWR.PROPBANK_REF);
-        srlExternalRefResourceTypeMapper.put("VerbNet", NWR.VERBNET_REF);
-        srlExternalRefResourceTypeMapper.put("FrameNet", NWR.FRAMENET_REF);
-        srlExternalRefResourceTypeMapper.put("NomBank", NWR.NOMBANK_REF);
-        srlExternalRefResourceTypeMapper.put("ESO", NWR.ESO_REF);
-    }
-
-    private static LinkedList<Wf> getTheWFListByThereTermsFromTargetList(LinkedList<Term> targetTermList) {
+    private static LinkedList<Wf> getTheWFListByThereTermsFromTargetList(LinkedList<Term> targetTermList,processNAFVariables vars) {
         LinkedList<Wf> returned = new LinkedList<Wf>();
         LinkedList<Wf> wordsIDL = new LinkedList<Wf>();
         boolean spanTermFound = false;
-        if (globalTerms != null) {
+        if (vars.globalTerms != null) {
 
-            for (Term termtmp : globalTerms.getTerm()) {
+            for (Term termtmp : vars.globalTerms.getTerm()) {
                 if (targetTermList.contains(termtmp)) {
                     Iterator<Object> spansl = termtmp
                             .getSentimentOrSpanOrExternalReferencesOrComponent().iterator();
@@ -1859,7 +1735,7 @@ public class processNAF {
             }
 
         } else {
-            Iterator<Object> doci = doc
+            Iterator<Object> doci = vars.doc
                     .getNafHeaderOrRawOrTextOrTermsOrDepsOrChunksOrEntitiesOrCoreferencesOrConstituencyOrTimeExpressionsOrFactualitylayerOrTunitsOrLocationsOrDates()
                     .iterator();
             while (doci.hasNext()) {
@@ -1885,12 +1761,12 @@ public class processNAF {
             }
         }
         if (!spanTermFound) {
-            logWarn("Inconsistence NAF file(#TS): Every term must contain a span element");
+            logWarn("Inconsistence NAF file(#TS): Every term must contain a span element",vars);
         }
-        if (globalText != null) {
+        if (vars.globalText != null) {
 
             int found = 0;
-            for (Wf wftmp : globalText.getWf()) {
+            for (Wf wftmp : vars.globalText.getWf()) {
                 if (wordsIDL.contains(wftmp)) {
                     returned.addLast(wftmp);
                     found++;
@@ -1901,11 +1777,11 @@ public class processNAF {
             }
 
             if (found < wordsIDL.size()) {
-                logWarn("Inconsistence NAF file(#SW): Wf(s)  arenot found when loading term ");
+                logWarn("Inconsistence NAF file(#SW): Wf(s)  arenot found when loading term ",vars);
             }
 
         } else {
-            Iterator<Object> doci2 = doc
+            Iterator<Object> doci2 = vars.doc
                     .getNafHeaderOrRawOrTextOrTermsOrDepsOrChunksOrEntitiesOrCoreferencesOrConstituencyOrTimeExpressionsOrFactualitylayerOrTunitsOrLocationsOrDates()
                     .iterator();
             int found = 0;
@@ -1926,14 +1802,14 @@ public class processNAF {
                 }
             }
             if (found < wordsIDL.size()) {
-                logWarn("Inconsistence NAF file(#SW): Wf(s)  arenot found when loading term ");
+                logWarn("Inconsistence NAF file(#SW): Wf(s)  arenot found when loading term ",vars);
             }
 
         }
         return returned;
     }
 
-    private static LinkedList<Wf> fromSpanGetAllMentions(List<Target> list) {
+    private static LinkedList<Wf> fromSpanGetAllMentions(List<Target> list,processNAFVariables vars) {
 
         LinkedList<Term> targetTermList = new LinkedList<Term>();
         Iterator<Target> targetList = list.iterator();
@@ -1941,23 +1817,23 @@ public class processNAF {
             Target tarm = targetList.next();
             targetTermList.add((Term)tarm.getId());
         }
-        LinkedList<Wf> corrispondingWf = getTheWFListByThereTermsFromTargetList(targetTermList);
+        LinkedList<Wf> corrispondingWf = getTheWFListByThereTermsFromTargetList(targetTermList,vars);
         return corrispondingWf;
     }
 
-    public static void readNAFFile(File naf) {
+    public static void readNAFFile(File naf,processNAFVariables vars) {
 
         try {
             JAXBContext jc = JAXBContext.newInstance("eu.fbk.knowledgestore.populator.naf.model");
             Unmarshaller unmarshaller = jc.createUnmarshaller();
-            doc = (NAF) unmarshaller.unmarshal(new InputStreamReader(new FileInputStream(naf),
+            vars.doc = (NAF) unmarshaller.unmarshal(new InputStreamReader(new FileInputStream(naf),
                     "UTF-8"));
         } catch (UnsupportedEncodingException e) {
-            logError(e.getMessage());
+            logError(e.getMessage(),vars);
         } catch (FileNotFoundException e) {
-            logError(e.getMessage());
+            logError(e.getMessage(),vars);
         } catch (JAXBException e) {
-            logError(e.getMessage());
+            logError(e.getMessage(),vars);
         }
 
     }

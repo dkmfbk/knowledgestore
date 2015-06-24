@@ -12,10 +12,11 @@
     <description>The KnowledgeStore</description>
     <url>http://knowledgestore.fbk.eu</url>
 
-    <organization>
-        <name>FBK-irst</name>
-        <url>http://www.fbk.eu</url>
-    </organization>
+    <parent>
+        <artifactId>fbk-parent</artifactId>
+        <groupId>eu.fbk</groupId>
+        <version>1.0</version>
+    </parent>
 
     <developers>
         <developer>
