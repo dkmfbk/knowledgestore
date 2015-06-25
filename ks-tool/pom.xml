@@ -37,11 +37,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>eu.fbk.newsreader</groupId>
-            <artifactId>kaflib-naf</artifactId>
-            <version>1.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
             <groupId>eu.fbk.knowledgestore</groupId>
             <artifactId>ks-core</artifactId>
         </dependency>
