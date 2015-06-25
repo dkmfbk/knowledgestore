@@ -6,6 +6,7 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Splitter;
@@ -17,7 +18,6 @@ import org.openrdf.model.impl.URIImpl;
 import org.openrdf.model.vocabulary.DCTERMS;
 import org.openrdf.model.vocabulary.RDF;
 
-import eu.fbk.knowledgestore.data.Data;
 import eu.fbk.knowledgestore.data.XPath;
 import eu.fbk.knowledgestore.vocabulary.KS;
 
@@ -33,9 +33,8 @@ public final class UIConfig implements Serializable {
     private static final Set<URI> DEFAULT_MENTION_OVERVIEW_PROPERTIES = ImmutableSet.of( //
             RDF.TYPE, KS.REFERS_TO);
 
-    private static final URI DEFAULT_DENOTED_BY_PROPERTY = new URIImpl(Data.getNamespaceMap().get(
-            "gaf")
-            + "denotedBy");
+    private static final URI DEFAULT_DENOTED_BY_PROPERTY = new URIImpl(
+            "http://groundedannotationframework.org/gaf#denotedBy");
 
     private static final boolean DEFAULT_DENOTED_BY_ALLOWS_GRAPHS = true;
 
@@ -60,10 +59,10 @@ public final class UIConfig implements Serializable {
     private final boolean refersToFunctional;
 
     private UIConfig(final Builder builder) {
-        this.resultLimit = Objects.firstNonNull(builder.resultLimit, DEFAULT_RESULT_LIMIT);
-        this.resourceOverviewProperties = ImmutableList.copyOf(Objects.firstNonNull(
+        this.resultLimit = MoreObjects.firstNonNull(builder.resultLimit, DEFAULT_RESULT_LIMIT);
+        this.resourceOverviewProperties = ImmutableList.copyOf(MoreObjects.firstNonNull(
                 builder.resourceOverviewProperties, DEFAULT_RESOURCE_OVERVIEW_PROPERTIES));
-        this.mentionOverviewProperties = ImmutableList.copyOf(Objects.firstNonNull(
+        this.mentionOverviewProperties = ImmutableList.copyOf(MoreObjects.firstNonNull(
                 builder.mentionOverviewProperties, DEFAULT_MENTION_OVERVIEW_PROPERTIES));
         this.mentionCategories = builder.mentionCategories == null ? ImmutableList.<Category>of()
                 : ImmutableList.copyOf(builder.mentionCategories);
@@ -145,7 +144,7 @@ public final class UIConfig implements Serializable {
 
     @Override
     public String toString() {
-        return Objects.toStringHelper(this).add("resultLimit", this.resultLimit)
+        return MoreObjects.toStringHelper(this).add("resultLimit", this.resultLimit)
                 .add("resourceOverviewProperties", this.resourceOverviewProperties)
                 .add("mentionOverviewProperties", this.mentionOverviewProperties)
                 .add("mentionCategories", this.mentionCategories)
@@ -202,7 +201,7 @@ public final class UIConfig implements Serializable {
 
         @Override
         public String toString() {
-            return Objects.toStringHelper(this) //
+            return MoreObjects.toStringHelper(this) //
                     .add("label", this.label) //
                     .add("style", this.style) //
                     .add("condition", this.condition) //
@@ -251,7 +250,7 @@ public final class UIConfig implements Serializable {
 
         @Override
         public String toString() {
-            return Objects.toStringHelper(this) //
+            return MoreObjects.toStringHelper(this) //
                     .add("label", this.label) //
                     .add("value", this.value) //
                     .toString();

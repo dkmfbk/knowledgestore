@@ -36,7 +36,6 @@ import org.openrdf.model.URI;
 import eu.fbk.knowledgestore.data.Record;
 import eu.fbk.knowledgestore.data.Stream;
 import eu.fbk.knowledgestore.data.XPath;
-import eu.fbk.knowledgestore.datastore.hbase.HBaseDataStore;
 import eu.fbk.knowledgestore.datastore.hbase.HBaseScanIterator;
 import eu.fbk.knowledgestore.runtime.DataCorruptedException;
 

@@ -1,0 +1,66 @@
+<configuration>
+
+    <conversionRule
+        conversionWord="bold"
+        converterClass="eu.fbk.knowledgestore.internal.Logging$BoldConverter" />
+
+    <conversionRule
+        conversionWord="normal"
+        converterClass="eu.fbk.knowledgestore.internal.Logging$NormalConverter" />
+
+    <conversionRule
+        conversionWord="context"
+        converterClass="eu.fbk.knowledgestore.internal.Logging$ContextConverter" />
+
+    <appender
+        name="STDOUT"
+        class="ch.qos.logback.core.ConsoleAppender">
+        <withJansi>true</withJansi>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <!--<pattern>%bold(%d{HH:mm:ss.SSS}\(%.-1level\)) %normal(%context%msg) %n%rEx{full}</pattern> -->
+            <pattern>%d{HH:mm:ss.SSS}\(%.-1level\) %context%msg %n%rEx{full}</pattern>
+        </encoder>
+    </appender>
+
+    <appender
+        name="FILE"
+        class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>log/ksnaf-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{HH:mm:ss}\(%.-1level\) %context%msg %n%rEx{full}</pattern>
+        </encoder>
+    </appender>
+
+    <appender
+        name="STATUS"
+        class="eu.fbk.knowledgestore.internal.Logging$StatusAppender"
+        withJansi="true">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="WARN">
+        <appender-ref ref="FILE" />
+        <appender-ref ref="STDOUT" />
+    </root>
+
+    <logger
+        name="eu.fbk.knowledgestore"
+        level="INFO" />
+
+    <logger
+        name="eu.fbk.knowledgestore.AbstractSession"
+        level="WARN" />
+
+    <logger
+        name="status"
+        additivity="false"
+        level="DEBUG">
+        <appender-ref ref="STATUS" />
+    </logger>
+
+</configuration>

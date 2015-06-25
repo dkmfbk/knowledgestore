@@ -34,17 +34,20 @@ public class submitKS {
 
 	    // Store resource records, in a single operation
 	    resources = submitResources(batchList, session);
-	    //upload news file
-	    uploadNews(batchList, session);
-	    // upload naf file
-	    uploadNaf(batchList, session);
 	    //store mentions records, in a single operation
 	    mentions = submitMentions(batchList, session);
-	    LinkedList<KSPresentation> submittedFiles = getAllSubmittedFiles(batchList);
+        //upload news file
+        uploadNews(batchList, session);
+        // upload naf file
+        uploadNaf(batchList, session);
+
+        LinkedList<KSPresentation> submittedFiles = getAllSubmittedFiles(batchList);
         for (KSPresentation ksF : submittedFiles) {
-            nafPopulator.out.append("NAF: " + ksF.getNaf_file_path()).append(ksF.getStats().getStats())
-                    .append("\n");
-            nafPopulator.out.flush();
+            if (nafPopulator.out != null) {
+                    nafPopulator.out.append("NAF: " + ksF.getNaf_file_path())
+                            .append(ksF.getStats().getStats()).append("\n");
+                    nafPopulator.out.flush();
+            }
             nafPopulator.updatestats(ksF.getStats());
         }
     
@@ -52,14 +55,14 @@ public class submitKS {
 	} catch (ParseException e) {
 	    //e.printStackTrace();
 	    //rollback
+        logger.error(e.getMessage(), e);
 	    rollback(session,resources,mentions);
-	    logger.error(e.getMessage(), e);
 	    //inout.append(e.getMessage());
 	    return 0;
 	} catch (IllegalStateException e) {
 	    //rollback
+        logger.error(e.getMessage(), e);
 	    rollback(session,resources,mentions);
-	    logger.error(e.getMessage(), e);
 	    return 0;
 	} catch (OperationException e) {
 	    //rollback
@@ -69,8 +72,8 @@ public class submitKS {
 	    return 0;
 	} catch (IOException e) {
 	    //rollback
+        logger.error(e.getMessage(), e);
 	    rollback(session,resources,mentions);
-	    logger.error(e.getMessage(), e);
 	    return 0;
 	}
 		
@@ -97,8 +100,11 @@ public class submitKS {
     	if(nafPopulator.KSresourceReplacement!=2){
     	for (KSPresentation tmp : batchList.values()) {
     	    try {
-    			long cc = session.count(KS.RESOURCE).ids(tmp.getNewsResource().getID()).exec();//TODO
-    			if(cc>0)
+                Record record = session.retrieve(KS.RESOURCE).ids(tmp.getNaf().getID())
+                        .properties(KS.STORED_AS).exec().getUnique();
+                boolean correctlyPopulated = record != null && !record.isNull(KS.STORED_AS);
+//    			long cc = session.count(KS.RESOURCE).ids(tmp.getNewsResource().getID()).exec();//TODO
+    			if(correctlyPopulated)
     				tmp.setFoundInKS(true);
     			else
     				tmp.setFoundInKS(false);

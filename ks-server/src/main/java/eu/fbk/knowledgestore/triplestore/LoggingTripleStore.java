@@ -225,7 +225,9 @@ public final class LoggingTripleStore extends ForwardingTripleStore {
             if (LOGGER.isDebugEnabled()) {
                 final AtomicLong count = new AtomicLong();
                 final AtomicBoolean eof = new AtomicBoolean();
-                final Stream<Statement> stream = Stream.create(statements).track(count, eof);
+                @SuppressWarnings("unchecked")
+                Iterable<Statement> stmts = (Iterable<Statement>) statements;
+                final Stream<Statement> stream = Stream.create(stmts).track(count, eof);
                 final long ts = System.currentTimeMillis();
                 super.remove(stream);
                 LOGGER.debug("{} - {} statements removed in {} ms{}", this, count,
@@ -243,7 +245,9 @@ public final class LoggingTripleStore extends ForwardingTripleStore {
             if (LOGGER.isDebugEnabled()) {
                 final AtomicLong count = new AtomicLong();
                 final AtomicBoolean eof = new AtomicBoolean();
-                final Stream<Statement> stream = Stream.create(statements).track(count, eof);
+                @SuppressWarnings("unchecked")
+                Iterable<Statement> stmts = (Iterable<Statement>) statements;
+                final Stream<Statement> stream = Stream.create(stmts).track(count, eof);
                 final long ts = System.currentTimeMillis();
                 super.remove(stream);
                 LOGGER.debug("{} - {} statements removed in {} ms{}", this, count,

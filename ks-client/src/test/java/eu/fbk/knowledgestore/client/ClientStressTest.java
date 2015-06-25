@@ -60,14 +60,14 @@ public class ClientStressTest {
         }
     }
 
-    private static void storeSingle(final Session session) throws Throwable {
+    static void storeSingle(final Session session) throws Throwable {
         final Stream<Record> records = createRecordStream();
         for (final Record record : records) {
             session.merge(KS.RESOURCE).criteria("overwrite *").records(record).exec();
         }
     }
 
-    private static void storeBatch(final Session session) throws OperationException {
+    static void storeBatch(final Session session) throws OperationException {
         session.merge(KS.RESOURCE).criteria("overwrite *").records(createRecordStream())
                 .exec(new Handler<Outcome>() {
 
@@ -87,7 +87,7 @@ public class ClientStressTest {
                 });
     }
 
-    private static Stream<Record> createRecordStream() {
+    static Stream<Record> createRecordStream() {
         return Stream.create(new AbstractIterator<Record>() {
 
             private int index = 0;

@@ -1,11 +1,5 @@
 #!/bin/sh
 
-if [ ${KS_ROOT_DIR:-unset} == unset ]
-then
-  export KS_ROOT_DIR=$(cd $(dirname "$0")/../../../ ; /bin/pwd)
-fi
-export JAVA_HOME=$(cd ${KS_ROOT_DIR}/sw/java/installed/jdk1.7.0_51 ; /bin/pwd)
-
 # set default JVM options if not supplied externally
 if [ -z "$JAVA_OPTS" ]; then
     JAVA_OPTS=-Xmx1024m
@@ -63,5 +57,6 @@ exec "$JAVA" $JAVA_OPTS  \
   -Dlauncher.description="Runs the KnowledgeStore daemon, using the daemon and logging configurations optionally specified" \
   -Dlauncher.config="ks.ttl" \
   -Dlauncher.logging="ks.log.xml" \
+  -Dlogback.configurationFile=ks.log.xml \
   eu.fbk.knowledgestore.runtime.Launcher \
   "$@"

@@ -29,6 +29,8 @@ import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataMultiPart;
 import org.openrdf.model.URI;
 import org.openrdf.model.Value;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import eu.fbk.knowledgestore.Operation;
 import eu.fbk.knowledgestore.Outcome;
@@ -66,6 +68,8 @@ import eu.fbk.knowledgestore.vocabulary.NIE;
 @Path("/" + Protocol.PATH_REPRESENTATIONS)
 public class Files extends Resource {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(Files.class);
+
     /**
      * Retrieves a file. Technically, this operation returns the representation of a file <i>HTTP
      * resource</i> whose URI is fully determined by the <tt>id</tt> query parameter that encodes
@@ -78,7 +82,7 @@ public class Files extends Resource {
      * <li>can enable / disable the use of server-side caches via header Cache-Control (specify
      * <tt>no-cache</tt> or <tt>no-store</tt> to disable caches).</li>
      * </ul>
-     * 
+     *
      * @param id
      *            the URI identifier of the KnowledgeStore resource (mandatory)
      * @param accept
@@ -159,7 +163,7 @@ public class Files extends Resource {
      * X-KS-Content-Meta <tt>property value</tt> non-standard header, where properties and values
      * are encoded using the Turtle syntax.</li>
      * </ul>
-     * 
+     *
      * @param id
      *            the URI identifier of the KnowledgeStore resource (mandatory, must refer to an
      *            existing resource for the request to be valid)
@@ -194,9 +198,13 @@ public class Files extends Resource {
         }
 
         // Retrieve old file for the same resource
-        final Representation oldRepresentation = getSession().download(id).timeout(getTimeout())
-                .exec();
-        closeOnCompletion(oldRepresentation);
+        Representation oldRepresentation = null;
+        try {
+            oldRepresentation = getSession().download(id).timeout(getTimeout()).exec();
+            closeOnCompletion(oldRepresentation);
+        } catch (final Throwable ex) {
+            LOGGER.error("Error retrieving current files associated to resource " + id, ex);
+        }
 
         // Handle two cases for validating preconditions, doing negotiation and handling probes
         if (oldRepresentation == null) {
@@ -235,7 +243,7 @@ public class Files extends Resource {
      * the X-KS Content-Meta non-standard <tt>property value</tt> header; in both cases,
      * properties and values are encoded using Turtle syntax.</li>
      * </ul>
-     * 
+     *
      * @param formData
      *            a multipart form data entity containing a body part for the <tt>id</tt> URI
      *            parameter (must denote an existing resource for the request to be valid), a body
@@ -323,7 +331,7 @@ public class Files extends Resource {
      * KnowledgeStore resource the file refers to. The operation supports the use of HTTP
      * preconditions in the form of If-Match, If-None-Match, If-Modified-Since,
      * If-Unmodified-Since headers.
-     * 
+     *
      * @param id
      *            the URI identifier of the KnowledgeStore resource (mandatory)
      * @return the operation outcome, encoded in one of the supported RDF MIME types

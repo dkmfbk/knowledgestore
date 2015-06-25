@@ -661,7 +661,7 @@ public final class Launcher {
             }
             return Preconditions.checkNotNull(url);
         } catch (final Throwable ex) {
-            throw new IllegalArgumentException("Invalid path: " + name);
+            throw new IllegalArgumentException("Invalid path: " + name, ex);
         }
     }
 
@@ -681,7 +681,7 @@ public final class Launcher {
             try {
                 return Data.convert(value, type);
             } catch (final Throwable ex) {
-                System.err.println(ex.getMessage()); // ignore
+                LOGGER.warn("Could not retrieve property '" + property + "'", ex);
             }
         }
         return defaultValue;

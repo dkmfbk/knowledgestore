@@ -21,7 +21,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import javax.annotation.Nullable;
 
 import com.google.common.base.Function;
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.base.Throwables;
@@ -85,6 +85,7 @@ import eu.fbk.knowledgestore.internal.Compression;
 import eu.fbk.knowledgestore.internal.Logging;
 import eu.fbk.knowledgestore.internal.Util;
 import eu.fbk.rdfpro.jsonld.JSONLD;
+import eu.fbk.rdfpro.tql.TQL;
 
 // TODO: reorganize code in this class
 
@@ -386,7 +387,7 @@ public final class RDFUtil {
         if (types instanceof Set && !jsonldDisabled) {
             try {
                 actualSettings.put(JSONLD.ROOT_TYPES, types);
-            } catch (Throwable ex) {
+            } catch (final Throwable ex) {
                 jsonldDisabled = true; // rdfpro-jsonld not available
             }
         }
@@ -845,7 +846,7 @@ public final class RDFUtil {
 
         DecouplingHandler(final RDFHandler handler, @Nullable final Integer queueSize) {
             this.handler = Preconditions.checkNotNull(handler);
-            this.queueSize = Objects.firstNonNull(queueSize, DEFAULT_QUEUE_SIZE);
+            this.queueSize = MoreObjects.firstNonNull(queueSize, DEFAULT_QUEUE_SIZE);
             this.queue = null;
             this.exception = null;
             this.future = null;
@@ -979,7 +980,7 @@ public final class RDFUtil {
                 @Nullable final Integer bufferSize) {
             this.handler = Preconditions.checkNotNull(handler);
             this.namespaces = Preconditions.checkNotNull(namespaces);
-            this.bufferSize = Objects.firstNonNull(bufferSize, DEFAULT_BUFFER_SIZE);
+            this.bufferSize = MoreObjects.firstNonNull(bufferSize, DEFAULT_BUFFER_SIZE);
             this.buffer = null;
             this.buffering = false;
             this.bindings = null;
@@ -1150,6 +1151,7 @@ public final class RDFUtil {
     }
 
     {
+        TQL.register();
         System.setProperty("entityExpansionLimit", "" + Integer.MAX_VALUE);
     }
 

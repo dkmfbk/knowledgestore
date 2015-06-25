@@ -1,36 +1,8 @@
 package eu.fbk.knowledgestore.server;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.Closeable;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.atomic.AtomicLong;
-
-import javax.annotation.Nullable;
-
-import com.google.common.base.Charsets;
-import com.google.common.base.Function;
-import com.google.common.base.Functions;
-import com.google.common.base.Objects;
-import com.google.common.base.Preconditions;
-import com.google.common.base.Throwables;
+import com.google.common.base.*;
 import com.google.common.collect.AbstractIterator;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
+import com.google.common.collect.*;
 import com.google.common.hash.Hashing;
 import com.google.common.hash.HashingOutputStream;
 import com.google.common.html.HtmlEscapers;
@@ -39,7 +11,19 @@ import com.google.common.io.CountingOutputStream;
 import com.google.common.io.FileBackedOutputStream;
 import com.google.common.net.MediaType;
 import com.google.common.net.UrlEscapers;
-
+import eu.fbk.knowledgestore.*;
+import eu.fbk.knowledgestore.Outcome.Status;
+import eu.fbk.knowledgestore.data.*;
+import eu.fbk.knowledgestore.datastore.DataStore;
+import eu.fbk.knowledgestore.datastore.DataTransaction;
+import eu.fbk.knowledgestore.filestore.FileStore;
+import eu.fbk.knowledgestore.internal.rdf.RDFUtil;
+import eu.fbk.knowledgestore.triplestore.TripleStore;
+import eu.fbk.knowledgestore.triplestore.TripleTransaction;
+import eu.fbk.knowledgestore.vocabulary.KS;
+import eu.fbk.knowledgestore.vocabulary.NFO;
+import eu.fbk.knowledgestore.vocabulary.NIE;
+import info.aduna.iteration.CloseableIteration;
 import org.openrdf.model.Statement;
 import org.openrdf.model.URI;
 import org.openrdf.model.ValueFactory;
@@ -53,30 +37,13 @@ import org.openrdf.query.parser.ParsedQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import info.aduna.iteration.CloseableIteration;
-
-import eu.fbk.knowledgestore.AbstractKnowledgeStore;
-import eu.fbk.knowledgestore.AbstractSession;
-import eu.fbk.knowledgestore.OperationException;
-import eu.fbk.knowledgestore.Outcome;
-import eu.fbk.knowledgestore.Outcome.Status;
-import eu.fbk.knowledgestore.Session;
-import eu.fbk.knowledgestore.data.Criteria;
-import eu.fbk.knowledgestore.data.Data;
-import eu.fbk.knowledgestore.data.Handler;
-import eu.fbk.knowledgestore.data.Record;
-import eu.fbk.knowledgestore.data.Representation;
-import eu.fbk.knowledgestore.data.Stream;
-import eu.fbk.knowledgestore.data.XPath;
-import eu.fbk.knowledgestore.datastore.DataStore;
-import eu.fbk.knowledgestore.datastore.DataTransaction;
-import eu.fbk.knowledgestore.filestore.FileStore;
-import eu.fbk.knowledgestore.internal.rdf.RDFUtil;
-import eu.fbk.knowledgestore.triplestore.TripleStore;
-import eu.fbk.knowledgestore.triplestore.TripleTransaction;
-import eu.fbk.knowledgestore.vocabulary.KS;
-import eu.fbk.knowledgestore.vocabulary.NFO;
-import eu.fbk.knowledgestore.vocabulary.NIE;
+import javax.annotation.Nullable;
+import java.io.*;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.atomic.AtomicLong;
 
 // TODO file garbage collection
 
@@ -109,8 +76,8 @@ public final class Server extends AbstractKnowledgeStore {
         this.tripleStore = Preconditions.checkNotNull(builder.tripleStore);
 
         try {
-            this.chunkSize = Objects.firstNonNull(builder.chunkSize, DEFAULT_CHUNK_SIZE);
-            this.bufferSize = Objects.firstNonNull(builder.bufferSize, DEFAULT_BUFFER_SIZE);
+            this.chunkSize = MoreObjects.firstNonNull(builder.chunkSize, DEFAULT_CHUNK_SIZE);
+            this.bufferSize = MoreObjects.firstNonNull(builder.bufferSize, DEFAULT_BUFFER_SIZE);
             Preconditions.checkArgument(this.chunkSize > 0);
             Preconditions.checkArgument(this.bufferSize > 0);
 
@@ -271,7 +238,7 @@ public final class Server extends AbstractKnowledgeStore {
                     // Transformation required: do it and return a subset of metadata
                     final String ext = Iterables.getFirst(
                             Data.mimeTypeToExtensions(transformToType), "bin");
-                    final String name = Objects.firstNonNull(
+                    final String name = MoreObjects.firstNonNull(
                             metadata.getUnique(NFO.FILE_NAME, String.class, null), "download")
                             + "." + ext;
                     stream = transform(fileTypeString, transformToType, stream);
@@ -512,7 +479,7 @@ public final class Server extends AbstractKnowledgeStore {
             // If IDs have been supplied, we prefer to retrieve the records and apply the optional
             // condition locally (more efficient if few IDs are used)
             if (actualIDs != null) {
-                return doRetrieve(timeout, type, condition, actualIDs, condition.getProperties(),
+                return doRetrieve(timeout, type, condition, actualIDs, condition == null ? null : condition.getProperties(),
                         null, null).count();
             }
 
@@ -569,8 +536,8 @@ public final class Server extends AbstractKnowledgeStore {
 
             // Apply offset and limit directives
             if (offset != null || limit != null) {
-                stream = stream.slice(Objects.firstNonNull(offset, 0L),
-                        Objects.firstNonNull(limit, Long.MAX_VALUE));
+                stream = stream.slice(MoreObjects.firstNonNull(offset, 0L),
+                        MoreObjects.firstNonNull(limit, Long.MAX_VALUE));
             }
 
             // Attach the transaction to the cursor, so that it ends when the latter is closed
@@ -887,7 +854,7 @@ public final class Server extends AbstractKnowledgeStore {
                 // Compute what to removed (oldRel/oldProp.) and to add (newRel/newProp.)
                 final Record oldRel = oldMap.get(id);
                 final Record newRel = newMap.get(id);
-                final URI type = Objects.firstNonNull(oldRel, newRel).getSystemType();
+                final URI type = MoreObjects.firstNonNull(oldRel, newRel).getSystemType();
                 if (oldRel != null && newRel != null) {
                     for (final URI property : oldRel.getProperties()) {
                         final List<URI> newValues = newRel.get(property, URI.class);
@@ -1022,10 +989,10 @@ public final class Server extends AbstractKnowledgeStore {
             if (defaultGraphs != null || namedGraphs != null) {
                 final DatasetImpl ds = new DatasetImpl();
                 final Set<URI> emptyGraphs = ImmutableSet.of();
-                for (final URI graph : Objects.firstNonNull(defaultGraphs, emptyGraphs)) {
+                for (final URI graph : MoreObjects.firstNonNull(defaultGraphs, emptyGraphs)) {
                     ds.addDefaultGraph(graph);
                 }
-                for (final URI graph : Objects.firstNonNull(namedGraphs, emptyGraphs)) {
+                for (final URI graph : MoreObjects.firstNonNull(namedGraphs, emptyGraphs)) {
                     ds.addNamedGraph(graph);
                 }
                 dataset = ds;

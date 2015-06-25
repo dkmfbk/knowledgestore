@@ -10,7 +10,7 @@ import java.util.Set;
 import javax.annotation.Nullable;
 
 import com.google.common.base.Function;
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
@@ -74,7 +74,7 @@ public class MemoryDataStore implements DataStore {
      */
     public MemoryDataStore(final FileSystem fileSystem, @Nullable final String path) {
         this.fileSystem = Preconditions.checkNotNull(fileSystem);
-        this.filePath = new Path(Objects.firstNonNull(path, MemoryDataStore.PATH_DEFAULT))
+        this.filePath = new Path(MoreObjects.firstNonNull(path, MemoryDataStore.PATH_DEFAULT))
                 .makeQualified(this.fileSystem); // resolve against working directory
         this.tables = Maps.newHashMap();
         this.revision = 1;

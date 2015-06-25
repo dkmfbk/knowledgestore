@@ -39,8 +39,6 @@ import org.openrdf.model.Value;
 import org.openrdf.model.ValueFactory;
 import org.openrdf.model.vocabulary.RDF;
 import org.openrdf.model.vocabulary.XMLSchema;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import eu.fbk.knowledgestore.data.Data;
 import eu.fbk.knowledgestore.data.Record;
@@ -60,9 +58,7 @@ public final class AvroSerializer {
     private final ValueFactory factory;
 
     private final DatatypeFactory datatypeFactory;
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(AvroSerializer.class);
-
+    
     public AvroSerializer() {
         this(null);
     }

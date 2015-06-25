@@ -18,7 +18,7 @@ import java.util.zip.InflaterInputStream;
 import javax.annotation.Nullable;
 import javax.xml.datatype.XMLGregorianCalendar;
 
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.io.ByteStreams;
@@ -40,9 +40,6 @@ import eu.fbk.knowledgestore.data.Record;
 // NOTE: supports only serialization and deserialization of Record, URI, BNode, Literal,
 // Statement objects. For records, it is possible to specify which properties to serialize /
 // deserialize.
-
-// TODO: add ideas from smaz/jsmaz to dictionary-compress short strings / uris
-// <https://github.com/icedrake/jsmaz> (30-50% string reduction achievable)
 
 public final class Serializer {
 
@@ -116,7 +113,7 @@ public final class Serializer {
             @Nullable final ValueFactory factory) {
         this.compress = compress;
         this.dictionary = dictionary;
-        this.factory = Objects.firstNonNull(factory, Data.getValueFactory());
+        this.factory = MoreObjects.firstNonNull(factory, Data.getValueFactory());
     }
 
     public byte[] toBytes(final Object object) {
