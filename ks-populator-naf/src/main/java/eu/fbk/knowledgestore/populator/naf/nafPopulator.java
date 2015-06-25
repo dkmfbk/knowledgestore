@@ -379,7 +379,7 @@ public class nafPopulator {
 	logger.info("checkSession SERVER_URL |" + SERVER_URL + "|");
         if (store == null) {
             // Initialize a KnowledgeStore client
-            store = Client.builder(SERVER_URL).validateServer(false).build();
+            store = Client.builder(SERVER_URL).maxConnections(16).validateServer(false).build();
         }
         if (store != null && (session == null || session.isClosed())) {
             // Acquire a session for a given username/password pair

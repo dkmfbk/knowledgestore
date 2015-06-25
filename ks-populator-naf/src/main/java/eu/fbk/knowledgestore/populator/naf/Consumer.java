@@ -27,11 +27,11 @@ public class Consumer implements Runnable {
     static int cc=1;
     @Override
     public void run() {
+        Session session = null;
         try {
             System.out.println("Start Consumer:"+cc);
             int cN= cc;
             cc++;
-            Session  session = null ;
             if(nafPopulator.store!=null&&!nafPopulator.store.isClosed()){
             	session = nafPopulator.store.newSession(nafPopulator.USERNAME, nafPopulator.PASSWORD);
             }
@@ -77,6 +77,11 @@ public class Consumer implements Runnable {
                 
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException | SecurityException | IOException  e) {
             e.printStackTrace();
+        }
+        finally {
+            if (session != null) {
+                session.close();
+            }
         }
     }
     
