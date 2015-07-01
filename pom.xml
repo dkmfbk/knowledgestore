@@ -1138,6 +1138,16 @@
 
         <plugins>
             <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>license-maven-plugin</artifactId>
+                <configuration>
+                    <licenseName>apache_v2</licenseName>
+                    <!--<licenseResolver>${project.baseUri}/${parent-path}/src/license</licenseResolver>-->
+                    <fileTemplate>${project.basedir}/${parent-path}/src/license/template.ftl</fileTemplate>
+                </configuration>
+            </plugin>
+
+            <plugin>
                 <!-- The following goal is necessary in order to allow child modules to
                      inherit the site descriptor of the parent project -->
                 <groupId>org.apache.maven.plugins</groupId>
