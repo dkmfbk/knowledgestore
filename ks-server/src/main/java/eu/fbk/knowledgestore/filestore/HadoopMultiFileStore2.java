@@ -81,7 +81,9 @@ public final class HadoopMultiFileStore2 implements FileStore {
 
     private static final String SMALL_FILES_PATH = "_small";
 
-    private static final int MAX_LUCENE_SEGMENTS = 100;
+    // private static final int MAX_LUCENE_SEGMENTS = 100;
+
+    private final int MAX_LUCENE_ATTEMPTS = 3;
 
     private static final String KEY_FIELD = "filename";
 
@@ -596,47 +598,61 @@ public final class HadoopMultiFileStore2 implements FileStore {
     }
 
     private void indexOptimize() throws IOException {
-        if (!this.luceneReader.isOptimized()) {
-            // this.luceneWriter.optimize(MAX_LUCENE_SEGMENTS);
-            this.luceneWriter.optimize();
-            this.luceneWriter.commit();
-            this.luceneReader.close();
-            this.luceneReader = this.luceneWriter.getReader();
-            LOGGER.debug("Index optimized");
+        synchronized (this.luceneWriter) {
+            if (!this.luceneReader.isOptimized()) {
+                // following command causes the index to always be detected as not optimized
+                // this.luceneWriter.optimize(MAX_LUCENE_SEGMENTS);
+                this.luceneWriter.optimize();
+                this.luceneWriter.commit();
+                this.luceneReader.close();
+                this.luceneReader = this.luceneWriter.getReader();
+                LOGGER.debug("Index optimized");
+            }
         }
     }
 
     private String indexGet(final String key) throws IOException {
         final Term s = new Term(KEY_FIELD, key);
-        final TermDocs termDocs = this.luceneReader.termDocs(s);
-        if (termDocs.next()) {
-            final Document doc = this.luceneReader.document(termDocs.doc());
-            return doc.get(VALUE_FIELD);
+        synchronized (this.luceneWriter) {
+            for (int attempt = 0;; ++attempt) {
+                try {
+                    final TermDocs termDocs = this.luceneReader.termDocs(s);
+                    if (termDocs.next()) {
+                        final Document doc = this.luceneReader.document(termDocs.doc());
+                        return doc.get(VALUE_FIELD);
+                    }
+                    return null;
+                } catch (final Throwable ex) {
+                    indexError(ex, attempt);
+                }
+            }
         }
-        return null;
     }
 
     private void indexPut(final Map<String, String> entries) throws IOException {
+
         try {
             int numDeleted = 0;
             int numUpdated = 0;
-            for (final Map.Entry<String, String> entry : entries.entrySet()) {
-                if (entry.getValue() == null) {
-                    this.luceneWriter.deleteDocuments(new Term(VALUE_FIELD, entry.getKey()));
-                    ++numDeleted;
-                } else {
-                    final Document doc = new Document();
-                    doc.add(new Field(KEY_FIELD, entry.getKey(), Field.Store.YES,
-                            Field.Index.NOT_ANALYZED));
-                    doc.add(new Field(VALUE_FIELD, entry.getValue(), Field.Store.YES,
-                            Field.Index.NOT_ANALYZED));
-                    this.luceneWriter.updateDocument(new Term(KEY_FIELD, entry.getKey()), doc);
-                    ++numUpdated;
+            synchronized (this.luceneWriter) {
+                for (final Map.Entry<String, String> entry : entries.entrySet()) {
+                    if (entry.getValue() == null) {
+                        this.luceneWriter.deleteDocuments(new Term(VALUE_FIELD, entry.getKey()));
+                        ++numDeleted;
+                    } else {
+                        final Document doc = new Document();
+                        doc.add(new Field(KEY_FIELD, entry.getKey(), Field.Store.YES,
+                                Field.Index.NOT_ANALYZED));
+                        doc.add(new Field(VALUE_FIELD, entry.getValue(), Field.Store.YES,
+                                Field.Index.NOT_ANALYZED));
+                        this.luceneWriter.updateDocument(new Term(KEY_FIELD, entry.getKey()), doc);
+                        ++numUpdated;
+                    }
                 }
+                this.luceneWriter.commit();
+                this.luceneReader.close();
+                this.luceneReader = this.luceneWriter.getReader();
             }
-            this.luceneWriter.commit();
-            this.luceneReader.close();
-            this.luceneReader = this.luceneWriter.getReader();
             LOGGER.debug("Updated Lucene index: {} documents updated, {} documents deleted",
                     numUpdated, numDeleted);
         } catch (final Throwable ex) {
@@ -648,13 +664,22 @@ public final class HadoopMultiFileStore2 implements FileStore {
 
         if (deleted) {
             // Perform a direct lookup
-            final List<String> deletedNames = new ArrayList<>();
             final Term s = new Term(VALUE_FIELD, DELETED);
-            final TermDocs termDocs = this.luceneReader.termDocs(s);
-            while (termDocs.next()) {
-                deletedNames.add(this.luceneReader.document(termDocs.doc()).get(KEY_FIELD));
+            final List<String> deletedNames = new ArrayList<>();
+            synchronized (this.luceneWriter) {
+                for (int attempt = 0;; ++attempt) {
+                    try {
+                        final TermDocs termDocs = this.luceneReader.termDocs(s);
+                        while (termDocs.next()) {
+                            deletedNames.add(this.luceneReader.document(termDocs.doc()).get(
+                                    KEY_FIELD));
+                        }
+                        return deletedNames.iterator();
+                    } catch (final Throwable ex) {
+                        indexError(ex, attempt);
+                    }
+                }
             }
-            return deletedNames.iterator();
 
         } else {
             // Iterate over the whole index
@@ -667,23 +692,49 @@ public final class HadoopMultiFileStore2 implements FileStore {
                 @Override
                 protected String computeNext() {
                     try {
-                        if (this.maxIndex < 0) {
-                            this.maxIndex = HadoopMultiFileStore2.this.luceneReader.maxDoc();
-                        }
-                        while (this.currentIndex <= this.maxIndex) {
-                            final Document document = HadoopMultiFileStore2.this.luceneReader
-                                    .document(this.currentIndex++);
-                            if (document != null && !DELETED.equals(document.get(VALUE_FIELD))) {
-                                return document.get(HadoopMultiFileStore2.KEY_FIELD);
+                        @SuppressWarnings("resource")
+                        final HadoopMultiFileStore2 store = HadoopMultiFileStore2.this;
+                        synchronized (store.luceneWriter) {
+                            for (int attempt = 0;; ++attempt) {
+                                try {
+                                    if (this.maxIndex < 0) {
+                                        this.maxIndex = store.luceneReader.maxDoc();
+                                    }
+                                    while (this.currentIndex <= this.maxIndex) {
+                                        final Document document = store.luceneReader
+                                                .document(this.currentIndex++);
+                                        if (document != null
+                                                && !DELETED.equals(document.get(VALUE_FIELD))) {
+                                            return document.get(HadoopMultiFileStore2.KEY_FIELD);
+                                        }
+                                    }
+                                    return endOfData();
+                                } catch (final Throwable ex) {
+                                    indexError(ex, attempt);
+                                }
                             }
                         }
                     } catch (final Throwable ex) {
                         throw new RuntimeException("Error iterating over Lucene index", ex);
                     }
-                    return endOfData();
                 }
-
             };
+        }
+    }
+
+    private void indexError(final Throwable ex, final int numAttempt) throws IOException {
+        if (numAttempt >= this.MAX_LUCENE_ATTEMPTS) {
+            Throwables.propagateIfPossible(ex, IOException.class);
+            Throwables.propagate(ex);
+        }
+        LOGGER.error("Error accessing Lucene index, will retry", ex);
+        synchronized (this.luceneWriter) {
+            try {
+                this.luceneReader.close();
+            } catch (final Throwable ex2) {
+                LOGGER.warn("Cannot close lucene reader after failure", ex2);
+            }
+            this.luceneReader = this.luceneWriter.getReader();
         }
     }
 
