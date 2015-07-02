@@ -1,0 +1,92 @@
+### List of third-party dependencies grouped by their license type.
+
+#### Aduna BSD license:
+
+  * OpenRDF Sesame: HTTP client (org.openrdf.sesame:sesame-http-client:2.7.15)
+  * OpenRDF Sesame: HTTP protocol (org.openrdf.sesame:sesame-http-protocol:2.7.15)
+  * OpenRDF Sesame: Model (org.openrdf.sesame:sesame-model:2.7.15)
+  * OpenRDF Sesame: Query (org.openrdf.sesame:sesame-query:2.7.15)
+  * OpenRDF Sesame: Query algebra - evaluation (org.openrdf.sesame:sesame-queryalgebra-evaluation:2.7.15)
+  * OpenRDF Sesame: Query algebra - model (org.openrdf.sesame:sesame-queryalgebra-model:2.7.15)
+  * OpenRDF Sesame: Query parser - API (org.openrdf.sesame:sesame-queryparser-api:2.7.15)
+  * OpenRDF Sesame: Query parser - SPARQL (org.openrdf.sesame:sesame-queryparser-sparql:2.7.15)
+  * OpenRDF Sesame: Query Rendering (org.openrdf.sesame:sesame-queryrender:2.7.15)
+  * OpenRDF Sesame: Query result IO - API (org.openrdf.sesame:sesame-queryresultio-api:2.7.15)
+  * OpenRDF Sesame: Query result IO - SPARQL/XML (org.openrdf.sesame:sesame-queryresultio-sparqlxml:2.7.15)
+  * OpenRDF Sesame: Repository - API (org.openrdf.sesame:sesame-repository-api:2.7.15)
+  * OpenRDF Sesame: SailRepository (org.openrdf.sesame:sesame-repository-sail:2.7.15)
+  * OpenRDF Sesame: SPARQL Repository (org.openrdf.sesame:sesame-repository-sparql:2.7.15)
+  * OpenRDF Sesame: Rio - API (org.openrdf.sesame:sesame-rio-api:2.7.15)
+  * OpenRDF Sesame: Rio - Datatypes (org.openrdf.sesame:sesame-rio-datatypes:2.7.15)
+  * OpenRDF Sesame: Rio - Languages (org.openrdf.sesame:sesame-rio-languages:2.7.15)
+  * OpenRDF Sesame: Rio - N-Triples (org.openrdf.sesame:sesame-rio-ntriples:2.7.15)
+  * OpenRDF Sesame: Rio - TriG (org.openrdf.sesame:sesame-rio-trig:2.7.15)
+  * OpenRDF Sesame: Rio - Turtle (org.openrdf.sesame:sesame-rio-turtle:2.7.15)
+  * OpenRDF Sesame: Sail API (org.openrdf.sesame:sesame-sail-api:2.7.15)
+  * OpenRDF Sesame: util (org.openrdf.sesame:sesame-util:2.7.15)
+
+#### Apache License:
+
+  * HttpClient (commons-httpclient:commons-httpclient:3.1)
+
+#### Apache License 2.0:
+
+  * Javassist (org.javassist:javassist:3.19.0-GA)
+
+#### Apache Software License, Version 2.0:
+
+  * FindBugs-jsr305 (com.google.code.findbugs:jsr305:3.0.0)
+  * Guava: Google Core Libraries for Java (com.google.guava:guava:18.0)
+  * virt_sesame2 (com.openlinksw.virtuoso:virt_sesame2:2015-01-26)
+  * virtjdbc4_1 (com.openlinksw.virtuoso:virtjdbc4_1:2015-01-26)
+  * HikariCP-java6 (com.zaxxer:HikariCP-java6:2.3.6)
+  * Commons BeanUtils Core (commons-beanutils:commons-beanutils-core:1.8.0)
+  * Commons Codec (commons-codec:commons-codec:1.4)
+  * Commons Collections (commons-collections:commons-collections:3.2.1)
+  * Commons Configuration (commons-configuration:commons-configuration:1.6)
+  * EL (commons-el:commons-el:1.0)
+  * Commons IO (commons-io:commons-io:2.4)
+  * Commons Lang (commons-lang:commons-lang:2.6)
+  * Jakarta Commons Net (commons-net:commons-net:1.4.1)
+  * ks-core (eu.fbk.knowledgestore:ks-core:1.6-SNAPSHOT)
+  * ks-server (eu.fbk.knowledgestore:ks-server:1.6-SNAPSHOT)
+  * jaxen (jaxen:jaxen:1.1.6)
+  * Apache Avro (org.apache.avro:avro:1.5.3)
+  * Commons Math (org.apache.commons:commons-math:2.1)
+  * hadoop-core (org.apache.hadoop:hadoop-core:1.0.4)
+  * Lucene Core (org.apache.lucene:lucene-core:2.9.4)
+  * Jackson (org.codehaus.jackson:jackson-core-asl:1.7.3)
+  * Data Mapper for Jackson (org.codehaus.jackson:jackson-mapper-asl:1.7.3)
+  * oro (oro:oro:2.0.8)
+
+#### BSD License:
+
+  * Hamcrest Core (org.hamcrest:hamcrest-core:1.3)
+  * xmlenc Library (xmlenc:xmlenc:0.52)
+
+#### Eclipse Public License - Version 1.0:
+
+  * JUnit (junit:junit:4.12)
+
+#### Eclipse Public License - v 1.0:
+
+  * Logback Classic Module (ch.qos.logback:logback-classic:1.1.3)
+  * Logback Core Module (ch.qos.logback:logback-core:1.1.3)
+
+#### GNU Lesser General Public License:
+
+  * Logback Classic Module (ch.qos.logback:logback-classic:1.1.3)
+  * Logback Core Module (ch.qos.logback:logback-core:1.1.3)
+  * Javassist (org.javassist:javassist:3.19.0-GA)
+
+#### MIT License:
+
+  * SLF4J API Module (org.slf4j:slf4j-api:1.7.12)
+
+#### Mozilla Public License Version 1.1:
+
+  * Javassist (org.javassist:javassist:3.19.0-GA)
+
+#### Public Domain:
+
+  * rdfpro-core (eu.fbk.rdfpro:rdfpro-core:0.3)
