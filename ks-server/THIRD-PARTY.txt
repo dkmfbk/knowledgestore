@@ -54,7 +54,7 @@
   * Commons IO (commons-io:commons-io:2.4)
   * Commons Lang (commons-lang:commons-lang:2.6)
   * Jakarta Commons Net (commons-net:commons-net:1.4.1)
-  * ks-core (eu.fbk.knowledgestore:ks-core:1.6-SNAPSHOT)
+  * ks-core (eu.fbk.knowledgestore:ks-core:1.6)
   * jaxen (jaxen:jaxen:1.1.6)
   * opencsv (net.sf.opencsv:opencsv:2.0)
   * Apache Avro (org.apache.avro:avro:1.5.3)
@@ -104,4 +104,4 @@
 
 #### Public Domain:
 
-  * rdfpro-core (eu.fbk.rdfpro:rdfpro-core:0.3)
+  * rdfpro-core (eu.fbk.rdfpro:rdfpro-core:0.4)

@@ -50,6 +50,6 @@
 
 #### Public Domain:
 
-  * rdfpro-core (eu.fbk.rdfpro:rdfpro-core:0.3)
-  * rdfpro-jsonld (eu.fbk.rdfpro:rdfpro-jsonld:0.3)
-  * rdfpro-tql (eu.fbk.rdfpro:rdfpro-tql:0.3)
+  * rdfpro-core (eu.fbk.rdfpro:rdfpro-core:0.4)
+  * rdfpro-jsonld (eu.fbk.rdfpro:rdfpro-jsonld:0.4)
+  * rdfpro-tql (eu.fbk.rdfpro:rdfpro-tql:0.4)

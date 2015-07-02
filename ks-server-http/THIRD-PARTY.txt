@@ -58,8 +58,8 @@
   * Commons IO (commons-io:commons-io:2.4)
   * Commons Lang (commons-lang:commons-lang:2.6)
   * Jakarta Commons Net (commons-net:commons-net:1.4.1)
-  * ks-core (eu.fbk.knowledgestore:ks-core:1.6-SNAPSHOT)
-  * ks-server (eu.fbk.knowledgestore:ks-server:1.6-SNAPSHOT)
+  * ks-core (eu.fbk.knowledgestore:ks-core:1.6)
+  * ks-server (eu.fbk.knowledgestore:ks-server:1.6)
   * Bean Validation API (javax.validation:validation-api:1.1.0.Final)
   * jaxen (jaxen:jaxen:1.1.6)
   * opencsv (net.sf.opencsv:opencsv:2.0)
@@ -176,6 +176,6 @@
 
 #### Public Domain:
 
-  * rdfpro-core (eu.fbk.rdfpro:rdfpro-core:0.3)
-  * rdfpro-jsonld (eu.fbk.rdfpro:rdfpro-jsonld:0.3)
-  * rdfpro-tql (eu.fbk.rdfpro:rdfpro-tql:0.3)
+  * rdfpro-core (eu.fbk.rdfpro:rdfpro-core:0.4)
+  * rdfpro-jsonld (eu.fbk.rdfpro:rdfpro-jsonld:0.4)
+  * rdfpro-tql (eu.fbk.rdfpro:rdfpro-tql:0.4)

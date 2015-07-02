@@ -61,8 +61,8 @@
   * Commons Lang (commons-lang:commons-lang:2.6)
   * Commons Logging (commons-logging:commons-logging:1.1.1)
   * Jakarta Commons Net (commons-net:commons-net:1.4.1)
-  * ks-core (eu.fbk.knowledgestore:ks-core:1.6-SNAPSHOT)
-  * ks-server (eu.fbk.knowledgestore:ks-server:1.6-SNAPSHOT)
+  * ks-core (eu.fbk.knowledgestore:ks-core:1.6)
+  * ks-server (eu.fbk.knowledgestore:ks-server:1.6)
   * fastutil (it.unimi.dsi:fastutil:6.5.6)
   * javax.inject (javax.inject:javax.inject:1)
   * jaxen (jaxen:jaxen:1.1.6)
@@ -180,4 +180,4 @@
 
   * AOP alliance (aopalliance:aopalliance:1.0)
   * Highly Scalable Java (com.github.stephenc.high-scale-lib:high-scale-lib:1.1.1)
-  * rdfpro-core (eu.fbk.rdfpro:rdfpro-core:0.3)
+  * rdfpro-core (eu.fbk.rdfpro:rdfpro-core:0.4)

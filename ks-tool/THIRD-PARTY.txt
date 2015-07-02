@@ -22,8 +22,8 @@
   * Guava: Google Core Libraries for Java (com.google.guava:guava:18.0)
   * Apache Commons Codec (commons-codec:commons-codec:1.9)
   * Commons IO (commons-io:commons-io:2.4)
-  * ks-client (eu.fbk.knowledgestore:ks-client:1.6-SNAPSHOT)
-  * ks-core (eu.fbk.knowledgestore:ks-core:1.6-SNAPSHOT)
+  * ks-client (eu.fbk.knowledgestore:ks-client:1.6)
+  * ks-core (eu.fbk.knowledgestore:ks-core:1.6)
   * jaxen (jaxen:jaxen:1.1.6)
   * opencsv (net.sf.opencsv:opencsv:2.0)
   * Apache Commons Math (org.apache.commons:commons-math3:3.4.1)
@@ -85,4 +85,4 @@
 
 #### Public Domain:
 
-  * rdfpro-core (eu.fbk.rdfpro:rdfpro-core:0.3)
+  * rdfpro-core (eu.fbk.rdfpro:rdfpro-core:0.4)
