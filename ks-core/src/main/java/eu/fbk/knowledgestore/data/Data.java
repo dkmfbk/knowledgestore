@@ -1505,20 +1505,16 @@ public final class Data {
                     return result;
                 }
                 result = compare(first.getContext(), secondStmt.getContext());
-                if (result != 0) {
-                    return result;
-                }
-            } else if (second instanceof Value || second instanceof Record) {
-                return Integer.MIN_VALUE;
+                return result;
             }
-            return Integer.MAX_VALUE;
+            return -1;
         }
 
         private int compareLiteral(final Literal first, final Object second) {
             if (second instanceof Resource || second instanceof Record) {
-                return Integer.MIN_VALUE;
+                return -1;
             } else if (second instanceof Statement) {
-                return Integer.MAX_VALUE;
+                return 1;
             }
             final Literal secondLit = second instanceof Literal ? (Literal) second : convert(
                     second, Literal.class);
@@ -1576,18 +1572,7 @@ public final class Data {
                 break;
             default:
             }
-            return firstGroup < secondGroup ? Integer.MIN_VALUE : Integer.MAX_VALUE;
-        }
-
-        private int compareURI(final URI first, final Object second) {
-            if (second instanceof URI) {
-                return first.stringValue().compareTo(((URI) second).stringValue());
-            } else if (second instanceof BNode) {
-                return 1;
-            } else if (second instanceof Record) {
-                return -1;
-            }
-            return Integer.MAX_VALUE;
+            return firstGroup < secondGroup ? -1 : 1;
         }
 
         private int compareBNode(final BNode first, final Object second) {
@@ -1596,16 +1581,23 @@ public final class Data {
             } else if (second instanceof URI || second instanceof Record) {
                 return -1;
             }
-            return Integer.MAX_VALUE;
+            return 1;
+        }
+
+        private int compareURI(final URI first, final Object second) {
+            if (second instanceof URI) {
+                return first.stringValue().compareTo(((URI) second).stringValue());
+            } else if (second instanceof Record) {
+                return -1;
+            }
+            return 1;
         }
 
         private int compareRecord(final Record first, final Object second) {
             if (second instanceof Record) {
                 return first.compareTo((Record) second);
-            } else if (second instanceof URI || second instanceof BNode) {
-                return 1;
             }
-            return Integer.MAX_VALUE;
+            return 1;
         }
 
         private static int classifyDatatype(final URI datatype) {

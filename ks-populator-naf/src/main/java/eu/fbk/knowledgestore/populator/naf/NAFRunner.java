@@ -247,11 +247,7 @@ public class NAFRunner {
 	boolean submittedFlag = false;
         for(File filePath:fileslist){
             if (filePath.exists() && filePath.isDirectory()) {
-                // create report file in the same directory of the input file path.
-                if(nafPopulator.out==null)
-                    nafPopulator.out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(
-                // filePath.getPath(),
-                            nafPopulator.reportFileName)), "utf-8"));
+                
                 File[] listOfFiles = filePath.listFiles();
                 
                 for (int i = 0; i < listOfFiles.length; i++) {
@@ -272,12 +268,7 @@ public class NAFRunner {
                     addAndFreeMemory(mentions);
                 }
             } else if (filePath.exists() && filePath.isFile()) {
-                if(nafPopulator.out==null){
-                // create report file in the same directory of the input file path.
-                    nafPopulator.out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(
-                // filePath.getParent() ,
-                            nafPopulator.reportFileName)), "utf-8"));
-                }
+                
                 // out.append(filePath.getPath() + "\n");
                 runClass(filePath.getPath(), disabledItems,mentions);
                 submittedFlag = checkAddOrSubmit(mentions);
@@ -321,10 +312,6 @@ public class NAFRunner {
             
             if (filePath.exists() && filePath.isDirectory()) {
                 // create report file in the same directory of the input file path.
-                if(nafPopulator.out==null)
-                    nafPopulator.out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(
-                // filePath.getPath(),
-                            nafPopulator.reportFileName)), "utf-8"));
                 File[] listOfFiles = filePath.listFiles();
                 Hashtable<String, KSPresentation> mentions = new Hashtable<String, KSPresentation>();
                 for (int i = 0; i < listOfFiles.length; i++) {
@@ -335,7 +322,6 @@ public class NAFRunner {
                     } else if (listOfFiles[i].exists() && listOfFiles[i].isDirectory()) {
                         analyzePathAndRunSystem(listOfFiles[i].getPath(), disabledItems, rec);
                     }
-                    nafPopulator.out.flush();
                     //this is bug applied once it should be i%mod nafPopulator.batchSize==0
                     if (nafPopulator.batchSize != -1&&mentions.size() % nafPopulator.batchSize==0 ) {
                         // submit the collected data to KS.
@@ -375,12 +361,7 @@ public class NAFRunner {
                     Runtime.getRuntime().gc();
                 }
             } else if (filePath.exists() && filePath.isFile()) {
-                if(nafPopulator.out==null){
-                // create report file in the same directory of the input file path.
-                    nafPopulator.out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(
-                // filePath.getParent() ,
-                            nafPopulator.reportFileName)), "utf-8"));
-                }
+               
                 // out.append(filePath.getPath() + "\n");
                 Hashtable<String, KSPresentation> mentions = new Hashtable<String, KSPresentation>();
                 runClass(filePath.getPath(), disabledItems,mentions);
@@ -395,7 +376,6 @@ public class NAFRunner {
                 System.gc();
                 Runtime.getRuntime().gc();
             }
-            nafPopulator.out.flush();
             if (nafPopulator.printToFile && 
 		(nafPopulator.mentionFile != null)) {
                 nafPopulator.mentionFile.flush();

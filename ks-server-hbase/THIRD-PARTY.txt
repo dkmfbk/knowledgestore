@@ -1,0 +1,183 @@
+### List of third-party dependencies grouped by their license type.
+
+#### Aduna BSD license:
+
+  * OpenRDF Sesame: HTTP client (org.openrdf.sesame:sesame-http-client:2.7.15)
+  * OpenRDF Sesame: HTTP protocol (org.openrdf.sesame:sesame-http-protocol:2.7.15)
+  * OpenRDF Sesame: Model (org.openrdf.sesame:sesame-model:2.7.15)
+  * OpenRDF Sesame: Query (org.openrdf.sesame:sesame-query:2.7.15)
+  * OpenRDF Sesame: Query algebra - evaluation (org.openrdf.sesame:sesame-queryalgebra-evaluation:2.7.15)
+  * OpenRDF Sesame: Query algebra - model (org.openrdf.sesame:sesame-queryalgebra-model:2.7.15)
+  * OpenRDF Sesame: Query parser - API (org.openrdf.sesame:sesame-queryparser-api:2.7.15)
+  * OpenRDF Sesame: Query parser - SPARQL (org.openrdf.sesame:sesame-queryparser-sparql:2.7.15)
+  * OpenRDF Sesame: Query Rendering (org.openrdf.sesame:sesame-queryrender:2.7.15)
+  * OpenRDF Sesame: Query result IO - API (org.openrdf.sesame:sesame-queryresultio-api:2.7.15)
+  * OpenRDF Sesame: Query result IO - SPARQL/XML (org.openrdf.sesame:sesame-queryresultio-sparqlxml:2.7.15)
+  * OpenRDF Sesame: Repository - API (org.openrdf.sesame:sesame-repository-api:2.7.15)
+  * OpenRDF Sesame: SailRepository (org.openrdf.sesame:sesame-repository-sail:2.7.15)
+  * OpenRDF Sesame: SPARQL Repository (org.openrdf.sesame:sesame-repository-sparql:2.7.15)
+  * OpenRDF Sesame: Rio - API (org.openrdf.sesame:sesame-rio-api:2.7.15)
+  * OpenRDF Sesame: Rio - Datatypes (org.openrdf.sesame:sesame-rio-datatypes:2.7.15)
+  * OpenRDF Sesame: Rio - Languages (org.openrdf.sesame:sesame-rio-languages:2.7.15)
+  * OpenRDF Sesame: Rio - N-Triples (org.openrdf.sesame:sesame-rio-ntriples:2.7.15)
+  * OpenRDF Sesame: Rio - TriG (org.openrdf.sesame:sesame-rio-trig:2.7.15)
+  * OpenRDF Sesame: Rio - Turtle (org.openrdf.sesame:sesame-rio-turtle:2.7.15)
+  * OpenRDF Sesame: Sail API (org.openrdf.sesame:sesame-sail-api:2.7.15)
+  * OpenRDF Sesame: util (org.openrdf.sesame:sesame-util:2.7.15)
+
+#### Apache License:
+
+  * HttpClient (commons-httpclient:commons-httpclient:3.1)
+
+#### Apache License 2.0:
+
+  * Metrics Core Library (com.yammer.metrics:metrics-core:2.1.2)
+  * Javassist (org.javassist:javassist:3.19.0-GA)
+
+#### Apache License Version 2.0:
+
+  * Glassfish Jasper API (org.mortbay.jetty:jsp-api-2.1:6.1.14)
+
+#### Apache Software License, Version 2.0:
+
+  * JCommander (com.beust:jcommander:1.23)
+  * Tephra API (com.continuuity.tephra:tephra-api:0.2.0-ROL)
+  * Tephra Core (com.continuuity.tephra:tephra-core:0.2.0-ROL)
+  * Tephra HBase 0.94 Compatibility (com.continuuity.tephra:tephra-hbase-compat-0.94:0.2.0-ROL)
+  * FindBugs-jsr305 (com.google.code.findbugs:jsr305:3.0.0)
+  * Gson (com.google.code.gson:gson:2.2.4)
+  * Guava: Google Core Libraries for Java (com.google.guava:guava:18.0)
+  * Google Guice - Core Library (com.google.inject:guice:3.0)
+  * Google Guice - Extensions - AssistedInject (com.google.inject.extensions:guice-assistedinject:3.0)
+  * omid (com.yahoo:omid:1)
+  * HikariCP-java6 (com.zaxxer:HikariCP-java6:2.3.6)
+  * Commons BeanUtils Core (commons-beanutils:commons-beanutils-core:1.8.0)
+  * Commons CLI (commons-cli:commons-cli:1.2)
+  * Commons Codec (commons-codec:commons-codec:1.4)
+  * Commons Collections (commons-collections:commons-collections:3.2.1)
+  * Commons Configuration (commons-configuration:commons-configuration:1.6)
+  * EL (commons-el:commons-el:1.0)
+  * Commons IO (commons-io:commons-io:2.4)
+  * Commons Lang (commons-lang:commons-lang:2.6)
+  * Commons Logging (commons-logging:commons-logging:1.1.1)
+  * Jakarta Commons Net (commons-net:commons-net:1.4.1)
+  * ks-core (eu.fbk.knowledgestore:ks-core:1.6)
+  * ks-server (eu.fbk.knowledgestore:ks-server:1.6)
+  * fastutil (it.unimi.dsi:fastutil:6.5.6)
+  * javax.inject (javax.inject:javax.inject:1)
+  * jaxen (jaxen:jaxen:1.1.6)
+  * Apache Log4j (log4j:log4j:1.2.17)
+  * Apache Avro (org.apache.avro:avro:1.5.3)
+  * Apache Avro IPC (org.apache.avro:avro-ipc:1.5.3)
+  * bookkeeper-server (org.apache.bookkeeper:bookkeeper-server:4.0.0)
+  * Commons Math (org.apache.commons:commons-math:2.1)
+  * hadoop-core (org.apache.hadoop:hadoop-core:1.0.4)
+  * HBase (org.apache.hbase:hbase:0.94.10)
+  * Apache HttpClient (org.apache.httpcomponents:httpclient:4.4.1)
+  * Apache HttpCore (org.apache.httpcomponents:httpcore:4.4.1)
+  * Lucene Core (org.apache.lucene:lucene-core:2.9.4)
+  * Apache Thrift (org.apache.thrift:libthrift:0.8.0)
+  * Apache Twill API (org.apache.twill:twill-api:0.4.0-incubating)
+  * Apache Twill common library (org.apache.twill:twill-common:0.4.0-incubating)
+  * Apache Twill core library (org.apache.twill:twill-core:0.4.0-incubating)
+  * Apache Twill discovery service API (org.apache.twill:twill-discovery-api:0.4.0-incubating)
+  * Apache Twill discovery service implementations (org.apache.twill:twill-discovery-core:0.4.0-incubating)
+  * Apache Twill ZooKeeper client library (org.apache.twill:twill-zookeeper:0.4.0-incubating)
+  * Apache Velocity (org.apache.velocity:velocity:1.7)
+  * zookeeper (org.apache.zookeeper:zookeeper:3.4.5)
+  * Jackson (org.codehaus.jackson:jackson-core-asl:1.7.3)
+  * JAX-RS provider for JSON content type (org.codehaus.jackson:jackson-jaxrs:1.8.8)
+  * Data Mapper for Jackson (org.codehaus.jackson:jackson-mapper-asl:1.7.3)
+  * Xml Compatibility extensions for Jackson (org.codehaus.jackson:jackson-xc:1.8.8)
+  * Jettison (org.codehaus.jettison:jettison:1.1)
+  * The Netty Project (org.jboss.netty:netty:3.2.6.Final)
+  * Jetty Server (org.mortbay.jetty:jetty:6.1.26)
+  * Jetty Utilities (org.mortbay.jetty:jetty-util:6.1.26)
+  * oro (oro:oro:2.0.8)
+  * StAX API (stax:stax-api:1.0.1)
+  * jasper-compiler (tomcat:jasper-compiler:5.5.23)
+  * jasper-runtime (tomcat:jasper-runtime:5.5.23)
+
+#### BSD License:
+
+  * ASM Core (asm:asm:3.1)
+  * Protocol Buffer Java API (com.google.protobuf:protobuf-java:2.4.0a)
+  * Hamcrest Core (org.hamcrest:hamcrest-core:1.3)
+  * Hamcrest library (org.hamcrest:hamcrest-library:1.2.1)
+  * ASM All (org.ow2.asm:asm-all:5.0.2)
+  * xmlenc Library (xmlenc:xmlenc:0.52)
+
+#### CDDL + GPLv2:
+
+  * jaxb-api (javax.xml.bind:jaxb-api:2.1)
+
+#### CDDL 1.0:
+
+  * Glassfish Jasper (org.mortbay.jetty:jsp-2.1:6.1.14)
+  * Servlet Specification 2.5 API (org.mortbay.jetty:servlet-api-2.5:6.1.14)
+
+#### CDDL 1.1:
+
+  * jersey-core (com.sun.jersey:jersey-core:1.8)
+  * jersey-json (com.sun.jersey:jersey-json:1.8)
+  * jersey-server (com.sun.jersey:jersey-server:1.8)
+  * JAXB RI (com.sun.xml.bind:jaxb-impl:2.2.3-1)
+
+#### Common Development and Distribution License (CDDL) v1.0:
+
+  * JavaBeans Activation Framework (JAF) (javax.activation:activation:1.1)
+
+#### Common Public License - v 1.0:
+
+  * JRuby Complete (org.jruby:jruby-complete:1.6.5)
+
+#### Eclipse Public License - Version 1.0:
+
+  * JUnit (junit:junit:4.12)
+  * Eclipse JDT Core (org.eclipse.jdt:core:3.1.1)
+  * Jetty Server (org.mortbay.jetty:jetty:6.1.26)
+  * Jetty Utilities (org.mortbay.jetty:jetty-util:6.1.26)
+
+#### Eclipse Public License - v 1.0:
+
+  * Logback Classic Module (ch.qos.logback:logback-classic:1.1.3)
+  * Logback Core Module (ch.qos.logback:logback-core:1.1.3)
+
+#### GNU General Public License Version 2:
+
+  * JRuby Complete (org.jruby:jruby-complete:1.6.5)
+
+#### GNU Lesser General Public License:
+
+  * Logback Classic Module (ch.qos.logback:logback-classic:1.1.3)
+  * Logback Core Module (ch.qos.logback:logback-core:1.1.3)
+  * Javassist (org.javassist:javassist:3.19.0-GA)
+  * JRuby Complete (org.jruby:jruby-complete:1.6.5)
+
+#### GNU Lesser General Public License (LGPL), Version 2.1:
+
+  * JAX-RS provider for JSON content type (org.codehaus.jackson:jackson-jaxrs:1.8.8)
+  * Xml Compatibility extensions for Jackson (org.codehaus.jackson:jackson-xc:1.8.8)
+
+#### GPLv2 with classpath exception:
+
+  * jersey-core (com.sun.jersey:jersey-core:1.8)
+  * jersey-json (com.sun.jersey:jersey-json:1.8)
+  * jersey-server (com.sun.jersey:jersey-server:1.8)
+  * JAXB RI (com.sun.xml.bind:jaxb-impl:2.2.3-1)
+
+#### MIT License:
+
+  * SLF4J API Module (org.slf4j:slf4j-api:1.7.12)
+  * SLF4J LOG4J-12 Binding (org.slf4j:slf4j-log4j12:1.4.3)
+
+#### Mozilla Public License Version 1.1:
+
+  * jamon-runtime (org.jamon:jamon-runtime:2.3.1)
+  * Javassist (org.javassist:javassist:3.19.0-GA)
+
+#### Public Domain:
+
+  * AOP alliance (aopalliance:aopalliance:1.0)
+  * Highly Scalable Java (com.github.stephenc.high-scale-lib:high-scale-lib:1.1.1)
+  * rdfpro-core (eu.fbk.rdfpro:rdfpro-core:0.4)

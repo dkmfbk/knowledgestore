@@ -85,6 +85,7 @@ import eu.fbk.knowledgestore.internal.Compression;
 import eu.fbk.knowledgestore.internal.Logging;
 import eu.fbk.knowledgestore.internal.Util;
 import eu.fbk.rdfpro.jsonld.JSONLD;
+import eu.fbk.rdfpro.tql.TQL;
 
 // TODO: reorganize code in this class
 
@@ -386,7 +387,7 @@ public final class RDFUtil {
         if (types instanceof Set && !jsonldDisabled) {
             try {
                 actualSettings.put(JSONLD.ROOT_TYPES, types);
-            } catch (Throwable ex) {
+            } catch (final Throwable ex) {
                 jsonldDisabled = true; // rdfpro-jsonld not available
             }
         }
@@ -1150,6 +1151,7 @@ public final class RDFUtil {
     }
 
     {
+        TQL.register();
         System.setProperty("entityExpansionLimit", "" + Integer.MAX_VALUE);
     }
 

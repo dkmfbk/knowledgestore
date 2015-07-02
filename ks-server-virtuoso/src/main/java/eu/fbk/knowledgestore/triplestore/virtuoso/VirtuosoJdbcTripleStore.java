@@ -31,6 +31,7 @@ import org.openrdf.model.Statement;
 import org.openrdf.model.URI;
 import org.openrdf.model.Value;
 import org.openrdf.model.ValueFactory;
+import org.openrdf.model.vocabulary.SESAME;
 import org.openrdf.model.vocabulary.XMLSchema;
 import org.openrdf.query.BindingSet;
 import org.openrdf.query.Dataset;
@@ -418,25 +419,49 @@ public final class VirtuosoJdbcTripleStore implements TripleStore {
         @Override
         public void add(final Iterable<? extends Statement> statements) throws IOException,
                 IllegalStateException {
-
-            // Check arguments and state
-            Preconditions.checkNotNull(statements);
-            checkWritable();
-
-            // TODO support adding triples (can start from VirtuosoTripleTransaction)
-            throw new UnsupportedOperationException();
+            update(true, statements);
         }
 
         @Override
         public void remove(final Iterable<? extends Statement> statements) throws IOException,
                 IllegalStateException {
+            update(false, statements);
+        }
+
+        private void update(final boolean insert, final Iterable<? extends Statement> statements)
+                throws IOException, IllegalStateException {
 
             // Check arguments and state
             Preconditions.checkNotNull(statements);
             checkWritable();
 
-            // TODO support removing triples (can start from VirtuosoTripleTransaction)
-            throw new UnsupportedOperationException();
+            try {
+                // Compose the SQL statement
+                final StringBuilder builder = new StringBuilder();
+                builder.append("SPARQL ");
+                builder.append(insert ? "INSERT" : "DELETE");
+                builder.append(" DATA {");
+                for (final Statement stmt : statements) {
+                    final Resource ctx = MoreObjects.firstNonNull(stmt.getContext(), SESAME.NIL);
+                    builder.append("\n  GRAPH ");
+                    builder.append(Data.toString(ctx, null));
+                    builder.append(" { ");
+                    builder.append(Data.toString(stmt.getSubject(), null));
+                    builder.append(' ');
+                    builder.append(Data.toString(stmt.getPredicate(), null));
+                    builder.append(' ');
+                    builder.append(Data.toString(stmt.getObject(), null));
+                    builder.append(" }");
+                }
+                builder.append("\n}");
+
+                // Issue the statement
+                final java.sql.Statement statement = this.connection.createStatement();
+                statement.executeUpdate(builder.toString());
+
+            } catch (final SQLException ex) {
+                throw new IOException(ex);
+            }
         }
 
         @Override
@@ -444,9 +469,6 @@ public final class VirtuosoJdbcTripleStore implements TripleStore {
                 IllegalStateException {
 
             try {
-                // TODO: here we should also handle commit/rollback when data modification
-                // operations will be implemented
-
                 // Schedule a task for killing the connection by forcedly closing its socket
                 final Future<?> future = Data.getExecutor().schedule(new Runnable() {
 
@@ -463,6 +485,15 @@ public final class VirtuosoJdbcTripleStore implements TripleStore {
                     }
 
                 }, 1000, TimeUnit.MILLISECONDS);
+
+                // Perform commit or rollback, in case of a non-read-only transaction
+                if (!this.readOnly) {
+                    if (commit) {
+                        this.connection.commit();
+                    } else {
+                        this.connection.rollback();
+                    }
+                }
 
                 // Try to close the connection 'kindly'. On success, unschedule the killing job
                 this.connection.close();
