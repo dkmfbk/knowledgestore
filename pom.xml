@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
@@ -31,7 +32,7 @@
             </roles>
             <timezone>+1</timezone>
             <properties>
-                <picUrl>https://my.fbk.eu/fbk-api/v2/picture/rospocher</picUrl>
+                <picUrl>https://knowledgestore.fbk.eu/images/team/rospocher.jpg</picUrl>
             </properties>
         </developer>
         <developer>
@@ -44,7 +45,7 @@
             </roles>
             <timezone>+1</timezone>
             <properties>
-                <picUrl>https://my.fbk.eu/fbk-api/v2/picture/serafini</picUrl>
+                <picUrl>https://knowledgestore.fbk.eu/images/team/serafini.jpg</picUrl>
             </properties>
         </developer>
         <developer>
@@ -57,7 +58,19 @@
             </roles>
             <timezone>+1</timezone>
             <properties>
-                <picUrl>https://my.fbk.eu/fbk-api/v2/picture/magnini</picUrl>
+                <picUrl>https://knowledgestore.fbk.eu/images/team/magnini.jpg</picUrl>
+            </properties>
+        </developer>
+        <developer>
+            <id>corcoglio</id>
+            <name>Francesco Corcoglioniti</name>
+            <email>corcoglio@fbk.eu</email>
+            <roles>
+                <role>Developer</role>
+            </roles>
+            <timezone>+1</timezone>
+            <properties>
+                <picUrl>https://knowledgestore.fbk.eu/images/team/corcoglio.jpg</picUrl>
             </properties>
         </developer>
         <developer>
@@ -71,7 +84,7 @@
             </roles>
             <timezone>+1</timezone>
             <properties>
-                <picUrl>https://my.fbk.eu/fbk-api/v2/picture/cattoni</picUrl>
+                <picUrl>https://knowledgestore.fbk.eu/images/team/cattoni.jpg</picUrl>
             </properties>
         </developer>
         <developer>
@@ -84,7 +97,7 @@
             </roles>
             <timezone>+1</timezone>
             <properties>
-                <picUrl>https://my.fbk.eu/fbk-api/v2/picture/qwaider</picUrl>
+                <picUrl>https://knowledgestore.fbk.eu/images/team/any.jpg</picUrl>
             </properties>
         </developer>
         <developer>
@@ -96,7 +109,7 @@
             </roles>
             <timezone>+1</timezone>
             <properties>
-                <picUrl>https://my.fbk.eu/fbk-api/v2/picture/aprosio</picUrl>
+                <picUrl>https://knowledgestore.fbk.eu/images/team/aprosio.jpg</picUrl>
             </properties>
         </developer>
     </developers>
@@ -104,14 +117,14 @@
     <contributors>
         <contributor>
             <name>Michele Mostarda</name>
-            <email>mostarda@fbk.eu</email>
-            <url>http://wed.fbk.eu/people/profile/mostarda</url>
+            <email>me@michelemostarda.it</email>
+            <url>http://www.michelemostarda.it/</url>
             <roles>
                 <role>Developer</role>
             </roles>
             <timezone>+1</timezone>
             <properties>
-                <picUrl>https://my.fbk.eu/fbk-api/v2/picture/mostarda</picUrl>
+                <picUrl>https://knowledgestore.fbk.eu/images/team/mostarda.jpg</picUrl>
             </properties>
         </contributor>
         <contributor>
@@ -123,7 +136,7 @@
             </roles>
             <timezone>+1</timezone>
             <properties>
-                <picUrl>https://my.fbk.eu/fbk-api/v2/picture/amadori</picUrl>
+                <picUrl>https://knowledgestore.fbk.eu/images/team/amadori.jpg</picUrl>
             </properties>
         </contributor>
         <contributor>
@@ -133,6 +146,9 @@
                 <role>Developer</role>
             </roles>
             <timezone>-5</timezone>
+            <properties>
+                <picUrl>https://knowledgestore.fbk.eu/images/team/any.jpg</picUrl>
+            </properties>
         </contributor>
         <contributor>
             <name>Christian Girardi</name>
@@ -143,7 +159,7 @@
             </roles>
             <timezone>+1</timezone>
             <properties>
-                <picUrl>https://my.fbk.eu/fbk-api/v2/picture/cgirardi</picUrl>
+                <picUrl>https://knowledgestore.fbk.eu/images/team/girardi.jpg</picUrl>
             </properties>
         </contributor>
     </contributors>
@@ -1247,6 +1263,43 @@
             </activation>
             <build>
                 <plugins>
+                    <!-- License -->
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>license-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>make-licenses</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>update-project-license</goal>
+                                    <goal>aggregate-add-third-party</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <!-- Move third party file -->
+                    <plugin>
+                        <groupId>com.coderplus.maven.plugins</groupId>
+                        <artifactId>copy-rename-maven-plugin</artifactId>
+                        <version>1.0.1</version>
+                        <inherited>false</inherited>
+                        <executions>
+                            <execution>
+                                <id>copy-file</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>copy</goal>
+                                </goals>
+                                <configuration>
+                                    <sourceFile>${basedir}/THIRD-PARTY.txt</sourceFile>
+                                    <destinationFile>${basedir}/src/site/markdown/third-party.md</destinationFile>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-source-plugin</artifactId>
@@ -1828,7 +1881,7 @@
         <module>ks-populator-naf</module>
         <module>ks-populator-rdf</module>
         <module>ks-distribution</module>
-    <module>ks-tool</module>
-  </modules>
+        <module>ks-tool</module>
+    </modules>
 
 </project>

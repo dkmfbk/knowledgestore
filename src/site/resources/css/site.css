@@ -1,0 +1,9 @@
+pre {
+    overflow: auto;
+    white-space: pre;
+}
+
+ul.breadcrumb {
+    position: relative;
+    top: 20px;
+}

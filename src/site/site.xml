@@ -47,9 +47,9 @@
 
     <body>
 
-        <head>
-            <link rel="stylesheet" href="$resourcePath/css/ks.css"/>
-        </head>
+        <!--<head>-->
+            <!--<link rel="stylesheet" href="$resourcePath/css/site.css"/>-->
+        <!--</head>-->
 
         <!-- Currently not used; would end up in top navigation bar
         <links>
@@ -64,11 +64,12 @@
         <!-- Top menus -->
         <menu name="Project">
             <item name="About" href="index.html"/>
-            <item name="License" href="license.html"/>
              <item name="Downloads" href="download.html" />
             <!-- <item name="Build" href="build.html" /> -->
             <item name="Team" href="team-list.html"/>
             <item name="Publications" href="publications.html"/>
+            <item name="License" href="license.html"/>
+            <item name="Third-party licenses" href="third-party.html"/>
             <item name="External resources" collapse="true" href="#">
                 <item name="RDFpro" href="http://fracor.bitbucket.org/rdfpro/"/>
                 <item name="Event Situation Ontology (ESO)" href="https://github.com/newsreader/eso"/>

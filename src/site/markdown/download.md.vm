@@ -5,7 +5,7 @@ Downloads
 
 $H3 KnowledgeStore
 
-<p>KnowledgeStore artifacts are published via the [Maven central repository](http://repo1.maven.org/maven2/eu/fbk/knowledgestore).
+<p>KnowledgeStore artifacts are published via the <a href="http://repo1.maven.org/maven2/eu/fbk/knowledgestore">Maven central repository</a>.
 They include binaries, test binaries, sources and javadocs of each software module of the KnowledgeStore as well as the source and binary `tar.gz` archives listed in the following table.
 The binary archives include all you need to run and populate a KnowledgeStore instance. They require a Java 7+ virtual machine, with startup scripts tested only on Linux and Mac OS X.</p>
 
@@ -22,25 +22,25 @@ The binary archives include all you need to run and populate a KnowledgeStore in
 </thead>
 <tbody>
 <tr>
-<th>server</th>
+<td>server</td>
 <td>KnowledgeStore server Java 7 binaries, including startup scripts and configuration files. Includes also the NAF populator (see below).</td>
 <td>${project-version} (latest)</td>
 <td><a href="${site-root}files/release/${project-version}/ks-distribution-${project-version}-server.tar.gz">ks-distribution-${project-version}-server.tar.gz</a></td>
 </tr>
 <tr>
-<th>tools</th>
+<td>tools</td>
 <td>KnowledgeStore client-side tools, including the NAF populator, the KS dump tool and the test tool used for performance assessment.</td>
 <td>${project-version} (latest)</td>
 <td><a href="${site-root}files/release/${project-version}/ks-distribution-${project-version}-tools.tar.gz">ks-distribution-${project-version}-tools.tar.gz</a></td>
 </tr>
 <tr>
-<th>client</th>
+<td>client</td>
 <td>KnowledgeStore Java 7 client library, for non-Maven users.</td>
 <td>${project-version} (latest)</td>
 <td><a href="${site-root}files/release/${project-version}/ks-distribution-${project-version}-client.tar.gz">ks-distribution-${project-version}-client.tar.gz</a></td>
 </tr>
 <tr>
-<th>sources</th>
+<td>sources</td>
 <td>KnowledgeStore source code, organized as a Maven multi-module project.</td>
 <td>${project-version} (latest)</td>
 <td><a href="${site-root}files/release/${project-version}/ks-distribution-${project-version}-src.tar.gz">ks-distribution-${project-version}-src.tar.gz</a></td>
@@ -72,7 +72,7 @@ For each dataset we provide the data, its [VOID](http://www.w3.org/TR/void/) sta
 </thead>
 <tbody>
 <tr>
-<th>en_2014</th>
+<td>en_2014</td>
 <td>EN data from DBpedia 2014 EN chapter.</td>
 <td>2014/12/22</td>
 <td style="text-align: right">75.837.282</td>
@@ -84,7 +84,7 @@ For each dataset we provide the data, its [VOID](http://www.w3.org/TR/void/) sta
 </td>
 </tr>
 <tr>
-<th>en_ext_2014</th>
+<td>en_ext_2014</td>
 <td>EN data from DBpedia 2014 in all chapters, using EN URIs.</td>
 <td>2014/12/22</td>
 <td style="text-align: right">95.910.347</td>
@@ -96,7 +96,7 @@ For each dataset we provide the data, its [VOID](http://www.w3.org/TR/void/) sta
 </td>
 </tr>
 <tr>
-<th>ml_2014</th>
+<td>ml_2014</td>
 <td>EN/ES/IT/NL data from DBpedia 2014 in these chapters, using EN URIs were possible and ES/IT/NL URIs otherwise.</td>
 <td>2014/12/22</td>
 <td style="text-align: right">122.672.893</td>
@@ -108,7 +108,7 @@ For each dataset we provide the data, its [VOID](http://www.w3.org/TR/void/) sta
 </td>
 </tr>
 <tr>
-<th>ml_ext_2014</th>
+<td>ml_ext_2014</td>
 <td>EN/ES/IT/NL data from DBpedia 2014 in all its chapters, using EN URIs were possible and ES/IT/NL URIs otherwise.</td>
 <td>2014/12/22</td>
 <td style="text-align: right">134.384.805</td>
