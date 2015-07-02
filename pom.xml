@@ -1840,7 +1840,7 @@
         <lucene.version>2.9.4</lucene.version>
         <!--<lucene.version>5.0.0</lucene.version>-->
         <hikari.version>2.3.6</hikari.version>
-        <rdfpro.version>0.3</rdfpro.version>
+        <rdfpro.version>0.4</rdfpro.version>
         <commons-math3.version>3.4.1</commons-math3.version>
 
         <!-- Build plugin versions -->
