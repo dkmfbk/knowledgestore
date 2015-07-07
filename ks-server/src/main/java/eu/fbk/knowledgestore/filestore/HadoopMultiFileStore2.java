@@ -637,7 +637,7 @@ public final class HadoopMultiFileStore2 implements FileStore {
             synchronized (this.luceneWriter) {
                 for (final Map.Entry<String, String> entry : entries.entrySet()) {
                     if (entry.getValue() == null) {
-                        this.luceneWriter.deleteDocuments(new Term(VALUE_FIELD, entry.getKey()));
+                        this.luceneWriter.deleteDocuments(new Term(KEY_FIELD, entry.getKey()));
                         ++numDeleted;
                     } else {
                         final Document doc = new Document();
