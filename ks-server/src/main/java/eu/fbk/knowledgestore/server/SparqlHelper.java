@@ -237,7 +237,7 @@ final class SparqlHelper {
 
         public LocalEvaluationStrategy(final TripleTransaction transaction, final Dataset dataset,
                 @Nullable final Long timeout) {
-            super(null, dataset);
+            super(null, dataset, null);
             this.transaction = Preconditions.checkNotNull(transaction);
             this.timeout = timeout;
         }
@@ -267,7 +267,7 @@ final class SparqlHelper {
 
         public DelegatingEvaluationStrategy(final TripleTransaction transaction,
                 final Dataset dataset, @Nullable final Long timeout, final boolean skolemize) {
-            super(null, dataset);
+            super(null, dataset, null);
             this.transaction = transaction;
             this.timeout = timeout;
             this.skolemize = skolemize;

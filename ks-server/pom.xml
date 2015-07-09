@@ -19,7 +19,7 @@
 
     <name>ks-server</name>
     <description>ks server</description>
-    <url>http://www.fbk.eu</url>
+    <url>http://knowledgestore.fbk.eu/ks-server/</url>
 
     <distributionManagement>
         <site>
@@ -27,65 +27,6 @@
             <url>${site-path}/ks-server/</url>
         </site>
     </distributionManagement>
-
-    <scm>
-        <connection>scm:svn:https://newsreader.fbk.eu/svn/Code/KnowledgeStore/trunk/ks-server</connection>
-        <developerConnection>scm:svn:https://newsreader.fbk.eu/svn/Code/KnowledgeStore/trunk/ks-server</developerConnection>
-        <tag>HEAD</tag>
-        <url>https://newsreader.fbk.eu/trac/browser/newsreader/Code/KnowledgeStore/trunk/ks-server</url>
-    </scm>
-
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>empty-javadoc-jar</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                        <configuration>
-                            <classifier>javadoc</classifier>
-                            <classesDirectory>${basedir}/javadoc</classesDirectory>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <!--<plugin>-->
-                <!--<groupId>org.apache.maven.plugins</groupId>-->
-                <!--<artifactId>maven-source-plugin</artifactId>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<id>attach-sources</id>-->
-                        <!--<phase>package</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>jar</goal>-->
-                        <!--</goals>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-            <!--</plugin>-->
-            <!--<plugin>-->
-                <!--<groupId>org.apache.maven.plugins</groupId>-->
-                <!--<artifactId>maven-javadoc-plugin</artifactId>-->
-                <!--<configuration>-->
-                    <!--<failOnError>false</failOnError>-->
-                <!--</configuration>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<id>attach-javadocs</id>-->
-                        <!--<phase>package</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>jar</goal>-->
-                        <!--</goals>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-            <!--</plugin>-->
-        </plugins>
-    </build>
 
     <dependencies>
         <!-- Compile dependencies -->
@@ -99,12 +40,8 @@
             <groupId>org.apache.lucene</groupId>
             <artifactId>lucene-core</artifactId>
         </dependency>
-        <!--
-        <dependency>
-            <groupId>org.apache.lucene</groupId>
-            <artifactId>lucene-analyzers-common</artifactId>
-        </dependency>
-        -->
+        <!-- <dependency> <groupId>org.apache.lucene</groupId> <artifactId>lucene-analyzers-common</artifactId> 
+            </dependency> -->
         <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP-java6</artifactId>
@@ -274,8 +211,7 @@
     </dependencies>
 
     <properties>
-        <parent-path>..</parent-path>
-        <aggregate>false</aggregate>
+        <parent-path>/..</parent-path>
     </properties>
 
 </project>

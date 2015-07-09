@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <project
-        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
-        xmlns="http://maven.apache.org/POM/4.0.0"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
     <modelVersion>4.0.0</modelVersion>
 
@@ -25,7 +25,7 @@
         respectively, operation transactionality and serialization of efficient
         serialization of structured data in byte strings.
     </description>
-    <url>http://www.fbk.eu</url>
+    <url>http://knowledgestore.fbk.eu/ks-server-hbase/</url>
 
     <distributionManagement>
         <site>
@@ -33,65 +33,6 @@
             <url>${site-path}/ks-server-hbase/</url>
         </site>
     </distributionManagement>
-
-    <scm>
-        <connection>scm:svn:https://newsreader.fbk.eu/svn/Code/KnowledgeStore/trunk/ks-server-hbase</connection>
-        <developerConnection>scm:svn:https://newsreader.fbk.eu/svn/Code/KnowledgeStore/trunk/ks-server-hbase
-        </developerConnection>
-        <tag>HEAD</tag>
-        <url>https://newsreader.fbk.eu/trac/browser/newsreader/Code/KnowledgeStore/trunk/ks-server-hbase</url>
-    </scm>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>empty-javadoc-jar</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                        <configuration>
-                            <classifier>javadoc</classifier>
-                            <classesDirectory>${basedir}/javadoc</classesDirectory>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <!--<plugin>-->
-                <!--<groupId>org.apache.maven.plugins</groupId>-->
-                <!--<artifactId>maven-source-plugin</artifactId>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<id>attach-sources</id>-->
-                        <!--<phase>package</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>jar</goal>-->
-                        <!--</goals>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-            <!--</plugin>-->
-            <!--<plugin>-->
-                <!--<groupId>org.apache.maven.plugins</groupId>-->
-                <!--<artifactId>maven-javadoc-plugin</artifactId>-->
-                <!--<configuration>-->
-                    <!--<failOnError>false</failOnError>-->
-                <!--</configuration>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<id>attach-javadocs</id>-->
-                        <!--<phase>package</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>jar</goal>-->
-                        <!--</goals>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-            <!--</plugin>-->
-        </plugins>
-    </build>
 
     <dependencies>
         <dependency>
@@ -173,89 +114,7 @@
     </dependencies>
 
     <properties>
-        <parent-path>..</parent-path>
-        <aggregate>false</aggregate>
+        <parent-path>/..</parent-path>
     </properties>
-
-    <!--<profiles>
-        <profile>
-            <id>attachments</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-shade-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>shade</goal>
-                                </goals>
-                                <configuration>
-                                    <shadedArtifactAttached>true</shadedArtifactAttached>
-                                    <shadedClassifierName>deploy-onejar</shadedClassifierName>
-                                    <artifactSet>
-                                        <includes>
-                                            <include>eu.fbk.knowledgestore:ks-datastore-hbase</include>
-                                            <include>eu.fbk.knowledgestore:ks-datastore</include>
-                                            <include>eu.fbk.knowledgestore:ks-runtime</include>
-                                            <include>eu.fbk.knowledgestore:ks-core</include>
-                                            <include>org.openrdf.sesame:sesame-model</include>
-                                            <include>org.openrdf.sesame:sesame-util</include>
-                                            <include>jaxen:jaxen</include>
-                                            <include>org.javassist:javassist</include>
-                                        </includes>
-                                    </artifactSet>
-                                    <relocations>
-                                        <relocation>
-                                            <pattern>org.openrdf</pattern>
-                                            <shadedPattern>eu.fbk.knowledgestore.openrdf</shadedPattern>
-                                        </relocation>
-                                        <relocation>
-                                            <pattern>info.aduna</pattern>
-                                            <shadedPattern>eu.fbk.knowledgestore.aduna</shadedPattern>
-                                        </relocation>
-                                        <relocation>
-                                            <pattern>org.jaxen</pattern>
-                                            <shadedPattern>eu.fbk.knowledgestore.jaxen</shadedPattern>
-                                        </relocation>
-                                        <relocation>
-                                            <pattern>javassist</pattern>
-                                            <shadedPattern>eu.fbk.knowledgestore.javassist</shadedPattern>
-                                        </relocation>
-                                        <relocation>
-                                            <pattern>org.w3c</pattern>
-                                            <shadedPattern>eu.fbk.knowledgestore.w3c</shadedPattern>
-                                        </relocation>
-                                    </relocations>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-assembly-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>attach-assemblies</id>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>single</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                        <configuration>
-                            <descriptors>
-                                <descriptor>src/assemblies/deploy/assembly.xml</descriptor>
-                            </descriptors>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>        -->
 
 </project>

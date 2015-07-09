@@ -76,7 +76,6 @@ public final class RDFPopulator {
 
     private static final Logger STATUS_LOGGER = LoggerFactory.getLogger("status");
 
-    @SuppressWarnings("unchecked")
     public static void main(final String... args) {
         try {
             // Parse command line, handling -h and -v commands
@@ -230,10 +229,10 @@ public final class RDFPopulator {
         // Handle help and version commands
         if (cmd.hasOption('h')) {
             final HelpFormatter formatter = new HelpFormatter();
-            formatter.setOptionComparator(new Comparator<Object>() {
+            formatter.setOptionComparator(new Comparator<Option>() {
 
                 @Override
-                public int compare(final Object option1, final Object option2) {
+                public int compare(final Option option1, final Option option2) {
                     return allOpts.indexOf(option1) - allOpts.indexOf(option2);
                 }
 
