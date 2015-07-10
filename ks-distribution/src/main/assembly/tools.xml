@@ -8,7 +8,7 @@
     <fileSets>
         <fileSet>
             <directory>..</directory>
-            <outputDirectory>/</outputDirectory>
+            <outputDirectory></outputDirectory>
             <includes>
                 <include>README.txt</include>
                 <include>NOTICE.txt</include>
@@ -17,7 +17,7 @@
         </fileSet>
         <fileSet>
             <directory>src/main/scripts</directory>
-            <outputDirectory>/bin</outputDirectory>
+            <outputDirectory>bin</outputDirectory>
             <fileMode>0755</fileMode>
             <lineEnding>unix</lineEnding>
             <includes>
@@ -30,7 +30,7 @@
         </fileSet>
         <fileSet>
             <directory>src/main/config</directory>
-            <outputDirectory>/etc</outputDirectory>
+            <outputDirectory>etc</outputDirectory>
             <includes>
                 <include>ks.log.xml</include>
             </includes>

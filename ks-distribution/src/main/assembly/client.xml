@@ -8,7 +8,7 @@
   <fileSets>
     <fileSet>
       <directory>..</directory>
-      <outputDirectory>/</outputDirectory>
+      <outputDirectory></outputDirectory>
       <includes>
         <include>README.txt</include>
         <include>NOTICE.txt</include>

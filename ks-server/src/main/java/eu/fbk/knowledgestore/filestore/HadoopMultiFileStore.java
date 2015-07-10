@@ -1,11 +1,39 @@
 package eu.fbk.knowledgestore.filestore;
 
+import java.io.File;
+import java.io.FilterInputStream;
+import java.io.FilterOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
+import java.util.zip.ZipOutputStream;
+
+import javax.annotation.Nullable;
+
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Throwables;
 import com.google.common.collect.AbstractIterator;
-import eu.fbk.knowledgestore.data.Data;
-import eu.fbk.knowledgestore.data.Stream;
+import com.google.common.collect.HashMultiset;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Multiset;
+import com.google.common.io.ByteStreams;
+
 import org.apache.hadoop.fs.FileStatus;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
@@ -20,40 +48,16 @@ import org.apache.lucene.store.FSDirectory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.Nullable;
-import java.io.*;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
-import java.util.zip.ZipOutputStream;
-
-/*
-*
-* TODO
-* - Pay attention to the list, when a file is deleted
-*   (the LuceneIterator will stop when it'll reach a hole)
-* - The zip seek is not optimized because the Hadoop API
-*   can only read file from start to end
-* - Optimize Lucene in background
-* - Introduce ReentrantReadWriteLock to avoid IndexReader
-*   closed error
-* - Add parameter for number of files
-*
-* */
+import eu.fbk.knowledgestore.data.Data;
+import eu.fbk.knowledgestore.data.Stream;
 
 /**
  * A {@code FileStore} implementation based on the Hadoop API optimized for huge number of files.
  * <p>
- * An {@code HadoopFileStore} stores its files in an Hadoop {@link org.apache.hadoop.fs.FileSystem}, under a certain,
- * configurable root path; the filesystem can be any of the filesystems supported by the Hadoop
- * API, including the local (raw) filesystem and the distributed HDFS filesystem.
+ * An {@code HadoopFileStore} stores its files in an Hadoop
+ * {@link org.apache.hadoop.fs.FileSystem}, under a certain, configurable root path; the
+ * filesystem can be any of the filesystems supported by the Hadoop API, including the local (raw)
+ * filesystem and the distributed HDFS filesystem.
  * </p>
  * <p>
  * Files are stored in a a two-level directory structure, where first level directories reflect
@@ -63,610 +67,737 @@ import java.util.zip.ZipOutputStream;
  * number of files storable in a directory.
  * </p>
  */
-public class HadoopMultiFileStore implements FileStore {
+public final class HadoopMultiFileStore implements FileStore {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(HadoopMultiFileStore.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(HadoopMultiFileStore.class);
 
-	private static final String DEFAULT_PATH = "files";
-	private static final String DEFAULT_LUCENE_PATH = "./lucene-index";
-	private static final String SMALL_FILES_PATH = "_small";
+    private static final String DEFAULT_ROOT_PATH = "files";
 
-	private final String FILENAME_FIELD_NAME = "filename";
-	private final String ZIP_FIELD_NAME = "zipfilename";
+    private static final String DEFAULT_LUCENE_PATH = "./lucene-index";
 
-	private final FileSystem fileSystem;
-	private final int MAX_LUCENE_SEGMENTS = 100;
+    private static final int DEFAULT_NUM_SMALL_FILES = 10;
 
-	private final Path rootPath;
-	private final Path smallFilesPath;
-	private final File luceneFolder;
+    private static final long DEFAULT_CLEANUP_PERIOD = 10000L; // 5s
 
-	private int MAX_NUM_SMALL_FILES = 10;
-	private Set<String> filesInWritingMode = Collections.synchronizedSet(new HashSet<String>());
-	final private AtomicBoolean isWritingBigFile = new AtomicBoolean(false);
+    private static final String SMALL_FILES_PATH = "_small";
 
-	private IndexReader luceneReader;
-	private IndexWriter luceneWriter;
+    // private static final int MAX_LUCENE_SEGMENTS = 100;
 
-	private final Lock writeBigFileLock;
+    private final int MAX_LUCENE_ATTEMPTS = 3;
 
-	/**
-	 * Creates a new {@code HadoopFileStore} storing files in the {@code FileSystem} and under the
-	 * {@code rootPath} specified.
-	 *
-	 * @param fileSystem the file system, not null
-	 * @param path       the root path where to store files, possibly relative to the filesystem working
-	 *                   directory; if null, the default root path {@code files} will be used
-	 */
-	public HadoopMultiFileStore(final FileSystem fileSystem, @Nullable final String lucenePath, @Nullable final String path, @Nullable Integer numSmallFile) {
-		if (numSmallFile != null) {
-			MAX_NUM_SMALL_FILES = numSmallFile;
-		}
-		this.fileSystem = Preconditions.checkNotNull(fileSystem);
-		this.rootPath = new Path(MoreObjects.firstNonNull(path, DEFAULT_PATH)).makeQualified(this.fileSystem); // resolve wrt workdir
-		this.luceneFolder = new File(MoreObjects.firstNonNull(lucenePath, DEFAULT_LUCENE_PATH));
-		this.smallFilesPath = new Path(this.rootPath.toString() + File.separator + SMALL_FILES_PATH).makeQualified(this.fileSystem);
-		this.writeBigFileLock = new ReentrantLock();
-		LOGGER.info("{} configured, paths={};{}", getClass().getSimpleName(), this.rootPath, this.luceneFolder);
-	}
+    private static final String KEY_FIELD = "filename";
 
-	public InputStream readGenericFile(Path path) throws IOException {
-		try {
-//			fileSystem.setVerifyChecksum(false);
-			final InputStream stream = this.fileSystem.open(path);
-			LOGGER.debug("Reading file {}", path.getName());
-			return stream;
-		} catch (final IOException ex) {
-			if (!this.fileSystem.exists(path)) {
-				throw new FileMissingException(path.getName(), "Cannot read non-existing file");
-			}
-			throw ex;
-		}
+    private static final String VALUE_FIELD = "zipfilename";
 
-	}
+    private static final String DELETED = "__deleted";
 
-	@Override
-	public void init() throws IOException {
-		if (!this.fileSystem.exists(this.rootPath)) {
-			LOGGER.debug("Created root folder");
-			this.fileSystem.mkdirs(this.rootPath);
-		}
-		if (!this.fileSystem.exists(this.smallFilesPath)) {
-			LOGGER.debug("Created small files folder");
-			this.fileSystem.mkdirs(this.smallFilesPath);
-		}
-		if (!this.luceneFolder.exists()) {
-			LOGGER.debug("Created lucene folder");
-			if (!this.luceneFolder.mkdirs()) {
-				throw new IOException(String.format("Unable to create dir %s", this.luceneFolder.toString()));
-			}
-		}
+    private final FileSystem fileSystem;
 
-		luceneWriter = new IndexWriter(FSDirectory.open(this.luceneFolder), new WhitespaceAnalyzer(), IndexWriter.MaxFieldLength.LIMITED);
-		luceneReader = luceneWriter.getReader();
-//		luceneReader = IndexReader.open(FSDirectory.open(this.luceneFolder), true);
-	}
+    private final Path rootPath;
 
-	private void deleteFromBigFile(final String fileName, final Path zipFile) throws IOException {
+    private final Path smallFilesPath;
 
-		LOGGER.debug("Deleting zip file {}", zipFile.getName());
-		ZipInputStream zipInputStream = new ZipInputStream(readGenericFile(zipFile));
-		ZipEntry entry;
-		byte[] buffer = new byte[2048];
-		HashSet<String> listOfFiles = new HashSet<>();
+    private final File luceneFolder;
 
-		while ((entry = zipInputStream.getNextEntry()) != null) {
-			String entryName = entry.getName();
+    private final int numSmallFiles;
 
-			if (entryName.equals(fileName)) {
-				continue;
-			}
+    private final long cleanupPeriod;
 
-			final Path path = getSmallPath(entryName);
-			filesInWritingMode.add(entryName);
-			listOfFiles.add(entryName);
+    private final Multiset<String> openedFiles;
 
-			OutputStream stream = this.fileSystem.create(path, false);
-			stream = new InterceptCloseOutputStream(stream, entryName);
-			int len;
-			while ((len = zipInputStream.read(buffer)) > 0) {
-				stream.write(buffer, 0, len);
-			}
-			stream.close();
-		}
+    private final ReadWriteLock lock;
 
-		zipInputStream.close();
-		this.fileSystem.delete(zipFile, false);
+    private final AtomicBoolean active;
 
-		Term s = new Term(ZIP_FIELD_NAME, zipFile.getName());
-		luceneWriter.deleteDocuments(s);
-		luceneWriter.commit();
-		luceneReader.close();
-		luceneReader = luceneWriter.getReader();
+    private IndexReader luceneReader;
 
-		filesInWritingMode.removeAll(listOfFiles);
+    private IndexWriter luceneWriter;
 
-		LOGGER.debug("Finishing deletion of zip file {}", zipFile.getName());
+    private Future<?> cleanupFuture;
 
-		checkSmallFilesAndMerge();
-	}
+    private long zipNameCounter;
 
-	private InputStream loadFromBigFile(final String fileName, final Path zipFile) throws IOException {
-		ZipInputStream stream = new ZipInputStream(readGenericFile(zipFile));
-		ZipEntry entry;
-		while ((entry = stream.getNextEntry()) != null) {
-			String entryName = entry.getName();
-			if (entryName.equals(fileName)) {
-				return stream;
-			}
-		}
+    /**
+     * Creates a new {@code HadoopFileStore} storing files in the {@code FileSystem} and under the
+     * {@code rootPath} specified.
+     *
+     * @param fileSystem
+     *            the file system, not null
+     * @param path
+     *            the root path where to store files, possibly relative to the filesystem working
+     *            directory; if null, the default root path {@code files} will be used
+     * @param numSmallFile
+     *            the number of files to put in each zip file
+     * @param cleanupPeriod
+     *            the amount of time in milliseconds between cleanup operations
+     */
+    public HadoopMultiFileStore(final FileSystem fileSystem, @Nullable final String lucenePath,
+            @Nullable final String path, @Nullable final Integer numSmallFile,
+            @Nullable final Long cleanupPeriod) {
 
-		throw new FileMissingException(fileName, "The file does not exist");
-	}
+        this.fileSystem = Preconditions.checkNotNull(fileSystem);
+        this.luceneFolder = new File(MoreObjects.firstNonNull(lucenePath, DEFAULT_LUCENE_PATH));
+        this.rootPath = new Path(MoreObjects.firstNonNull(path, DEFAULT_ROOT_PATH))
+                .makeQualified(this.fileSystem); // resolve wrt workdir
+        this.smallFilesPath = new Path(this.rootPath.toString() + File.separator
+                + SMALL_FILES_PATH).makeQualified(this.fileSystem);
+        this.numSmallFiles = numSmallFile != null ? numSmallFile : DEFAULT_NUM_SMALL_FILES;
+        this.cleanupPeriod = cleanupPeriod != null ? cleanupPeriod : DEFAULT_CLEANUP_PERIOD;
+        this.openedFiles = HashMultiset.create();
+        this.lock = new ReentrantReadWriteLock(true);
+        this.active = new AtomicBoolean(false);
+        this.zipNameCounter = System.currentTimeMillis();
+        LOGGER.info("{} configured, paths={};{}", getClass().getSimpleName(), this.rootPath,
+                this.luceneFolder);
+    }
 
-	@Override
-	public InputStream read(final String fileName) throws IOException {
+    @Override
+    public void init() throws IOException {
 
-		optimizeOnDemand();
+        // Create root folder if missing
+        if (!this.fileSystem.exists(this.rootPath)) {
+            LOGGER.debug("Creating root folder {}", this.rootPath);
+            if (!this.fileSystem.mkdirs(this.rootPath)) {
+                throw new IOException("Cannot create root folter " + this.luceneFolder);
+            }
+        }
 
-		// Search for small file
-		final Path path = getSmallPath(fileName);
-		if (this.fileSystem.exists(path)) {
-			LOGGER.debug("It is a small file");
-			return readGenericFile(path);
-		}
+        // Create sub-folder for small files, if missing
+        if (!this.fileSystem.exists(this.smallFilesPath)) {
+            LOGGER.debug("Creating small files folder {}", this.smallFilesPath);
+            if (!this.fileSystem.mkdirs(this.smallFilesPath)) {
+                throw new IOException("Cannot create small files folter " + this.smallFilesPath);
+            }
+        }
 
-		// Seek it in the gzipped files
-		else {
-			Term s = new Term(FILENAME_FIELD_NAME, fileName);
-			TermDocs termDocs = luceneReader.termDocs(s);
+        // Create folder for lucene index, if missing
+        if (!this.luceneFolder.exists()) {
+            LOGGER.debug("Created lucene folder {}", this.luceneFolder);
+            if (!this.luceneFolder.mkdirs()) {
+                throw new IOException("Cannot create lucene folder " + this.luceneFolder);
+            }
+        }
 
-			if (termDocs.next()) {
-				Document doc = luceneReader.document(termDocs.doc());
-				String zipFile = doc.get(ZIP_FIELD_NAME);
-				Path inputFile = getFolderFromBigFile(zipFile);
+        // Initialize Lucene writer and reader
+        this.luceneWriter = new IndexWriter(FSDirectory.open(this.luceneFolder),
+                new WhitespaceAnalyzer(), IndexWriter.MaxFieldLength.LIMITED);
+        this.luceneReader = this.luceneWriter.getReader();
 
-				LOGGER.debug("The zip file is {}", inputFile.getName());
-				return loadFromBigFile(fileName, inputFile);
-			}
+        // Mark the component as active
+        this.active.set(true);
 
-			throw new FileMissingException(fileName, "The file does not exist");
-		}
-	}
+        // Schedule periodic cleanup
+        this.cleanupFuture = Data.getExecutor().scheduleWithFixedDelay(new Runnable() {
 
-	@Override
-	public OutputStream write(final String fileName) throws IOException {
-//		return new IOUtils.NullOutputStream();
+            @Override
+            public void run() {
+                try {
+                    merge();
+                    purge();
+                    indexOptimize();
+                } catch (final Throwable ex) {
+                    LOGGER.warn("Periodic cleanup failed", ex);
+                }
+            }
 
-		final Path path = getSmallPath(fileName);
+        }, this.cleanupPeriod, this.cleanupPeriod, TimeUnit.MILLISECONDS);
+    }
 
-		// Check existence in small folder
-		if (this.fileSystem.exists(path)) {
-			throw new FileExistsException(path.getName(), "Cannot overwrite file");
-		}
+    @Override
+    public InputStream read(final String fileName) throws IOException {
 
-		// Check existence in Lucene index
-		Term s = new Term(FILENAME_FIELD_NAME, fileName);
-		TermDocs termDocs = luceneReader.termDocs(s);
-		if (termDocs.next()) {
-			throw new FileExistsException(path.getName(), "Cannot overwrite file");
-		}
+        // This prevents concurrent write/delete/merge/purge operations to occur
+        this.lock.readLock().lock();
 
-		checkSmallFilesAndMerge();
+        try {
+            // Check active flag
+            Preconditions.checkState(this.active.get());
 
-		// Write small file
-		LOGGER.debug("Creating file {}", path.getName());
-		final OutputStream stream = this.fileSystem.create(path, false);
-		filesInWritingMode.add(fileName);
-		return new InterceptCloseOutputStream(stream, fileName);
-	}
+            // Lookup the current zip file / deleted status for the file name supplied
+            final String zipName = indexGet(fileName);
+
+            // Proceed only if file is not marked as deleted
+            if (!DELETED.equals(zipName)) {
+                if (zipName != null) {
+                    // Search in zipped file
+                    final Path zipPath = pathForZipFile(zipName);
+                    try {
+                        final ZipInputStream stream = new ZipInputStream(openForRead(zipPath));
+                        ZipEntry entry;
+                        while ((entry = stream.getNextEntry()) != null) {
+                            if (entry.getName().equals(fileName)) {
+                                LOGGER.debug("Reading {} from ZIP file {}", fileName, zipPath);
+                                return stream;
+                            }
+                        }
+                    } catch (final IOException ex) {
+                        throw new IOException("Cannot read " + fileName + " from ZIP file"
+                                + zipPath, ex);
+                    }
+
+                } else {
+                    // Search in small files
+                    final Path smallPath = pathForSmallFile(fileName);
+                    if (this.fileSystem.exists(smallPath)) {
+                        LOGGER.debug("Reading small file {}", smallPath);
+                        return openForRead(smallPath);
+                    }
+                }
+            }
+
+            // Report missing file
+            throw new FileMissingException(fileName, "The file does not exist");
+
+        } finally {
+            // Always release the lock
+            this.lock.readLock().unlock();
+        }
+    }
+
+    @Override
+    public OutputStream write(final String fileName) throws IOException {
+
+        // This prevents any other read/write/delete/merge/purge operation to occur
+        this.lock.writeLock().lock();
+
+        try {
+            // Check active flag
+            Preconditions.checkState(this.active.get());
+
+            // Throw an exception in case a file with the same name already exists
+            final String zipName = indexGet(fileName);
+            final Path smallPath = pathForSmallFile(fileName);
+            final boolean fileExists = this.fileSystem.exists(smallPath);
+            if (!DELETED.equals(zipName) && (zipName != null || fileExists)) {
+                throw new FileExistsException(fileName, "Cannot overwrite file");
+            }
+
+            // Write small file
+            LOGGER.debug("Creating small file {}", smallPath);
+            final OutputStream stream = openForWrite(smallPath); // may overwrite file
+
+            // Update the index, marking the file as no more deleted if necessary
+            if (fileExists) {
+                try {
+                    final Map<String, String> entries = new HashMap<>();
+                    entries.put(fileName, null);
+                    indexPut(entries);
+                } catch (final Throwable ex) {
+                    stream.close();
+                    Throwables.propagateIfPossible(ex, IOException.class);
+                    Throwables.propagate(ex);
+                }
+            }
+
+            // Return opened stream
+            return stream;
+
+        } finally {
+            // Always release the lock
+            this.lock.writeLock().unlock();
+        }
+    }
+
+    // Synchronization serves to (1) avoid the same ZIP file to be exploded multiple times and
+    // (2) to avoid deleting files while merge is occurring
 
     @Override
     public void delete(final String fileName) throws FileMissingException, IOException {
 
-        writeBigFileLock.lock();
+        // This prevents other read/write/delete/merge/purge operations to occur
+        this.lock.writeLock().lock();
+
         try {
-            synchronized (isWritingBigFile) {
-                final Path path = getSmallPath(fileName);
-                if (this.fileSystem.exists(path)) {
-                    // It is a small file
-                    this.fileSystem.delete(path, false);
-                    LOGGER.debug("Deleted file {}", path.getName());
-                } else {
-                    Term s = new Term(FILENAME_FIELD_NAME, fileName);
-                    TermDocs termDocs = luceneReader.termDocs(s);
+            // Check active flag
+            Preconditions.checkState(this.active.get());
 
-                    if (termDocs.next()) {
-                        Document doc = luceneReader.document(termDocs.doc());
-                        String zipFile = doc.get(ZIP_FIELD_NAME);
-                        Path inputFile = getFolderFromBigFile(zipFile);
+            // Lookup the zip file / deleted status for the supplied file
+            final String zipName = indexGet(fileName);
 
-                        LOGGER.debug("The zip file is {}", inputFile.getName());
-                        deleteFromBigFile(fileName, inputFile);
-                        return;
+            // Proceed only if file is not marked as deleted
+            if (!DELETED.equals(zipName)) {
+                if (zipName != null) {
+
+                    // Explode the ZIP file (except for the deleted file)
+                    final Map<String, String> entries = new HashMap<>();
+                    final Path zipPath = pathForZipFile(zipName);
+                    LOGGER.debug("Exploding zip file {}", zipPath);
+                    try (final ZipInputStream zipStream = new ZipInputStream(openForRead(zipPath))) {
+                        ZipEntry entry;
+                        while ((entry = zipStream.getNextEntry()) != null) {
+                            final String smallName = entry.getName();
+                            if (!smallName.equals(fileName)) {
+                                entries.put(smallName, null);
+                                final Path smallPath = pathForSmallFile(smallName);
+                                // note: small file may already exist (as previously packed in ZIP
+                                // file but not yet purged): in this case it is silently
+                                // overwritten
+                                try (OutputStream stream = openForWrite(smallPath)) {
+                                    ByteStreams.copy(zipStream, stream);
+                                }
+                            }
+                        }
+                    } catch (final IOException ex) {
+                        // Perform clean up and propagate exception
+                        for (final String smallName : entries.keySet()) {
+                            final Path smallPath = pathForSmallFile(smallName);
+                            try {
+                                this.fileSystem.delete(smallPath, false);
+                            } catch (final Throwable ex2) {
+                                LOGGER.warn("Could not delete extracted file " + smallPath
+                                        + " after failed to explod ZIP file " + zipPath, ex2);
+                            }
+                        }
+                        throw new IOException("Cannot explode ZIP file " + zipPath, ex);
                     }
 
-                    throw new FileMissingException(fileName, "The file does not exist");
+                    // Update index, marking small file and ZIP as deleted and de-associating
+                    // other small files previously in the ZIP from the ZIP file
+                    entries.put(fileName, DELETED); // because the file may still exist
+                    entries.put(zipName, DELETED);
+                    indexPut(entries);
+                    return;
+
+                } else {
+                    // Mark a small file with the name supplied as deleted
+                    final Path smallPath = pathForSmallFile(fileName);
+                    if (this.fileSystem.exists(smallPath)) {
+                        LOGGER.debug("Marking small file {} as deleted", smallPath);
+                        indexPut(ImmutableMap.of(fileName, DELETED));
+                        return;
+                    }
                 }
             }
+
+            // Report file does not exist
+            throw new FileMissingException(fileName, "The file does not exist");
+
         } finally {
-            writeBigFileLock.unlock();
+            // Always release the lock
+            this.lock.writeLock().unlock();
         }
     }
 
-	private synchronized void optimizeOnDemand() throws IOException {
-		if (!luceneReader.isOptimized()) {
-			LOGGER.debug("Optimizing index");
-			luceneWriter.optimize(MAX_LUCENE_SEGMENTS);
-			luceneReader.close();
-			luceneReader = luceneWriter.getReader();
-		}
-		else {
-			LOGGER.debug("Index is optimized");
-		}
-	}
+    @Override
+    public Stream<String> list() throws IOException {
 
-	@Override
-	public Stream<String> list() throws IOException {
-//		return Stream.create(new LuceneIterator(luceneReader));
-		optimizeOnDemand();
-		return Stream.concat(Stream.create(new LuceneIterator(luceneReader)), Stream.create(new HadoopIterator(this.smallFilesPath, this.fileSystem)));
-	}
+        // This prevents write/delete/merge/purge operations to occur ONLY for the time needed to
+        // retrieve (non-merged/non-deleted) small files and retrieve an iterator over Lucene
+        // index. This DOES NOT PROTECT the iteration over the Lucene index, thus changes to the
+        // file store during the iteration may be reflected in the iteration results
+        this.lock.readLock().lock();
 
-	@Override
-	public void close() {
+        try {
+            // Check active flag
+            Preconditions.checkState(this.active.get());
 
-	    // This will wait for a pending SaveBigFile task to complete
-	    writeBigFileLock.lock();
-	    writeBigFileLock.unlock();
+            // Retrieve small files
+            final List<String> smallNames = new ArrayList<>();
+            for (final FileStatus fs : this.fileSystem.listStatus(this.smallFilesPath)) {
+                final String smallName = fs.getPath().getName();
+                if (indexGet(smallName) != null) {
+                    smallNames.add(smallName);
+                }
+            }
 
-		try {
-			luceneReader.close();
-		} catch (Exception e) {
-			LOGGER.warn("Unable to close Lucene reader");
-		}
+            // Retrieve an iterator over zipped files
+            final Iterator<String> zippedNames = indexList(false);
 
-		try {
-			luceneWriter.optimize();
-		} catch (Exception e) {
-			LOGGER.warn("Unable to optimize Lucene writer");
-		}
+            // Return the concatenation of the two
+            return Stream.concat(Stream.create(smallNames), Stream.create(zippedNames));
 
-		try {
-			luceneWriter.close();
-		} catch (Exception e) {
-			LOGGER.warn("Unable to close Lucene writer");
-		}
-
-	}
-
-	@Override
-	public String toString() {
-		return getClass().getSimpleName();
-	}
-
-	private Path getFolderFromBigFile(String fileName) {
-		final String bucketDirectory = fileName.substring(0, 2);
-		return new Path(this.rootPath, bucketDirectory + File.separator + fileName);
-	}
-
-	private void checkSmallFilesAndMerge() throws IOException {
-		boolean mustMerge = false;
-		FileStatus[] files;
-		LOGGER.debug("Checking small files");
-
-		synchronized (isWritingBigFile) {
-			if (!isWritingBigFile.get()) {
-				files = fileSystem.listStatus(smallFilesPath);
-				if (files == null) {
-					return;
-				}
-				LOGGER.debug("Number of files: {}", files.length);
-				if (files.length > MAX_NUM_SMALL_FILES) {
-					mustMerge = true;
-					isWritingBigFile.set(true);
-					writeBigFileLock.lock();
-				}
-			}
-			else {
-				return;
-			}
-		}
-
-		if (mustMerge) {
-		    try {
-                LOGGER.debug("More than {} small files, building zip", MAX_NUM_SMALL_FILES);
-                LOGGER.debug(filesInWritingMode.toString());
-
-                FileStatus[] list = new FileStatus[MAX_NUM_SMALL_FILES];
-
-                StringBuffer stringBuffer = new StringBuffer();
-			
-				int i = 0;
-				for (FileStatus fs : files) {
-					if (fs.isDir()) {
-						continue;
-					}
-					if (filesInWritingMode.contains(fs.getPath().getName())) {
-						continue;
-					}
-					if (++i > MAX_NUM_SMALL_FILES) {
-						break;
-					}
-
-					LOGGER.debug("{} - {}", i - 1, fs.getPath().getName());
-					stringBuffer.append(fs.toString());
-					list[i - 1] = fs;
-				}
-
-				if (list[list.length - 1] == null) {
-					throw new IOException("Not enough files, skipping");
-				}
-
-				final String fileName = Data.hash(stringBuffer.toString());
-				Path outputFile = getFolderFromBigFile(fileName);
-//				new SaveBigFile(fileSystem, list, outputFile).run();
-				Data.getExecutor().schedule(new SaveBigFile(fileSystem, list, outputFile), 0, TimeUnit.MILLISECONDS);
-			} catch (Exception e) {
-                writeBigFileLock.unlock();
-				isWritingBigFile.set(false);
-				LOGGER.debug(e.getMessage());
-			}
-		}
-	}
-
-	private Path getSmallPath(final String fileName) {
-//        final String typeDirectory = Objects.firstNonNull(Data.extensionToMimeType(fileName),
-//                "application/octet-stream").replace('/', '_');
-//        final String bucketDirectory = Data.hash(fileName).substring(0, 2);
-		return new Path(this.smallFilesPath, fileName);
-	}
-
-	private int numSmallFiles() throws IOException {
-		return fileSystem.listStatus(smallFilesPath).length;
-	}
-
-
-    // Classes
-
-    private class SaveBigFile implements Runnable {
-
-        private FileSystem fileSystem;
-        private FileStatus[] files;
-        private Path outputFile;
-
-        private SaveBigFile(FileSystem fileSystem, FileStatus[] files, Path outputFile) {
-            this.fileSystem = fileSystem;
-            this.files = files;
-            this.outputFile = outputFile;
+        } finally {
+            // Always release the lock
+            this.lock.readLock().unlock();
         }
+    }
 
-        @Override
-        public void run() {
+    @Override
+    public void close() {
 
-            // Make the zip file
+        // This ensures no other read/write/delete/merge/delete operation is running
+        this.lock.writeLock().lock();
+
+        try {
             try {
-                ZipOutputStream out;
-                try {
-                    LOGGER.debug("Opening ZIP file {}", outputFile.getName());
-                    out = new ZipOutputStream(new BufferedOutputStream(
-                            fileSystem.create(outputFile)));
-                } catch (Exception e) {
-                    LOGGER.debug("Unable to open ZIP file");
-                    return;
+                // Stop periodic cleanup
+                this.cleanupFuture.cancel(false);
+            } catch (final Throwable ex) {
+                LOGGER.warn("Unable to stop periodic cleanup task", ex);
+            }
+
+            try {
+                // Close Lucene reader
+                this.luceneReader.close();
+            } catch (final Throwable ex) {
+                LOGGER.warn("Unable to close Lucene reader", ex);
+            }
+
+            try {
+                // Optimize Lucene writer before closing
+                this.luceneWriter.optimize();
+            } catch (final Exception ex) {
+                LOGGER.warn("Unable to optimize Lucene writer", ex);
+            }
+
+            try {
+                // Close Lucene writer
+                this.luceneWriter.close();
+            } catch (final Exception ex) {
+                LOGGER.warn("Unable to close Lucene writer", ex);
+            }
+
+        } finally {
+            // Always mark component as inactive and release the lock
+            this.active.set(false);
+            this.lock.writeLock().unlock();
+        }
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName();
+    }
+
+    private void purge() throws IOException {
+
+        // This prevents other read/write/delete/merge/purge operations from running
+        this.lock.writeLock().lock();
+
+        try {
+            // Identify deleted files that can be safely purged (i.e., not opened)
+            final Set<String> purgableFiles = new HashSet<>();
+            for (final Iterator<String> i = indexList(true); i.hasNext();) {
+                purgableFiles.add(i.next());
+            }
+            final FileStatus[] files = this.fileSystem.listStatus(this.smallFilesPath);
+            if (files != null) {
+                for (final FileStatus fs : files) {
+                    final String fileName = fs.getPath().getName();
+                    if (indexGet(fileName) != null) {
+                        purgableFiles.add(fileName);
+                    }
                 }
+            }
+            synchronized (this.openedFiles) {
+                purgableFiles.removeAll(this.openedFiles.elementSet());
+            }
 
-                byte[] data = new byte[1024];
-                int count;
+            // Abort if there is nothing to do
+            if (purgableFiles.isEmpty()) {
+                return;
+            }
 
-                for (FileStatus f : files) {
-                    try {
-                        BufferedInputStream in = new BufferedInputStream(fileSystem.open(f
-                                .getPath()));
-
-                        out.putNextEntry(new ZipEntry(f.getPath().getName()));
-                        while ((count = in.read(data, 0, 1000)) != -1) {
-                            out.write(data, 0, count);
+            // Delete purgable files
+            LOGGER.debug("Purging {} files", purgableFiles.size());
+            final Map<String, String> entries = new HashMap<>();
+            for (final String file : purgableFiles) {
+                try {
+                    final Path smallPath = pathForSmallFile(file);
+                    if (this.fileSystem.exists(smallPath)) {
+                        this.fileSystem.delete(smallPath, false);
+                        LOGGER.debug("Deleted small file {}", smallPath);
+                    } else {
+                        final Path zipPath = pathForZipFile(file);
+                        if (this.fileSystem.exists(zipPath)) {
+                            this.fileSystem.delete(zipPath, false);
+                            LOGGER.debug("Deleted ZIP file {}", zipPath);
+                        } else {
+                            LOGGER.warn("Cannot find file " + file);
                         }
-                        in.close();
+                    }
+                    entries.put(file, null);
+                } catch (final Throwable ex) {
+                    LOGGER.warn("Cannot purge file " + file, ex);
+                }
+            }
 
-                    } catch (Exception e) {
-                        // ignore
-                        LOGGER.warn("Unable to write to ZIP file {}", outputFile.getName(), e);
+            // Update index
+            indexPut(entries);
+
+        } finally {
+            // Always release the lock
+            this.lock.writeLock().unlock();
+        }
+    }
+
+    private void merge() throws IOException {
+
+        // This ensures no other read/write/delete/merge/purge operation is running
+        this.lock.writeLock().lock();
+
+        try {
+            // Retrieve the list of small files that can be packed in a zip file
+            final List<String> mergeableNames = new LinkedList<>();
+            final FileStatus[] files = this.fileSystem.listStatus(this.smallFilesPath);
+            if (files != null) {
+                for (final FileStatus fs : files) {
+                    final String name = fs.getPath().getName();
+                    if (!fs.isDir() && indexGet(name) == null) {
+                        mergeableNames.add(name);
                     }
                 }
+            }
 
+            // Pack files in batches of 'numSmallFiles' size
+            while (mergeableNames.size() > this.numSmallFiles) {
+
+                // Determine the name of the zip file
+                final String zipName = Data.hash(this.zipNameCounter++) + ".zip";
+                final Path zipPath = pathForZipFile(zipName);
+
+                // Status variable necessary for cleanup in case the operation fails
+                boolean opened = false;
+                final Map<String, String> entries = new HashMap<>();
                 try {
-                    LOGGER.debug("Closing ZIP file {}", outputFile.getName());
-                    out.flush();
-                    out.close();
-                } catch (Exception e) {
-                    // ignore
-                    LOGGER.warn("Unable to close ZIP file {}", outputFile.getName(), e);
-                }
+                    // Try to build the zip file
+                    try (final ZipOutputStream out = new ZipOutputStream(openForWrite(zipPath))) {
+                        opened = true;
+                        for (int i = 0; i < this.numSmallFiles; ++i) {
+                            final String fileName = mergeableNames.remove(0);
+                            out.putNextEntry(new ZipEntry(fileName));
+                            try (final InputStream in = openForRead(pathForSmallFile(fileName))) {
+                                ByteStreams.copy(in, out);
+                            }
+                            entries.put(fileName, zipName);
+                        }
+                    }
 
-                // Update index
+                    // Update index
+                    indexPut(entries);
 
-                for (FileStatus f : files) {
-                    LOGGER.debug("Adding file {} to index", f.getPath().getName());
-                    Document doc = new Document();
-                    doc.add(new Field(FILENAME_FIELD_NAME, f.getPath().getName(), Field.Store.YES,
-                            Field.Index.NOT_ANALYZED));
-                    doc.add(new Field(ZIP_FIELD_NAME, outputFile.getName(), Field.Store.YES,
-                            Field.Index.NOT_ANALYZED));
+                } catch (final Throwable ex) {
+                    // On failure, delete and unindex the zip file
                     try {
-                        // use "update" instead of "add" to avoid duplicates
-                        luceneWriter.updateDocument(new Term(FILENAME_FIELD_NAME, f.getPath()
-                                .getName()), doc);
-                    } catch (Exception e) {
-                        LOGGER.warn("Error in writing file {} to Lucene index", f.getPath()
-                                .getName(), e);
+                        for (final Map.Entry<String, String> entry : entries.entrySet()) {
+                            entry.setValue(null);
+                        }
+                        indexPut(entries);
+                    } catch (final Throwable ex2) {
+                        LOGGER.warn("Cannot unindex zip file after failure to generate it", ex2);
                     }
-                }
-
-                try {
-                    luceneWriter.commit();
-                } catch (Exception e) {
-                    // ignored
-                }
-
-                // try {
-                // LOGGER.debug("Optimizing index");
-                // luceneWriter.optimize();
-                // synchronized (luceneReader) {
-                // luceneReader = luceneWriter.getReader();
-                // }
-                // } catch (Exception e) {
-                // LOGGER.warn("Error in optimizing Lucene index {}", e.getMessage());
-                // }
-
-                // Delete small files
-
-                for (FileStatus f : files) {
                     try {
-                        LOGGER.debug("Deleting file {}", f.getPath().getName());
-                        fileSystem.delete(f.getPath(), false);
-                    } catch (Exception e) {
-                        // ignore
-                        LOGGER.warn("Unable to delete file {}", f.getPath().getName());
+                        if (opened) {
+                            this.fileSystem.delete(zipPath, false);
+                        }
+                    } catch (final Throwable ex2) {
+                        LOGGER.warn("Cannot delete zip file after failure to generate it", ex2);
                     }
+                    throw new IOException("Cannot build and index zip file " + zipPath, ex);
                 }
 
-                try {
-                    checkSmallFilesAndMerge();
-                } catch (Exception e) {
-                    // ignored
-                }
-                
-            } finally {
-                writeBigFileLock.unlock();
-                isWritingBigFile.set(false);
+                // Log batch completion
+                LOGGER.debug("Merged {}/{} small files in ZIP file {}", this.numSmallFiles,
+                        this.numSmallFiles + mergeableNames.size(), zipPath);
+            }
+
+        } finally {
+            // Always release the lock
+            this.lock.writeLock().unlock();
+        }
+    }
+
+    private void indexOptimize() throws IOException {
+        synchronized (this.luceneWriter) {
+            if (!this.luceneReader.isOptimized()) {
+                // following command causes the index to always be detected as not optimized
+                // this.luceneWriter.optimize(MAX_LUCENE_SEGMENTS);
+                this.luceneWriter.optimize();
+                this.luceneWriter.commit();
+                this.luceneReader.close();
+                this.luceneReader = this.luceneWriter.getReader();
+                LOGGER.debug("Index optimized");
             }
         }
-	}
+    }
 
-	private class InterceptCloseOutputStream extends FilterOutputStream {
+    private String indexGet(final String key) throws IOException {
+        final Term s = new Term(KEY_FIELD, key);
+        synchronized (this.luceneWriter) {
+            for (int attempt = 0;; ++attempt) {
+                try {
+                    final TermDocs termDocs = this.luceneReader.termDocs(s);
+                    if (termDocs.next()) {
+                        final Document doc = this.luceneReader.document(termDocs.doc());
+                        return doc.get(VALUE_FIELD);
+                    }
+                    return null;
+                } catch (final Throwable ex) {
+                    indexError(ex, attempt);
+                }
+            }
+        }
+    }
 
-		private String fileName;
+    private void indexPut(final Map<String, String> entries) throws IOException {
 
-		private InterceptCloseOutputStream(OutputStream out, String fileName) {
-			super(out);
-			this.fileName = fileName;
-		}
+        try {
+            int numDeleted = 0;
+            int numUpdated = 0;
+            synchronized (this.luceneWriter) {
+                for (final Map.Entry<String, String> entry : entries.entrySet()) {
+                    if (entry.getValue() == null) {
+                        this.luceneWriter.deleteDocuments(new Term(KEY_FIELD, entry.getKey()));
+                        ++numDeleted;
+                    } else {
+                        final Document doc = new Document();
+                        doc.add(new Field(KEY_FIELD, entry.getKey(), Field.Store.YES,
+                                Field.Index.NOT_ANALYZED));
+                        doc.add(new Field(VALUE_FIELD, entry.getValue(), Field.Store.YES,
+                                Field.Index.NOT_ANALYZED));
+                        this.luceneWriter.updateDocument(new Term(KEY_FIELD, entry.getKey()), doc);
+                        ++numUpdated;
+                    }
+                }
+                this.luceneWriter.commit();
+                this.luceneReader.close();
+                this.luceneReader = this.luceneWriter.getReader();
+            }
+            LOGGER.debug("Updated Lucene index: {} documents updated, {} documents deleted",
+                    numUpdated, numDeleted);
+        } catch (final Throwable ex) {
+            throw new IOException("Failed to update Lucene index with entries " + entries, ex);
+        }
+    }
 
-		@Override
-		public void close() throws IOException {
-			try {
-				LOGGER.debug("Closing {}", fileName);
-				super.close();
-			} finally {
-				filesInWritingMode.remove(this.fileName);
-			}
-		}
-	}
+    private Iterator<String> indexList(final boolean deleted) throws IOException {
 
-	private class LuceneIterator implements Iterable<String> {
+        if (deleted) {
+            // Perform a direct lookup
+            final Term s = new Term(VALUE_FIELD, DELETED);
+            final List<String> deletedNames = new ArrayList<>();
+            synchronized (this.luceneWriter) {
+                for (int attempt = 0;; ++attempt) {
+                    try {
+                        final TermDocs termDocs = this.luceneReader.termDocs(s);
+                        while (termDocs.next()) {
+                            deletedNames.add(this.luceneReader.document(termDocs.doc()).get(
+                                    KEY_FIELD));
+                        }
+                        return deletedNames.iterator();
+                    } catch (final Throwable ex) {
+                        indexError(ex, attempt);
+                    }
+                }
+            }
 
-		private IndexReader reader;
+        } else {
+            // Iterate over the whole index
+            return new AbstractIterator<String>() {
 
-		private LuceneIterator(IndexReader reader) {
-			this.reader = reader;
-			LOGGER.debug("Reader loaded! Num files: {}", this.reader.numDocs());
-		}
+                private int maxIndex = -1;
 
-		@Override
-		public Iterator<String> iterator() {
-			return new Iterator<String>() {
+                private int currentIndex = 0;
 
-				private int currentIndex = 0;
+                @Override
+                protected String computeNext() {
+                    try {
+                        @SuppressWarnings("resource")
+                        final HadoopMultiFileStore store = HadoopMultiFileStore.this;
+                        synchronized (store.luceneWriter) {
+                            for (int attempt = 0;; ++attempt) {
+                                try {
+                                    if (this.maxIndex < 0) {
+                                        this.maxIndex = store.luceneReader.maxDoc();
+                                    }
+                                    while (this.currentIndex <= this.maxIndex) {
+                                        final Document document = store.luceneReader
+                                                .document(this.currentIndex++);
+                                        if (document != null
+                                                && !DELETED.equals(document.get(VALUE_FIELD))) {
+                                            return document.get(HadoopMultiFileStore.KEY_FIELD);
+                                        }
+                                    }
+                                    return endOfData();
+                                } catch (final Throwable ex) {
+                                    indexError(ex, attempt);
+                                }
+                            }
+                        }
+                    } catch (final Throwable ex) {
+                        throw new RuntimeException("Error iterating over Lucene index", ex);
+                    }
+                }
+            };
+        }
+    }
 
-				@Override
-				public boolean hasNext() {
-					try {
-						Document document = reader.document(currentIndex);
-						if (document != null) {
-							return true;
-						}
-					} catch (Exception e) {
-						return false;
-					}
-					return false;
-				}
+    private void indexError(final Throwable ex, final int numAttempt) throws IOException {
+        if (numAttempt >= this.MAX_LUCENE_ATTEMPTS) {
+            Throwables.propagateIfPossible(ex, IOException.class);
+            Throwables.propagate(ex);
+        }
+        LOGGER.error("Error accessing Lucene index, will retry", ex);
+        synchronized (this.luceneWriter) {
+            try {
+                this.luceneReader.close();
+            } catch (final Throwable ex2) {
+                LOGGER.warn("Cannot close lucene reader after failure", ex2);
+            }
+            this.luceneReader = this.luceneWriter.getReader();
+        }
+    }
 
-				@Override
-				public String next() {
-					try {
-						Document document = reader.document(currentIndex++);
-						if (document != null) {
-							return document.get(FILENAME_FIELD_NAME);
-						}
-					} catch (Exception e) {
-						return null;
-					}
+    private InputStream openForRead(final Path filePath) throws IOException {
+        final String fileName = filePath.getName();
+        final InputStream stream = this.fileSystem.open(filePath);
+        synchronized (this.openedFiles) {
+            this.openedFiles.add(fileName);
+        }
+        LOGGER.trace("Opening {} for read", fileName);
+        return new FilterInputStream(stream) {
 
-					return null;
-				}
+            @Override
+            public void close() throws IOException {
+                try {
+                    LOGGER.trace("Closing {}", fileName);
+                    super.close();
+                } finally {
+                    synchronized (HadoopMultiFileStore.this.openedFiles) {
+                        HadoopMultiFileStore.this.openedFiles.remove(fileName);
+                    }
+                }
+            }
 
-				@Override
-				public void remove() {
-					// empty
-				}
-			};
-		}
-	}
+        };
+    }
 
-	private class HadoopIterator extends AbstractIterator<String> {
+    private OutputStream openForWrite(final Path filePath) throws IOException {
+        final String fileName = filePath.getName();
+        final OutputStream stream = this.fileSystem.create(filePath, true);
+        synchronized (this.openedFiles) {
+            this.openedFiles.add(fileName);
+        }
+        LOGGER.trace("Opening {} for write", fileName);
+        return new FilterOutputStream(stream) {
 
-		private FileStatus[] files;
-		private int fileIndex = 0;
+            @Override
+            public void close() throws IOException {
+                try {
+                    LOGGER.trace("Closing {}", fileName);
+                    super.close();
+                } finally {
+                    synchronized (HadoopMultiFileStore.this.openedFiles) {
+                        HadoopMultiFileStore.this.openedFiles.remove(fileName);
+                    }
+                }
+            }
 
-		HadoopIterator(Path path, FileSystem fileSystem) throws IOException {
-			this.files = fileSystem.listStatus(path);
-//			this.typeDirectories = HadoopMultiFileStore.this.fileSystem.listStatus(path);
-//			this.bucketDirectories = new FileStatus[]{};
-//			this.files = new FileStatus[]{};
-		}
+        };
+    }
 
-		@Override
-		protected String computeNext() {
-			try {
-				while (true) {
-					if (this.fileIndex < this.files.length) {
-						final FileStatus file = this.files[this.fileIndex++];
-						if (!file.isDir()) {
-							return file.getPath().getName();
-						}
-					}
+    @Nullable
+    private Path pathForSmallFile(@Nullable final String smallFile) {
+        return smallFile == null ? null : new Path(this.smallFilesPath, smallFile);
+    }
 
-					return endOfData();
-
-//					else if (this.bucketIndex < this.bucketDirectories.length) {
-//						final FileStatus bucketDirectory;
-//						bucketDirectory = this.bucketDirectories[this.bucketIndex++];
-//						if (bucketDirectory.isDir()) {
-//							this.files = this.fileSystem
-//									.listStatus(bucketDirectory.getPath());
-//							this.fileIndex = 0;
-//						}
-//					}
-//					else if (this.typeIndex < this.typeDirectories.length) {
-//						final FileStatus typeDirectory;
-//						typeDirectory = this.typeDirectories[this.typeIndex++];
-//						if (typeDirectory.isDir()) {
-//							this.bucketDirectories = this.fileSystem
-//									.listStatus(typeDirectory.getPath());
-//							this.bucketIndex = 0;
-//						}
-//					}
-//					else {
-//						return endOfData();
-//					}
-				}
-			} catch (final Throwable ex) {
-				throw Throwables.propagate(ex);
-			}
-		}
-
-	}
+    @Nullable
+    private Path pathForZipFile(@Nullable final String zipFile) {
+        if (zipFile == null) {
+            return null;
+        }
+        final String bucketDirectory = zipFile.substring(0, 2);
+        return new Path(this.rootPath, bucketDirectory + File.separator + zipFile);
+    }
 
 }

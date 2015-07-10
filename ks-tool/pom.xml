@@ -9,7 +9,7 @@
     <parent>
         <groupId>eu.fbk.knowledgestore</groupId>
         <artifactId>ks</artifactId>
-        <version>1.6</version>
+        <version>1.6.1</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -18,8 +18,13 @@
     <packaging>jar</packaging>
 
     <name>ks-tool</name>
-    <description>KnowledgeStore client-side tools.</description>
-    <url>http://www.fbk.eu</url>
+    <description>
+        A collection of command line tools for interacting with a KnowledgeStore server,
+        including benchmarking tools to create and perform a performance test of KS
+        retrieval methods as well as a tool for dumping the contents of a KS instance
+        to RDF files.
+    </description>
+    <url>http://knowledgestore.fbk.eu/ks-tool/</url>
 
     <distributionManagement>
         <site>
@@ -27,13 +32,6 @@
             <url>${site-path}/ks-tool/</url>
         </site>
     </distributionManagement>
-
-    <scm>
-        <connection>scm:svn:https://newsreader.fbk.eu/svn/Code/KnowledgeStore/trunk/ks-tool</connection>
-        <developerConnection>scm:svn:https://newsreader.fbk.eu/svn/Code/KnowledgeStore/trunk/ks-tool</developerConnection>
-        <tag>HEAD</tag>
-        <url>https://newsreader.fbk.eu/trac/browser/newsreader/Code/KnowledgeStore/trunk/ks-tool</url>
-    </scm>
 
     <dependencies>
         <dependency>
@@ -105,8 +103,7 @@
     </dependencies>
 
     <properties>
-        <parent-path>..</parent-path>
-        <aggregate>false</aggregate>
+        <parent-path>/..</parent-path>
     </properties>
 
 </project>

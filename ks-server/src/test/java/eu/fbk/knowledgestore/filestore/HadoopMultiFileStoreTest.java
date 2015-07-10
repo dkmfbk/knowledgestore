@@ -1,19 +1,17 @@
 package eu.fbk.knowledgestore.filestore;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.UUID;
-
 import com.google.common.base.Charsets;
 import com.google.common.io.ByteStreams;
-
+import eu.fbk.knowledgestore.runtime.Files;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import eu.fbk.knowledgestore.runtime.Files;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.UUID;
 
 public class HadoopMultiFileStoreTest {
 
@@ -56,7 +54,7 @@ public class HadoopMultiFileStoreTest {
 
         return new HadoopMultiFileStore(Files.getRawLocalFileSystem(),
                 System.getProperty("java.io.tmpdir") + "/ks-lucene-" + thisRandomID,
-                System.getProperty("java.io.tmpdir") + "/ks-" + thisRandomID, 10);
+                System.getProperty("java.io.tmpdir") + "/ks-" + thisRandomID, 10, null);
     }
 
     @Test

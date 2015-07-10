@@ -8,7 +8,7 @@
   <fileSets>
     <fileSet>
       <directory>..</directory>
-      <outputDirectory>/</outputDirectory>
+      <outputDirectory></outputDirectory>
       <includes>
         <include>README.txt</include>
         <include>NOTICE.txt</include>
@@ -17,19 +17,19 @@
     </fileSet>
     <fileSet>
       <directory>src/main/scripts</directory>
-      <outputDirectory>/bin</outputDirectory>
+      <outputDirectory>bin</outputDirectory>
       <fileMode>0755</fileMode>
       <directoryMode>0755</directoryMode>
       <lineEnding>unix</lineEnding>
     </fileSet>
     <fileSet>
       <directory>src/main/config</directory>
-      <outputDirectory>/etc</outputDirectory>
+      <outputDirectory>etc</outputDirectory>
     </fileSet>
     <fileSet>
       <!-- Create empty output directory /log -->
       <directory>src/main/assembly</directory>
-      <outputDirectory>/log</outputDirectory>
+      <outputDirectory>log</outputDirectory>
       <excludes>
         <exclude>*/**</exclude>
       </excludes>
@@ -37,7 +37,7 @@
     <fileSet>
       <!-- Create empty output directory /var -->
       <directory>src/main/assembly</directory>
-      <outputDirectory>/var</outputDirectory>
+      <outputDirectory>var</outputDirectory>
       <excludes>
         <exclude>*/**</exclude>
       </excludes>

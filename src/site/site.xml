@@ -93,7 +93,7 @@
             <item name="NewsReader Data Model" href="${site-root}ontologies/newsreader.html"/>
         </menu>
 
-        <menu name="Maven Resources" ref="reports" inherit="top"/>
+        <menu name="Maven Reports" ref="reports" inherit="top"/>
         <menu ref="modules" inherit="top"/>
 
         <menu name="Contacts">
@@ -130,8 +130,8 @@
 
     <custom>
         <reflowSkin>
-            <absoluteResourceURL>${site-root}/</absoluteResourceURL>
-            <protocolRelativeURLs>true</protocolRelativeURLs>
+            <!--<absoluteResourceURL>${site-root}/</absoluteResourceURL>-->
+            <!--<protocolRelativeURLs>true</protocolRelativeURLs>-->
 
             <endContent>
                 ${site.topbar}
@@ -141,7 +141,7 @@
             <highlightJs>true</highlightJs>
             <highlightJsTheme>default</highlightJsTheme>
             <imgLightbox>true</imgLightbox>
-            <smoothScroll>true</smoothScroll>
+            <smoothScroll>false</smoothScroll>
             <bootstrapCss>true</bootstrapCss>
             <bootstrapIcons>true</bootstrapIcons>
             <html5Anchor>true</html5Anchor>
@@ -161,7 +161,7 @@
               <tocTopMax>6</tocTopMax>
               <tocTopFlatten>false</tocTopFlatten>
             -->
-            <topNav>Project|Documentation|Ontologies|Maven Resources|Modules|Parent Project|Contacts</topNav>
+            <topNav>Project|Documentation|Ontologies|Maven Reports|Modules|Parent Project|Contacts</topNav>
             <bottomNav maxSpan="4">
                 <column>Project Links</column>
                 <column>Supported by</column>
@@ -198,6 +198,9 @@
                 <test-tools>
                     <highlightJs>false</highlightJs>
                 </test-tools>
+                <license>
+                    <highlightJs>false</highlightJs>
+                </license>
             </pages>
         </reflowSkin>
     </custom>

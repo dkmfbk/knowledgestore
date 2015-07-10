@@ -9,7 +9,7 @@
     <parent>
         <groupId>eu.fbk.knowledgestore</groupId>
         <artifactId>ks</artifactId>
-        <version>1.6</version>
+        <version>1.6.1</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -34,7 +34,7 @@
         documentation of the Web API is automatically generated using the
         Enunciate tool.
     </description>
-    <url>http://www.fbk.eu</url>
+    <url>http://knowledgestore.fbk.eu/ks-server-http/</url>
 
     <distributionManagement>
         <site>
@@ -42,14 +42,6 @@
             <url>${site-path}/ks-server-http/</url>
         </site>
     </distributionManagement>
-
-    <scm>
-        <connection>scm:svn:https://newsreader.fbk.eu/svn/Code/KnowledgeStore/trunk/ks-server-http</connection>
-        <developerConnection>scm:svn:https://newsreader.fbk.eu/svn/Code/KnowledgeStore/trunk/ks-server-http
-        </developerConnection>
-        <tag>HEAD</tag>
-        <url>https://newsreader.fbk.eu/trac/browser/newsreader/Code/KnowledgeStore/trunk/ks-server-http</url>
-    </scm>
 
     <dependencies>
         <dependency>
@@ -239,19 +231,6 @@
             <groupId>eu.fbk.knowledgestore</groupId>
             <artifactId>ks-core</artifactId>
         </dependency>
-        <!-- <dependency> -->
-        <!-- <groupId>eu.fbk.knowledgestore</groupId> -->
-        <!-- <artifactId>ks-core</artifactId> -->
-        <!-- <classifier>sources</classifier> -->
-        <!-- <scope>compile</scope> -->
-        <!-- <optional>true</optional> -->
-        <!-- </dependency> -->
-        <dependency>
-            <groupId>eu.fbk.knowledgestore</groupId>
-            <artifactId>ks-core</artifactId>
-            <type>test-jar</type>
-            <scope>test</scope>
-        </dependency>
         <dependency>
             <groupId>eu.fbk.knowledgestore</groupId>
             <artifactId>ks-server</artifactId>
@@ -260,87 +239,42 @@
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>empty-javadoc-jar</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                        <configuration>
-                            <classifier>javadoc</classifier>
-                            <classesDirectory>${basedir}/javadoc</classesDirectory>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <!--<plugin>-->
-                <!--<groupId>org.apache.maven.plugins</groupId>-->
-                <!--<artifactId>maven-source-plugin</artifactId>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<id>attach-sources</id>-->
-                        <!--<phase>package</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>jar</goal>-->
-                        <!--</goals>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-            <!--</plugin>-->
-            <!--<plugin>-->
-                <!--<groupId>org.apache.maven.plugins</groupId>-->
-                <!--<artifactId>maven-javadoc-plugin</artifactId>-->
-                <!--<configuration>-->
-                    <!--<failOnError>false</failOnError>-->
-                <!--</configuration>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<id>attach-javadocs</id>-->
-                        <!--<phase>package</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>jar</goal>-->
-                        <!--</goals>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-            <!--</plugin>-->
-            <plugin>
-                <groupId>org.codehaus.enunciate</groupId>
-                <artifactId>maven-enunciate-plugin</artifactId>
-                <configuration>
-                    <configFile>enunciate.xml</configFile>
-                    <docsSubdir>webdocs</docsSubdir>
-                    <indexPageName>webdocs.html</indexPageName>
-                    <!-- <copyright>2014 FBK-irst</copyright> -->
-                    <!-- <title>KnowledgeStore Web API reference</title> -->
-                    <!-- <splashPackage>eu.fbk.knowledgestore.endpoint.resources</splashPackage> -->
-                </configuration>
-            </plugin>
+            <!-- BROKEN IN JAVA 8 -->
+            <!-- <plugin> -->
+            <!-- <groupId>org.codehaus.enunciate</groupId> -->
+            <!-- <artifactId>maven-enunciate-plugin</artifactId> -->
+            <!-- <configuration> -->
+            <!-- <configFile>enunciate.xml</configFile> -->
+            <!-- <docsSubdir>webdocs</docsSubdir> -->
+            <!-- <indexPageName>webdocs.html</indexPageName> -->
+            <!-- <copyright>2014 FBK-irst</copyright> -->
+            <!-- <title>KnowledgeStore Web API reference</title> -->
+            <!-- <splashPackage>eu.fbk.knowledgestore.endpoint.resources</splashPackage> -->
+            <!-- </configuration> -->
+            <!-- </plugin> -->
         </plugins>
     </build>
 
     <reporting>
         <plugins>
-            <plugin>
-                <groupId>org.codehaus.enunciate</groupId>
-                <artifactId>maven-enunciate-plugin</artifactId>
-                <configuration>
-                    <configFile>enunciate.xml</configFile>
-                    <docsSubdir>webdocs</docsSubdir>
-                    <indexPageName>webdocs.html</indexPageName>
-                    <!-- <copyright>2014 FBK-irst</copyright> -->
-                    <!-- <title>KnowledgeStore Web API reference</title> -->
-                    <!-- <splashPackage>eu.fbk.knowledgestore.endpoint.jaxrs</splashPackage> -->
-                </configuration>
-            </plugin>
+            <!-- BROKEN IN JAVA 8 -->
+            <!-- <plugin> -->
+            <!-- <groupId>org.codehaus.enunciate</groupId> -->
+            <!-- <artifactId>maven-enunciate-plugin</artifactId> -->
+            <!-- <configuration> -->
+            <!-- <configFile>enunciate.xml</configFile> -->
+            <!-- <docsSubdir>webdocs</docsSubdir> -->
+            <!-- <indexPageName>webdocs.html</indexPageName> -->
+            <!-- <copyright>2014 FBK-irst</copyright> -->
+            <!-- <title>KnowledgeStore Web API reference</title> -->
+            <!-- <splashPackage>eu.fbk.knowledgestore.endpoint.jaxrs</splashPackage> -->
+            <!-- </configuration> -->
+            <!-- </plugin> -->
         </plugins>
     </reporting>
 
     <properties>
-        <parent-path>..</parent-path>
-        <aggregate>false</aggregate>
+        <parent-path>/..</parent-path>
     </properties>
 
 </project>

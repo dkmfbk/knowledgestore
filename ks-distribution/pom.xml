@@ -9,7 +9,7 @@
     <parent>
         <groupId>eu.fbk.knowledgestore</groupId>
         <artifactId>ks</artifactId>
-        <version>1.6</version>
+        <version>1.6.1</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -19,55 +19,14 @@
 
     <name>ks-distribution</name>
     <description></description>
-    <url>http://www.fbk.eu</url>
+    <url>http://knowledgestore.fbk.eu/ks-distribution/</url>
 
     <distributionManagement>
         <site>
             <id>siteks</id>
-            <url>${site-path}/ks-distribution</url>
+            <url>${site-path}/ks-distribution/</url>
         </site>
     </distributionManagement>
-
-    <scm>
-        <connection>scm:svn:https://newsreader.fbk.eu/svn/Code/KnowledgeStore/trunk/ks-distribution</connection>
-        <developerConnection>scm:svn:https://newsreader.fbk.eu/svn/Code/KnowledgeStore/trunk/ks-distribution</developerConnection>
-        <tag>HEAD</tag>
-        <url>https://newsreader.fbk.eu/trac/browser/newsreader/Code/KnowledgeStore/trunk/ks-distribution</url>
-    </scm>
-
-    <!--<build>-->
-        <!--<plugins>-->
-            <!--<plugin>-->
-                <!--<groupId>org.apache.maven.plugins</groupId>-->
-                <!--<artifactId>maven-source-plugin</artifactId>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<id>attach-sources</id>-->
-                        <!--<phase>package</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>jar</goal>-->
-                        <!--</goals>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-            <!--</plugin>-->
-            <!--<plugin>-->
-                <!--<groupId>org.apache.maven.plugins</groupId>-->
-                <!--<artifactId>maven-javadoc-plugin</artifactId>-->
-                <!--<configuration>-->
-                    <!--<failOnError>false</failOnError>-->
-                <!--</configuration>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<id>attach-javadocs</id>-->
-                        <!--<phase>package</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>jar</goal>-->
-                        <!--</goals>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-            <!--</plugin>-->
-        <!--</plugins>-->
-    <!--</build>-->
 
     <dependencies>
         <!-- Note: order of dependencies is important! don't move the first four! -->
@@ -152,12 +111,12 @@
     </dependencies>
 
     <properties>
-        <parent-path>..</parent-path>
+        <parent-path>/..</parent-path>
     </properties>
 
     <profiles>
         <profile>
-            <id>attachments</id>
+            <id>release</id>
             <activation>
                 <activeByDefault>false</activeByDefault>
             </activation>
@@ -183,6 +142,26 @@
                                 <descriptor>src/main/assembly/tools.xml</descriptor>
                             </descriptors>
                         </configuration>
+                    </plugin>
+
+                    <!-- Create an empty javadoc (bad) -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-jar-plugin</artifactId>
+                        <version>2.5</version>
+                        <executions>
+                            <execution>
+                                <id>empty-javadoc-jar</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                                <configuration>
+                                    <classifier>javadoc</classifier>
+                                    <classesDirectory>${basedir}/javadoc</classesDirectory>
+                                </configuration>
+                            </execution>
+                        </executions>
                     </plugin>
                 </plugins>
             </build>
