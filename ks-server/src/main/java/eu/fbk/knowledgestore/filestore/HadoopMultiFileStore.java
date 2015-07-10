@@ -67,9 +67,9 @@ import eu.fbk.knowledgestore.data.Stream;
  * number of files storable in a directory.
  * </p>
  */
-public final class HadoopMultiFileStore2 implements FileStore {
+public final class HadoopMultiFileStore implements FileStore {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(HadoopMultiFileStore2.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(HadoopMultiFileStore.class);
 
     private static final String DEFAULT_ROOT_PATH = "files";
 
@@ -131,7 +131,7 @@ public final class HadoopMultiFileStore2 implements FileStore {
      * @param cleanupPeriod
      *            the amount of time in milliseconds between cleanup operations
      */
-    public HadoopMultiFileStore2(final FileSystem fileSystem, @Nullable final String lucenePath,
+    public HadoopMultiFileStore(final FileSystem fileSystem, @Nullable final String lucenePath,
             @Nullable final String path, @Nullable final Integer numSmallFile,
             @Nullable final Long cleanupPeriod) {
 
@@ -693,7 +693,7 @@ public final class HadoopMultiFileStore2 implements FileStore {
                 protected String computeNext() {
                     try {
                         @SuppressWarnings("resource")
-                        final HadoopMultiFileStore2 store = HadoopMultiFileStore2.this;
+                        final HadoopMultiFileStore store = HadoopMultiFileStore.this;
                         synchronized (store.luceneWriter) {
                             for (int attempt = 0;; ++attempt) {
                                 try {
@@ -705,7 +705,7 @@ public final class HadoopMultiFileStore2 implements FileStore {
                                                 .document(this.currentIndex++);
                                         if (document != null
                                                 && !DELETED.equals(document.get(VALUE_FIELD))) {
-                                            return document.get(HadoopMultiFileStore2.KEY_FIELD);
+                                            return document.get(HadoopMultiFileStore.KEY_FIELD);
                                         }
                                     }
                                     return endOfData();
@@ -753,8 +753,8 @@ public final class HadoopMultiFileStore2 implements FileStore {
                     LOGGER.trace("Closing {}", fileName);
                     super.close();
                 } finally {
-                    synchronized (HadoopMultiFileStore2.this.openedFiles) {
-                        HadoopMultiFileStore2.this.openedFiles.remove(fileName);
+                    synchronized (HadoopMultiFileStore.this.openedFiles) {
+                        HadoopMultiFileStore.this.openedFiles.remove(fileName);
                     }
                 }
             }
@@ -777,8 +777,8 @@ public final class HadoopMultiFileStore2 implements FileStore {
                     LOGGER.trace("Closing {}", fileName);
                     super.close();
                 } finally {
-                    synchronized (HadoopMultiFileStore2.this.openedFiles) {
-                        HadoopMultiFileStore2.this.openedFiles.remove(fileName);
+                    synchronized (HadoopMultiFileStore.this.openedFiles) {
+                        HadoopMultiFileStore.this.openedFiles.remove(fileName);
                     }
                 }
             }
