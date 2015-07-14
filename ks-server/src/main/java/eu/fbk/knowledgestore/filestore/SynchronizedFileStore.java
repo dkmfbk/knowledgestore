@@ -93,7 +93,7 @@ public final class SynchronizedFileStore extends ForwardingFileStore {
     }
 
     private Object lockFor(final String fileName) {
-        return this.fileLocks[Math.abs(fileName.hashCode()) % NUM_LOCKS];
+        return this.fileLocks[fileName.hashCode() % 0x7FFFFFFF % NUM_LOCKS];
     }
 
     @Override

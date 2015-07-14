@@ -388,7 +388,7 @@ public abstract class CompactBindingSet implements BindingSet, Serializable {
             this.indexTable = new int[tableSize];
             int index = 0;
             for (final String variable : variables) {
-                int tableIndex = Math.abs(variable.hashCode()) % tableSize;
+                int tableIndex = (variable.hashCode() & 0x7FFFFFFF) % tableSize;
                 while (this.variableTable[tableIndex] != null) {
                     tableIndex = (tableIndex + 1) % tableSize;
                 }
@@ -417,7 +417,7 @@ public abstract class CompactBindingSet implements BindingSet, Serializable {
         @Override
         public int indexOf(final Object object) {
             final int tableSize = this.variableTable.length;
-            int tableIndex = Math.abs(object.hashCode()) % tableSize;
+            int tableIndex = (object.hashCode() & 0x7FFFFFFF) % tableSize;
             for (int i = 0; i < tableSize; ++i) {
                 final String candidate = this.variableTable[tableIndex];
                 if (candidate != null && candidate.equals(object)) {
