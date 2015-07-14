@@ -53,6 +53,9 @@ public class LuceneDataStore implements DataStore {
 	private HashMap<URI, IndexWriter> writers = new HashMap<>();
 	private HashMap<URI, AtomicInteger> writingOperations = new HashMap<>();
 
+	private static final long DEFAULT_CLEANUP_PERIOD = 10000L; // 5s
+	private final long cleanupPeriod;
+
 	private SerializerAvro serializer;
 
 	private final int MAX_LUCENE_SEGMENTS = 100;
@@ -67,9 +70,14 @@ public class LuceneDataStore implements DataStore {
 	static Logger logger = LoggerFactory.getLogger(LuceneDataStore.class);
 
 	public LuceneDataStore(String folder, @Nullable SerializerAvro serializer) {
+		this(folder, serializer, null);
+	}
+
+	public LuceneDataStore(String folder, @Nullable SerializerAvro serializer, @Nullable final Long cleanupPeriod) {
 		this.mentionsFolder = folder + File.separator + "mentions";
 		this.resourcesFolder = folder + File.separator + "resources";
 		this.serializer = serializer;
+		this.cleanupPeriod = cleanupPeriod != null ? cleanupPeriod : DEFAULT_CLEANUP_PERIOD;
 	}
 
 	public static byte[] serializeRecord(Record record, @Nullable SerializerAvro serializer) throws IOException {
