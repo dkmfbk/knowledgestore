@@ -511,7 +511,7 @@ public final class TestGenerator {
 
         public int codeFor(final String string) {
             final byte[] bytes = string.getBytes(Charsets.UTF_8);
-            int bucket = Math.abs(string.hashCode()) % TABLE_SIZE;
+            int bucket = (string.hashCode() & 0x7FFFFFFF) % TABLE_SIZE;
             for (int i = 0; i < MAX_COLLISIONS; ++i) {
                 final int code = this.table[bucket];
                 if (code != 0) {

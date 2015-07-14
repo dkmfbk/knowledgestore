@@ -466,6 +466,7 @@ public final class HadoopMultiFileStore implements FileStore {
 
         try {
             // Identify deleted files that can be safely purged (i.e., not opened)
+            final Set<String> zippedFiles = new HashSet<>();
             final Set<String> purgableFiles = new HashSet<>();
             for (final Iterator<String> i = indexList(true); i.hasNext();) {
                 purgableFiles.add(i.next());
@@ -474,8 +475,10 @@ public final class HadoopMultiFileStore implements FileStore {
             if (files != null) {
                 for (final FileStatus fs : files) {
                     final String fileName = fs.getPath().getName();
-                    if (indexGet(fileName) != null) {
+                    final String zipName = indexGet(fileName);
+                    if (zipName != null && !zipName.equals(DELETED)) {
                         purgableFiles.add(fileName);
+                        zippedFiles.add(fileName);
                     }
                 }
             }
@@ -506,7 +509,9 @@ public final class HadoopMultiFileStore implements FileStore {
                             LOGGER.warn("Cannot find file " + file);
                         }
                     }
-                    entries.put(file, null);
+                    if (!zippedFiles.contains(file)) {
+                        entries.put(file, null);
+                    }
                 } catch (final Throwable ex) {
                     LOGGER.warn("Cannot purge file " + file, ex);
                 }
