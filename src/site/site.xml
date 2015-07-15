@@ -131,7 +131,7 @@
     <custom>
         <reflowSkin>
             <!--<absoluteResourceURL>${site-root}/</absoluteResourceURL>-->
-            <!--<protocolRelativeURLs>true</protocolRelativeURLs>-->
+            <protocolRelativeURLs>true</protocolRelativeURLs>
 
             <endContent>
                 ${site.topbar}
