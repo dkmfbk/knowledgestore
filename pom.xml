@@ -7,7 +7,7 @@
     <groupId>eu.fbk.knowledgestore</groupId>
     <artifactId>ks</artifactId>
     <packaging>pom</packaging>
-    <version>1.6.1</version>
+    <version>1.6.2</version>
 
     <name>ks</name>
     <description>The KnowledgeStore</description>
@@ -473,6 +473,10 @@
         <tephra-version>0.2.0-ROL</tephra-version>
         <zookeeper-version>3.4.5</zookeeper-version>
         <avro-version>1.5.3</avro-version>
+
+        <!-- Mustache template problem with jersey 2.19 and mustache 0.9 -->
+        <jersey-version>2.17</jersey-version>
+        <mustache-version>0.8.12</mustache-version>
     </properties>
 
     <modules>

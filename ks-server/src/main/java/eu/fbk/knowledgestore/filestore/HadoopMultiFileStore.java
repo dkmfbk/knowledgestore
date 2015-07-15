@@ -1,30 +1,5 @@
 package eu.fbk.knowledgestore.filestore;
 
-import java.io.File;
-import java.io.FilterInputStream;
-import java.io.FilterOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
-import java.util.zip.ZipOutputStream;
-
-import javax.annotation.Nullable;
-
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Throwables;
@@ -33,7 +8,8 @@ import com.google.common.collect.HashMultiset;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Multiset;
 import com.google.common.io.ByteStreams;
-
+import eu.fbk.knowledgestore.data.Data;
+import eu.fbk.knowledgestore.data.Stream;
 import org.apache.hadoop.fs.FileStatus;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
@@ -48,8 +24,17 @@ import org.apache.lucene.store.FSDirectory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import eu.fbk.knowledgestore.data.Data;
-import eu.fbk.knowledgestore.data.Stream;
+import javax.annotation.Nullable;
+import java.io.*;
+import java.util.*;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
+import java.util.zip.ZipOutputStream;
 
 /**
  * A {@code FileStore} implementation based on the Hadoop API optimized for huge number of files.
@@ -158,7 +143,7 @@ public final class HadoopMultiFileStore implements FileStore {
         if (!this.fileSystem.exists(this.rootPath)) {
             LOGGER.debug("Creating root folder {}", this.rootPath);
             if (!this.fileSystem.mkdirs(this.rootPath)) {
-                throw new IOException("Cannot create root folter " + this.luceneFolder);
+                throw new IOException("Cannot create root folder " + this.luceneFolder);
             }
         }
 
@@ -166,7 +151,7 @@ public final class HadoopMultiFileStore implements FileStore {
         if (!this.fileSystem.exists(this.smallFilesPath)) {
             LOGGER.debug("Creating small files folder {}", this.smallFilesPath);
             if (!this.fileSystem.mkdirs(this.smallFilesPath)) {
-                throw new IOException("Cannot create small files folter " + this.smallFilesPath);
+                throw new IOException("Cannot create small files folder " + this.smallFilesPath);
             }
         }
 
@@ -466,6 +451,7 @@ public final class HadoopMultiFileStore implements FileStore {
 
         try {
             // Identify deleted files that can be safely purged (i.e., not opened)
+            final Set<String> zippedFiles = new HashSet<>();
             final Set<String> purgableFiles = new HashSet<>();
             for (final Iterator<String> i = indexList(true); i.hasNext();) {
                 purgableFiles.add(i.next());
@@ -474,8 +460,10 @@ public final class HadoopMultiFileStore implements FileStore {
             if (files != null) {
                 for (final FileStatus fs : files) {
                     final String fileName = fs.getPath().getName();
-                    if (indexGet(fileName) != null) {
+                    final String zipName = indexGet(fileName);
+                    if (zipName != null && !zipName.equals(DELETED)) {
                         purgableFiles.add(fileName);
+                        zippedFiles.add(fileName);
                     }
                 }
             }
@@ -506,7 +494,9 @@ public final class HadoopMultiFileStore implements FileStore {
                             LOGGER.warn("Cannot find file " + file);
                         }
                     }
-                    entries.put(file, null);
+                    if (!zippedFiles.contains(file)) {
+                        entries.put(file, null);
+                    }
                 } catch (final Throwable ex) {
                     LOGGER.warn("Cannot purge file " + file, ex);
                 }
@@ -645,6 +635,7 @@ public final class HadoopMultiFileStore implements FileStore {
                                 Field.Index.NOT_ANALYZED));
                         doc.add(new Field(VALUE_FIELD, entry.getValue(), Field.Store.YES,
                                 Field.Index.NOT_ANALYZED));
+                        LOGGER.debug("Document added: {}", doc.toString());
                         this.luceneWriter.updateDocument(new Term(KEY_FIELD, entry.getKey()), doc);
                         ++numUpdated;
                     }
