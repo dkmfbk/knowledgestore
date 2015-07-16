@@ -100,10 +100,13 @@ public final class VirtuosoJdbcTripleStore implements TripleStore {
      * @param fetchSize
      *            the number of results (solutions, triples, ...) to fetch from Virtuoso in a
      *            single operation when query results are iterated; if null defaults to 200
+     * @param charset
+     *            the charset to use for serializing / deserializing textual data exchanged with
+     *            the server; if null defaults to UTF-8
      */
     public VirtuosoJdbcTripleStore(@Nullable final String host, @Nullable final Integer port,
             @Nullable final String username, @Nullable final String password,
-            @Nullable final Integer fetchSize) {
+            @Nullable final Integer fetchSize, @Nullable final String charset) {
 
         // Configure the data source
         // (see http://docs.openlinksw.com/virtuoso/VirtuosoDriverJDBC.html, section 7.4.4.2)
@@ -112,6 +115,7 @@ public final class VirtuosoJdbcTripleStore implements TripleStore {
         this.source.setPortNumber(MoreObjects.firstNonNull(port, DEFAULT_PORT));
         this.source.setUser(MoreObjects.firstNonNull(username, DEFAULT_USERNAME));
         this.source.setPassword(MoreObjects.firstNonNull(password, DEFAULT_PASSWORD));
+        this.source.setCharset(charset != null ? charset : "UTF-8");
 
         // Configure and validate other parameters
         this.fetchSize = MoreObjects.firstNonNull(fetchSize, DEFAULT_FETCH_SIZE);
