@@ -53,6 +53,18 @@ public final class NWR {
     /** Class nwr:Factuality. */
     public static final URI FACTUALITY_ENUM = createURI("Factuality");
 
+    /** Class nwr:Factuality. */
+    public static final URI FACTBANK = createURI("factbank");
+
+    /** Class nwr:Factuality. */
+    public static final URI ATTRIBUTION_TENSE = createURI("attributionTense");
+
+    /** Class nwr:Factuality. */
+    public static final URI ATTRIBUTION_CERTAINTY = createURI("attributionCertainty");
+
+    /** Class nwr:Factuality. */
+    public static final URI ATTRIBUTION_POLARITY = createURI("attributionPolarity");
+
     /** Class nwr:FunctionInDocument. */
     public static final URI FUNCTION_IN_DOCUMENT_ENUM = createURI("FunctionInDocument");
 
