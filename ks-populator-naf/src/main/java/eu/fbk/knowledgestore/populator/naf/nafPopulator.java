@@ -346,6 +346,11 @@ public class nafPopulator {
                 + st.getRolewithoutEntity());
         globalStats.setSrl(globalStats.getSrl() + st.getSrl());
         globalStats.setTimex(globalStats.getTimex() + st.getTimex());
+        globalStats.setTlinkMention(globalStats.getTlinkMention() + st.getTlinkMention());
+        globalStats.setTlinkMentionDiscarded(globalStats.getTlinkMentionDiscarded() + st.getTlinkMentionDiscarded());
+        globalStats.setClinkMention(globalStats.getClinkMention() + st.getClinkMention());
+        globalStats.setClinkMentionDiscarded(globalStats.getClinkMentionDiscarded() + st.getClinkMentionDiscarded());
+        globalStats.setTlinkMentionsEnriched(globalStats.getTlinkMentionsEnriched() + st.getTlinkMentionsEnriched());
 
         globalStats.setCorefMentionEvent(globalStats.getCorefMentionEvent() + st.getCorefMentionEvent());
         globalStats.setCorefMentionNotEvent(globalStats.getCorefMentionNotEvent() + st.getCorefMentionNotEvent());

@@ -13,15 +13,18 @@ import java.io.Writer;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
+
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
+
 import org.openrdf.model.URI;
 import org.openrdf.model.impl.URIImpl;
 import org.openrdf.model.impl.ValueFactoryImpl;
@@ -32,12 +35,17 @@ import org.slf4j.LoggerFactory;
 
 import eu.fbk.knowledgestore.data.Data;
 import eu.fbk.knowledgestore.data.Record;
+import eu.fbk.knowledgestore.populator.naf.model.CausalRelations;
+import eu.fbk.knowledgestore.populator.naf.model.Clink;
 import eu.fbk.knowledgestore.populator.naf.model.Coref;
 import eu.fbk.knowledgestore.populator.naf.model.Coreferences;
 import eu.fbk.knowledgestore.populator.naf.model.Entities;
 import eu.fbk.knowledgestore.populator.naf.model.Entity;
 import eu.fbk.knowledgestore.populator.naf.model.ExternalRef;
 import eu.fbk.knowledgestore.populator.naf.model.ExternalReferences;
+import eu.fbk.knowledgestore.populator.naf.model.FactVal;
+import eu.fbk.knowledgestore.populator.naf.model.Factualities;
+import eu.fbk.knowledgestore.populator.naf.model.Factuality;
 import eu.fbk.knowledgestore.populator.naf.model.Factualitylayer;
 import eu.fbk.knowledgestore.populator.naf.model.Factvalue;
 import eu.fbk.knowledgestore.populator.naf.model.FileDesc;
@@ -46,6 +54,7 @@ import eu.fbk.knowledgestore.populator.naf.model.Lp;
 import eu.fbk.knowledgestore.populator.naf.model.NAF;
 import eu.fbk.knowledgestore.populator.naf.model.NafHeader;
 import eu.fbk.knowledgestore.populator.naf.model.Predicate;
+import eu.fbk.knowledgestore.populator.naf.model.PredicateAnchor;
 import eu.fbk.knowledgestore.populator.naf.model.Public;
 import eu.fbk.knowledgestore.populator.naf.model.Raw;
 import eu.fbk.knowledgestore.populator.naf.model.References;
@@ -53,11 +62,13 @@ import eu.fbk.knowledgestore.populator.naf.model.Role;
 import eu.fbk.knowledgestore.populator.naf.model.Span;
 import eu.fbk.knowledgestore.populator.naf.model.Srl;
 import eu.fbk.knowledgestore.populator.naf.model.Target;
+import eu.fbk.knowledgestore.populator.naf.model.TemporalRelations;
 import eu.fbk.knowledgestore.populator.naf.model.Term;
 import eu.fbk.knowledgestore.populator.naf.model.Terms;
 import eu.fbk.knowledgestore.populator.naf.model.Text;
 import eu.fbk.knowledgestore.populator.naf.model.TimeExpressions;
 import eu.fbk.knowledgestore.populator.naf.model.Timex3;
+import eu.fbk.knowledgestore.populator.naf.model.Tlink;
 import eu.fbk.knowledgestore.populator.naf.model.Wf;
 import eu.fbk.knowledgestore.vocabulary.KS;
 import eu.fbk.knowledgestore.vocabulary.NIF;
@@ -140,36 +151,19 @@ public class processNAF {
             disabledItems = disabled_Items;
             logDebug("Disable layer: " + disabledItems,vars);
         }
-        readNAFFile(vars.filePath,vars);
-        for (Object obj : vars.doc
-                .getNafHeaderOrRawOrTextOrTermsOrDepsOrChunksOrEntitiesOrCoreferencesOrConstituencyOrTimeExpressionsOrFactualitylayerOrTunitsOrLocationsOrDates()) {
-            if (obj instanceof NafHeader) {
-                getNAFHEADERMentions((NafHeader) obj,vars);
-            } else if (obj instanceof Raw) {
-                // raw text
-            	vars.rawText = ((Raw) obj).getvalue();
-            } else if (obj instanceof Text) {
-            	vars.globalText = (Text) obj;
-            } else if (obj instanceof Entities) {
-		getEntitiesMentions((Entities) obj, disabledItems,vars);
-            } 
-	    else if (obj instanceof Coreferences) {
-                getCoreferencesMentions((Coreferences) obj,vars);
-            } 
-	    else if (obj instanceof TimeExpressions) {
-                getTimeExpressionsMentions((TimeExpressions) obj,vars);
-            } 
-	    else if (obj instanceof Factualitylayer) {
-                getFactualityMentions((Factualitylayer) obj,vars);
-            }
-	    else if (obj instanceof Terms) {
-	    	vars.globalTerms = (Terms) obj;
-            } else {
-                // logError("Error:Uncatchable Object:"+obj);
-            }
-        }
-	getSRLMentions(vars);
-
+        		readNAFFile(vars.filePath,vars);
+        		getNAFHEADERMentions(vars.doc.getNafHeader(),vars);
+            	vars.rawText = vars.doc.getRaw().getvalue();
+            	vars.globalText = vars.doc.getText();
+            	vars.globalTerms = vars.doc.getTerms();
+            	getEntitiesMentions(vars.doc.getEntities(), disabledItems,vars);
+                getCoreferencesMentions(vars.doc.getCoreferences(),vars);
+                getTimeExpressionsMentions(vars.doc.getTimeExpressions(),vars);
+              //  getFactualityMentions(vars.doc.getFactualitylayer(),vars);
+                getFactualityMentionsV3(vars.doc.getFactualities(),vars);
+                getSRLMentions(vars);
+                getCLinksMentions(vars.doc.getCausalRelations(),vars);
+                getTLinksMentions(vars.doc.getTemporalRelations(),vars);
 	// logDebug("ROL1 before dumpStack()") ; Thread.currentThread().dumpStack();
 
 	fixMentions(vars);
@@ -197,7 +191,11 @@ public class processNAF {
         st.setRolewithoutEntity(vars.rolewithoutEntity);
         st.setSrl(vars.srlMention);
         st.setTimex(vars.timeMention);
-        
+        st.setClinkMention(vars.clinkMentions);
+        st.setClinkMentionDiscarded(vars.clinkMentionsDiscarded);
+        st.setTlinkMention(vars.tlinkMentions);
+        st.setTlinkMentionsEnriched(vars.tlinkMentionsEnriched);
+        st.setTlinkMentionDiscarded(vars.tlinkMentionsDiscarded);
         logDebug(st.getStats(),vars);
         return st;
     }
@@ -347,46 +345,59 @@ public class processNAF {
 			//1. Language For each entity, group externalRef(s) by language (using reftype) and use the first nonempty set, using this sorting: en, es, it, nl.
 			//2. Confidence Once the language is chosen, just take the externalRef having the higher confidence (and, of course, the language chosen).
 			boolean modeactive=true; 
-			if(modeactive){
-			LinkedList<ExternalRef> exrEn = new LinkedList<ExternalRef>();
-			LinkedList<ExternalRef> exrEs = new LinkedList<ExternalRef>();
-			LinkedList<ExternalRef> exrIt = new LinkedList<ExternalRef>();
-			LinkedList<ExternalRef> exrNl = new LinkedList<ExternalRef>();
 			
-			ExternalReferences obs = ((ExternalReferences) generalEntObj) ;
-			for (ExternalRef exRObj : obs.getExternalRef()) {
-				if(exRObj!=null)
-				getAllLayersOfExternalReferences( modeactive, exrEn,  exRObj, exrEs, exrIt,  exrNl,vars);
-			}
-			if(exrEn.size()>0)
-				chosenReferenceValue = new String(getHighConfidenceReferenceValue(exrEn));
-			else if(exrEs.size()>0)
-				chosenReferenceValue = new String(getHighConfidenceReferenceValue(exrEs));
-			else if(exrIt.size()>0)
-				chosenReferenceValue = new String(getHighConfidenceReferenceValue(exrIt));
-			else 
-				chosenReferenceValue = new String(getHighConfidenceReferenceValue(exrNl));
-			
-			
-			
-			}else{
+			// if POCUS "reranker value" get it as externalreference otherwise do the language/highconfidence check
 			for (ExternalRef exRObj : ((ExternalReferences) generalEntObj) .getExternalRef()) {
-				
+				if(exRObj.getSource().equalsIgnoreCase("POCUS")){
 				if (referencesElements < 1) {
 				logWarn("Every entity must contain a 'references' element:not possible to add ExternalRef to null.",vars);
 				continue;
 			    }
-			    String resourceValue = exRObj.getResource();
+			   // String resourceValue = exRObj.getResource();
 			    String referenceValue = exRObj.getReference();
-
-			    // choose as referenceValue the one provided by 'vua-type-reranker' if present, otherwise take the first value
-			    if (firstTimeFlag) {
-				chosenReferenceValue = new String(referenceValue);
-				firstTimeFlag = false;
-			    } else if (resourceValue.matches("(?i).*type-reranker.*")) {
-				chosenReferenceValue = new String(referenceValue);
-			    }
+			    chosenReferenceValue = new String(referenceValue);
+			    modeactive=false;
+				}
 			}
+			
+			if(modeactive){
+				LinkedList<ExternalRef> exrEn = new LinkedList<ExternalRef>();
+				LinkedList<ExternalRef> exrEs = new LinkedList<ExternalRef>();
+				LinkedList<ExternalRef> exrIt = new LinkedList<ExternalRef>();
+				LinkedList<ExternalRef> exrNl = new LinkedList<ExternalRef>();
+				
+				ExternalReferences obs = ((ExternalReferences) generalEntObj) ;
+				for (ExternalRef exRObj : obs.getExternalRef()) {
+					if(exRObj!=null)
+					getAllLayersOfExternalReferences( modeactive, exrEn,  exRObj, exrEs, exrIt,  exrNl,vars);
+				}
+				if(exrEn.size()>0)
+					chosenReferenceValue = new String(getHighConfidenceReferenceValue(exrEn));
+				else if(exrEs.size()>0)
+					chosenReferenceValue = new String(getHighConfidenceReferenceValue(exrEs));
+				else if(exrIt.size()>0)
+					chosenReferenceValue = new String(getHighConfidenceReferenceValue(exrIt));
+				else 
+					chosenReferenceValue = new String(getHighConfidenceReferenceValue(exrNl));
+
+			}else if(false){ //don't use it for now, it gets the last externalRef as the chosen one
+				for (ExternalRef exRObj : ((ExternalReferences) generalEntObj) .getExternalRef()) {
+					
+					if (referencesElements < 1) {
+					logWarn("Every entity must contain a 'references' element:not possible to add ExternalRef to null.",vars);
+					continue;
+				    }
+				    String resourceValue = exRObj.getResource();
+				    String referenceValue = exRObj.getReference();
+	
+				    // choose as referenceValue the one provided by 'vua-type-reranker' if present, otherwise take the first value
+				    if (firstTimeFlag) {
+					chosenReferenceValue = new String(referenceValue);
+					firstTimeFlag = false;
+				    } else if (resourceValue.matches("(?i).*type-reranker.*")) {
+					chosenReferenceValue = new String(referenceValue);
+				    }
+				}
 			}
 			
 
@@ -603,7 +614,250 @@ public class processNAF {
 
     }
 
-    private static URIImpl getUriForSrlExternalRefResource(String type, String value) {
+    
+    private static void getFactualityMentionsV3(Factualities factualities,processNAFVariables vars) {
+        if (!checkHeaderTextTerms(vars)) {
+            logError("Error: populating interrupted",vars);
+        } else {
+            logDebug("Start mapping the Factualities mentions:",vars);
+        }
+        for (Factuality fvObj : factualities.getFactuality()) {
+
+            String deg = "";
+            Record m = Record.create();
+            m.add(RDF.TYPE, NWR.EVENT_MENTION, NWR.TIME_OR_EVENT_MENTION, NWR.ENTITY_MENTION,
+                    KS.MENTION);
+            deg += "|TYPE:EVENT_MENTION,TIME_OR_EVENT_MENTION,ENTITY_MENTION,MENTION";
+            m.add(KS.MENTION_OF, vars.news_file_id);
+            LinkedList<Target> tarlist = new LinkedList<Target>();
+           for(Target t : fvObj.getSpan().getTarget()){
+            tarlist.addLast(t);
+           }
+            LinkedList<Wf> wordsL = fromSpanGetAllMentions(tarlist,vars);
+            generateMIDAndSetIdWF(wordsL, m,vars);
+            deg = "MentionId:" + m.getID() + deg;
+
+	        for (FactVal tts : fvObj.getFactVal()) {
+	        	if(tts.getResource().equalsIgnoreCase("factbank")){
+	        		 m.add(NWR.FACT_BANK,  tts.getValue());
+	        	}
+	        }           
+            logDebug(deg,vars);
+            int addedNew = addOrMergeAMention(m,vars);
+            if (addedNew==1|addedNew==0){
+            	vars.factualityMentions2++;
+            	vars.factualityMentions++;
+            }
+            String charS2 = m.getUnique(NIF.BEGIN_INDEX, Integer.class) + "," + m.getUnique(NIF.END_INDEX, Integer.class);
+            vars.entityMentions.put(charS2,m);
+        
+      }
+    }
+
+  
+    private static void getCLinksMentions(CausalRelations causalRelations,processNAFVariables vars) {
+        if (!checkHeaderTextTerms(vars)) {
+            logError("Error: populating interrupted",vars);
+        } else {
+            logDebug("Start mapping the CLINKS mentions:",vars);
+        }
+        for (Clink fvObj : causalRelations.getClink()) {
+
+            String deg = "";
+            Record m = Record.create();
+            m.add(RDF.TYPE, NWR.CLINK,NWR.RELATION_MENTION,
+                    KS.MENTION);
+            deg += "|TYPE:CLINK,RELATION_MENTION,MENTION";
+            m.add(KS.MENTION_OF, vars.news_file_id);
+           
+            
+            LinkedList<Target> tarlist = new LinkedList<Target>();
+            List<Target> from = getSpanTermsOfPredicate(fvObj.getFrom(),vars);
+            List<Target> to = getSpanTermsOfPredicate(fvObj.getTo(),vars);
+	        tarlist.addAll(from);
+	        tarlist.addAll(to);	           
+	        
+	        LinkedList<Wf> fromwl = fromSpanGetAllMentions(from,vars);
+            Record mtest1 = Record.create();
+			generateMIDAndSetIdWF(fromwl, mtest1 ,vars);
+	        m.add(NWR.SOURCE, mtest1.getID());
+	        
+	        LinkedList<Wf> towl = fromSpanGetAllMentions(to,vars);
+            Record mtest2 = Record.create();
+			generateMIDAndSetIdWF(towl, mtest2 ,vars);
+            m.add(NWR.TARGET, mtest2.getID());
+	        
+            LinkedList<Wf> wordsL = fromSpanGetAllMentions(tarlist,vars);
+            generateMIDAndSetIdWF(wordsL, m,vars);
+            deg = "MentionId:" + m.getID() + deg;
+	                 
+            logDebug(deg,vars);
+            int addedNew = addOrMergeAMention(m,vars);
+            if (addedNew==1){
+            	vars.clinkMentions++;
+            }else if (addedNew==1){
+            	vars.clinkMentionsDiscarded++;
+            }
+           
+      }
+    }
+
+  
+    private static void getTLinksMentions(TemporalRelations temporalRelations,processNAFVariables vars) {
+        if (!checkHeaderTextTerms(vars)) {
+            logError("Error: populating interrupted",vars);
+        } else {
+            logDebug("Start mapping the TLINKS mentions:",vars);
+        }
+        for (Tlink fvObj : temporalRelations.getTlink()) {
+
+            String deg = "";
+            Record m = Record.create();
+            m.add(RDF.TYPE, NWR.TLINK,NWR.RELATION_MENTION,
+                    KS.MENTION);
+            deg += "|TYPE:TLINK,RELATION_MENTION,MENTION";
+            m.add(KS.MENTION_OF, vars.news_file_id);
+           
+            
+            LinkedList<Target> tarlist = new LinkedList<Target>();
+            List<Target> from = new ArrayList<Target>();
+            List<Target> to = new ArrayList<Target>();
+            if(fvObj.getFromType().equalsIgnoreCase("event")){
+            	from = getSpanTermsOfPredicate(fvObj.getFrom(),vars);
+            }
+            
+            if(fvObj.getToType().equalsIgnoreCase("event")){
+            	 to = getSpanTermsOfPredicate(fvObj.getTo(),vars);
+            }
+
+            tarlist.addAll(from);
+	        tarlist.addAll(to);	           
+	        
+	        LinkedList<Wf> allEventWF = fromSpanGetAllMentions(tarlist,vars);
+	        LinkedList<Wf> allWFFrom = fromSpanGetAllMentions(from,vars);
+	        LinkedList<Wf> allWFTO = fromSpanGetAllMentions(to,vars);
+
+	        List<Wf> fromtmx = new ArrayList<Wf>();
+            List<Wf> totmx = new ArrayList<Wf>();
+	        //here if the type is timex, get all its WFs
+	        if(fvObj.getFromType().equalsIgnoreCase("timex")){
+	        	fromtmx=getSpanOfTimex(fvObj.getFrom(),vars);
+	        	allWFFrom.addAll(fromtmx);
+	        	allEventWF.addAll(fromtmx);
+            }
+            
+            if(fvObj.getToType().equalsIgnoreCase("timex")){
+            	 totmx = getSpanOfTimex(fvObj.getTo(),vars);
+            	 allWFTO.addAll(totmx);
+            	 allEventWF.addAll(totmx);
+            }
+            
+            //reorder the lists
+             allEventWF = reorderWFAscending(allEventWF,vars);
+	         allWFFrom = reorderWFAscending(allWFFrom,vars);
+	         allWFTO = reorderWFAscending(allWFTO,vars);
+            
+	         if(fvObj.getFrom().equalsIgnoreCase("tmx0")){
+	        	 	Record mtest2 = Record.create();
+					generateMIDAndSetIdWF(allWFTO, mtest2 ,vars);
+	        		int returned=addTlinkRelTypeToMention(NWR.TLINK_FROM_TMX0,vars.tLinkTypeMapper.get(fvObj.getRelType().toUpperCase()),mtest2,vars);
+	        		if (returned==1)
+	        		vars.tlinkMentionsEnriched++;
+	        		else
+	        		logWarn("Tlink FROM -> tmx0, not found the target mention id:"+fvObj.getTo(), vars);
+	        		continue;
+	         }
+	         if(fvObj.getTo().equalsIgnoreCase("tmx0")){
+	        	 	Record mtest1 = Record.create();
+					generateMIDAndSetIdWF(allWFFrom, mtest1 ,vars);
+					int returned=addTlinkRelTypeToMention(NWR.TLINK_TO_TMX0,vars.tLinkTypeMapper.get(fvObj.getRelType().toUpperCase()),mtest1,vars);
+					if (returned==1)
+					vars.tlinkMentionsEnriched++;
+					else
+		        		logWarn("Tlink TO -> tmx0, not found the source mention id:"+fvObj.getFrom(), vars);
+					continue;
+	        	}
+             if(allWFFrom.size()>0){
+	            Record mtest1 = Record.create();
+				generateMIDAndSetIdWF(allWFFrom, mtest1 ,vars);
+		        m.add(NWR.SOURCE, mtest1.getID());
+             }
+             if(allWFTO.size()>0){
+	            Record mtest2 = Record.create();
+				generateMIDAndSetIdWF(allWFTO, mtest2 ,vars);
+	            m.add(NWR.TARGET, mtest2.getID());
+             }
+            m.add(NWR.REL_TYPE, vars.tLinkTypeMapper.get(fvObj.getRelType().toUpperCase()));
+            generateMIDAndSetIdWF(allEventWF, m,vars);
+            deg = "MentionId:" + m.getID() + deg;
+	                 
+            logDebug(deg,vars);
+            int addedNew = addOrMergeAMention(m,vars);
+            if (addedNew==1){
+            	vars.tlinkMentions++;
+            }else if (addedNew==-1){
+            	vars.tlinkMentionsDiscarded++;
+            }
+           
+      }
+    }
+
+  
+    private static int addTlinkRelTypeToMention(URI key, URI value,
+			Record mention, processNAFVariables vars) {
+        String charS = mention.getUnique(NIF.BEGIN_INDEX, Integer.class) + "," + mention.getUnique(NIF.END_INDEX, Integer.class);
+    	if(vars.mentionListHash.containsKey(charS)){
+    		vars.mentionListHash.get(charS).add(key, value);
+    		return 1;
+    	}
+    	return -1;
+	}
+
+	private static LinkedList<Wf> reorderWFAscending(LinkedList<Wf> list,
+			processNAFVariables vars) {
+    	LinkedList<Wf> tmp = new LinkedList<Wf>();
+        int found = 0;
+                for (Wf wftmp : vars.doc.getText().getWf()) {
+                    if (list.contains(wftmp)) {
+                        tmp.addLast(wftmp);
+                        found++;
+                    }
+                    if (found >= list.size()) {
+                        break;
+                    }
+
+                }
+        
+        if (found < list.size()) {
+            logWarn("reorderWFAscending method, inconsistency: returned list less than the input list",vars);
+        }
+    return tmp;
+	}
+
+	private static List<Wf> getSpanOfTimex(String tmxId, processNAFVariables vars) {
+    	List<Wf> tmp = new ArrayList<Wf>();
+		for(Timex3 tms:vars.doc.getTimeExpressions().getTimex3()){
+			if(tms.getId().equalsIgnoreCase(tmxId)){
+				for(Target t: tms.getSpan().getTarget()){
+					tmp.add((Wf) t.getId());
+				}
+				break;
+			}
+		}
+		return tmp;
+	}
+
+	private static List<Target> getSpanTermsOfPredicate(String predicateId,
+			processNAFVariables vars) {
+		for( Predicate pr:vars.doc.getSrl().getPredicate()){
+			if(pr.getId().equalsIgnoreCase(predicateId)){
+				return pr.getSpan().getTarget();
+			}
+		}
+		return null;
+	}
+
+	private static URIImpl getUriForSrlExternalRefResource(String type, String value) {
 	String prefix = null;
 	if (type.equalsIgnoreCase("PropBank")) {
 	    prefix = "http://www.newsreader-project.eu/propbank/";
@@ -685,7 +939,42 @@ public class processNAF {
                 deg = "MentionId:" + mtmp.getID() + deg;
 
             }
-
+            
+            /*
+             * Assign the predicateAnchor attributes to the predicate Mention
+             */
+            
+           List<PredicateAnchor> prds= getAllRelativePredicateAnchors(prdObj.getId(),vars);
+           for(PredicateAnchor tprd: prds){
+        	   
+        	   if(tprd.getAnchorTime()!=null){
+        	    LinkedList<Wf> wfL = reorderWFAscending(fromSpanGetAllMentionsTmx(((Timex3)tprd.getAnchorTime()).getSpan().getTarget(), vars),vars);
+                if(wfL.size()>0){
+        	    Record mtest1 = Record.create();
+       			generateMIDAndSetIdWF(wfL, mtest1 ,vars);       	        
+        		mtmp.add(NWR.ANCHOR_TIME, mtest1.getID());
+                }
+        	   }
+        	   
+        	   if(tprd.getBeginPoint()!=null){
+        		   LinkedList<Wf> wfL = reorderWFAscending(fromSpanGetAllMentionsTmx(((Timex3)tprd.getBeginPoint()).getSpan().getTarget(), vars),vars);
+                   if(wfL.size()>0){
+        		   Record mtest1 = Record.create();
+        		   generateMIDAndSetIdWF(wfL, mtest1 ,vars);
+            	   mtmp.add(NWR.BEGIN_POINT, mtest1.getID());
+                   }
+        	   }
+        	   
+        	   if(tprd.getEndPoint()!=null){
+        		   LinkedList<Wf> wfL = reorderWFAscending(fromSpanGetAllMentionsTmx(((Timex3)tprd.getEndPoint()).getSpan().getTarget(), vars),vars);
+                   if(wfL.size()>0){
+        		   Record mtest1 = Record.create();
+        		   generateMIDAndSetIdWF(wfL, mtest1 ,vars);
+            	   mtmp.add(NWR.END_POINT, mtest1.getID());
+                   }
+        	   }
+           }
+           deg +="| ANCHOR_TIME:"+mtmp.get(NWR.ANCHOR_TIME)+" | BEGIN_POINT:"+mtmp.get(NWR.BEGIN_POINT)+" | END_POINT:"+mtmp.get(NWR.END_POINT);
 	    /* 
 	       iterate over the sub-tags <externalReferences> or <role>s of the <predicate>
 	    */
@@ -708,11 +997,11 @@ public class processNAF {
 			    String resourceValue = exrObj.getResource();
 			    String referenceValue = exrObj.getReference();
 					
-                            if (resourceValue != null) {
+                if (resourceValue != null) {
 				
 				// check cases different from resource="EventType"
 				//
-                                if (!resourceValue.equalsIgnoreCase("EventType")) {
+                   if (!resourceValue.equalsIgnoreCase("EventType")) {
 
 				    URI resourceMappedValue = vars.srlExternalRefResourceTypeMapper.get(resourceValue);
 				    URIImpl valueURI;
@@ -767,7 +1056,7 @@ public class processNAF {
 			logDebug("ROL1: <srl> <predicate> adding new event mention for id " 
 				+ predicateID + ", charSpan |" + predicateCharSpan + "|",vars);
 			
-                        if (addedNew==1){
+                        if (addedNew==1|addedNew==0){
                         	vars.srlMention2++;
                         	vars.srlMention++;
                         }
@@ -938,9 +1227,8 @@ public class processNAF {
 			    /* 
 			       add the information from <externalReferences> sub-tag (the relation mention is always created)
 			    */
-			    for (Object roleGOBJ : ((Role) prdGObj).getExternalReferences()) {
-				if (roleGOBJ instanceof ExternalReferences) {
-				    for (ExternalRef rexRefObj : ((ExternalReferences) roleGOBJ).getExternalRef()) {
+			    for (ExternalReferences roleGOBJ : ((Role) prdGObj).getExternalReferences()) {
+				    for (ExternalRef rexRefObj : roleGOBJ.getExternalRef()) {
 
 					// check 'resource' and 'reference' attributes
 					//
@@ -971,7 +1259,7 @@ public class processNAF {
 						    + ((Role) prdGObj).getId() + ")",vars);
 					}
 				    }
-				}
+				
 			    } // end of adding info from <externalReferences> within <role>
 			}
 			logDebug(deg2,vars);
@@ -984,7 +1272,24 @@ public class processNAF {
     }
 
 
-    private static void getNAFHEADERMentions(NafHeader obj,processNAFVariables vars) {
+    private static List<PredicateAnchor> getAllRelativePredicateAnchors(String id,
+			processNAFVariables vars) {
+    	List<PredicateAnchor> tmp= new ArrayList<PredicateAnchor>();
+    	for( PredicateAnchor pas:vars.doc.getTemporalRelations().getPredicateAnchor()){
+    		for(Span t: pas.getSpan()){
+    			for(Target tm: t.getTarget()){
+    				if(((Predicate)tm.getId()).getId().equalsIgnoreCase(id)){
+    					tmp.add(pas);
+    					break;
+    				}
+    			}
+    		}
+    	}
+		return tmp;
+	}
+
+	
+	private static void getNAFHEADERMentions(NafHeader obj,processNAFVariables vars) {
         logDebug("Start reading the naf metadata:",vars);
         String deg = "";
         Public publicProp = ((NafHeader) obj).getPublic();
@@ -1652,18 +1957,10 @@ public class processNAF {
             if (vars.globalTerms.getTerm().contains(termId))
                 return vars.globalTerms.getTerm().get(vars.globalTerms.getTerm().indexOf(termId));
         } else {
-            Iterator<Object> ls = vars.doc
-                    .getNafHeaderOrRawOrTextOrTermsOrDepsOrChunksOrEntitiesOrCoreferencesOrConstituencyOrTimeExpressionsOrFactualitylayerOrTunitsOrLocationsOrDates()
-                    .iterator();
-            while (ls.hasNext()) {
-                Object ltmp = ls.next();
-                if (ltmp instanceof Terms) {
-                    if (((Terms) ltmp).getTerm().contains(termId))
-                        return vars.globalTerms.getTerm().get(vars.globalTerms.getTerm().indexOf(termId));
-                    break;
-                }
-            }
-
+        	Terms ltmp = vars.doc.getTerms();
+            if (((Terms) ltmp).getTerm().contains(termId))
+            return vars.globalTerms.getTerm().get(vars.globalTerms.getTerm().indexOf(termId));
+           
         }
         logWarn("Term is not found, searched TermId(" + termId.getId() + ")",vars);
         return null;
@@ -1688,14 +1985,9 @@ public class processNAF {
                 }
             }
         } else {
-            Iterator<Object> doci2 = vars.doc
-                    .getNafHeaderOrRawOrTextOrTermsOrDepsOrChunksOrEntitiesOrCoreferencesOrConstituencyOrTimeExpressionsOrFactualitylayerOrTunitsOrLocationsOrDates()
-                    .iterator();
-            while (doci2.hasNext()) {
-                Object prop = doci2.next();
-                if (prop instanceof Text) {
+        	Text prop = vars.doc.getText();
                     int found = 0;
-                    for (Wf wftmp : ((Text) prop).getWf()) {
+                    for (Wf wftmp : prop.getWf()) {
                         if (wordsIDL.contains(wftmp)) {
                             returned.addLast(wftmp);
                             found++;
@@ -1704,8 +1996,8 @@ public class processNAF {
                             break;
                         }
                     }
-                }
-            }
+                
+            
         }
         return returned;
     }
@@ -1735,13 +2027,9 @@ public class processNAF {
             }
 
         } else {
-            Iterator<Object> doci = vars.doc
-                    .getNafHeaderOrRawOrTextOrTermsOrDepsOrChunksOrEntitiesOrCoreferencesOrConstituencyOrTimeExpressionsOrFactualitylayerOrTunitsOrLocationsOrDates()
-                    .iterator();
-            while (doci.hasNext()) {
-                Object prop = doci.next();
-                if (prop instanceof Terms) {
-                    for (Term termtmp : ((Terms) prop).getTerm()) {
+        	Terms prop = vars.doc.getTerms();
+                    
+                    for (Term termtmp : prop.getTerm()) {
                         if (targetTermList.contains(termtmp)) {
                             Iterator<Object> spansl = termtmp
                                     .getSentimentOrSpanOrExternalReferencesOrComponent()
@@ -1757,12 +2045,12 @@ public class processNAF {
                             }
                         }
                     }
-                }
-            }
+                
+            
         }
-        if (!spanTermFound) {
+      /*  if (!spanTermFound) {
             logWarn("Inconsistence NAF file(#TS): Every term must contain a span element",vars);
-        }
+        }*/
         if (vars.globalText != null) {
 
             int found = 0;
@@ -1781,15 +2069,9 @@ public class processNAF {
             }
 
         } else {
-            Iterator<Object> doci2 = vars.doc
-                    .getNafHeaderOrRawOrTextOrTermsOrDepsOrChunksOrEntitiesOrCoreferencesOrConstituencyOrTimeExpressionsOrFactualitylayerOrTunitsOrLocationsOrDates()
-                    .iterator();
+        	Text prop = vars.doc.getText();
             int found = 0;
-            while (doci2.hasNext()) {
-                Object prop = doci2.next();
-                if (prop instanceof Text) {
-
-                    for (Wf wftmp : ((Text) prop).getWf()) {
+                    for (Wf wftmp : prop.getWf()) {
                         if (wordsIDL.contains(wftmp)) {
                             returned.addLast(wftmp);
                             found++;
@@ -1799,8 +2081,8 @@ public class processNAF {
                         }
 
                     }
-                }
-            }
+                
+            
             if (found < wordsIDL.size()) {
                 logWarn("Inconsistence NAF file(#SW): Wf(s)  arenot found when loading term ",vars);
             }

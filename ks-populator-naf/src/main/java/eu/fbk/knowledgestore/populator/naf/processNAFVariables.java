@@ -55,11 +55,14 @@ public class processNAFVariables {
             corefMention2 = 0, timeMention2 = 0, srlMention2 = 0, rolewithEntity = 0,
             rolewithEntity2 = 0, rolewithoutEntity = 0, factualityMentions = 0,
             factualityMentions2 = 0, roleMentions = 0;
-     int PER = 0, LOC = 0, ORG = 0, PRO = 0, fin = 0, mix = 0, no_mapping = 0;
+     int PER = 0, LOC = 0, ORG = 0, PRO = 0, fin = 0, mix = 0, no_mapping = 0, clinkMentions=0,tlinkMentions=0;
      boolean logDebugActive = true, logErrorActive = true;
      String rawText = "";
      boolean storePartialInforInCaseOfError = false;
      File filePath = null;
+	public int tlinkMentionsDiscarded=0;
+	public int clinkMentionsDiscarded=0;
+	public int tlinkMentionsEnriched=0;
        processNAFVariables() {
      	PER = 0;
          LOC = 0;
@@ -67,6 +70,11 @@ public class processNAFVariables {
          PRO = 0;
          fin = 0;
          mix = 0;
+         clinkMentions=0;
+         tlinkMentions=0;
+         tlinkMentionsDiscarded=0;
+         clinkMentionsDiscarded=0;
+         tlinkMentionsEnriched=0;
          no_mapping = 0;
          entityMen2 = 0;
          corefMention2 = 0;
@@ -201,7 +209,9 @@ public class processNAFVariables {
          nafLayerMapper.put("constituency", NWR.LAYER_CONSTITUENCY);
          nafLayerMapper.put("timeExpressions", NWR.LAYER_TIME_EXPRESSIONS);
          nafLayerMapper.put("factuality", NWR.LAYER_FACTUALITY);
-
+         nafLayerMapper.put("topics", NWR.LAYER_TOPICS);
+         nafLayerMapper.put("markables", NWR.LAYER_MARKABLES);
+         nafLayerMapper.put("factualities", NWR.LAYER_FACTUALITIES);
          nafLayerMapper.put("opinions",  NWR.LAYER_OPINIONS); 
          nafLayerMapper.put("temporalRelations",  NWR.LAYER_TEMPORAL_RELATIONS); 
          nafLayerMapper.put("causalRelations",  NWR.LAYER_CAUSAL_RELATIONS); 
@@ -216,18 +226,18 @@ public class processNAFVariables {
          nafLayerMapper.put("timex3", NWR.LAYER_TIME_EXPRESSIONS);
 
 
-         tLinkTypeMapper.put("", NWR.TLINK_BEFORE);
-         tLinkTypeMapper.put("", NWR.TLINK_AFTER);
-         tLinkTypeMapper.put("", NWR.TLINK_INCLUDES);
-         tLinkTypeMapper.put("", NWR.TLINK_MEASURE);
-         tLinkTypeMapper.put("", NWR.TLINK_IS_INCLUDED);
-         tLinkTypeMapper.put("", NWR.TLINK_SIMULTANEOUS);
-         tLinkTypeMapper.put("", NWR.TLINK_IAFTER);
-         tLinkTypeMapper.put("", NWR.TLINK_IBEFORE);
-         tLinkTypeMapper.put("", NWR.TLINK_BEGINS);
-         tLinkTypeMapper.put("", NWR.TLINK_ENDS);
-         tLinkTypeMapper.put("", NWR.TLINK_BEGUN_BY);
-         tLinkTypeMapper.put("", NWR.TLINK_ENDED_BY);
+         tLinkTypeMapper.put("BEFORE", NWR.TLINK_BEFORE);
+         tLinkTypeMapper.put("AFTER", NWR.TLINK_AFTER);
+         tLinkTypeMapper.put("INCLUDES", NWR.TLINK_INCLUDES);
+         tLinkTypeMapper.put("MEASURE", NWR.TLINK_MEASURE);
+         tLinkTypeMapper.put("IS_INCLUDED", NWR.TLINK_IS_INCLUDED);
+         tLinkTypeMapper.put("SIMULTANEOUS", NWR.TLINK_SIMULTANEOUS);
+         tLinkTypeMapper.put("IAFTER", NWR.TLINK_IAFTER);
+         tLinkTypeMapper.put("IBEFORE", NWR.TLINK_IBEFORE);
+         tLinkTypeMapper.put("BEGINS", NWR.TLINK_BEGINS);
+         tLinkTypeMapper.put("ENDS", NWR.TLINK_ENDS);
+         tLinkTypeMapper.put("BEGUN_BY", NWR.TLINK_BEGUN_BY);
+         tLinkTypeMapper.put("ENDED_BY", NWR.TLINK_ENDED_BY);
 
          srlExternalRefResourceTypeMapper.put("PropBank", NWR.PROPBANK_REF);
          srlExternalRefResourceTypeMapper.put("VerbNet", NWR.VERBNET_REF);
