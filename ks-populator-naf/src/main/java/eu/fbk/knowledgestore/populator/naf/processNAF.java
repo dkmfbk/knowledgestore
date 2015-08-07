@@ -523,11 +523,11 @@ public class processNAF {
 			    + "), No mapping.",vars);
 		}
 	    }
-            if (tmxObj.getBeginPoint() != null) {
+            if (false&&tmxObj.getBeginPoint() != null) { //TODO
                 m.add(NWR.BEGIN_POINT, tmxObj.getBeginPoint());
                 deg += "|BEGIN_POINT:" + tmxObj.getBeginPoint();
             }
-	    if (tmxObj.getEndPoint() != null) {
+	    if (false&&tmxObj.getEndPoint() != null) {
                 m.add(NWR.END_POINT, tmxObj.getEndPoint());
                 deg += "|END_POINT:" + tmxObj.getEndPoint();
             }

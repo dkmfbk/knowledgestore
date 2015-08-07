@@ -177,6 +177,8 @@ public class NAF {
 	}
 
 	public Topics getTopics() {
+		if(topics==null)
+			topics = new Topics();
 		return topics;
 	}
 
@@ -201,6 +203,8 @@ public class NAF {
 	}
 
 	public Deps getDeps() {
+		if(deps==null)
+			deps = new Deps();
 		return deps;
 	}
 
@@ -209,6 +213,8 @@ public class NAF {
 	}
 
 	public Chunks getChunks() {
+		if(chunks==null)
+			chunks = new Chunks();
 		return chunks;
 	}
 
@@ -217,6 +223,8 @@ public class NAF {
 	}
 
 	public Entities getEntities() {
+		if(entities==null)
+			entities = new Entities();
 		return entities;
 	}
 
@@ -225,6 +233,8 @@ public class NAF {
 	}
 
 	public Coreferences getCoreferences() {
+		if(coreferences==null)
+			coreferences = new Coreferences();
 		return coreferences;
 	}
 
@@ -233,6 +243,8 @@ public class NAF {
 	}
 
 	public Constituency getConstituency() {
+		if(constituency==null)
+			constituency = new Constituency();
 		return constituency;
 	}
 
@@ -241,6 +253,8 @@ public class NAF {
 	}
 
 	public Srl getSrl() {
+		if(srl==null)
+			srl = new Srl();
 		return srl;
 	}
 
@@ -249,6 +263,8 @@ public class NAF {
 	}
 
 	public Opinions getOpinions() {
+		if(opinions==null)
+			opinions = new Opinions();
 		return opinions;
 	}
 
@@ -257,6 +273,8 @@ public class NAF {
 	}
 
 	public TimeExpressions getTimeExpressions() {
+		if(timeExpressions==null)
+			timeExpressions = new TimeExpressions();
 		return timeExpressions;
 	}
 
@@ -265,6 +283,8 @@ public class NAF {
 	}
 
 	public Factualitylayer getFactualitylayer() {
+		if(factualitylayer==null)
+			factualitylayer = new Factualitylayer();
 		return factualitylayer;
 	}
 
@@ -273,6 +293,8 @@ public class NAF {
 	}
 
 	public Tunits getTunits() {
+		if(tunits==null)
+			tunits = new Tunits();
 		return tunits;
 	}
 
@@ -281,6 +303,8 @@ public class NAF {
 	}
 
 	public Locations getLocations() {
+		if(locations==null)
+			locations = new Locations();
 		return locations;
 	}
 
@@ -289,6 +313,8 @@ public class NAF {
 	}
 
 	public Dates getDates() {
+		if(dates==null)
+			dates = new Dates();
 		return dates;
 	}
 
@@ -297,6 +323,8 @@ public class NAF {
 	}
 
 	public TemporalRelations getTemporalRelations() {
+		if(temporalRelations==null)
+			temporalRelations = new TemporalRelations();
 		return temporalRelations;
 	}
 
@@ -305,6 +333,8 @@ public class NAF {
 	}
 
 	public CausalRelations getCausalRelations() {
+		if(causalRelations==null)
+			causalRelations = new CausalRelations();
 		return causalRelations;
 	}
 
@@ -313,6 +343,8 @@ public class NAF {
 	}
 
 	public Markables getMarkables() {
+		if(markables==null)
+			markables = new Markables();
 		return markables;
 	}
 
@@ -321,6 +353,8 @@ public class NAF {
 	}
 
 	public Attribution getAttribution() {
+		if(attribution==null)
+			attribution = new Attribution();
 		return attribution;
 	}
 
@@ -329,6 +363,8 @@ public class NAF {
 	}
 
 	public Factualities getFactualities() {
+		if(factualities==null)
+			factualities = new Factualities();
 		return factualities;
 	}
 

@@ -1,0 +1,36 @@
+NAF: /Users/qwaider/Documents/Projects/NWR-August-v3/v3_test_dataset/out/5FN3-TY71-F11P-X2H4.xml
+KS stats all(664):
+Object mentions:139 , PER(10), LOC(34), ORG(90), PRO(0), fin(0), mix(0), no-mapping(5)
+Time mentions: 10
+Event mentions: 483
+Participation mentions: 32
+Tlinks mentions: 36 discarded(0) enriched(11) 
+Clinks mentions: 0 discarded(0)
+
+populator stats:
+Entity:134
+Coreference: 166 (event: 161 , not-event: 5 )
+Srl:161
+Role with entity: 32 (discarded: 0)
+Timex:10
+Factuality:161
+=========
+
+Global stats:
+
+KS stats all(664):
+Object mentions:139 , PER(10), LOC(34), ORG(90), PRO(0), fin(0), mix(0), no-mapping(5)
+Time mentions: 10
+Event mentions: 483
+Participation mentions: 32
+Tlinks mentions: 36 discarded(0) enriched(11) 
+Clinks mentions: 0 discarded(0)
+
+populator stats:
+Entity:134
+Coreference: 166 (event: 161 , not-event: 5 )
+Srl:161
+Role with entity: 32 (discarded: 0)
+Timex:10
+Factuality:161
+=========

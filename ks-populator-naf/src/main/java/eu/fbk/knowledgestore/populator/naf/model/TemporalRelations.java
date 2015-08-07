@@ -40,6 +40,8 @@ public class TemporalRelations {
 		this.tlink = tlink;
 	}
 	public List<PredicateAnchor> getPredicateAnchor() {
+		if(predicateAnchor==null)
+			predicateAnchor= new ArrayList<PredicateAnchor>();
 		return predicateAnchor;
 	}
 	public void setPredicateAnchor(List<PredicateAnchor> predicateAnchor) {

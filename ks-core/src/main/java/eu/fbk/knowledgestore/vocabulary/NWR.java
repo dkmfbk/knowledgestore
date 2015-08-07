@@ -531,7 +531,7 @@ public final class NWR {
     public static final URI TLINK_FROM_TMX0 = createURI("tlink_from_tmx0");
 
     /** Individual nwr:tlink_tm_tmx0. */
-    public static final URI TLINK_TO_TMX0 = createURI("tlink_tm_tmx0");
+    public static final URI TLINK_TO_TMX0 = createURI("tlink_to_tmx0");
 
     /** Individual nwr:tlink_after. */
     public static final URI TLINK_AFTER = createURI("tlink_after");
