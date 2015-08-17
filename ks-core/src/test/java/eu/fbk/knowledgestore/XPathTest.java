@@ -9,12 +9,14 @@ import com.google.common.collect.ImmutableBiMap;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.openrdf.model.URI;
 import org.openrdf.model.impl.URIImpl;
 import org.openrdf.model.vocabulary.DCTERMS;
 import org.openrdf.model.vocabulary.RDF;
 
+import eu.fbk.knowledgestore.data.Data;
 import eu.fbk.knowledgestore.data.Record;
 import eu.fbk.knowledgestore.data.XPath;
 import eu.fbk.knowledgestore.vocabulary.KS;
@@ -24,9 +26,21 @@ import eu.fbk.knowledgestore.vocabulary.NIE;
 public class XPathTest {
 
     @Test
+    public void test2() {
+
+        final Record record = Record.create(new URIImpl("ex:id"));
+        record.set(new URIImpl(KS.NAMESPACE + "pippo"), "pioppo");
+        System.out.println(record.toString(Data.getNamespaceMap(), true));
+
+        XPath xpath = XPath.parse("ks:pippo = 'pioppo'");
+        System.out.println(xpath.evalBoolean(record));
+    }
+
+    @Ignore
+    @Test
     public void test() {
 
-        XPath xpath0 = XPath.parse("rdfs:comment = 'comment # 0'");
+        final XPath xpath0 = XPath.parse("rdfs:comment = 'comment # 0'");
         System.out.println(xpath0);
 
         final Record resource = getMockResource();
