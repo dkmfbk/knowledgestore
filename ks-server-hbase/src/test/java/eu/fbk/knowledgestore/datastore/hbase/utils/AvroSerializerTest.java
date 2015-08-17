@@ -16,8 +16,8 @@ import org.openrdf.model.impl.URIImpl;
 import org.openrdf.model.impl.ValueFactoryImpl;
 
 import eu.fbk.knowledgestore.data.Data;
+import eu.fbk.knowledgestore.data.Dictionary;
 import eu.fbk.knowledgestore.data.Record;
-import eu.fbk.knowledgestore.runtime.Dictionary;
 
 public class AvroSerializerTest {
 
@@ -38,7 +38,7 @@ public class AvroSerializerTest {
     @Test
     public void test() throws Throwable {
 
-        final Dictionary<URI> dictionary = new Dictionary<URI>(URI.class, new Path(System.getProperty("java.io.tmpdir") + "/uris.dic").toString());
+        final Dictionary<URI> dictionary = Dictionary.createHadoopDictionary(URI.class, new Path(System.getProperty("java.io.tmpdir") + "/uris.dic").toString());
 
         final AvroSerializer serializer = new AvroSerializer(dictionary);
 

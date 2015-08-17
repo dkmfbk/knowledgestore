@@ -41,6 +41,7 @@ import org.openrdf.model.vocabulary.RDF;
 import org.openrdf.model.vocabulary.XMLSchema;
 
 import eu.fbk.knowledgestore.data.Data;
+import eu.fbk.knowledgestore.data.Dictionary;
 import eu.fbk.knowledgestore.data.Record;
 
 // NOTE: supports only serialization and deserialization of Record, URI, BNode, Literal,
@@ -68,8 +69,8 @@ public final class SerializerAvro {
         this.datatypeFactory = Data.getDatatypeFactory();
     }
 
-    public SerializerAvro(String fileName) throws IOException {
-        this.dictionary = new Dictionary<URI>(URI.class, fileName);
+    public SerializerAvro(final String fileName) throws IOException {
+        this.dictionary = Dictionary.createHadoopDictionary(URI.class, fileName);
         this.factory = Data.getValueFactory();
         this.datatypeFactory = Data.getDatatypeFactory();
     }
