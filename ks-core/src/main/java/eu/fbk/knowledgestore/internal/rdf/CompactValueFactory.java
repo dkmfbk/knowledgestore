@@ -370,7 +370,7 @@ public final class CompactValueFactory implements ValueFactory {
                     || object instanceof CalendarLiteralImpl || object instanceof StringLiteral) {
                 return false;
             }
-            return other.getLabel() == null && this.datatype.equals(other.getDatatype())
+            return other.getLanguage() == null && this.datatype.equals(other.getDatatype())
                     && stringValue().equals(other.stringValue());
         }
 
