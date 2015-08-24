@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
@@ -12,6 +14,7 @@ import com.google.common.io.CountingOutputStream;
 
 import org.openrdf.model.Statement;
 import org.openrdf.model.URI;
+import org.openrdf.model.impl.URIImpl;
 import org.openrdf.model.vocabulary.OWL;
 import org.openrdf.model.vocabulary.RDF;
 import org.openrdf.model.vocabulary.RDFS;
@@ -25,6 +28,7 @@ import org.slf4j.LoggerFactory;
 import jersey.repackaged.com.google.common.base.Throwables;
 
 import eu.fbk.knowledgestore.KnowledgeStore;
+import eu.fbk.knowledgestore.Operation.Retrieve;
 import eu.fbk.knowledgestore.Session;
 import eu.fbk.knowledgestore.client.Client;
 import eu.fbk.knowledgestore.data.Dictionary;
@@ -62,6 +66,9 @@ public class Dumper {
                             CommandLine.Type.STRING, true, false, false)
                     .withOption("r", "resources", "dump resources data (default: false)")
                     .withOption("m", "mentions", "dump mentions data (default: false)")
+                    .withOption("i", "identifier", "the URI identifier of the single record " //
+                            + "to download (default unspecified = download all records)", "URI",
+                            CommandLine.Type.STRING, true, false, false)
                     .withOption("b", "binary", "use binary format (two files produced)")
                     .withOption("o", "output", "the output file", "FILE", CommandLine.Type.FILE,
                             true, false, true)
@@ -75,6 +82,7 @@ public class Dumper {
             final String password = Strings.emptyToNull(cmd.getOptionValue("p", String.class));
             final boolean dumpResources = cmd.hasOption("r");
             final boolean dumpMentions = cmd.hasOption("m");
+            final String id = Strings.emptyToNull(cmd.getOptionValue("i", String.class, null));
             final boolean binary = cmd.hasOption("b");
             final File outputFile = cmd.getOptionValue("o", File.class);
 
@@ -87,7 +95,7 @@ public class Dumper {
                 } else {
                     session = ks.newSession();
                 }
-                final Stream<Record> records = download(session, dumpResources, dumpMentions);
+                final Stream<Record> records = download(session, dumpResources, dumpMentions, id);
                 if (binary) {
                     writeBinary(records, outputFile);
                 } else {
@@ -104,7 +112,7 @@ public class Dumper {
     }
 
     private static Stream<Record> download(final Session session, final boolean dumpResources,
-            final boolean dumpMentions) throws Throwable {
+            final boolean dumpMentions, @Nullable final String id) throws Throwable {
 
         final List<URI> types = Lists.newArrayList();
         if (dumpResources) {
@@ -114,16 +122,24 @@ public class Dumper {
             types.add(KS.MENTION);
         }
 
-        return Stream.concat(Stream.create(types).transform(
-                (final URI type) -> {
-                    LOGGER.info("Downloading {} data", type.getLocalName().toLowerCase());
-                    try {
-                        return session.retrieve(type).limit((long) Integer.MAX_VALUE)
-                                .timeout(24 * 60 * 60 * 1000L).exec();
-                    } catch (final Throwable ex) {
-                        throw Throwables.propagate(ex);
-                    }
-                }, 1));
+        return Stream.concat(Stream.create(types)
+                .transform(
+                        (final URI type) -> {
+                            LOGGER.info("Downloading {} data", type.getLocalName().toLowerCase());
+                            try {
+                                final Retrieve retrieve = session.retrieve(type)
+                                        .limit((long) Integer.MAX_VALUE)
+                                        .timeout(7 * 24 * 60 * 60 * 1000L); // 1 week
+                                if (id != null) {
+                                    retrieve.ids(new URIImpl(id));
+                                }
+                                return retrieve.exec();
+                                // return session.retrieve(type).limit((long) Integer.MAX_VALUE)
+                                // .timeout(24 * 60 * 60 * 1000L).exec();
+                            } catch (final Throwable ex) {
+                                throw Throwables.propagate(ex);
+                            }
+                        }, 1));
     }
 
     private static void writeRDF(final Stream<Record> records, final File file)
