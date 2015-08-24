@@ -1018,14 +1018,20 @@ public abstract class XPath implements Serializable {
             return ((LiteralExpr) node).getLiteral();
         } else if (node instanceof NumberExpr) {
             final Number number = ((NumberExpr) node).getNumber();
-            return (long) number.doubleValue() == number.longValue() ? number.longValue() : number
-                    .doubleValue();
+            return (number instanceof Double || number instanceof Float) ? number.doubleValue()
+                    : number.longValue(); // always return a Double
         } else if (node instanceof FunctionCallExpr) {
             final FunctionCallExpr function = (FunctionCallExpr) node;
             if (function.getFunctionName().equals("uri") && function.getParameters().size() == 1) {
                 final Expr arg = (Expr) function.getParameters().get(0);
                 if (arg instanceof LiteralExpr) {
                     return new URIImpl(((LiteralExpr) arg).getLiteral());
+                }
+            } else if (function.getFunctionName().equals("dateTime")
+                    && function.getParameters().size() == 1) {
+                final Expr arg = (Expr) function.getParameters().get(0);
+                if (arg instanceof LiteralExpr) {
+                    return Data.convert(((LiteralExpr) arg).getLiteral(), Date.class);
                 }
             }
         }
