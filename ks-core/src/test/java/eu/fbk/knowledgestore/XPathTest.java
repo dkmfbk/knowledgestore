@@ -2,6 +2,7 @@ package eu.fbk.knowledgestore;
 
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -25,6 +26,7 @@ import eu.fbk.knowledgestore.vocabulary.NIE;
 
 public class XPathTest {
 
+    @Ignore
     @Test
     public void test2() {
 
@@ -32,13 +34,19 @@ public class XPathTest {
         record.set(new URIImpl(KS.NAMESPACE + "pippo"), "pioppo");
         System.out.println(record.toString(Data.getNamespaceMap(), true));
 
-        XPath xpath = XPath.parse("ks:pippo = 'pioppo'");
+        final XPath xpath = XPath.parse("ks:pippo = 'pioppo'");
         System.out.println(xpath.evalBoolean(record));
     }
 
-    @Ignore
     @Test
     public void test() {
+
+        final XPath xpath2 = XPath.parse("dct:created >= dateTime('2012-01-01') " //
+                + "and dct:created < dateTime('2012-01-31') " //
+                + "and dct:source = \\ks:test ");
+        final Map<URI, Set<Object>> map2 = new HashMap<>();
+        xpath2.decompose(map2);
+        System.out.println(map2);
 
         final XPath xpath0 = XPath.parse("rdfs:comment = 'comment # 0'");
         System.out.println(xpath0);
