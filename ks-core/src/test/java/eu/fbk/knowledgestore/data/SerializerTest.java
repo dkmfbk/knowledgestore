@@ -1,6 +1,7 @@
-package eu.fbk.knowledgestore.runtime;
+package eu.fbk.knowledgestore.data;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.util.Arrays;
@@ -9,7 +10,6 @@ import java.util.GregorianCalendar;
 
 import com.google.common.io.BaseEncoding;
 
-import org.apache.hadoop.fs.Path;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openrdf.model.Literal;
@@ -19,8 +19,6 @@ import org.openrdf.model.impl.ValueFactoryImpl;
 import org.openrdf.model.vocabulary.DCTERMS;
 import org.openrdf.model.vocabulary.RDF;
 
-import eu.fbk.knowledgestore.data.Data;
-import eu.fbk.knowledgestore.data.Record;
 import eu.fbk.knowledgestore.vocabulary.KS;
 import eu.fbk.knowledgestore.vocabulary.NFO;
 import eu.fbk.knowledgestore.vocabulary.NIE;
@@ -51,8 +49,8 @@ public class SerializerTest {
     @Test
     public void test() throws Throwable {
 
-        final Dictionary<URI> dictionary = new Dictionary<URI>(URI.class, new Path(
-                System.getProperty("java.io.tmpdir") + "/uris.dic").toString());
+        final Dictionary<URI> dictionary = Dictionary.createLocalDictionary(URI.class, new File(
+                System.getProperty("java.io.tmpdir") + "/uris.dic"));
         // final Serializer serializer = new Serializer(dictionary);
         final Serializer serializer = new Serializer(true, dictionary, null);
 

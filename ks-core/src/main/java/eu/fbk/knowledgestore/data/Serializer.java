@@ -1,4 +1,4 @@
-package eu.fbk.knowledgestore.runtime;
+package eu.fbk.knowledgestore.data;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -9,6 +9,7 @@ import java.io.OutputStream;
 import java.math.BigInteger;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Set;
 import java.util.TimeZone;
 import java.util.zip.Deflater;
 import java.util.zip.DeflaterOutputStream;
@@ -19,6 +20,7 @@ import javax.annotation.Nullable;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import com.google.common.base.MoreObjects;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.io.ByteStreams;
@@ -34,14 +36,14 @@ import org.openrdf.model.Value;
 import org.openrdf.model.ValueFactory;
 import org.openrdf.model.vocabulary.XMLSchema;
 
-import eu.fbk.knowledgestore.data.Data;
-import eu.fbk.knowledgestore.data.Record;
-
 // NOTE: supports only serialization and deserialization of Record, URI, BNode, Literal,
 // Statement objects. For records, it is possible to specify which properties to serialize /
 // deserialize.
 
 public final class Serializer {
+
+    private static final Set<String> KB_PREFIXES = ImmutableSet.of("dbpedia", "yago", "gn",
+            "geonames", "lgdo", "lgv");
 
     private static final String LANG_NS = "lang:";
 
@@ -238,9 +240,7 @@ public final class Serializer {
 
         } else if (object instanceof URI) {
             final URI uri = (URI) object;
-            final boolean isVocabTerm = Data.namespaceToPrefix(uri.getNamespace(),
-                    Data.getNamespaceMap()) != null;
-            if (isVocabTerm) {
+            if (isVocabTerm(uri)) {
                 writeHeader(stream, TYPE_URI_COMPRESSED, 0);
                 writeCompressedURI(stream, uri);
             } else {
@@ -528,6 +528,11 @@ public final class Serializer {
     private String decodeString(final byte[] bytes) {
         // return new String(bytes, Charsets.UTF_8);
         return Smaz.decompress(bytes);
+    }
+
+    private static boolean isVocabTerm(final URI uri) {
+        final String prefix = Data.namespaceToPrefix(uri.getNamespace(), Data.getNamespaceMap());
+        return prefix != null && !KB_PREFIXES.contains(prefix);
     }
 
 }

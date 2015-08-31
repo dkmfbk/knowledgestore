@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +22,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Ordering;
 
-import org.apache.commons.cli.GnuParser;
+import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
@@ -178,6 +179,8 @@ public final class CommandLine {
 
         private final Options options;
 
+        private final Map<Option, Type> optionTypes;
+
         private final Set<String> mandatoryOptions;
 
         public Parser() {
@@ -185,6 +188,7 @@ public final class CommandLine {
             this.header = null;
             this.footer = null;
             this.options = new Options();
+            this.optionTypes = new HashMap<>();
             this.mandatoryOptions = new HashSet<>();
         }
 
@@ -229,14 +233,16 @@ public final class CommandLine {
             Preconditions.checkArgument(name.length() > 1);
             Preconditions.checkNotNull(description);
             Preconditions.checkNotNull(argName);
-            Preconditions.checkNotNull(argType);
 
             final Option option = new Option(letter, name, true, description);
             option.setArgName(argName);
             option.setOptionalArg(!argRequired);
             option.setArgs(multiValue ? Short.MAX_VALUE : 1);
-            option.setType(argType);
             this.options.addOption(option);
+
+            if (argType != null) {
+                this.optionTypes.put(option, argType);
+            }
 
             if (mandatory) {
                 this.mandatoryOptions.add(name);
@@ -245,7 +251,6 @@ public final class CommandLine {
             return this;
         }
 
-        @SuppressWarnings("unchecked")
         public CommandLine parse(final String... args) {
 
             try {
@@ -261,7 +266,7 @@ public final class CommandLine {
                 // Parse options
                 org.apache.commons.cli.CommandLine cmd = null;
                 try {
-                    cmd = new GnuParser().parse(this.options, args);
+                    cmd = new DefaultParser().parse(this.options, args);
                 } catch (final Throwable ex) {
                     System.err.println("SYNTAX ERROR: " + ex.getMessage());
                     printHelp();
@@ -302,9 +307,10 @@ public final class CommandLine {
                     final List<String> valueList = Lists.newArrayList();
                     final String[] values = cmd.getOptionValues(option.getLongOpt());
                     if (values != null) {
+                        final Type type = this.optionTypes.get(option);
                         for (final String value : values) {
-                            if (option.getType() instanceof Type) {
-                                Type.validate(value, (Type) option.getType());
+                            if (type != null) {
+                                Type.validate(value, type);
                             }
                             valueList.add(value);
                         }

@@ -3,6 +3,7 @@ package eu.fbk.knowledgestore.data;
 import java.io.ObjectStreamException;
 import java.io.Serializable;
 import java.lang.reflect.Array;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -19,6 +20,7 @@ import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.ImmutableBiMap;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -139,7 +141,7 @@ public abstract class XPath implements Serializable {
      * specified. Values must be scalars, arrays or iterables; the latter two are recursively
      * exploded and their elements added to the sequence produced by the returned {@code XPath}
      * expression.
-     * 
+     *
      * @param values
      *            the values
      * @return the produced {@code XPath} expression
@@ -154,7 +156,7 @@ public abstract class XPath implements Serializable {
      * of scalars. Supported operators are {@code not}, {@code and}, {@code or}, {@code =},
      * {@code !=}, {@code <}, {@code >}, {@code <=}, {@code >=}, {@code +}, {@code -}, {@code *},
      * {@code mod}, {@code div}, {@code |}.
-     * 
+     *
      * @param operator
      *            the operator
      * @param operands
@@ -259,7 +261,7 @@ public abstract class XPath implements Serializable {
      * optional <tt>$$</tt> placeholders replaced by supplied values. Note that i-th placeholder
      * is replaced with i-th value of the {@code values} vararg array, while namespaces referenced
      * in the string must be defined in the {@code WITH} clause of the string itself.
-     * 
+     *
      * @param string
      *            the expression string
      * @param values
@@ -280,7 +282,7 @@ public abstract class XPath implements Serializable {
      * that i-th placeholder is replaced with i-th value of the {@code values} vararg array, while
      * namespaces occurring in the string can be defined either in the {@code WITH} clause of the
      * string or in the supplied namespace {@code Map}.
-     * 
+     *
      * @param namespaces
      *            the namespace map
      * @param expression
@@ -601,7 +603,7 @@ public abstract class XPath implements Serializable {
     /**
      * Returns the head of the {@code XPath} expression, i.e., the content of the {@code WITH}
      * clause. An empty string is returned in case the with clause is not used.
-     * 
+     *
      * @return the head
      */
     public final String getHead() {
@@ -611,7 +613,7 @@ public abstract class XPath implements Serializable {
     /**
      * Returns the body of the {@code XPath} expression, i.e., the {@code XPath} string without
      * the {@code WITH} clause.
-     * 
+     *
      * @return the body
      */
     public final String getBody() {
@@ -620,7 +622,7 @@ public abstract class XPath implements Serializable {
 
     /**
      * Returns the namespace declarations referenced by this {@code XPath} expression.
-     * 
+     *
      * @return an immutable bidirectional map of {@code prefix - namespace URI} mappings
      */
     public final Map<String, String> getNamespaces() {
@@ -632,7 +634,7 @@ public abstract class XPath implements Serializable {
      * returns only the properties accessed on the <i>root</i> record the condition is evaluated
      * on, ignoring properties of nested records that can be reached via property traversal
      * starting from the root record.
-     * 
+     *
      * @return an immutable set with the referenced properties, possibly empty
      */
     public final Set<URI> getProperties() {
@@ -643,14 +645,14 @@ public abstract class XPath implements Serializable {
      * Returns true if this {@code XPath} expression is lenient, i.e., evaluation never throws
      * exceptions. {@code XPath} expressions are non-lenient by default; a lenient version of an
      * expression can be obtained by calling method {@link #lenient(boolean)}.
-     * 
+     *
      * @return true if this expression is lenient
      */
     public abstract boolean isLenient();
 
     /**
      * Returns a lenient / not lenient version of this {@code XPath} expression.
-     * 
+     *
      * @param lenient
      *            the requested lenient mode
      * @return an {@code XPath} expression with the same xpath string of this expression but the
@@ -671,7 +673,7 @@ public abstract class XPath implements Serializable {
      * Returns a predicate view of this {@code XPath} expression that accept an object input. If
      * this {@code XPath} is lenient, evaluation of the predicate will return false on failure,
      * rather than throwing an {@link IllegalArgumentException}.
-     * 
+     *
      * @return the requested predicate view
      */
     public final Predicate<Object> asPredicate() {
@@ -692,7 +694,7 @@ public abstract class XPath implements Serializable {
      * result given an input object. If this {@code XPath} is lenient, evaluation of the function
      * will return an empty list on failure, rather than throwing an
      * {@link IllegalArgumentException}.
-     * 
+     *
      * @param resultClass
      *            the {@code Class} object for the list elements of the expected function result
      * @param <T>
@@ -718,7 +720,7 @@ public abstract class XPath implements Serializable {
      * Returns a function view of this {@code XPath} expression that produces a unique {@code T}
      * result given an input object. If this {@code XPath} is lenient, evaluation of the function
      * will return null on failure, rather than throwing an {@link IllegalArgumentException}.
-     * 
+     *
      * @param resultClass
      *            the {@code Class} object for the expected function result
      * @param <T>
@@ -743,7 +745,7 @@ public abstract class XPath implements Serializable {
     /**
      * Evaluates this {@code XPath} expression on the object supplied, producing as result a list
      * of objects.
-     * 
+     *
      * @param object
      *            the object to evaluate this expression on
      * @return the list of objects produced as result, on success; an empty list on failure if on
@@ -759,7 +761,7 @@ public abstract class XPath implements Serializable {
     /**
      * Evaluates this {@code XPath} expression on the object supplied, producing as result a list
      * of objects of the type {@code T} specified.
-     * 
+     *
      * @param object
      *            the object to evaluate this expression on
      * @param resultClass
@@ -794,7 +796,7 @@ public abstract class XPath implements Serializable {
     /**
      * Evaluates this {@code XPath} expression on the object supplied, producing as result a
      * unique object.
-     * 
+     *
      * @param object
      *            the object to evaluate this expression on
      * @return on success, the unique object resulting from the evaluation, or null if evaluation
@@ -812,7 +814,7 @@ public abstract class XPath implements Serializable {
     /**
      * Evaluates this {@code XPath} expression on the object supplied, producing as result a
      * unique object of the type {@code T} specified.
-     * 
+     *
      * @param object
      *            the object to evaluate this expression on
      * @param resultClass
@@ -849,7 +851,7 @@ public abstract class XPath implements Serializable {
     /**
      * Evaluates this {@code XPath} expression on the object supplied, producing a boolean value
      * as result.
-     * 
+     *
      * @param object
      *            the object to evaluate this expression on
      * @return the boolean value resulting from the evaluation, on success; on failure, false is
@@ -930,12 +932,13 @@ public abstract class XPath implements Serializable {
      * scalar values or scalar {@link Range}s (e.g., {@code (1, 5], [7, 9]})), whose union should
      * be taken, and {@code remainingXPath} contains all the clauses of the original {@code XPath}
      * that cannot be decomposed in property restrictions.
-     * 
+     *
      * @param restrictions
      *            a modifiable map where to store the {@code property in restriction} restrictions
      * @return the remaining {@code XPath} expression, if any, or null if it was possible to
      *         completely express this expression as a conjunction of property restrictions
      */
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     @Nullable
     public final XPath decompose(final Map<URI, Set<Object>> restrictions) {
 
@@ -992,15 +995,35 @@ public abstract class XPath implements Serializable {
                     }
                 }
 
+                boolean processed = false;
                 if (property != null && valueOrRange != null) {
                     Set<Object> set = restrictions.get(property);
                     if (set == null) {
-                        set = Sets.newHashSet();
+                        set = ImmutableSet.of(valueOrRange);
                         restrictions.put(property, set);
+                        processed = true;
+                    } else {
+                        final Object oldValue = set.iterator().next();
+                        if (oldValue instanceof Range) {
+                            final Range oldRange = (Range) oldValue;
+                            if (valueOrRange instanceof Range) {
+                                final Range newRange = (Range) valueOrRange;
+                                if (oldRange.isConnected(newRange)) {
+                                    restrictions.put(property,
+                                            ImmutableSet.of(oldRange.intersection(newRange)));
+                                    processed = true;
+                                }
+                            } else if (valueOrRange instanceof Comparable) {
+                                if (oldRange.contains((Comparable) valueOrRange)) {
+                                    restrictions.put(property, ImmutableSet.of(valueOrRange));
+                                    processed = true;
+                                }
+                            }
+                        }
                     }
-                    set.add(valueOrRange);
+                }
 
-                } else {
+                if (!processed) {
                     remaining = remaining == null ? node : FACTORY.createAndExpr(remaining, node);
                 }
             }
@@ -1018,14 +1041,20 @@ public abstract class XPath implements Serializable {
             return ((LiteralExpr) node).getLiteral();
         } else if (node instanceof NumberExpr) {
             final Number number = ((NumberExpr) node).getNumber();
-            return (long) number.doubleValue() == number.longValue() ? number.longValue() : number
-                    .doubleValue();
+            return number instanceof Double || number instanceof Float ? number.doubleValue()
+                    : number.longValue(); // always return a Double
         } else if (node instanceof FunctionCallExpr) {
             final FunctionCallExpr function = (FunctionCallExpr) node;
             if (function.getFunctionName().equals("uri") && function.getParameters().size() == 1) {
                 final Expr arg = (Expr) function.getParameters().get(0);
                 if (arg instanceof LiteralExpr) {
                     return new URIImpl(((LiteralExpr) arg).getLiteral());
+                }
+            } else if (function.getFunctionName().equals("dateTime")
+                    && function.getParameters().size() == 1) {
+                final Expr arg = (Expr) function.getParameters().get(0);
+                if (arg instanceof LiteralExpr) {
+                    return Data.convert(((LiteralExpr) arg).getLiteral(), Date.class);
                 }
             }
         }
@@ -1145,7 +1174,7 @@ public abstract class XPath implements Serializable {
     /**
      * Returns the {@code XPath} string corresponding to the sequence of values specified. This
      * utility method can be used when programmatically composing an {@code XPath} string.
-     * 
+     *
      * @param values
      *            the values to format
      * @return the corresponding {@code XPath} string

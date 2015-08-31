@@ -12,9 +12,9 @@ import org.openrdf.model.URI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import eu.fbk.knowledgestore.data.Dictionary;
 import eu.fbk.knowledgestore.data.Record;
 import eu.fbk.knowledgestore.data.XPath;
-import eu.fbk.knowledgestore.runtime.Dictionary;
 
 public class HBaseFilter extends FilterBase {
 
@@ -60,7 +60,7 @@ public class HBaseFilter extends FilterBase {
         final String conditionString = dataIn.readUTF();
         final String dictionaryURL = dataIn.readUTF();
         this.condition = XPath.parse(conditionString);
-        this.serializer = new AvroSerializer(new Dictionary<URI>(URI.class, dictionaryURL));
+        this.serializer = new AvroSerializer(Dictionary.createHadoopDictionary(URI.class, dictionaryURL));
     }
 
     @Override

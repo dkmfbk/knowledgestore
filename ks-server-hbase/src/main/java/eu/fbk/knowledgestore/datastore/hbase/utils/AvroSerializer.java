@@ -41,8 +41,8 @@ import org.openrdf.model.vocabulary.RDF;
 import org.openrdf.model.vocabulary.XMLSchema;
 
 import eu.fbk.knowledgestore.data.Data;
+import eu.fbk.knowledgestore.data.Dictionary;
 import eu.fbk.knowledgestore.data.Record;
-import eu.fbk.knowledgestore.runtime.Dictionary;
 
 // NOTE: supports only serialization and deserialization of Record, URI, BNode, Literal,
 // Statement objects. For records, it is possible to specify which properties to serialize /
@@ -58,7 +58,7 @@ public final class AvroSerializer {
     private final ValueFactory factory;
 
     private final DatatypeFactory datatypeFactory;
-    
+
     public AvroSerializer() {
         this(null);
     }

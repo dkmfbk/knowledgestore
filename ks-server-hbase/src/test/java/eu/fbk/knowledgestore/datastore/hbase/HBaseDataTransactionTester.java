@@ -1,5 +1,10 @@
 package eu.fbk.knowledgestore.datastore.hbase;
 
+import static eu.fbk.knowledgestore.datastore.hbase.utils.HBaseConstants.DEFAULT_CON_TAB_NAME;
+import static eu.fbk.knowledgestore.datastore.hbase.utils.HBaseConstants.DEFAULT_ENT_TAB_NAME;
+import static eu.fbk.knowledgestore.datastore.hbase.utils.HBaseConstants.DEFAULT_MEN_TAB_NAME;
+import static eu.fbk.knowledgestore.datastore.hbase.utils.HBaseConstants.DEFAULT_RES_TAB_NAME;
+import static eu.fbk.knowledgestore.datastore.hbase.utils.HBaseConstants.DEFAULT_USR_TAB_NAME;
 import static eu.fbk.knowledgestore.datastore.hbase.utils.HBaseConstants.HADOOP_FS_DEFAULT_NAME;
 import static eu.fbk.knowledgestore.datastore.hbase.utils.HBaseConstants.HADOOP_FS_URL;
 import static eu.fbk.knowledgestore.datastore.hbase.utils.HBaseConstants.HBASEDATASTORE_TABLEPREFIX_PROP;
@@ -10,12 +15,6 @@ import static eu.fbk.knowledgestore.datastore.hbase.utils.HBaseConstants.OMID_TR
 import static eu.fbk.knowledgestore.datastore.hbase.utils.HBaseConstants.OMID_TSO_HOST;
 import static eu.fbk.knowledgestore.datastore.hbase.utils.HBaseConstants.URIDICT_RELATIVEPATH_DEFAULT;
 import static eu.fbk.knowledgestore.datastore.hbase.utils.HBaseConstants.URIDICT_RELATIVEPATH_PROP;
-
-import static eu.fbk.knowledgestore.datastore.hbase.utils.HBaseConstants.DEFAULT_RES_TAB_NAME;
-import static eu.fbk.knowledgestore.datastore.hbase.utils.HBaseConstants.DEFAULT_MEN_TAB_NAME;
-import static eu.fbk.knowledgestore.datastore.hbase.utils.HBaseConstants.DEFAULT_ENT_TAB_NAME;
-import static eu.fbk.knowledgestore.datastore.hbase.utils.HBaseConstants.DEFAULT_CON_TAB_NAME;
-import static eu.fbk.knowledgestore.datastore.hbase.utils.HBaseConstants.DEFAULT_USR_TAB_NAME;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -48,13 +47,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import eu.fbk.knowledgestore.data.Data;
+import eu.fbk.knowledgestore.data.Dictionary;
 import eu.fbk.knowledgestore.data.Record;
 import eu.fbk.knowledgestore.data.Stream;
 import eu.fbk.knowledgestore.data.XPath;
 import eu.fbk.knowledgestore.datastore.DataTransaction;
 import eu.fbk.knowledgestore.datastore.hbase.exception.DataTransactionBlockingException;
 import eu.fbk.knowledgestore.runtime.DataCorruptedException;
-import eu.fbk.knowledgestore.runtime.Dictionary;
 import eu.fbk.knowledgestore.runtime.Files;
 import eu.fbk.knowledgestore.vocabulary.KS;
 

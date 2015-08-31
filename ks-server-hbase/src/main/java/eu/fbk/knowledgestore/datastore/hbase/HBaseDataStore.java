@@ -1,9 +1,5 @@
 package eu.fbk.knowledgestore.datastore.hbase;
 
-import static eu.fbk.knowledgestore.datastore.hbase.utils.HBaseConstants.HBASEDATASTORE_TABLEPREFIX_PROP;
-import static eu.fbk.knowledgestore.datastore.hbase.utils.HBaseConstants.HBASEDATASTORE_TABLEPREFIX_DEFAULT;
-import static eu.fbk.knowledgestore.datastore.hbase.utils.HBaseConstants.DEFAULT_USR_FAM_NAME;
-import static eu.fbk.knowledgestore.datastore.hbase.utils.HBaseConstants.DEFAULT_USR_TAB_NAME;
 import static eu.fbk.knowledgestore.datastore.hbase.utils.HBaseConstants.DEFAULT_CON_FAM_NAME;
 import static eu.fbk.knowledgestore.datastore.hbase.utils.HBaseConstants.DEFAULT_CON_TAB_NAME;
 import static eu.fbk.knowledgestore.datastore.hbase.utils.HBaseConstants.DEFAULT_ENT_FAM_NAME;
@@ -12,7 +8,11 @@ import static eu.fbk.knowledgestore.datastore.hbase.utils.HBaseConstants.DEFAULT
 import static eu.fbk.knowledgestore.datastore.hbase.utils.HBaseConstants.DEFAULT_MEN_TAB_NAME;
 import static eu.fbk.knowledgestore.datastore.hbase.utils.HBaseConstants.DEFAULT_RES_FAM_NAME;
 import static eu.fbk.knowledgestore.datastore.hbase.utils.HBaseConstants.DEFAULT_RES_TAB_NAME;
+import static eu.fbk.knowledgestore.datastore.hbase.utils.HBaseConstants.DEFAULT_USR_FAM_NAME;
+import static eu.fbk.knowledgestore.datastore.hbase.utils.HBaseConstants.DEFAULT_USR_TAB_NAME;
 import static eu.fbk.knowledgestore.datastore.hbase.utils.HBaseConstants.HBASEDATASTORE_SERVERFILTERFLAG;
+import static eu.fbk.knowledgestore.datastore.hbase.utils.HBaseConstants.HBASEDATASTORE_TABLEPREFIX_DEFAULT;
+import static eu.fbk.knowledgestore.datastore.hbase.utils.HBaseConstants.HBASEDATASTORE_TABLEPREFIX_PROP;
 import static eu.fbk.knowledgestore.datastore.hbase.utils.HBaseConstants.URIDICT_RELATIVEPATH_DEFAULT;
 import static eu.fbk.knowledgestore.datastore.hbase.utils.HBaseConstants.URIDICT_RELATIVEPATH_PROP;
 
@@ -25,11 +25,11 @@ import org.openrdf.model.URI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import eu.fbk.knowledgestore.data.Dictionary;
 import eu.fbk.knowledgestore.datastore.DataStore;
 import eu.fbk.knowledgestore.datastore.DataTransaction;
 import eu.fbk.knowledgestore.datastore.hbase.utils.AbstractHBaseUtils;
 import eu.fbk.knowledgestore.datastore.hbase.utils.AvroSerializer;
-import eu.fbk.knowledgestore.runtime.Dictionary;
 
 /**
  * HBaseDataStore used to read and write data into HBase specific tables e.g. Resources, Mentions,
@@ -94,7 +94,7 @@ public class HBaseDataStore implements DataStore {
             final String dictRelPathString = properties.getProperty(URIDICT_RELATIVEPATH_PROP,
                     URIDICT_RELATIVEPATH_DEFAULT);
             final Path dictFullPath = new Path(dictRelPathString).makeQualified(fileSystem);
-            this.serializer = new AvroSerializer(new Dictionary<URI>(URI.class,
+            this.serializer = new AvroSerializer(Dictionary.createHadoopDictionary(URI.class,
                     dictFullPath.toString()));
 
         } catch (final IOException e) {
