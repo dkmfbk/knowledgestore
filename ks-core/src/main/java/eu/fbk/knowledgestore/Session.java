@@ -1,26 +1,15 @@
 package eu.fbk.knowledgestore;
 
-import java.io.Closeable;
-import java.util.Map;
-
-import javax.annotation.Nullable;
-
-import org.openrdf.model.URI;
-
-import eu.fbk.knowledgestore.Operation.Count;
-import eu.fbk.knowledgestore.Operation.Create;
-import eu.fbk.knowledgestore.Operation.Delete;
-import eu.fbk.knowledgestore.Operation.Download;
-import eu.fbk.knowledgestore.Operation.Match;
-import eu.fbk.knowledgestore.Operation.Merge;
-import eu.fbk.knowledgestore.Operation.Retrieve;
-import eu.fbk.knowledgestore.Operation.Sparql;
-import eu.fbk.knowledgestore.Operation.Update;
-import eu.fbk.knowledgestore.Operation.Upload;
+import eu.fbk.knowledgestore.Operation.*;
 import eu.fbk.knowledgestore.data.Criteria;
 import eu.fbk.knowledgestore.data.Data;
 import eu.fbk.knowledgestore.data.XPath;
 import eu.fbk.knowledgestore.vocabulary.KS;
+import org.openrdf.model.URI;
+
+import javax.annotation.Nullable;
+import java.io.Closeable;
+import java.util.Map;
 
 /**
  * A KnowledgeStore user session.
@@ -299,6 +288,8 @@ public interface Session extends Closeable {
      *             if the {@code Session} has been closed
      */
     Sparql sparql(String expression, Object... arguments) throws IllegalStateException;
+
+    SparqlUpdate sparqlupdate() throws IllegalStateException;
 
     /**
      * Tests whether this {@code Session} instance has been closed.

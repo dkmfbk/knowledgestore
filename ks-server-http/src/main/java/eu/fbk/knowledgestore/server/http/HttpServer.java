@@ -1,34 +1,21 @@
 package eu.fbk.knowledgestore.server.http;
 
-import java.io.File;
-import java.io.IOException;
-import java.lang.management.ManagementFactory;
-import java.net.URL;
-import java.util.Set;
-import java.util.UUID;
-import java.util.concurrent.ExecutorService;
-
-import javax.annotation.Nullable;
-
+import ch.qos.logback.access.jetty.RequestLogImpl;
 import com.google.common.base.Charsets;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Sets;
 import com.google.common.io.Resources;
-
+import eu.fbk.knowledgestore.ForwardingKnowledgeStore;
+import eu.fbk.knowledgestore.KnowledgeStore;
+import eu.fbk.knowledgestore.Session;
+import eu.fbk.knowledgestore.data.Data;
+import eu.fbk.knowledgestore.runtime.Component;
+import eu.fbk.knowledgestore.server.http.jaxrs.*;
 import org.eclipse.jetty.jmx.MBeanContainer;
 import org.eclipse.jetty.security.HashLoginService;
-import org.eclipse.jetty.server.ConnectionFactory;
-import org.eclipse.jetty.server.Connector;
-import org.eclipse.jetty.server.ConnectorStatistics;
-import org.eclipse.jetty.server.Handler;
-import org.eclipse.jetty.server.HttpConfiguration;
-import org.eclipse.jetty.server.HttpConnectionFactory;
-import org.eclipse.jetty.server.SecureRequestCustomizer;
-import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.ServerConnector;
-import org.eclipse.jetty.server.SslConnectionFactory;
+import org.eclipse.jetty.server.*;
 import org.eclipse.jetty.server.handler.HandlerCollection;
 import org.eclipse.jetty.server.handler.RequestLogHandler;
 import org.eclipse.jetty.server.handler.StatisticsHandler;
@@ -39,18 +26,14 @@ import org.eclipse.jetty.webapp.WebAppContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ch.qos.logback.access.jetty.RequestLogImpl;
-
-import eu.fbk.knowledgestore.ForwardingKnowledgeStore;
-import eu.fbk.knowledgestore.KnowledgeStore;
-import eu.fbk.knowledgestore.Session;
-import eu.fbk.knowledgestore.data.Data;
-import eu.fbk.knowledgestore.runtime.Component;
-import eu.fbk.knowledgestore.server.http.jaxrs.Application;
-import eu.fbk.knowledgestore.server.http.jaxrs.Files;
-import eu.fbk.knowledgestore.server.http.jaxrs.Mentions;
-import eu.fbk.knowledgestore.server.http.jaxrs.Root;
-import eu.fbk.knowledgestore.server.http.jaxrs.Sparql;
+import javax.annotation.Nullable;
+import java.io.File;
+import java.io.IOException;
+import java.lang.management.ManagementFactory;
+import java.net.URL;
+import java.util.Set;
+import java.util.UUID;
+import java.util.concurrent.ExecutorService;
 
 // TODO: check
 // https://jersey.java.net/apidocs/2.5.1/jersey/org/glassfish/jersey/server/filter/UriConnegFilter.html
@@ -245,7 +228,7 @@ public class HttpServer extends ForwardingKnowledgeStore implements Component {
                 ImmutableList.of(Root.class, Files.class,
                         eu.fbk.knowledgestore.server.http.jaxrs.Resources.class, Mentions.class,
                         // Entities.class, Axioms.class, Match.class,
-                        Sparql.class));
+                        Sparql.class, SparqlUpdate.class));
 
         // configure request logging using logback access
         RequestLogHandler requestLogHandler = null;

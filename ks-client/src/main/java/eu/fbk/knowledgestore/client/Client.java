@@ -1,32 +1,5 @@
 package eu.fbk.knowledgestore.client;
 
-import java.io.InputStream;
-import java.lang.reflect.Type;
-import java.security.cert.X509Certificate;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.atomic.AtomicReference;
-
-import javax.annotation.Nullable;
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
-import javax.ws.rs.HttpMethod;
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.Invocation;
-import javax.ws.rs.client.ResponseProcessingException;
-import javax.ws.rs.core.CacheControl;
-import javax.ws.rs.core.GenericEntity;
-import javax.ws.rs.core.GenericType;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Variant;
-
 import com.google.common.base.Charsets;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
@@ -37,7 +10,17 @@ import com.google.common.escape.Escaper;
 import com.google.common.io.BaseEncoding;
 import com.google.common.net.HttpHeaders;
 import com.google.common.net.UrlEscapers;
-
+import eu.fbk.knowledgestore.AbstractKnowledgeStore;
+import eu.fbk.knowledgestore.AbstractSession;
+import eu.fbk.knowledgestore.Outcome;
+import eu.fbk.knowledgestore.Outcome.Status;
+import eu.fbk.knowledgestore.Session;
+import eu.fbk.knowledgestore.data.*;
+import eu.fbk.knowledgestore.internal.Util;
+import eu.fbk.knowledgestore.internal.jaxrs.Protocol;
+import eu.fbk.knowledgestore.internal.jaxrs.Serializer;
+import eu.fbk.knowledgestore.internal.rdf.RDFUtil;
+import eu.fbk.knowledgestore.vocabulary.NIE;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.config.RegistryBuilder;
 import org.apache.http.conn.HttpClientConnectionManager;
@@ -61,23 +44,26 @@ import org.openrdf.rio.RDFFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import eu.fbk.knowledgestore.AbstractKnowledgeStore;
-import eu.fbk.knowledgestore.AbstractSession;
-import eu.fbk.knowledgestore.Outcome;
-import eu.fbk.knowledgestore.Outcome.Status;
-import eu.fbk.knowledgestore.Session;
-import eu.fbk.knowledgestore.data.Criteria;
-import eu.fbk.knowledgestore.data.Data;
-import eu.fbk.knowledgestore.data.Handler;
-import eu.fbk.knowledgestore.data.Record;
-import eu.fbk.knowledgestore.data.Representation;
-import eu.fbk.knowledgestore.data.Stream;
-import eu.fbk.knowledgestore.data.XPath;
-import eu.fbk.knowledgestore.internal.Util;
-import eu.fbk.knowledgestore.internal.jaxrs.Protocol;
-import eu.fbk.knowledgestore.internal.jaxrs.Serializer;
-import eu.fbk.knowledgestore.internal.rdf.RDFUtil;
-import eu.fbk.knowledgestore.vocabulary.NIE;
+import javax.annotation.Nullable;
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+import javax.ws.rs.HttpMethod;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.Invocation;
+import javax.ws.rs.client.ResponseProcessingException;
+import javax.ws.rs.core.*;
+import java.io.InputStream;
+import java.lang.reflect.Type;
+import java.security.cert.X509Certificate;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.atomic.AtomicReference;
 
 // TODO: decide where to place the Configuration class
 
@@ -468,6 +454,11 @@ public final class Client extends AbstractKnowledgeStore {
             }
             return (Stream<T>) invoke(HttpMethod.GET, path, query, null, null, responseType,
                     timeout);
+        }
+
+        @Override
+        protected Outcome doSparqlUpdate(@Nullable Long timeout, @Nullable Stream<? extends Statement> statements) throws Throwable {
+            return null;
         }
 
         private String query(final Object... queryNameValues) {

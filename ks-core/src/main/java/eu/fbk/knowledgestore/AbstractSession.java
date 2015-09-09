@@ -1,47 +1,25 @@
 package eu.fbk.knowledgestore;
 
-import java.io.Closeable;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.WeakHashMap;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicReference;
-
-import javax.annotation.Nullable;
-
 import com.google.common.collect.Lists;
-
+import eu.fbk.knowledgestore.Operation.*;
+import eu.fbk.knowledgestore.Outcome.Status;
+import eu.fbk.knowledgestore.data.*;
+import eu.fbk.knowledgestore.vocabulary.NFO;
+import eu.fbk.knowledgestore.vocabulary.NIE;
+import org.openrdf.model.Statement;
 import org.openrdf.model.URI;
 import org.openrdf.query.BindingSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
-import eu.fbk.knowledgestore.Operation.Count;
-import eu.fbk.knowledgestore.Operation.Create;
-import eu.fbk.knowledgestore.Operation.Delete;
-import eu.fbk.knowledgestore.Operation.Download;
-import eu.fbk.knowledgestore.Operation.Match;
-import eu.fbk.knowledgestore.Operation.Merge;
-import eu.fbk.knowledgestore.Operation.Retrieve;
-import eu.fbk.knowledgestore.Operation.Sparql;
-import eu.fbk.knowledgestore.Operation.Update;
-import eu.fbk.knowledgestore.Operation.Upload;
-import eu.fbk.knowledgestore.Outcome.Status;
-import eu.fbk.knowledgestore.data.Criteria;
-import eu.fbk.knowledgestore.data.Data;
-import eu.fbk.knowledgestore.data.Handler;
-import eu.fbk.knowledgestore.data.Record;
-import eu.fbk.knowledgestore.data.Representation;
-import eu.fbk.knowledgestore.data.Stream;
-import eu.fbk.knowledgestore.data.XPath;
-import eu.fbk.knowledgestore.vocabulary.NFO;
-import eu.fbk.knowledgestore.vocabulary.NIE;
+import javax.annotation.Nullable;
+import java.io.Closeable;
+import java.util.*;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 
 public abstract class AbstractSession implements Session {
 
@@ -122,7 +100,7 @@ public abstract class AbstractSession implements Session {
 
     @Nullable
     private void start(final String operation, @Nullable final URI recordType,
-            @Nullable final Class<?> streamType, @Nullable final URI objectID, final Long timeout) {
+            @Nullable final Class<?> streamType, @Nullable final URI objectID, @Nullable final Long timeout) {
 
         this.timestamp = System.currentTimeMillis();
         this.operation = operation;
@@ -503,7 +481,7 @@ public abstract class AbstractSession implements Session {
                         logRequest(null, condition, "ids", ids, "props", properties, //
                                 "offset", offset, "limit", limit, "timeout", timeout);
                         return logResponse(doRetrieve(timeout, type, condition, ids, properties,
-                                offset, limit));
+								offset, limit));
                     } catch (final Throwable ex) {
                         throw fail(ex);
                     } finally {
@@ -639,7 +617,7 @@ public abstract class AbstractSession implements Session {
                     start("MATCH", null, Record.class, null, timeout);
                     try {
                         logRequest(null, conditions, "ids", ids, "props", //
-                                properties, "timeout", timeout);
+								properties, "timeout", timeout);
                         return logResponse(filter(doMatch(timeout, conditions, ids, properties)));
                     } catch (final Throwable ex) {
                         throw fail(ex);
@@ -669,7 +647,7 @@ public abstract class AbstractSession implements Session {
                         logRequest("from", defaultGraphs, "from-named", namedGraphs, //
                                 "timeout", timeout, null, expression);
                         return logResponse(filter(doSparql(timeout, type, expression,
-                                defaultGraphs, namedGraphs)));
+								defaultGraphs, namedGraphs)));
                     } catch (final Throwable ex) {
                         throw fail(ex);
                     } finally {
@@ -681,7 +659,30 @@ public abstract class AbstractSession implements Session {
         };
     }
 
-    @Override
+	@Override
+	public final SparqlUpdate sparqlupdate()
+			throws IllegalStateException {
+		checkNotClosed();
+		return new SparqlUpdate(this.namespaces) {
+			@Override
+			protected Outcome doExec(@Nullable Long timeout, @Nullable Stream<? extends Statement> statements) throws OperationException {
+				synchronized (AbstractSession.this) {
+					checkNotClosed();
+					start("SPARQLUPDATE", null, null, null, timeout);
+					try {
+						logRequest("timeout", timeout);
+						return logResponse(doSparqlUpdate(timeout, statements));
+					} catch (final Throwable ex) {
+						throw fail(ex);
+					} finally {
+						end();
+					}
+				}
+			}
+		};
+	}
+
+	@Override
     public final boolean isClosed() {
         return this.closed.get();
     }
@@ -776,6 +777,9 @@ public abstract class AbstractSession implements Session {
     protected abstract <T> Stream<T> doSparql(@Nullable Long timeout, final Class<T> type,
             final String expression, @Nullable final Set<URI> defaultGraphs,
             @Nullable final Set<URI> namedGraphs) throws Throwable;
+
+    protected abstract Outcome doSparqlUpdate(@Nullable Long timeout,
+													@Nullable final Stream<? extends Statement> statements) throws Throwable;
 
     protected void doClose() {
     }
