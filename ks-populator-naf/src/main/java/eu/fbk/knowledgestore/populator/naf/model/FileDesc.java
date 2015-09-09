@@ -34,6 +34,18 @@ public class FileDesc {
     @XmlAttribute(name = "creationtime")
     @XmlJavaTypeAdapter(NormalizedStringAdapter.class)
     protected String creationtime;
+    @XmlAttribute(name = "section")
+    @XmlJavaTypeAdapter(NormalizedStringAdapter.class)
+    protected String section;
+    @XmlAttribute(name = "magazine")
+    @XmlJavaTypeAdapter(NormalizedStringAdapter.class)
+    protected String magazine;
+    @XmlAttribute(name = "location")
+    @XmlJavaTypeAdapter(NormalizedStringAdapter.class)
+    protected String location;
+    @XmlAttribute(name = "publisher")
+    @XmlJavaTypeAdapter(NormalizedStringAdapter.class)
+    protected String publisher;
     @XmlAttribute(name = "filename")
     @XmlJavaTypeAdapter(NormalizedStringAdapter.class)
     protected String filename;
@@ -187,5 +199,37 @@ public class FileDesc {
     public void setPages(String value) {
         this.pages = value;
     }
+
+	public String getSection() {
+		return section;
+	}
+
+	public void setSection(String section) {
+		this.section = section;
+	}
+
+	public String getMagazine() {
+		return magazine;
+	}
+
+	public void setMagazine(String magazine) {
+		this.magazine = magazine;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public String getPublisher() {
+		return publisher;
+	}
+
+	public void setPublisher(String publisher) {
+		this.publisher = publisher;
+	}
 
 }

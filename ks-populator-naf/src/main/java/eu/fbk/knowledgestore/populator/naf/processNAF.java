@@ -1353,14 +1353,38 @@ public class processNAF {
                 newsFile.add(DCTERMS.CREATED, fileDesc.getCreationtime());
                 deg += "|Creationtime:" + fileDesc.getCreationtime();
             }
+            
+            
+            if (fileDesc.getSection() != null) {
+                newsFile.add(NWR.SECTION, fileDesc.getSection());
+                deg += "|SECTION:" + fileDesc.getSection();
+            }
+           
+            if (fileDesc.getMagazine() != null) {
+                newsFile.add(NWR.MAGAZINE, fileDesc.getMagazine());
+                deg += "|MAGAZINE:" + fileDesc.getMagazine();
+            }
+            
+            if (fileDesc.getLocation() != null) {
+                newsFile.add(NWR.LOCATION, fileDesc.getLocation());
+                deg += "|LOCATION:" + fileDesc.getLocation();
+            }
+            
+            if (fileDesc.getPublisher() != null) {
+                newsFile.add(NWR.PUBLISHER, fileDesc.getPublisher());
+                deg += "|PUBLISHER:" + fileDesc.getPublisher();
+            }
+                        
             if (fileDesc.getFilename() != null) {
                 newsFile.add(NWR.ORIGINAL_FILE_NAME, fileDesc.getFilename());
                 deg += "|Filename:" + fileDesc.getFilename();
             }
+            
             if (fileDesc.getFiletype() != null) {
                 newsFile.add(NWR.ORIGINAL_FILE_FORMAT, fileDesc.getFiletype());
                 deg += "|Filetype:" + fileDesc.getFiletype();
             }
+            
             if (fileDesc.getPages() != null) {
                 newsFile.add(NWR.ORIGINAL_PAGES, fileDesc.getPages());
                 deg += "|Pages:" + fileDesc.getPages();

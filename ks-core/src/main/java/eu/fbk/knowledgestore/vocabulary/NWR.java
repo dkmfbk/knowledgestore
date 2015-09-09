@@ -123,6 +123,18 @@ public final class NWR {
     public static final URI VALUE_TYPE_ENUM = createURI("ValueType");
 
     // PROPERTIES
+    
+    /** Property nwr:section. */
+    public static final URI SECTION = createURI("section");
+    
+    /** Property nwr:magazine. */
+    public static final URI MAGAZINE = createURI("magazine");
+
+    /** Property nwr:location. */
+    public static final URI LOCATION = createURI("location");
+    
+    /** Property nwr:publisher. */
+    public static final URI PUBLISHER = createURI("publisher");
 
     /** Property nwr:anchorTime. */
     public static final URI ANCHOR_TIME = createURI("anchorTime");
