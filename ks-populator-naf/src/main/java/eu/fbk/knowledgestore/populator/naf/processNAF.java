@@ -1,78 +1,27 @@
 package eu.fbk.knowledgestore.populator.naf;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
-import java.io.Writer;
-import java.net.URL;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.ListIterator;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
-
+import eu.fbk.knowledgestore.data.Data;
+import eu.fbk.knowledgestore.data.Record;
+import eu.fbk.knowledgestore.populator.naf.model.*;
+import eu.fbk.knowledgestore.vocabulary.KS;
+import eu.fbk.knowledgestore.vocabulary.NIF;
+import eu.fbk.knowledgestore.vocabulary.NWR;
+import eu.fbk.rdfpro.util.IO;
 import org.openrdf.model.URI;
 import org.openrdf.model.impl.URIImpl;
 import org.openrdf.model.impl.ValueFactoryImpl;
 import org.openrdf.model.vocabulary.DCTERMS;
 import org.openrdf.model.vocabulary.RDF;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import eu.fbk.knowledgestore.data.Data;
-import eu.fbk.knowledgestore.data.Record;
-import eu.fbk.knowledgestore.populator.naf.model.CausalRelations;
-import eu.fbk.knowledgestore.populator.naf.model.Clink;
-import eu.fbk.knowledgestore.populator.naf.model.Coref;
-import eu.fbk.knowledgestore.populator.naf.model.Coreferences;
-import eu.fbk.knowledgestore.populator.naf.model.Entities;
-import eu.fbk.knowledgestore.populator.naf.model.Entity;
-import eu.fbk.knowledgestore.populator.naf.model.ExternalRef;
-import eu.fbk.knowledgestore.populator.naf.model.ExternalReferences;
-import eu.fbk.knowledgestore.populator.naf.model.FactVal;
-import eu.fbk.knowledgestore.populator.naf.model.Factualities;
-import eu.fbk.knowledgestore.populator.naf.model.Factuality;
-import eu.fbk.knowledgestore.populator.naf.model.Factualitylayer;
-import eu.fbk.knowledgestore.populator.naf.model.Factvalue;
-import eu.fbk.knowledgestore.populator.naf.model.FileDesc;
-import eu.fbk.knowledgestore.populator.naf.model.LinguisticProcessors;
-import eu.fbk.knowledgestore.populator.naf.model.Lp;
-import eu.fbk.knowledgestore.populator.naf.model.NAF;
-import eu.fbk.knowledgestore.populator.naf.model.NafHeader;
-import eu.fbk.knowledgestore.populator.naf.model.Predicate;
-import eu.fbk.knowledgestore.populator.naf.model.PredicateAnchor;
-import eu.fbk.knowledgestore.populator.naf.model.Public;
-import eu.fbk.knowledgestore.populator.naf.model.Raw;
-import eu.fbk.knowledgestore.populator.naf.model.References;
-import eu.fbk.knowledgestore.populator.naf.model.Role;
-import eu.fbk.knowledgestore.populator.naf.model.Span;
-import eu.fbk.knowledgestore.populator.naf.model.Srl;
-import eu.fbk.knowledgestore.populator.naf.model.Target;
-import eu.fbk.knowledgestore.populator.naf.model.TemporalRelations;
-import eu.fbk.knowledgestore.populator.naf.model.Term;
-import eu.fbk.knowledgestore.populator.naf.model.Terms;
-import eu.fbk.knowledgestore.populator.naf.model.Text;
-import eu.fbk.knowledgestore.populator.naf.model.TimeExpressions;
-import eu.fbk.knowledgestore.populator.naf.model.Timex3;
-import eu.fbk.knowledgestore.populator.naf.model.Tlink;
-import eu.fbk.knowledgestore.populator.naf.model.Wf;
-import eu.fbk.knowledgestore.vocabulary.KS;
-import eu.fbk.knowledgestore.vocabulary.NIF;
-import eu.fbk.knowledgestore.vocabulary.NWR;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+import java.io.*;
+import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
 
 public class processNAF {
 
@@ -2132,12 +2081,14 @@ public class processNAF {
         try {
             JAXBContext jc = JAXBContext.newInstance("eu.fbk.knowledgestore.populator.naf.model");
             Unmarshaller unmarshaller = jc.createUnmarshaller();
-            vars.doc = (NAF) unmarshaller.unmarshal(new InputStreamReader(new FileInputStream(naf),
+            vars.doc = (NAF) unmarshaller.unmarshal(new InputStreamReader(IO.read(naf.getAbsolutePath()),
                     "UTF-8"));
         } catch (UnsupportedEncodingException e) {
             logError(e.getMessage(),vars);
         } catch (FileNotFoundException e) {
             logError(e.getMessage(),vars);
+		} catch (IOException e) {
+			logError(e.getMessage(),vars);
         } catch (JAXBException e) {
             logError(e.getMessage(),vars);
         }
