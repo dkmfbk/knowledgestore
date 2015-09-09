@@ -4,9 +4,70 @@ public class statistics {
 
     private int entity = 0, coref = 0, timex = 0, srl = 0, objectMention = 0,
             timeMention = 0, eventMention = 0, rolewithEntity = 0, participationMention = 0,
-            rolewithoutEntity = 0, factuality = 0,role=0, corefMentionEvent=0,corefMentionNotEvent=0;
+            rolewithoutEntity = 0, factuality = 0,role=0, corefMentionEvent=0,corefMentionNotEvent=0
+            , clinkMention=0,tlinkMention=0, clinkMentionDiscarded=0,tlinkMentionDiscarded=0,tlinkMentionsEnriched=0;
     
-    public int getCorefMentionEvent() {
+    public int getClinkMention() {
+		return clinkMention;
+	}
+
+
+
+	public int getTlinkMentionsEnriched() {
+		return tlinkMentionsEnriched;
+	}
+
+
+
+	public void setTlinkMentionsEnriched(int tlinkMentionsEnriched) {
+		this.tlinkMentionsEnriched = tlinkMentionsEnriched;
+	}
+
+
+
+	public void setClinkMention(int clinkMention) {
+		this.clinkMention = clinkMention;
+	}
+
+
+
+	public int getTlinkMention() {
+		return tlinkMention;
+	}
+
+
+
+	public void setTlinkMention(int tlinkMention) {
+		this.tlinkMention = tlinkMention;
+	}
+
+
+
+	public int getClinkMentionDiscarded() {
+		return clinkMentionDiscarded;
+	}
+
+
+
+	public void setClinkMentionDiscarded(int clinkMentionDiscarded) {
+		this.clinkMentionDiscarded = clinkMentionDiscarded;
+	}
+
+
+
+	public int getTlinkMentionDiscarded() {
+		return tlinkMentionDiscarded;
+	}
+
+
+
+	public void setTlinkMentionDiscarded(int tlinkMentionDiscarded) {
+		this.tlinkMentionDiscarded = tlinkMentionDiscarded;
+	}
+
+
+
+	public int getCorefMentionEvent() {
         return corefMentionEvent;
     }
 
@@ -47,7 +108,9 @@ public class statistics {
                 + "), ORG(" + ORG + "), PRO(" + PRO + "), fin(" + fin + "), mix(" + mix
                 + "), no-mapping(" + no_mapping + ")" + "\nTime mentions: " + timeMention
                 + "\nEvent mentions: " + (eventMention)
-                + "\nParticipation mentions: " + participationMention;
+                + "\nParticipation mentions: " + participationMention
+                +"\nTlinks mentions: "+tlinkMention+" discarded("+tlinkMentionDiscarded+") enriched("+tlinkMentionsEnriched+") "
+                 +"\nClinks mentions: "+clinkMention+" discarded("+clinkMentionDiscarded+")";
         statistics += ("\n\npopulator stats:\nEntity:" + entity + "\nCoreference: " + coref
                 + " (event: "+getCorefMentionEvent()+" , not-event: "+getCorefMentionNotEvent()+" )\nSrl:" + srl);
        // statistics += ("\nRole:" + role);

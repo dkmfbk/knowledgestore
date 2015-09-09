@@ -135,6 +135,18 @@ public final class NWR {
     public static final URI VALUE_TYPE_ENUM = createURI("ValueType");
 
     // PROPERTIES
+    
+    /** Property nwr:section. */
+    public static final URI SECTION = createURI("section");
+    
+    /** Property nwr:magazine. */
+    public static final URI MAGAZINE = createURI("magazine");
+
+    /** Property nwr:location. */
+    public static final URI LOCATION = createURI("location");
+    
+    /** Property nwr:publisher. */
+    public static final URI PUBLISHER = createURI("publisher");
 
     /** Property nwr:anchorTime. */
     public static final URI ANCHOR_TIME = createURI("anchorTime");
@@ -180,6 +192,10 @@ public final class NWR {
 
     /** Property nwr:factualityConfidence. */
     public static final URI FACTUALITY_CONFIDENCE = createURI("factualityConfidence");
+    
+    /** Property nwr:factBank. */
+    public static final URI FACT_BANK = createURI("factBank");
+    
 
     /** Property nwr:framenetRef. */
     public static final URI FRAMENET_REF = createURI("framenetRef");
@@ -397,6 +413,15 @@ public final class NWR {
     /** Individual nwr:layer_time_expressions. */
     public static final URI LAYER_TIME_EXPRESSIONS = createURI("layer_time_expressions");
 
+    /** Individual nwr:layer_time_expressions. */
+    public static final URI LAYER_TOPICS = createURI("layer_topics");
+    
+    /** Individual nwr:layer_time_expressions. */
+    public static final URI LAYER_MARKABLES = createURI("layer_markables");
+    
+    /** Individual nwr:layer_time_expressions. */
+    public static final URI LAYER_FACTUALITIES = createURI("layer_factualities");
+    
     /** Individual nwr:layer_opinions. */
     public static final URI LAYER_OPINIONS = createURI("layer_opinions");
 
@@ -525,6 +550,12 @@ public final class NWR {
 
     /** Individual nwr:timex3_time. */
     public static final URI TIMEX3_TIME = createURI("timex3_time");
+
+    /** Individual nwr:tlink_from_tmx0. */
+    public static final URI TLINK_FROM_TMX0 = createURI("tlink_from_tmx0");
+
+    /** Individual nwr:tlink_tm_tmx0. */
+    public static final URI TLINK_TO_TMX0 = createURI("tlink_to_tmx0");
 
     /** Individual nwr:tlink_after. */
     public static final URI TLINK_AFTER = createURI("tlink_after");
