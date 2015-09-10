@@ -40,7 +40,7 @@ public class processNAF {
         }
     	processNAFVariables vars = new processNAFVariables();
 
-        analyzePathAndRunSystem(path, disabled_Items,vars);
+        analyzePathAndRunSystem(path, disabled_Items, vars);
     }
 
     public static KSPresentation init(String fPath, Writer inout, String disabled_Items,
@@ -658,6 +658,14 @@ public class processNAF {
         } else {
             logDebug("Start mapping the TLINKS mentions:",vars);
         }
+
+		if (temporalRelations == null) {
+			return;
+		}
+		if (temporalRelations.getTlink() == null) {
+			return;
+		}
+
         for (Tlink fvObj : temporalRelations.getTlink()) {
 
             String deg = "";
