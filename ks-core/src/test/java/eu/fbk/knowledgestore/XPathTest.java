@@ -26,6 +26,82 @@ import eu.fbk.knowledgestore.vocabulary.NIE;
 
 public class XPathTest {
 
+    @Test
+    public void test7() {
+
+        final Record record = Record.create(new URIImpl("ex:id"));
+        record.set(new URIImpl(KS.NAMESPACE + "p"), new URIImpl(KS.NAMESPACE + "x"));
+        System.out.println(record.toString(Data.getNamespaceMap(), true));
+
+        // final XPath xpath = XPath.parse("ks:test = strdt('true', \\xsd:boolean)");
+        // final XPath xpath = XPath.parse("ks:p = \\ks:x");
+        final XPath xpath = XPath.parse("ks:p = $$", new URIImpl(KS.NAMESPACE + "x"));
+
+        final Map<URI, Set<Object>> map = Maps.newHashMap();
+        xpath.decompose(map);
+        System.out.println(map);
+
+        System.out.println(xpath.eval(record));
+    }
+
+    @Ignore
+    @Test
+    public void test5() {
+
+        final long now = System.currentTimeMillis();
+
+        final Record record = Record.create(new URIImpl("ex:id"));
+        record.set(new URIImpl(KS.NAMESPACE + "p"), new Date(now));
+        System.out.println(record.toString(Data.getNamespaceMap(), true));
+
+        // final XPath xpath = XPath.parse("ks:test = strdt('true', \\xsd:boolean)");
+        final XPath xpath = XPath.parse("ks:p > $$ and ks:p < $$", new Date(now - 5000), new Date(
+                now + 5000));
+
+        final Map<URI, Set<Object>> map = Maps.newHashMap();
+        xpath.decompose(map);
+        System.out.println(map);
+
+        System.out.println(xpath.eval(record));
+    }
+
+    @Ignore
+    @Test
+    public void test4() {
+
+        final Record record = Record.create(new URIImpl("ex:id"));
+        record.set(new URIImpl(KS.NAMESPACE + "p"), "test");
+        System.out.println(record.toString(Data.getNamespaceMap(), true));
+
+        // final XPath xpath = XPath.parse("ks:test = strdt('true', \\xsd:boolean)");
+        final XPath xpath = XPath.parse("ks:p > '' and ks:p <= 'test'");
+
+        final Map<URI, Set<Object>> map = Maps.newHashMap();
+        xpath.decompose(map);
+        System.out.println(map);
+
+        System.out.println(xpath.eval(record));
+    }
+
+    @Ignore
+    @Test
+    public void test3() {
+
+        final Record record = Record.create(new URIImpl("ex:id"));
+        record.set(new URIImpl(KS.NAMESPACE + "boolean"), false);
+        record.set(new URIImpl(KS.NAMESPACE + "test"), true);
+        System.out.println(record.toString(Data.getNamespaceMap(), true));
+
+        // final XPath xpath = XPath.parse("ks:test = strdt('true', \\xsd:boolean)");
+        final XPath xpath = XPath.parse("ks:boolean = false");
+
+        final Map<URI, Set<Object>> map = Maps.newHashMap();
+        xpath.decompose(map);
+        System.out.println(map);
+
+        System.out.println(xpath.eval(record));
+    }
+
     @Ignore
     @Test
     public void test2() {
@@ -38,8 +114,11 @@ public class XPathTest {
         System.out.println(xpath.evalBoolean(record));
     }
 
+    @Ignore
     @Test
     public void test() {
+
+        System.out.println(XPath.parse("dct:test = $$", 55));
 
         final XPath xpath2 = XPath.parse("dct:created >= dateTime('2012-01-01') " //
                 + "and dct:created < dateTime('2012-01-31') " //
