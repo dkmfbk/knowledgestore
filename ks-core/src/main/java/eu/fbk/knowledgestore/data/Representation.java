@@ -1,16 +1,21 @@
 package eu.fbk.knowledgestore.data;
 
-import java.io.BufferedInputStream;
-import java.io.ByteArrayInputStream;
-import java.io.Closeable;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.Reader;
+import com.google.common.base.Charsets;
+import com.google.common.base.Preconditions;
+import com.google.common.base.Throwables;
+import com.google.common.io.ByteStreams;
+import com.google.common.io.CharSource;
+import com.google.common.io.CharStreams;
+import com.google.common.net.MediaType;
+import eu.fbk.knowledgestore.vocabulary.KS;
+import eu.fbk.knowledgestore.vocabulary.NFO;
+import eu.fbk.knowledgestore.vocabulary.NIE;
+import eu.fbk.rdfpro.util.IO;
+import org.openrdf.model.URI;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.ByteBuffer;
@@ -20,22 +25,6 @@ import java.nio.charset.CharsetEncoder;
 import java.nio.charset.CoderResult;
 import java.nio.charset.CodingErrorAction;
 import java.util.Date;
-
-import com.google.common.base.Charsets;
-import com.google.common.base.Preconditions;
-import com.google.common.base.Throwables;
-import com.google.common.io.ByteStreams;
-import com.google.common.io.CharSource;
-import com.google.common.io.CharStreams;
-import com.google.common.net.MediaType;
-
-import org.openrdf.model.URI;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import eu.fbk.knowledgestore.vocabulary.KS;
-import eu.fbk.knowledgestore.vocabulary.NFO;
-import eu.fbk.knowledgestore.vocabulary.NIE;
 
 /**
  * A digital representation of a resource.
@@ -171,7 +160,7 @@ public final class Representation implements Closeable {
     public static Representation create(final File file) throws IllegalArgumentException {
         try {
             final Representation representation = new Representation(new BufferedInputStream(
-                    new FileInputStream(file)));
+                    IO.read(file.getAbsolutePath())));
             representation.metadata.set(NFO.FILE_SIZE, file.length());
             representation.metadata.set(NFO.FILE_NAME, file.getName());
             representation.metadata.set(NFO.FILE_LAST_MODIFIED, new Date(file.lastModified()));
@@ -179,6 +168,8 @@ public final class Representation implements Closeable {
             return representation;
         } catch (final FileNotFoundException ex) {
             throw new IllegalArgumentException("Not a file: " + file.getAbsolutePath());
+        } catch (IOException e) {
+            throw new IllegalArgumentException("IOException on file: " + file.getAbsolutePath());
         }
     }
 

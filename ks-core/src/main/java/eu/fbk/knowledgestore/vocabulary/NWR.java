@@ -80,6 +80,9 @@ public final class NWR {
     /** Class nwr:NAFProcessor. */
     public static final URI NAFPROCESSOR = createURI("NAFProcessor");
 
+    /** Class nwr:NAFProcessor. */
+    public static final URI MODULES = createURI("modules");
+
     /** Class nwr:News. */
     public static final URI NEWS = createURI("News");
 

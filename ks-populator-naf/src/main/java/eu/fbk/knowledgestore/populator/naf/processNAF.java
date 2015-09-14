@@ -1379,7 +1379,7 @@ public class processNAF {
 
                 URI rId = new URIImpl(uri);
                 r3.setID(rId);
-                nafFile.add(DCTERMS.CREATOR, r3);
+                nafFile.add(NWR.MODULES, r3);
                 deg += "|CREATOR:" + r3;
             }
         }
