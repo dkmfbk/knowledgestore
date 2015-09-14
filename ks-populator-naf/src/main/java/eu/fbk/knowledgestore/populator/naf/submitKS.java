@@ -177,7 +177,7 @@ public class submitKS {
 	for (final Map.Entry<URI, String> entry : FILE_RESOURCES.entrySet()) {
 	    final URI resourceID = entry.getKey();
 	    final File nafFile = new File(entry.getValue());
-	    final Representation representation = Representation.create(nafFile);
+	    final Representation representation = Representation.create(nafFile, true);
 	    try {
 		session.upload(resourceID).representation(representation).exec();
 	    } finally {

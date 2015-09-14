@@ -1,21 +1,15 @@
 package eu.fbk.knowledgestore.data;
 
-import com.google.common.base.Charsets;
-import com.google.common.base.Preconditions;
-import com.google.common.base.Throwables;
-import com.google.common.io.ByteStreams;
-import com.google.common.io.CharSource;
-import com.google.common.io.CharStreams;
-import com.google.common.net.MediaType;
-import eu.fbk.knowledgestore.vocabulary.KS;
-import eu.fbk.knowledgestore.vocabulary.NFO;
-import eu.fbk.knowledgestore.vocabulary.NIE;
-import eu.fbk.rdfpro.util.IO;
-import org.openrdf.model.URI;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.Closeable;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.Reader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.ByteBuffer;
@@ -25,6 +19,23 @@ import java.nio.charset.CharsetEncoder;
 import java.nio.charset.CoderResult;
 import java.nio.charset.CodingErrorAction;
 import java.util.Date;
+
+import com.google.common.base.Charsets;
+import com.google.common.base.Preconditions;
+import com.google.common.base.Throwables;
+import com.google.common.io.ByteStreams;
+import com.google.common.io.CharSource;
+import com.google.common.io.CharStreams;
+import com.google.common.net.MediaType;
+
+import org.openrdf.model.URI;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import eu.fbk.knowledgestore.vocabulary.KS;
+import eu.fbk.knowledgestore.vocabulary.NFO;
+import eu.fbk.knowledgestore.vocabulary.NIE;
+import eu.fbk.rdfpro.util.IO;
 
 /**
  * A digital representation of a resource.
@@ -119,7 +130,7 @@ public final class Representation implements Closeable {
      * Creates a representation based on the {@code InputStream} specified. Note that the supplied
      * {@code InputStream} is never closed by this class: it MUST be closed externally under the
      * responsibility of the caller.
-     * 
+     *
      * @param stream
      *            the {@code InputStream}, not null
      * @return the created representation
@@ -133,7 +144,7 @@ public final class Representation implements Closeable {
      * will be reflected in the returned representation metadata (property {@link NFO#FILE_SIZE}).
      * Note that the byte array should not be changed after calling this method, as modification
      * could be (partially) reflected in the returned representation.
-     * 
+     *
      * @param bytes
      *            the byte array containing the binary data of the representation
      * @return the created representation
@@ -150,25 +161,38 @@ public final class Representation implements Closeable {
      * (respectively, properties {@link NFO#FILE_SIZE}, {@link NFO#FILE_NAME},
      * {@link NFO#FILE_LAST_MODIFIED}, {@link NIE#MIME_TYPE}). Note that this method causes the
      * file to be opened for reading.
-     * 
+     *
      * @param file
      *            the file containing the binary data of the representation
+     * @param autoDecompress
+     *            automatically decompress the file, if compressed with gzip, bzip2, xz, 7z or lz4
      * @return the created representation
      * @throws IllegalArgumentException
      *             in case the file does not exist
      */
-    public static Representation create(final File file) throws IllegalArgumentException {
+    public static Representation create(final File file, final boolean autoDecompress)
+            throws IllegalArgumentException {
         try {
-            final Representation representation = new Representation(new BufferedInputStream(
-                    IO.read(file.getAbsolutePath())));
+            String name = file.getName();
+            final Representation representation;
+            if (autoDecompress) {
+                representation = new Representation(IO.buffer(IO.read(file.getAbsolutePath())));
+                if (name.endsWith(".gz") || name.endsWith(".xz") || name.endsWith(".7z")) {
+                    name = name.substring(0, name.length() - 3);
+                } else if (name.endsWith(".bz2") || name.endsWith(".lz4")) {
+                    name = name.substring(0, name.length() - 4);
+                }
+            } else {
+                representation = new Representation(IO.buffer(new FileInputStream(file)));
+            }
             representation.metadata.set(NFO.FILE_SIZE, file.length());
-            representation.metadata.set(NFO.FILE_NAME, file.getName());
+            representation.metadata.set(NFO.FILE_NAME, name);
             representation.metadata.set(NFO.FILE_LAST_MODIFIED, new Date(file.lastModified()));
-            representation.metadata.set(NIE.MIME_TYPE, Data.extensionToMimeType(file.getName()));
+            representation.metadata.set(NIE.MIME_TYPE, Data.extensionToMimeType(name));
             return representation;
         } catch (final FileNotFoundException ex) {
             throw new IllegalArgumentException("Not a file: " + file.getAbsolutePath());
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw new IllegalArgumentException("IOException on file: " + file.getAbsolutePath());
         }
     }
@@ -181,7 +205,7 @@ public final class Representation implements Closeable {
      * size ({@link NFO#FILE_SIZE}), the file name ({@link NFO#FILE_NAME}) and the MD5 hash (
      * {@link NFO#HAS_HASH}); all of these attributes are optional and are extracted only if
      * available.
-     * 
+     *
      * @param url
      *            the URL that, resolved, will produced the binary data of the representation
      * @return the created representation
@@ -277,7 +301,7 @@ public final class Representation implements Closeable {
      * character data produced by the {@code Reader} will be translated into byte data either
      * using the charset specified in the representation metadata (property {@link NIE#MIME_TYPE})
      * or by using UTF-8.
-     * 
+     *
      * @param reader
      *            the reader producing the character data of the representation
      * @return the created representation
@@ -292,7 +316,7 @@ public final class Representation implements Closeable {
      * invocation of {@link #getInputStream()}), character data produced by the {@code Reader}
      * will be translated into byte data either using the charset specified in the representation
      * metadata (property {@link NIE#MIME_TYPE}) or by using UTF-8.
-     * 
+     *
      * @param sequence
      *            the {@code CharSequence} with the character data of the representation
      * @return the created representation
@@ -307,7 +331,7 @@ public final class Representation implements Closeable {
 
     /**
      * Returns the metadata about this representation.
-     * 
+     *
      * @return the representation metadata, not null
      */
     public Record getMetadata() {
@@ -318,7 +342,7 @@ public final class Representation implements Closeable {
      * Returns an {@code InputStream} over the binary data of this representation object.
      * Conversion from character to byte data, if required, is performed according to the charset
      * specified by the MIME type metadata property ({@link NIE#MIME_TYPE}).
-     * 
+     *
      * @return an {@code InputStream} over the binary content of this representation
      */
     public InputStream getInputStream() {
@@ -334,7 +358,7 @@ public final class Representation implements Closeable {
      * Returns a {@code Reader} over the character data of this representation object. Conversion
      * from byte to character data, if required, is performed according to the charset specified
      * by the MIME type metadata property ({@link NIE#MIME_TYPE}).
-     * 
+     *
      * @return a {@code Reader} providing access to the character data of the representation.
      */
     public Reader getReader() {
@@ -352,7 +376,7 @@ public final class Representation implements Closeable {
      * by the MIME type metadata property ({@link NIE#MIME_TYPE}). If some data has been already
      * read via {@code getInputStream()} or {@code getReaer()}, it will not be returned in the
      * result.
-     * 
+     *
      * @return a byte array with the binary content of this representation
      * @throws IOException
      *             in case access to binary data fails
@@ -372,7 +396,7 @@ public final class Representation implements Closeable {
      * by the MIME type metadata property ({@link NIE#MIME_TYPE}). If some data has been already
      * read via {@code getInputStream()} or {@code getReaer()}, it will not be returned in the
      * result.
-     * 
+     *
      * @return a {@code String} containg the full character-based content of this representation
      * @throws IOException
      *             in case access to binary data fails
@@ -392,7 +416,7 @@ public final class Representation implements Closeable {
      * the charset specified by the MIME type metadata property ({@link NIE#MIME_TYPE}). If some
      * data has been already read via {@code getInputStream()} or {@code getReaer()}, it will not
      * be written to the supplied sink.
-     * 
+     *
      * @param sink
      *            the sink where to write binary data to
      * @throws IOException
@@ -413,7 +437,7 @@ public final class Representation implements Closeable {
      * the charset specified by the MIME type metadata property ({@link NIE#MIME_TYPE}). If some
      * data has been already read via {@code getInputStream()} or {@code getReaer()}, it will not
      * be written to the supplied sink.
-     * 
+     *
      * @param sink
      *            the sink where to write character data to
      * @throws IOException
