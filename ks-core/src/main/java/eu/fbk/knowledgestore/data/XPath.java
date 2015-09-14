@@ -4,6 +4,7 @@ import java.io.ObjectStreamException;
 import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -11,6 +12,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.annotation.Nullable;
+import javax.xml.datatype.XMLGregorianCalendar;
 
 import com.google.common.base.Function;
 import com.google.common.base.Objects;
@@ -52,8 +54,12 @@ import org.jaxen.expr.UnaryExpr;
 import org.jaxen.expr.XPathFactory;
 import org.jaxen.saxpath.XPathReader;
 import org.jaxen.saxpath.helpers.XPathReaderFactory;
+import org.openrdf.model.Literal;
 import org.openrdf.model.URI;
 import org.openrdf.model.impl.URIImpl;
+import org.openrdf.model.vocabulary.XMLSchema;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * An XPath-like expression that computes/extracts a list of objects starting from an object of
@@ -118,6 +124,8 @@ import org.openrdf.model.impl.URIImpl;
  */
 @SuppressWarnings("deprecation")
 public abstract class XPath implements Serializable {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(XPath.class);
 
     private static final Cache<String, XPath> CACHE = CacheBuilder.newBuilder().maximumSize(1024)
             .build();
@@ -330,10 +338,15 @@ public abstract class XPath implements Serializable {
         final Set<URI> properties = Sets.newHashSet();
         try {
             xpathString = extractNamespaces(expandedString, declaredNamespaces);
+            String rewrittenXpathString = rewriteLiterals(xpathString, combinedNamespaces,
+                    usedNamespaces);
+            rewrittenXpathString = rewriteEscapedURIs(rewrittenXpathString, combinedNamespaces,
+                    usedNamespaces);
+            LOGGER.debug("XPath '{}' rewritten to '{}'", expression, rewrittenXpathString);
             final JaxenHandler handler = new JaxenHandler();
             final XPathReader reader = XPathReaderFactory.createReader();
             reader.setXPathHandler(handler);
-            reader.parse(rewriteEscapedURIs(xpathString, combinedNamespaces, usedNamespaces));
+            reader.parse(rewrittenXpathString);
             expr = handler.getXPathExpr().getRootExpr();
             assert expr != null;
             analyzeExpr(expr, combinedNamespaces, usedNamespaces, properties, true);
@@ -454,6 +467,111 @@ public abstract class XPath implements Serializable {
         return builder.toString();
     }
 
+    private static String rewriteLiterals(final String string,
+            final Map<String, String> inNamespaces, final Map<String, String> outNamespaces) {
+
+        final StringBuilder builder = new StringBuilder();
+        final int length = string.length();
+        int i = 0;
+
+        try {
+            while (i < length) {
+                char c = string.charAt(i);
+                if (c == '\'' || c == '\"') {
+                    final char d = c; // delimiter
+                    if (i > 0 && string.charAt(i - 1) == '\\' //
+                            || i >= 4 && string.startsWith("uri(", i - 4) //
+                            || i >= 4 && string.startsWith("str(", i - 4) //
+                            || i >= 6 && string.startsWith("strdt(", i - 6) //
+                            || i >= 8 && string.startsWith("strlang(", i - 8)) {
+                        do {
+                            builder.append(c);
+                            c = string.charAt(++i);
+                        } while (c != d || string.charAt(i - 1) == '\\');
+                        builder.append(c);
+                        ++i;
+                    } else {
+                        int start = i + 1;
+                        do {
+                            c = string.charAt(++i);
+                        } while (c != d || string.charAt(i - 1) == '\\');
+                        final String label = string.substring(start, i);
+                        String lang = null;
+                        String dt = null;
+                        ++i;
+                        if (i < length) {
+                            if (string.charAt(i) == '@') {
+                                start = ++i;
+                                do {
+                                    c = string.charAt(i++);
+                                } while (i < length && Character.isLetter(c));
+                                lang = string.substring(start, i);
+                            } else if (string.charAt(i) == '^' && i + 1 < length
+                                    && string.charAt(i + 1) == '^') {
+                                i += 2;
+                                if (string.charAt(i) == '<') {
+                                    start = i + 1;
+                                    do {
+                                        c = string.charAt(++i);
+                                    } while (c != '>');
+                                    dt = string.substring(start, i);
+                                } else {
+                                    start = i;
+                                    while (i < length && (string.charAt(i) == ':' //
+                                            || string.charAt(i) == '_' //
+                                            || string.charAt(i) == '-' //
+                                            || string.charAt(i) == '.' //
+                                    || Character.isLetterOrDigit(string.charAt(i)))) {
+                                        ++i;
+                                    }
+                                    final String qname = string.substring(start, i);
+                                    final String prefix = qname.substring(0, qname.indexOf(':'));
+                                    final URI uri = (URI) Data.parseValue(qname, inNamespaces);
+                                    outNamespaces.put(prefix, uri.getNamespace());
+                                    dt = uri.stringValue();
+                                }
+                            }
+                        }
+                        if (lang != null) {
+                            builder.append("strlang(\"").append(label).append("\", \"")
+                                    .append(lang).append("\")");
+                        } else if (dt != null) {
+                            builder.append("strdt(\"").append(label).append("\", uri(\"")
+                                    .append(dt).append("\"))");
+                        } else {
+                            builder.append("str(\"").append(label).append("\")");
+                        }
+                    }
+                } else if (c == 't'
+                        && string.startsWith("true", i)
+                        && (i == 0 || !Character.isLetterOrDigit(string.charAt(i - 1)))
+                        && (i + 4 == length || !Character.isLetterOrDigit(string.charAt(i + 4))
+                                && string.charAt(i + 4) != '(')) {
+                    builder.append("strdt(\"true\", uri(\"")
+                            .append(XMLSchema.BOOLEAN.stringValue()).append("\"))");
+                    i += 4;
+
+                } else if (c == 'f'
+                        && string.startsWith("false", i)
+                        && (i == 0 || !Character.isLetterOrDigit(string.charAt(i - 1)))
+                        && (i + 5 == length || !Character.isLetterOrDigit(string.charAt(i + 5))
+                                && string.charAt(i + 5) != '(')) {
+                    builder.append("strdt(\"false\", uri(\"")
+                            .append(XMLSchema.BOOLEAN.stringValue()).append("\"))");
+                    i += 5;
+
+                } else {
+                    builder.append(c);
+                    ++i;
+                }
+            }
+        } catch (final Exception ex) {
+            throw new IllegalArgumentException("Illegal URI escaping near offset " + i, ex);
+        }
+
+        return builder.toString();
+    }
+
     private static void analyzeExpr(final Expr expr, final Map<String, String> inNamespaces,
             final Map<String, String> outNamespaces, final Set<URI> outProperties,
             final boolean root) {
@@ -553,6 +671,10 @@ public abstract class XPath implements Serializable {
 
         } else if (object instanceof Number) {
             return object.toString();
+
+        } else if (object instanceof Date || object instanceof GregorianCalendar
+                || object instanceof XMLGregorianCalendar) {
+            return "dateTime(\'" + Data.convert(object, XMLGregorianCalendar.class) + "\')";
 
         } else if (object instanceof URI) {
             return "\\'" + object.toString().replace("\'", "\\\'") + "\'";
@@ -975,6 +1097,32 @@ public abstract class XPath implements Serializable {
                         swap = true;
                     }
 
+                    if (value instanceof Literal) {
+                        final Literal lit = (Literal) value;
+                        final URI dt = lit.getDatatype();
+                        if (dt == null || dt.equals(XMLSchema.STRING)) {
+                            value = lit.stringValue();
+                        } else if (dt.equals(XMLSchema.BOOLEAN)) {
+                            value = lit.booleanValue();
+                        } else if (dt.equals(XMLSchema.DATE) || dt.equals(XMLSchema.DATETIME)) {
+                            value = lit.calendarValue().toGregorianCalendar().getTime();
+                        } else if (dt.equals(XMLSchema.INT) || dt.equals(XMLSchema.LONG)
+                                || dt.equals(XMLSchema.DOUBLE) || dt.equals(XMLSchema.FLOAT)
+                                || dt.equals(XMLSchema.SHORT) || dt.equals(XMLSchema.BYTE)
+                                || dt.equals(XMLSchema.DECIMAL) || dt.equals(XMLSchema.INTEGER)
+                                || dt.equals(XMLSchema.NON_NEGATIVE_INTEGER)
+                                || dt.equals(XMLSchema.NON_POSITIVE_INTEGER)
+                                || dt.equals(XMLSchema.NEGATIVE_INTEGER)
+                                || dt.equals(XMLSchema.POSITIVE_INTEGER)) {
+                            value = lit.doubleValue();
+                        } else if (dt.equals(XMLSchema.NORMALIZEDSTRING)
+                                || dt.equals(XMLSchema.TOKEN) || dt.equals(XMLSchema.NMTOKEN)
+                                || dt.equals(XMLSchema.LANGUAGE) || dt.equals(XMLSchema.NAME)
+                                || dt.equals(XMLSchema.NCNAME)) {
+                            value = lit.getLabel();
+                        }
+                    }
+
                     if (property != null && value != null) {
                         if ("=".equals(binary.getOperator())) {
                             valueOrRange = value;
@@ -1035,6 +1183,7 @@ public abstract class XPath implements Serializable {
         }
     }
 
+    @SuppressWarnings("rawtypes")
     @Nullable
     private Object extractValue(final Expr node) {
         if (node instanceof LiteralExpr) {
@@ -1045,17 +1194,35 @@ public abstract class XPath implements Serializable {
                     : number.longValue(); // always return a Double
         } else if (node instanceof FunctionCallExpr) {
             final FunctionCallExpr function = (FunctionCallExpr) node;
-            if (function.getFunctionName().equals("uri") && function.getParameters().size() == 1) {
-                final Expr arg = (Expr) function.getParameters().get(0);
-                if (arg instanceof LiteralExpr) {
-                    return new URIImpl(((LiteralExpr) arg).getLiteral());
+            final String name = function.getFunctionName();
+            String arg0 = null;
+            String arg1 = null;
+            final List params = function.getParameters();
+            final int numParams = params.size();
+            if (numParams > 0 && params.get(0) instanceof LiteralExpr) {
+                arg0 = ((LiteralExpr) params.get(0)).getLiteral();
+            }
+            if (numParams > 1 && params.get(1) instanceof LiteralExpr) {
+                arg1 = ((LiteralExpr) params.get(1)).getLiteral();
+            }
+            if (name.equals("uri") && numParams == 1 && arg0 != null) {
+                return new URIImpl(arg0);
+            } else if (name.equals("dateTime") && numParams == 1 && arg0 != null) {
+                return Data.convert(arg0, Date.class);
+            } else if (name.equals("true") && numParams == 0) {
+                return true;
+            } else if (name.equals("false") && numParams == 0) {
+                return false;
+            } else if (name.equals("str") && numParams == 1 && arg0 != null) {
+                return Data.getValueFactory().createLiteral(arg0);
+            } else if (name.equals("strdt") && numParams == 2 && arg0 != null) {
+                final Object dt = extractValue((Expr) params.get(1));
+                if (dt instanceof URI) {
+                    return Data.getValueFactory().createLiteral(arg0, (URI) dt);
                 }
-            } else if (function.getFunctionName().equals("dateTime")
-                    && function.getParameters().size() == 1) {
-                final Expr arg = (Expr) function.getParameters().get(0);
-                if (arg instanceof LiteralExpr) {
-                    return Data.convert(((LiteralExpr) arg).getLiteral(), Date.class);
-                }
+            } else if (name.equals("strlang") && numParams == 2 && arg0 != null && arg1 != null) {
+                return Data.getValueFactory().createLiteral(arg0, arg1);
+
             }
         }
         return null;
@@ -1181,6 +1348,10 @@ public abstract class XPath implements Serializable {
      */
     public static String toString(final Object... values) {
         return encode(values, true);
+    }
+
+    public static Object unwrap(final Object object) {
+        return XPathNavigator.INSTANCE.unwrap(object);
     }
 
     private Object writeReplace() throws ObjectStreamException {

@@ -2,6 +2,8 @@ package eu.fbk.knowledgestore.data;
 
 import java.util.List;
 
+import javax.xml.datatype.XMLGregorianCalendar;
+
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
@@ -40,6 +42,7 @@ import org.jaxen.function.ext.EndsWithFunction;
 import org.jaxen.function.ext.EvaluateFunction;
 import org.jaxen.function.ext.LowerFunction;
 import org.jaxen.function.ext.UpperFunction;
+import org.openrdf.model.URI;
 
 // TODO add subject(), predicate(), object(), context() functions to extract statement components
 
@@ -60,9 +63,12 @@ abstract class XPathFunction implements Function {
         CONTEXT.registerFunction(null, "lang", new LangFunction()); // xpath1
         CONTEXT.registerFunction(null, "evaluate", new EvaluateFunction()); // xpath2 jaxen
 
-        // Function on URIs
+        // Function on RDF Values
         CONTEXT.registerFunction(null, "uri", new URIFunction());
         CONTEXT.registerFunction(null, "escape-uri", new EscapeURIFunction());
+        CONTEXT.registerFunction(null, "str", new StrFunction());
+        CONTEXT.registerFunction(null, "strdt", new StrdtFunction());
+        CONTEXT.registerFunction(null, "strlang", new StrlangFunction());
 
         // Functions on booleans
         CONTEXT.registerFunction(null, "boolean", new BooleanFunction()); // xpath1
@@ -141,6 +147,57 @@ abstract class XPathFunction implements Function {
 
             final String string = StringFunction.evaluate(args.get(0), context.getNavigator());
             return Data.getValueFactory().createURI(string);
+        }
+
+    }
+
+    private static final class StrFunction extends XPathFunction {
+
+        @SuppressWarnings("rawtypes")
+        @Override
+        public Object call(final Context context, final List args) throws FunctionCallException {
+
+            if (args.size() != 1) {
+                throw new FunctionCallException("str() requires one argument");
+            }
+
+            final String label = StringFunction.evaluate(args.get(0), context.getNavigator());
+            return Data.getValueFactory().createLiteral(label);
+        }
+
+    }
+
+    private static final class StrdtFunction extends XPathFunction {
+
+        @SuppressWarnings("rawtypes")
+        @Override
+        public Object call(final Context context, final List args) throws FunctionCallException {
+
+            if (args.size() != 2) {
+                throw new FunctionCallException("strdt() requires two arguments");
+            }
+
+            final String label = StringFunction.evaluate(args.get(0), context.getNavigator());
+            final URI dt = args.get(1) instanceof URI ? (URI) args.get(1) : Data.getValueFactory()
+                    .createURI(StringFunction.evaluate(args.get(1), context.getNavigator()));
+            return Data.getValueFactory().createLiteral(label, dt);
+        }
+
+    }
+
+    private static final class StrlangFunction extends XPathFunction {
+
+        @SuppressWarnings("rawtypes")
+        @Override
+        public Object call(final Context context, final List args) throws FunctionCallException {
+
+            if (args.size() != 2) {
+                throw new FunctionCallException("strlang() requires two arguments");
+            }
+
+            final String label = StringFunction.evaluate(args.get(0), context.getNavigator());
+            final String lang = StringFunction.evaluate(args.get(1), context.getNavigator());
+            return Data.getValueFactory().createLiteral(label, lang);
         }
 
     }
@@ -236,7 +293,7 @@ abstract class XPathFunction implements Function {
         @Override
         @SuppressWarnings("rawtypes")
         public Object call(final Context context, final List args) throws FunctionCallException {
-            throw new UnsupportedOperationException(); // TODO
+            return Data.convert(args.get(0), XMLGregorianCalendar.class);
         }
 
     }

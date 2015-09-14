@@ -8,6 +8,7 @@ import java.util.NoSuchElementException;
 
 import javax.annotation.Nullable;
 
+import com.google.common.collect.AbstractIterator;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.UnmodifiableIterator;
 
@@ -188,7 +189,13 @@ final class XPathNavigator extends DefaultNavigator {
 
     @Override
     public String getTextStringValue(final Object text) {
-        return text instanceof Element || text instanceof Collection ? null : text.toString();
+        if (text instanceof Element || text instanceof Collection) {
+            return null;
+        }
+        if (text instanceof Value) {
+            return ((Value) text).stringValue();
+        }
+        return text.toString();
     }
 
     @Override
@@ -226,7 +233,7 @@ final class XPathNavigator extends DefaultNavigator {
 
     }
 
-    private static final class ChildIterator extends UnmodifiableIterator<Object> {
+    private static final class ChildIterator extends AbstractIterator<Object> {
 
         private final Element parent;
 
@@ -254,19 +261,22 @@ final class XPathNavigator extends DefaultNavigator {
         }
 
         @Override
-        public boolean hasNext() {
-            return this.valueIndex < this.values.size()
-                    || this.propertyIndex < this.properties.size();
-        }
-
-        @Override
-        public Element next() {
-            if (this.valueIndex >= this.values.size()) {
+        protected Object computeNext() {
+            while (true) {
+                while (this.valueIndex < this.values.size()) {
+                    final Object value = this.values.get(this.valueIndex++);
+                    // if (!BooleanLiteralImpl.FALSE.equals(value)) {
+                    // This is necessary for proper comparison of boolean values
+                    return new Element(this.parent, this.propertyURI, value);
+                    // }
+                }
+                if (this.propertyIndex == this.properties.size()) {
+                    return endOfData();
+                }
                 this.propertyURI = this.properties.get(this.propertyIndex++);
                 this.values = ((Record) this.parent.getContent()).get(this.propertyURI);
                 this.valueIndex = 0;
             }
-            return new Element(this.parent, this.propertyURI, this.values.get(this.valueIndex++));
         }
 
     }
