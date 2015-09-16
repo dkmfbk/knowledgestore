@@ -1,5 +1,6 @@
 package eu.fbk.knowledgestore.populator.naf;
 
+import com.google.common.io.ByteStreams;
 import eu.fbk.knowledgestore.data.Data;
 import eu.fbk.knowledgestore.data.Record;
 import eu.fbk.knowledgestore.populator.naf.model.*;
@@ -1500,7 +1501,7 @@ public class processNAF {
 				deg += "|SYNTACTIC_HEAD:" + spTar.getId();
 			    } else {
 					logDebug("//NAF/coreferences/coref/span/target[@head='yes']/@id[null], id("
-					+ spTar.getId() + ")",vars);
+							+ spTar.getId() + ")", vars);
 			    }
 			}
 		    }
@@ -2089,8 +2090,8 @@ public class processNAF {
         try {
             JAXBContext jc = JAXBContext.newInstance("eu.fbk.knowledgestore.populator.naf.model");
             Unmarshaller unmarshaller = jc.createUnmarshaller();
-            vars.doc = (NAF) unmarshaller.unmarshal(new InputStreamReader(IO.read(naf.getAbsolutePath()),
-                    "UTF-8"));
+			byte[] bytes = ByteStreams.toByteArray(IO.read(naf.getAbsolutePath()));
+			vars.doc = (NAF) unmarshaller.unmarshal(new InputStreamReader(new ByteArrayInputStream(bytes), "UTF-8"));
         } catch (UnsupportedEncodingException e) {
             logError(e.getMessage(),vars);
         } catch (FileNotFoundException e) {
