@@ -38,11 +38,15 @@ public final class GzippedFileStore extends ForwardingFileStore {
 
     private static final int DEFAULT_BUFFER_SIZE = 512;
 
+    private static final boolean DEFAULT_FORCE_COMPRESSION = true;
+
     private final FileStore delegate;
 
     private final int compressionLevel;
 
     private final int bufferSize;
+
+    private final boolean forceCompression;
 
     /**
      * Creates a new instance wrapping the {@code FileStore} supplied and using the default
@@ -53,7 +57,7 @@ public final class GzippedFileStore extends ForwardingFileStore {
      * @see #GzippedFileStore(FileStore, Integer, Integer)
      */
     public GzippedFileStore(final FileStore delegate) {
-        this(delegate, null, null);
+        this(delegate, null, null, null);
     }
 
     /**
@@ -69,9 +73,12 @@ public final class GzippedFileStore extends ForwardingFileStore {
      * @param bufferSize
      *            the size of the buffer used by the GZIP inflaters / deflaters; if null defaults
      *            to 512
+     * @param forceCompression
+     *            if true, supplied files are always compressed independently of their (detected)
+     *            MIME type; if null defaults to false
      */
     public GzippedFileStore(final FileStore delegate, @Nullable final Integer compressionLevel,
-            @Nullable final Integer bufferSize) {
+            @Nullable final Integer bufferSize, @Nullable final Boolean forceCompression) {
 
         Preconditions.checkNotNull(delegate);
         Preconditions.checkArgument(compressionLevel == null
@@ -84,6 +91,8 @@ public final class GzippedFileStore extends ForwardingFileStore {
         this.compressionLevel = MoreObjects.firstNonNull(compressionLevel,
                 DEFAULT_COMPRESSION_LEVEL);
         this.bufferSize = MoreObjects.firstNonNull(bufferSize, DEFAULT_BUFFER_SIZE);
+        this.forceCompression = MoreObjects.firstNonNull(forceCompression,
+                DEFAULT_FORCE_COMPRESSION);
 
         LOGGER.info("GZippedFileStore configured, compression={}, buffer={}", compressionLevel,
                 bufferSize);
@@ -137,12 +146,12 @@ public final class GzippedFileStore extends ForwardingFileStore {
         }, 0);
     }
 
-    private static String toInternalFilename(final String filename) {
-        final String mimeType = Data.extensionToMimeType(filename);
-        return Data.isMimeTypeCompressible(mimeType) ? filename + ".gz" : filename;
+    private String toInternalFilename(final String filename) {
+        return this.forceCompression || Data.isMimeTypeCompressible( //
+                Data.extensionToMimeType(filename)) ? filename + ".gz" : filename;
     }
 
-    private static String toExternalFilename(final String filename) {
+    private String toExternalFilename(final String filename) {
         return filename.endsWith(".gz") ? filename.substring(0, filename.length() - 3) : filename;
     }
 

@@ -32,18 +32,20 @@ public class runPopoulator {
                // "-d","/mnt/wind/work/test-20/2011"
                // , "-x", "Entity"
                // , "-u", "http://localhost:8080/"
-                "-u","http://maya:8080",
+              //  "-u","http://maya:8080",
               //  "-n","/Users/qwaider/Desktop/NewsReader/testSet/58B2-1JT1-DYTM-916F.xml_09f6656a977d7216bde58d33a5c51921.naf"
-               //  "-d","/Users/qwaider/Desktop/NewsReader/test/"
+               //  "-d","/Users/qwaider/Documents/Projects/NWR-August-v3/v3_test_dataset/test/"
+                 "-n","/Users/qwaider/Documents/Projects/NWR-August-v3/v3_test_dataset/out/5FN3-TY71-F11P-X2H4.xml"
+                 
              //   "-d","/Users/qwaider/Desktop/NewsReader/testMTH/DATA/",
              //   "-d","/Users/qwaider/Desktop/NewsReader/test3/"
                // "-n","/Users/qwaider/Desktop/NewsReader/test3/test.naf"
                // "-d","/Users/qwaider/Desktop/NewsReader/populator.test/test-multifiles/input/"
-                "-x", "Entity" 
-               // ,"-p"
-                ,"-f","NAF_TESTWC.20.list"
-                ,"-o", "rr-last.report"
-                ,"-or", "rr.records" 
+             //   "-x", "Entity" 
+                ,"-p"
+               // ,"-f","NAF_TESTWC.20.list"
+                ,"-o", "rr-last2.report"
+                ,"-or", "rr2.records" 
                // "-h"
                 ,"-b","5"
                 ,"-qs","5"
