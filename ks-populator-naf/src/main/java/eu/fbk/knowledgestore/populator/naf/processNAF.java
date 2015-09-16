@@ -2091,7 +2091,7 @@ public class processNAF {
             JAXBContext jc = JAXBContext.newInstance("eu.fbk.knowledgestore.populator.naf.model");
             Unmarshaller unmarshaller = jc.createUnmarshaller();
 			byte[] bytes = ByteStreams.toByteArray(IO.read(naf.getAbsolutePath()));
-			vars.doc = (NAF) unmarshaller.unmarshal(new InputStreamReader(new ByteArrayInputStream(bytes), "UTF-8"));
+			vars.doc = (NAF) unmarshaller.unmarshal(new ByteArrayInputStream(bytes));
         } catch (UnsupportedEncodingException e) {
             logError(e.getMessage(),vars);
         } catch (FileNotFoundException e) {
