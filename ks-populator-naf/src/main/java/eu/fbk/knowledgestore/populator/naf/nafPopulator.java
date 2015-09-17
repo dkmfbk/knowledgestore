@@ -1,53 +1,24 @@
 package eu.fbk.knowledgestore.populator.naf;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.io.Reader;
-import java.io.UnsupportedEncodingException;
-import java.io.Writer;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.net.URL;
-import java.util.Hashtable;
-import java.util.LinkedList;
-import java.util.Map.Entry;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
-
-
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.GnuParser;
-import org.apache.commons.cli.HelpFormatter;
-import org.apache.commons.cli.Options;
-import org.apache.commons.cli.ParseException;
-
 import eu.fbk.knowledgestore.KnowledgeStore;
 import eu.fbk.knowledgestore.OperationException;
 import eu.fbk.knowledgestore.Session;
 import eu.fbk.knowledgestore.client.Client;
-import eu.fbk.knowledgestore.data.Data;
-import eu.fbk.knowledgestore.data.Record;
 import eu.fbk.knowledgestore.populator.naf.connection.KnowledgestoreServer;
-import eu.fbk.knowledgestore.vocabulary.KS;
-
-import org.openrdf.model.URI;
+import org.apache.commons.cli.*;
 import org.openrdf.model.impl.URIImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+import java.io.*;
+import java.net.URL;
+import java.util.Hashtable;
+import java.util.LinkedList;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 
 public class nafPopulator {
 
@@ -55,7 +26,7 @@ public class nafPopulator {
 	static statistics globalStats = new statistics();
     static Writer out, mentionFile;
     static int batchSize = 1, consumer_threads = 1;
-    
+
     static String disabledItems = "", reportFileName = "report.txt", mentionsF = "records.txt";
     static boolean recursion = false, printToFile = false,JobFinished=false;
     static boolean store_partial_info = false;
@@ -90,7 +61,7 @@ public class nafPopulator {
     public static void main(String[] args) throws JAXBException, IOException,
             InstantiationException, IllegalAccessException, NoSuchMethodException,
             SecurityException, ClassNotFoundException {
-         
+
        init();
         // Configure command line options
         final Options options = new Options();
@@ -134,16 +105,16 @@ public class nafPopulator {
 	    {
 		//check if we have many inputs in the same call, error and exit
 		int nafFileModalitiesCount = 0;
-		if (cmd.hasOption("ksm")) { 
+		if (cmd.hasOption("ksm")) {
 			KSresourceReplacement=Integer.parseInt(cmd.getOptionValue("ksm")) ;
 			}
-		
+
 		if (cmd.hasOption("n")) { nafFileModalitiesCount++;}
 		if (cmd.hasOption("d")) { nafFileModalitiesCount++;}
 		if (cmd.hasOption("f")) { nafFileModalitiesCount++;}
 		if (cmd.hasOption("z")) { nafFileModalitiesCount++;}
 		if (nafFileModalitiesCount > 1) {
-		    System.err.println("Cannot manage multiple options(-n|-d|-f|-z): please choice one of them.");  
+		    System.err.println("Cannot manage multiple options(-n|-d|-f|-z): please choice one of them.");
 		    printUsage(options);
 		    System.exit(0);
 		}
@@ -152,12 +123,12 @@ public class nafPopulator {
             if (cmd.hasOption("u")) {
                 SERVER_URL = cmd.getOptionValue('u');
             }
-            
+
             if (cmd.hasOption("ct")) {
                 consumer_threads=Integer.parseInt(cmd.getOptionValue("ct"))  ;
             }
             //TODO important if any illegal input crash with error message
-            
+
             if (cmd.hasOption("qs")) {
                 queue = new ArrayBlockingQueue<>(Integer.parseInt(cmd.getOptionValue("qs")))  ;
             }else{
@@ -165,7 +136,7 @@ public class nafPopulator {
             }
              producer = new Producer(queue);
              consumer = new Consumer(queue);
-            
+
             if (cmd.hasOption("o")) {
                 reportFileName = cmd.getOptionValue('o');
                 File tst = new File(reportFileName);
@@ -186,11 +157,11 @@ public class nafPopulator {
                         // filePath.getPath(),
                                     nafPopulator.mentionsF)), "utf-8"));
             }
-            
+
             if (cmd.hasOption("p")) {
                 printToFile = true;
             }
-            
+
             if (cmd.hasOption("spi")) {
                 store_partial_info = true;
             }
@@ -216,12 +187,12 @@ public class nafPopulator {
             if (cmd.hasOption("r")) {
                 recursion = true;
             }
-            if (!printToFile && 
+            if (!printToFile &&
 		(cmd.hasOption("n") || cmd.hasOption("d") || cmd.hasOption("f") || cmd.hasOption("z") || cmd.hasOption("t"))) {
                 readConnectionFile();
             }
             if (cmd.hasOption("n") || cmd.hasOption("d") || cmd.hasOption("f") || cmd.hasOption("z") || cmd.hasOption("t")) {
-            
+
                 if (cmd.hasOption("n")){
                     INpath = cmd.getOptionValue('n');
                     //analyzePathAndRunSystem(cmd.getOptionValue('n'), disabledItems, recursion);
@@ -249,12 +220,12 @@ public class nafPopulator {
                 a.start();
                 threads.addLast(a);
                 }
-              
+
                 // new Thread(consumer).start();
                finalizeThread finalizeThreadObj = new finalizeThread();
                 new Thread(finalizeThreadObj).start();
-               
-            
+
+
             }
 
         } catch (final ParseException ex) {
@@ -266,9 +237,9 @@ public class nafPopulator {
             System.err.print("EXECUTION FAILED: ");
             ex.printStackTrace();
             printUsage(options);
-        } 
-    
-    
+        }
+
+
     }
 
     private static void init() {
@@ -290,10 +261,14 @@ public class nafPopulator {
 
     static void nullObjects() throws IOException {
         nafPopulator.closeConnection();
-             nafPopulator.mentionFile.flush();
-             nafPopulator.mentionFile.close();
-             nafPopulator.out.flush();
-         nafPopulator.out.close();
+        if (nafPopulator.mentionFile != null) {
+            nafPopulator.mentionFile.flush();
+            nafPopulator.mentionFile.close();
+        }
+		if (nafPopulator.out != null) {
+			nafPopulator.out.flush();
+			nafPopulator.out.close();
+		}
         globalStats = null;
         out=null;
         mentionFile = null;
@@ -307,7 +282,7 @@ public class nafPopulator {
         session = null;
         store = null;
        // mentions = null;
-        
+
     }
 
     private static void printUsage(Options options) {
@@ -365,7 +340,7 @@ public class nafPopulator {
         Unmarshaller unmarshaller = jc.createUnmarshaller();
         if (url != null) {
             KnowledgestoreServer myFile = (KnowledgestoreServer) unmarshaller
-                    .unmarshal(new InputStreamReader(url.openStream(), "UTF-8"));
+					.unmarshal(new InputStreamReader(url.openStream(), "UTF-8"));
 	    // read SERVER_URL from XML file unless previously defined with command line parameters
 	    if (SERVER_URL.equals("")) {
 		SERVER_URL = myFile.getUrl();
@@ -375,7 +350,7 @@ public class nafPopulator {
             checkSession();
         } else {
             System.err
-                    .println("Error: populator-ks-connection.xml.xml file not found!\nYou should first create the connection file to the KS.");
+					.println("Error: populator-ks-connection.xml.xml file not found!\nYou should first create the connection file to the KS.");
         }
 
     }
