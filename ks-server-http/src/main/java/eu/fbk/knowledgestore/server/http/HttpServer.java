@@ -232,6 +232,15 @@ public class HttpServer extends ForwardingKnowledgeStore implements Component {
 
         // configure request logging using logback access
         RequestLogHandler requestLogHandler = null;
+        if (builder.logLocation != null) {
+            LOGGER.info("Log location: {}", builder.logLocation);
+            NCSARequestLog requestLog = new NCSARequestLog(builder.logLocation + "ksd-yyyy_mm_dd-http.log");
+            requestLog.setAppend(true);
+            requestLog.setExtended(false);
+            requestLog.setLogTimeZone("GMT");
+            requestLogHandler = new RequestLogHandler();
+            requestLogHandler.setRequestLog(requestLog);
+        }
         if (builder.logConfigLocation != null) {
             final RequestLogImpl requestLog = new RequestLogImpl();
             requestLog.setQuiet(true);
@@ -450,6 +459,9 @@ public class HttpServer extends ForwardingKnowledgeStore implements Component {
         Boolean debug;
 
         @Nullable
+        String logLocation;
+
+        @Nullable
         String logConfigLocation;
 
         Builder(final KnowledgeStore store) {
@@ -513,6 +525,11 @@ public class HttpServer extends ForwardingKnowledgeStore implements Component {
 
         public Builder debug(@Nullable final Boolean debug) {
             this.debug = debug;
+            return this;
+        }
+
+        public Builder logLocation(@Nullable final String logLocation) {
+            this.logLocation = logLocation;
             return this;
         }
 
