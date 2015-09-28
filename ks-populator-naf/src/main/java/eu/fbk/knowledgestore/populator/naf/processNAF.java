@@ -94,15 +94,16 @@ public class processNAF {
             IOException {
     	vars.storePartialInforInCaseOfError = true;
     	vars.filePath = new File(filepath);
-        logDebug("Start working with (" + vars.filePath.getName() + ")",vars);
+        logDebug("Start working with (" + vars.filePath.getName() + ")", vars);
         String disabledItems = "";// Default empty so generate all layers of data
         if (disabled_Items != null
                 && (disabled_Items.matches("(?i)Entity") || disabled_Items.contains("(?i)Mention") || disabled_Items.contains("(?i)Resource"))) {
             disabledItems = disabled_Items;
             logDebug("Disable layer: " + disabledItems,vars);
         }
-        		readNAFFile(vars.filePath,vars);
-        		getNAFHEADERMentions(vars.doc.getNafHeader(),vars);
+        		readNAFFile(vars.filePath, vars);
+		NafHeader header = vars.doc.getNafHeader();
+        		getNAFHEADERMentions(header,vars);
             	vars.rawText = vars.doc.getRaw().getvalue();
             	vars.globalText = vars.doc.getText();
             	vars.globalTerms = vars.doc.getTerms();

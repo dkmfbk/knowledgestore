@@ -48,6 +48,11 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>eu.fbk.rdfpro</groupId>
+            <artifactId>rdfpro-tql</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
             <groupId>org.openrdf.sesame</groupId>
             <artifactId>sesame-model</artifactId>
         </dependency>
