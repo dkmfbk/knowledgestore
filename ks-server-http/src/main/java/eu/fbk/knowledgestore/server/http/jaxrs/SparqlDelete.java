@@ -14,11 +14,11 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
 /**
- * Created by alessio on 31/08/15.
+ * Created by alessio on 28/09/15.
  */
 
-@Path("/" + Protocol.PATH_UPDATE)
-public class SparqlUpdate extends Resource {
+@Path("/" + Protocol.PATH_DELETE)
+public class SparqlDelete extends Resource {
 
 	@POST
 	@Produces(Protocol.MIME_TYPES_ALL)
@@ -30,7 +30,7 @@ public class SparqlUpdate extends Resource {
 		// POST URI does not support GET, hence no tag and last modified
 		init(true, null);
 
-		Outcome outcome = getSession().sparqlupdate().statements(statements).exec();
+		Outcome outcome = getSession().sparqldelete().statements(statements).exec();
 
 		// Setup the response stream
 		final int httpStatus = outcome.getStatus().getHTTPStatus();

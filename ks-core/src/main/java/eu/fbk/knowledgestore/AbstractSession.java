@@ -481,7 +481,7 @@ public abstract class AbstractSession implements Session {
                         logRequest(null, condition, "ids", ids, "props", properties, //
                                 "offset", offset, "limit", limit, "timeout", timeout);
                         return logResponse(doRetrieve(timeout, type, condition, ids, properties,
-								offset, limit));
+                                offset, limit));
                     } catch (final Throwable ex) {
                         throw fail(ex);
                     } finally {
@@ -617,7 +617,7 @@ public abstract class AbstractSession implements Session {
                     start("MATCH", null, Record.class, null, timeout);
                     try {
                         logRequest(null, conditions, "ids", ids, "props", //
-								properties, "timeout", timeout);
+                                properties, "timeout", timeout);
                         return logResponse(filter(doMatch(timeout, conditions, ids, properties)));
                     } catch (final Throwable ex) {
                         throw fail(ex);
@@ -647,7 +647,7 @@ public abstract class AbstractSession implements Session {
                         logRequest("from", defaultGraphs, "from-named", namedGraphs, //
                                 "timeout", timeout, null, expression);
                         return logResponse(filter(doSparql(timeout, type, expression,
-								defaultGraphs, namedGraphs)));
+                                defaultGraphs, namedGraphs)));
                     } catch (final Throwable ex) {
                         throw fail(ex);
                     } finally {
@@ -682,7 +682,30 @@ public abstract class AbstractSession implements Session {
 		};
 	}
 
-	@Override
+    @Override
+    public final SparqlDelete sparqldelete()
+            throws IllegalStateException {
+        checkNotClosed();
+        return new SparqlDelete(this.namespaces) {
+            @Override
+            protected Outcome doExec(@Nullable Long timeout, @Nullable Stream<? extends Statement> statements) throws OperationException {
+                synchronized (AbstractSession.this) {
+                    checkNotClosed();
+                    start("SPARQLDELETE", null, null, null, timeout);
+                    try {
+                        logRequest("timeout", timeout);
+                        return logResponse(doSparqlDelete(timeout, statements));
+                    } catch (final Throwable ex) {
+                        throw fail(ex);
+                    } finally {
+                        end();
+                    }
+                }
+            }
+        };
+    }
+
+    @Override
     public final boolean isClosed() {
         return this.closed.get();
     }
@@ -780,6 +803,9 @@ public abstract class AbstractSession implements Session {
 
     protected abstract Outcome doSparqlUpdate(@Nullable Long timeout,
 													@Nullable final Stream<? extends Statement> statements) throws Throwable;
+
+    protected abstract Outcome doSparqlDelete(@Nullable Long timeout,
+                                              @Nullable final Stream<? extends Statement> statements) throws Throwable;
 
     protected void doClose() {
     }

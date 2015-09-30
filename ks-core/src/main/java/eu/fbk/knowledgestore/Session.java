@@ -290,6 +290,7 @@ public interface Session extends Closeable {
     Sparql sparql(String expression, Object... arguments) throws IllegalStateException;
 
     SparqlUpdate sparqlupdate() throws IllegalStateException;
+    SparqlDelete sparqldelete() throws IllegalStateException;
 
     /**
      * Tests whether this {@code Session} instance has been closed.

@@ -30,6 +30,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>eu.fbk.rdfpro</groupId>
+            <artifactId>rdfpro-tql</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>eu.fbk.knowledgestore</groupId>
             <artifactId>ks-core</artifactId>
         </dependency>

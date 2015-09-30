@@ -974,9 +974,27 @@ public final class Server extends AbstractKnowledgeStore {
         @Override
         protected Outcome doSparqlUpdate(@Nullable Long timeout, @Nullable Stream<? extends Statement> statements) throws Throwable {
 
+            LOGGER.debug("Server.UPDATING");
             final TripleTransaction tx = Server.this.tripleStore.begin(false);
             try {
                 tx.add(statements);
+                Outcome outcome = newOutcome(Status.OK_BULK, null, null);
+                tx.end(true);
+                return outcome;
+            } catch (final Throwable ex) {
+                tx.end(false); // commit or rollback does not matter
+                throw ex;
+            }
+        }
+
+        @SuppressWarnings("unchecked")
+        @Override
+        protected Outcome doSparqlDelete(@Nullable Long timeout, @Nullable Stream<? extends Statement> statements) throws Throwable {
+
+            LOGGER.debug("Server.REMOVING");
+            final TripleTransaction tx = Server.this.tripleStore.begin(false);
+            try {
+                tx.remove(statements);
                 Outcome outcome = newOutcome(Status.OK_BULK, null, null);
                 tx.end(true);
                 return outcome;

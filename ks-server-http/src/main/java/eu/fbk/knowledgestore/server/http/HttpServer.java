@@ -228,7 +228,7 @@ public class HttpServer extends ForwardingKnowledgeStore implements Component {
                 ImmutableList.of(Root.class, Files.class,
                         eu.fbk.knowledgestore.server.http.jaxrs.Resources.class, Mentions.class,
                         // Entities.class, Axioms.class, Match.class,
-                        Sparql.class, SparqlUpdate.class));
+                        Sparql.class, SparqlUpdate.class, SparqlDelete.class));
 
         // configure request logging using logback access
         RequestLogHandler requestLogHandler = null;

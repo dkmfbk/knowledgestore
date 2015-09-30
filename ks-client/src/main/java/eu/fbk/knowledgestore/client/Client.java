@@ -458,7 +458,18 @@ public final class Client extends AbstractKnowledgeStore {
 
         @Override
         protected Outcome doSparqlUpdate(@Nullable Long timeout, @Nullable Stream<? extends Statement> statements) throws Throwable {
-            return null;
+            final String path = Protocol.PATH_UPDATE;
+            final GenericEntity<Stream<Statement>> entity = new GenericEntity<Stream<Statement>>((Stream<Statement>) statements, Protocol.STREAM_OF_STATEMENTS.getType());
+            Entity<?> entityEntity = Entity.entity(entity, new Variant(MediaType.valueOf(MIME_TYPE_RDF), (String) null, Client.this.compressionEnabled ? "gzip" : "identity"));
+            return invoke(HttpMethod.POST, path, null, null, entityEntity, Protocol.STREAM_OF_OUTCOMES, timeout).getUnique();
+        }
+
+        @Override
+        protected Outcome doSparqlDelete(@Nullable Long timeout, @Nullable Stream<? extends Statement> statements) throws Throwable {
+            final String path = Protocol.PATH_DELETE;
+            final GenericEntity<Stream<Statement>> entity = new GenericEntity<Stream<Statement>>((Stream<Statement>) statements, Protocol.STREAM_OF_STATEMENTS.getType());
+            Entity<?> entityEntity = Entity.entity(entity, new Variant(MediaType.valueOf(MIME_TYPE_RDF), (String) null, Client.this.compressionEnabled ? "gzip" : "identity"));
+            return invoke(HttpMethod.POST, path, null, null, entityEntity, Protocol.STREAM_OF_OUTCOMES, timeout).getUnique();
         }
 
         private String query(final Object... queryNameValues) {

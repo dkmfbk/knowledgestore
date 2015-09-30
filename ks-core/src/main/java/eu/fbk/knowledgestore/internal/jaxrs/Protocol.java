@@ -80,6 +80,7 @@ public final class Protocol {
     public static final String PATH_MATCH = "match";
 
     public static final String PATH_UPDATE = "sparqlupdate";
+    public static final String PATH_DELETE = "sparqldelete";
 
     public static final String PATH_SPARQL = "sparql";
 

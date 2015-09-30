@@ -423,12 +423,14 @@ public final class VirtuosoJdbcTripleStore implements TripleStore {
 		@Override
 		public void add(final Iterable<? extends Statement> statements) throws IOException,
 				IllegalStateException {
+			LOGGER.debug("UPDATING");
 			update(true, statements);
 		}
 
 		@Override
 		public void remove(final Iterable<? extends Statement> statements) throws IOException,
 				IllegalStateException {
+			LOGGER.debug("REMOVING");
 			update(false, statements);
 		}
 
@@ -497,7 +499,13 @@ public final class VirtuosoJdbcTripleStore implements TripleStore {
 			checkWritable();
 
 			try {
-				PreparedStatement insertStmt = this.connection.prepareStatement("DB.DBA.rdf_insert_triple_c (?,?,?,?,?,?)");
+				String command = "DB.DBA.rdf_insert_triple_c (?,?,?,?,?,?)";
+				if (!insert) {
+					command = "DB.DBA.rdf_delete_triple_c (?,?,?,?,?,?)";
+				}
+
+				PreparedStatement insertStmt;
+				insertStmt = this.connection.prepareStatement(command);
 
 				for (Statement stmt : statements) {
 					insertStmt.setString(1, stmt.getSubject().toString());
