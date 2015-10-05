@@ -221,14 +221,25 @@ public class HttpServer extends ForwardingKnowledgeStore implements Component {
         webappHandler.setContextPath(base);
         webappHandler.getServletContext().setAttribute(Application.STORE_ATTRIBUTE, this);
         webappHandler.getServletContext().setAttribute(Application.TRACING_ATTRIBUTE, debug);
+        webappHandler.getServletContext().setAttribute(Application.CUSTOM_ATTRIBUTE, builder.customConfigs);
         webappHandler.getServletContext().setAttribute(Application.UI_ATTRIBUTE,
                 MoreObjects.firstNonNull(builder.uiConfig, DEFAULT_UI_CONFIG));
         webappHandler.getServletContext().setAttribute(
                 Application.RESOURCE_ATTRIBUTE,
-                ImmutableList.of(Root.class, Files.class,
-                        eu.fbk.knowledgestore.server.http.jaxrs.Resources.class, Mentions.class,
-                        // Entities.class, Axioms.class, Match.class,
-                        Sparql.class, SparqlUpdate.class, SparqlDelete.class));
+                ImmutableList.of(
+                        Root.class,
+                        Files.class,
+                        eu.fbk.knowledgestore.server.http.jaxrs.Resources.class,
+                        Mentions.class,
+                        // Entities.class,
+                        // Axioms.class,
+                        // Match.class,
+                        Sparql.class,
+                        SparqlUpdate.class,
+                        SparqlDelete.class,
+                        Custom.class
+                )
+        );
 
         // configure request logging using logback access
         RequestLogHandler requestLogHandler = null;
@@ -456,6 +467,9 @@ public class HttpServer extends ForwardingKnowledgeStore implements Component {
         UIConfig uiConfig;
 
         @Nullable
+        Iterable<CustomConfig> customConfigs;
+
+        @Nullable
         Boolean debug;
 
         @Nullable
@@ -510,6 +524,11 @@ public class HttpServer extends ForwardingKnowledgeStore implements Component {
 
         public Builder keystoreConfig(@Nullable final KeystoreConfig keystoreConfig) {
             this.keystoreConfig = keystoreConfig;
+            return this;
+        }
+
+        public Builder customConfigs(@Nullable final Iterable<CustomConfig> customConfigs) {
+            this.customConfigs = customConfigs;
             return this;
         }
 

@@ -1,42 +1,5 @@
 package eu.fbk.knowledgestore.server.http.jaxrs;
 
-import java.io.IOException;
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Type;
-import java.security.Principal;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
-
-import javax.annotation.Nullable;
-import javax.servlet.ServletContext;
-import javax.ws.rs.Produces;
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.container.ContainerRequestContext;
-import javax.ws.rs.container.ContainerRequestFilter;
-import javax.ws.rs.container.ContainerResponseContext;
-import javax.ws.rs.container.ContainerResponseFilter;
-import javax.ws.rs.container.PreMatching;
-import javax.ws.rs.core.CacheControl;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.GenericEntity;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.ResponseBuilder;
-import javax.ws.rs.core.Response.Status;
-import javax.ws.rs.core.SecurityContext;
-import javax.ws.rs.ext.ExceptionMapper;
-import javax.ws.rs.ext.ParamConverter;
-import javax.ws.rs.ext.ParamConverterProvider;
-import javax.ws.rs.ext.Provider;
-import javax.ws.rs.ext.WriterInterceptor;
-import javax.ws.rs.ext.WriterInterceptorContext;
-
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
@@ -45,7 +8,16 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.net.HttpHeaders;
-
+import eu.fbk.knowledgestore.KnowledgeStore;
+import eu.fbk.knowledgestore.OperationException;
+import eu.fbk.knowledgestore.Outcome;
+import eu.fbk.knowledgestore.data.*;
+import eu.fbk.knowledgestore.internal.Logging;
+import eu.fbk.knowledgestore.internal.Util;
+import eu.fbk.knowledgestore.internal.jaxrs.Protocol;
+import eu.fbk.knowledgestore.internal.jaxrs.Serializer;
+import eu.fbk.knowledgestore.server.http.CustomConfig;
+import eu.fbk.knowledgestore.server.http.UIConfig;
 import org.eclipse.jetty.server.Server;
 import org.glassfish.jersey.message.DeflateEncoder;
 import org.glassfish.jersey.message.GZipEncoder;
@@ -58,19 +30,23 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
-import eu.fbk.knowledgestore.KnowledgeStore;
-import eu.fbk.knowledgestore.OperationException;
-import eu.fbk.knowledgestore.Outcome;
-import eu.fbk.knowledgestore.data.Criteria;
-import eu.fbk.knowledgestore.data.Data;
-import eu.fbk.knowledgestore.data.ParseException;
-import eu.fbk.knowledgestore.data.Stream;
-import eu.fbk.knowledgestore.data.XPath;
-import eu.fbk.knowledgestore.internal.Logging;
-import eu.fbk.knowledgestore.internal.Util;
-import eu.fbk.knowledgestore.internal.jaxrs.Protocol;
-import eu.fbk.knowledgestore.internal.jaxrs.Serializer;
-import eu.fbk.knowledgestore.server.http.UIConfig;
+import javax.annotation.Nullable;
+import javax.servlet.ServletContext;
+import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.container.*;
+import javax.ws.rs.core.*;
+import javax.ws.rs.core.Response.ResponseBuilder;
+import javax.ws.rs.core.Response.Status;
+import javax.ws.rs.ext.*;
+import java.io.IOException;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Type;
+import java.security.Principal;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 public final class Application extends javax.ws.rs.core.Application {
 
@@ -81,6 +57,8 @@ public final class Application extends javax.ws.rs.core.Application {
     public static final String RESOURCE_ATTRIBUTE = "resource";
 
     public static final String UI_ATTRIBUTE = "ui";
+
+    public static final String CUSTOM_ATTRIBUTE = "custom";
 
     public static final int DEFAULT_TIMEOUT = 600000; // 600 sec; TODO: make this customizable
 
@@ -112,6 +90,7 @@ public final class Application extends javax.ws.rs.core.Application {
     private final Set<Object> singletons;
 
     private final Map<String, Object> properties;
+    private final Map<String, CustomConfig> customConfigs;
 
     private int pendingModifications;
 
@@ -122,15 +101,23 @@ public final class Application extends javax.ws.rs.core.Application {
         this((UIConfig) context.getAttribute(UI_ATTRIBUTE), //
                 (KnowledgeStore) context.getAttribute(STORE_ATTRIBUTE), //
                 (Boolean) context.getAttribute(TRACING_ATTRIBUTE), //
-                (Iterable<? extends Class<?>>) context.getAttribute(RESOURCE_ATTRIBUTE));
+                (Iterable<? extends Class<?>>) context.getAttribute(RESOURCE_ATTRIBUTE),
+                (Iterable<CustomConfig>) context.getAttribute(CUSTOM_ATTRIBUTE));
     }
 
     public Application(final UIConfig uiConfig, final KnowledgeStore store,
-            final Boolean enableTracing, final Iterable<? extends Class<?>> resourceClasses) {
+            final Boolean enableTracing, final Iterable<? extends Class<?>> resourceClasses,
+                       final Iterable<CustomConfig> configs) {
 
         // keep track of KS and UI config
         this.store = Preconditions.checkNotNull(store);
         this.uiConfig = Preconditions.checkNotNull(uiConfig);
+        customConfigs = new HashMap<>();
+        if (configs != null) {
+			for (CustomConfig config : configs) {
+				customConfigs.put(config.getName(), config);
+			}
+		}
 
         // define JAX-RS classes
         final ImmutableSet.Builder<Class<?>> classes = ImmutableSet.builder();
@@ -175,6 +162,10 @@ public final class Application extends javax.ws.rs.core.Application {
         // Initialize globally last modified variables
         this.pendingModifications = 0;
         this.lastModified = new Date();
+    }
+
+    public Map<String, CustomConfig> getCustomConfigs() {
+        return customConfigs;
     }
 
     public UIConfig getUIConfig() {
