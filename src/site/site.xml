@@ -148,6 +148,8 @@
             <navbarInverse>true</navbarInverse>
             <markPageHeader>true</markPageHeader>
             <skinAttribution>true</skinAttribution>
+            <absoluteResourceURL>${site-root}</absoluteResourceURL>
+
             <brand>
                 <name>
                     <![CDATA[The <span class="color-highlight">KnowledgeStore</span> project]]></name>
