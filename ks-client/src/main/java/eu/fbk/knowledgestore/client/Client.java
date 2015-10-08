@@ -210,6 +210,7 @@ public final class Client extends AbstractKnowledgeStore {
                 .setRedirectsEnabled(false) //
                 .setConnectionRequestTimeout(connectionTimeout) //
                 .setConnectTimeout(connectionTimeout) //
+                .setSocketTimeout(10000)
                 .build();
 
         // Configure client
