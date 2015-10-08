@@ -7,7 +7,7 @@
     <groupId>eu.fbk.knowledgestore</groupId>
     <artifactId>ks</artifactId>
     <packaging>pom</packaging>
-    <version>1.8-SNAPSHOT</version>
+    <version>1.7.1</version>
 
     <name>ks</name>
     <description>The KnowledgeStore</description>
