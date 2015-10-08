@@ -89,6 +89,7 @@ public final class Client extends AbstractKnowledgeStore {
     private static final boolean DEFAULT_VALIDATE_SERVER = true;
 
     private static final int DEFAULT_CONNECTION_TIMEOUT = 1000; // 1 sec
+    private static final int DEFAULT_SOCKET_TIMEOUT = 10000; // 10 sec
 
     private static final boolean DEFAULT_COMPRESSION_ENABLED = LoggerFactory.getLogger(
             "org.apache.http.wire").isDebugEnabled();;
@@ -114,13 +115,17 @@ public final class Client extends AbstractKnowledgeStore {
         timeout = MoreObjects.firstNonNull(builder.connectionTimeout, DEFAULT_CONNECTION_TIMEOUT);
         Preconditions.checkArgument(timeout >= 0, "Invalid connection timeout %d", timeout);
 
+        final int socketTimeout;
+        socketTimeout = MoreObjects.firstNonNull(builder.socketTimeout, DEFAULT_SOCKET_TIMEOUT);
+        Preconditions.checkArgument(socketTimeout >= 0, "Invalid connection timeout %d", socketTimeout);
+
         this.serverURL = url;
         this.compressionEnabled = MoreObjects.firstNonNull(builder.compressionEnabled,
                 DEFAULT_COMPRESSION_ENABLED);
         this.connectionManager = createConnectionManager(
                 MoreObjects.firstNonNull(builder.maxConnections, DEFAULT_MAX_CONNECTIONS),
                 MoreObjects.firstNonNull(builder.validateServer, DEFAULT_VALIDATE_SERVER));
-        this.client = createJaxrsClient(this.connectionManager, timeout, builder.proxy);
+        this.client = createJaxrsClient(this.connectionManager, timeout, socketTimeout, builder.proxy);
         this.targets = Maps.newConcurrentMap();
     }
 
@@ -202,7 +207,7 @@ public final class Client extends AbstractKnowledgeStore {
 
     private static javax.ws.rs.client.Client createJaxrsClient(
             final HttpClientConnectionManager connectionManager, final int connectionTimeout,
-            @Nullable final ProxyConfig proxy) {
+            final int socketTimeout, @Nullable final ProxyConfig proxy) {
 
         // Configure requests
         final RequestConfig requestConfig = RequestConfig.custom()//
@@ -210,7 +215,7 @@ public final class Client extends AbstractKnowledgeStore {
                 .setRedirectsEnabled(false) //
                 .setConnectionRequestTimeout(connectionTimeout) //
                 .setConnectTimeout(connectionTimeout) //
-                .setSocketTimeout(10000)
+                .setSocketTimeout(socketTimeout)
                 .build();
 
         // Configure client
@@ -683,6 +688,9 @@ public final class Client extends AbstractKnowledgeStore {
         Integer connectionTimeout;
 
         @Nullable
+        Integer socketTimeout;
+
+        @Nullable
         Boolean compressionEnabled;
 
         @Nullable
@@ -702,6 +710,11 @@ public final class Client extends AbstractKnowledgeStore {
 
         public Builder connectionTimeout(@Nullable final Integer connectionTimeout) {
             this.connectionTimeout = connectionTimeout;
+            return this;
+        }
+
+        public Builder socketTimeout(@Nullable final Integer socketTimeout) {
+            this.socketTimeout = socketTimeout;
             return this;
         }
 
