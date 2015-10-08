@@ -26,6 +26,8 @@ public class SparqlDelete extends Resource {
 	@TypeHint(Stream.class)
 	public Response post(final Stream<Statement> statements) throws OperationException {
 
+		closeOnCompletion(statements);
+
 		// Validate preconditions and handle probe requests here, before body is consumed
 		// POST URI does not support GET, hence no tag and last modified
 		init(true, null);

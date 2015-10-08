@@ -982,8 +982,12 @@ public final class Server extends AbstractKnowledgeStore {
                 tx.end(true);
                 return outcome;
             } catch (final Throwable ex) {
+                ex.printStackTrace();
                 tx.end(false); // commit or rollback does not matter
                 throw ex;
+            }
+            finally {
+                closeQuietly(statements);
             }
         }
 
@@ -1001,6 +1005,9 @@ public final class Server extends AbstractKnowledgeStore {
             } catch (final Throwable ex) {
                 tx.end(false); // commit or rollback does not matter
                 throw ex;
+            }
+            finally {
+                closeQuietly(statements);
             }
         }
 

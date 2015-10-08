@@ -41,8 +41,8 @@ public class Custom extends Resource {
 		String command = customConfig.getCommand();
 
 		RDFSource source = RDFSources.wrap(statements);
-		RDFProcessor processor = RDFProcessors.parse(true, command);
 		try {
+			RDFProcessor processor = RDFProcessors.parse(true, command);
 			processor.apply(source, RDFHandlers.NIL, 1);
 		} catch (RDFHandlerException ex) {
 			throw new OperationException(newOutcome(Outcome.Status.ERROR_UNEXPECTED, "%s", ex.getMessage()), ex);
