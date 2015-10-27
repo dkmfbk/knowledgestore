@@ -1,20 +1,15 @@
 package eu.fbk.knowledgestore.populator.naf;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
+import eu.fbk.knowledgestore.Session;
+import eu.fbk.knowledgestore.data.Data;
+import eu.fbk.knowledgestore.data.Record;
+
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Hashtable;
 import java.util.Map.Entry;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.TimeUnit;
-
-import eu.fbk.knowledgestore.Session;
-import eu.fbk.knowledgestore.data.Data;
-import eu.fbk.knowledgestore.data.Record;
 
 public class Consumer implements Runnable {
 
@@ -155,11 +150,16 @@ public class Consumer implements Runnable {
     }
 
     private static void appendCollectedDataToFile(Hashtable<String, KSPresentation> mentions) throws IOException {
-       
+
         for (Entry<String, KSPresentation> mn : mentions.entrySet()) {
-            nafPopulator.out.append("NAF: " + mn.getValue().getNaf_file_path())
-                    .append(mn.getValue().getStats().getStats()).append("\n");
-            nafPopulator.out.flush();
+            String naf_file_path = mn.getValue().getNaf_file_path();
+            String stats = mn.getValue().getStats().getStats();
+            if (nafPopulator.out != null) {
+                nafPopulator.out.append("NAF: " + naf_file_path);
+                nafPopulator.out.append(stats);
+                nafPopulator.out.append("\n");
+                nafPopulator.out.flush();
+            }
             nafPopulator.updatestats(mn.getValue().getStats());
             nafPopulator.mentionFile.append(mn.getValue().getNewsResource()
                     .toString(Data.getNamespaceMap(), true)
@@ -171,7 +171,9 @@ public class Consumer implements Runnable {
             }
 
         }
-        nafPopulator.out.flush();
+        if (nafPopulator.out != null) {
+            nafPopulator.out.flush();
+        }
         nafPopulator.mentionFile.flush();
         mentions.clear();
 

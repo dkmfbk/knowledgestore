@@ -9,7 +9,7 @@ public class StoreTester {
         System.setProperty("launcher.executable", "ksd");
         System.setProperty("launcher.description", "Runs the KnowledgeStore daemon, "
                 + "using the daemon and logging configurations optionally specified");
-        System.setProperty("launcher.config", "ks-distribution/src/main/config/ks.ttl");
+        System.setProperty("launcher.config", "/Users/alessio/Desktop/ks/ks.ttl");
         Launcher.main(args);
     }
 

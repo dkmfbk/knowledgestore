@@ -1,32 +1,5 @@
 package eu.fbk.knowledgestore.client;
 
-import java.io.InputStream;
-import java.lang.reflect.Type;
-import java.security.cert.X509Certificate;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.atomic.AtomicReference;
-
-import javax.annotation.Nullable;
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
-import javax.ws.rs.HttpMethod;
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.Invocation;
-import javax.ws.rs.client.ResponseProcessingException;
-import javax.ws.rs.core.CacheControl;
-import javax.ws.rs.core.GenericEntity;
-import javax.ws.rs.core.GenericType;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Variant;
-
 import com.google.common.base.Charsets;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
@@ -37,7 +10,17 @@ import com.google.common.escape.Escaper;
 import com.google.common.io.BaseEncoding;
 import com.google.common.net.HttpHeaders;
 import com.google.common.net.UrlEscapers;
-
+import eu.fbk.knowledgestore.AbstractKnowledgeStore;
+import eu.fbk.knowledgestore.AbstractSession;
+import eu.fbk.knowledgestore.Outcome;
+import eu.fbk.knowledgestore.Outcome.Status;
+import eu.fbk.knowledgestore.Session;
+import eu.fbk.knowledgestore.data.*;
+import eu.fbk.knowledgestore.internal.Util;
+import eu.fbk.knowledgestore.internal.jaxrs.Protocol;
+import eu.fbk.knowledgestore.internal.jaxrs.Serializer;
+import eu.fbk.knowledgestore.internal.rdf.RDFUtil;
+import eu.fbk.knowledgestore.vocabulary.NIE;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.config.RegistryBuilder;
 import org.apache.http.conn.HttpClientConnectionManager;
@@ -61,23 +44,26 @@ import org.openrdf.rio.RDFFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import eu.fbk.knowledgestore.AbstractKnowledgeStore;
-import eu.fbk.knowledgestore.AbstractSession;
-import eu.fbk.knowledgestore.Outcome;
-import eu.fbk.knowledgestore.Outcome.Status;
-import eu.fbk.knowledgestore.Session;
-import eu.fbk.knowledgestore.data.Criteria;
-import eu.fbk.knowledgestore.data.Data;
-import eu.fbk.knowledgestore.data.Handler;
-import eu.fbk.knowledgestore.data.Record;
-import eu.fbk.knowledgestore.data.Representation;
-import eu.fbk.knowledgestore.data.Stream;
-import eu.fbk.knowledgestore.data.XPath;
-import eu.fbk.knowledgestore.internal.Util;
-import eu.fbk.knowledgestore.internal.jaxrs.Protocol;
-import eu.fbk.knowledgestore.internal.jaxrs.Serializer;
-import eu.fbk.knowledgestore.internal.rdf.RDFUtil;
-import eu.fbk.knowledgestore.vocabulary.NIE;
+import javax.annotation.Nullable;
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+import javax.ws.rs.HttpMethod;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.Invocation;
+import javax.ws.rs.client.ResponseProcessingException;
+import javax.ws.rs.core.*;
+import java.io.InputStream;
+import java.lang.reflect.Type;
+import java.security.cert.X509Certificate;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.atomic.AtomicReference;
 
 // TODO: decide where to place the Configuration class
 
@@ -103,6 +89,7 @@ public final class Client extends AbstractKnowledgeStore {
     private static final boolean DEFAULT_VALIDATE_SERVER = true;
 
     private static final int DEFAULT_CONNECTION_TIMEOUT = 1000; // 1 sec
+    private static final int DEFAULT_SOCKET_TIMEOUT = 10000; // 10 sec
 
     private static final boolean DEFAULT_COMPRESSION_ENABLED = LoggerFactory.getLogger(
             "org.apache.http.wire").isDebugEnabled();;
@@ -128,13 +115,17 @@ public final class Client extends AbstractKnowledgeStore {
         timeout = MoreObjects.firstNonNull(builder.connectionTimeout, DEFAULT_CONNECTION_TIMEOUT);
         Preconditions.checkArgument(timeout >= 0, "Invalid connection timeout %d", timeout);
 
+        final int socketTimeout;
+        socketTimeout = MoreObjects.firstNonNull(builder.socketTimeout, DEFAULT_SOCKET_TIMEOUT);
+        Preconditions.checkArgument(socketTimeout >= 0, "Invalid connection timeout %d", socketTimeout);
+
         this.serverURL = url;
         this.compressionEnabled = MoreObjects.firstNonNull(builder.compressionEnabled,
                 DEFAULT_COMPRESSION_ENABLED);
         this.connectionManager = createConnectionManager(
                 MoreObjects.firstNonNull(builder.maxConnections, DEFAULT_MAX_CONNECTIONS),
                 MoreObjects.firstNonNull(builder.validateServer, DEFAULT_VALIDATE_SERVER));
-        this.client = createJaxrsClient(this.connectionManager, timeout, builder.proxy);
+        this.client = createJaxrsClient(this.connectionManager, timeout, socketTimeout, builder.proxy);
         this.targets = Maps.newConcurrentMap();
     }
 
@@ -216,7 +207,7 @@ public final class Client extends AbstractKnowledgeStore {
 
     private static javax.ws.rs.client.Client createJaxrsClient(
             final HttpClientConnectionManager connectionManager, final int connectionTimeout,
-            @Nullable final ProxyConfig proxy) {
+            final int socketTimeout, @Nullable final ProxyConfig proxy) {
 
         // Configure requests
         final RequestConfig requestConfig = RequestConfig.custom()//
@@ -224,6 +215,7 @@ public final class Client extends AbstractKnowledgeStore {
                 .setRedirectsEnabled(false) //
                 .setConnectionRequestTimeout(connectionTimeout) //
                 .setConnectTimeout(connectionTimeout) //
+                .setSocketTimeout(socketTimeout)
                 .build();
 
         // Configure client
@@ -470,6 +462,22 @@ public final class Client extends AbstractKnowledgeStore {
                     timeout);
         }
 
+        @Override
+        protected Outcome doSparqlUpdate(@Nullable Long timeout, @Nullable Stream<? extends Statement> statements) throws Throwable {
+            final String path = Protocol.PATH_UPDATE;
+            final GenericEntity<Stream<Statement>> entity = new GenericEntity<Stream<Statement>>((Stream<Statement>) statements, Protocol.STREAM_OF_STATEMENTS.getType());
+            Entity<?> entityEntity = Entity.entity(entity, new Variant(MediaType.valueOf(MIME_TYPE_RDF), (String) null, Client.this.compressionEnabled ? "gzip" : "identity"));
+            return invoke(HttpMethod.POST, path, null, null, entityEntity, Protocol.STREAM_OF_OUTCOMES, timeout).getUnique();
+        }
+
+        @Override
+        protected Outcome doSparqlDelete(@Nullable Long timeout, @Nullable Stream<? extends Statement> statements) throws Throwable {
+            final String path = Protocol.PATH_DELETE;
+            final GenericEntity<Stream<Statement>> entity = new GenericEntity<Stream<Statement>>((Stream<Statement>) statements, Protocol.STREAM_OF_STATEMENTS.getType());
+            Entity<?> entityEntity = Entity.entity(entity, new Variant(MediaType.valueOf(MIME_TYPE_RDF), (String) null, Client.this.compressionEnabled ? "gzip" : "identity"));
+            return invoke(HttpMethod.POST, path, null, null, entityEntity, Protocol.STREAM_OF_OUTCOMES, timeout).getUnique();
+        }
+
         private String query(final Object... queryNameValues) {
             final StringBuilder builder = new StringBuilder();
             final Escaper escaper = UrlEscapers.urlFormParameterEscaper();
@@ -680,6 +688,9 @@ public final class Client extends AbstractKnowledgeStore {
         Integer connectionTimeout;
 
         @Nullable
+        Integer socketTimeout;
+
+        @Nullable
         Boolean compressionEnabled;
 
         @Nullable
@@ -699,6 +710,11 @@ public final class Client extends AbstractKnowledgeStore {
 
         public Builder connectionTimeout(@Nullable final Integer connectionTimeout) {
             this.connectionTimeout = connectionTimeout;
+            return this;
+        }
+
+        public Builder socketTimeout(@Nullable final Integer socketTimeout) {
+            this.socketTimeout = socketTimeout;
             return this;
         }
 

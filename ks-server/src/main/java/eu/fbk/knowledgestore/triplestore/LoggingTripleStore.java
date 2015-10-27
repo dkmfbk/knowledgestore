@@ -1,13 +1,11 @@
 package eu.fbk.knowledgestore.triplestore;
 
-import java.io.IOException;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicLong;
-
-import javax.annotation.Nullable;
-
 import com.google.common.base.Preconditions;
-
+import eu.fbk.knowledgestore.data.Data;
+import eu.fbk.knowledgestore.data.Handler;
+import eu.fbk.knowledgestore.data.Stream;
+import info.aduna.iteration.CloseableIteration;
+import info.aduna.iteration.IterationWrapper;
 import org.openrdf.model.Resource;
 import org.openrdf.model.Statement;
 import org.openrdf.model.URI;
@@ -17,12 +15,10 @@ import org.openrdf.query.QueryEvaluationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import info.aduna.iteration.CloseableIteration;
-import info.aduna.iteration.IterationWrapper;
-
-import eu.fbk.knowledgestore.data.Data;
-import eu.fbk.knowledgestore.data.Handler;
-import eu.fbk.knowledgestore.data.Stream;
+import javax.annotation.Nullable;
+import java.io.IOException;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * A {@code TripleStore} wrapper that log calls to the operations of a wrapped {@code TripleStore}
@@ -229,8 +225,8 @@ public final class LoggingTripleStore extends ForwardingTripleStore {
                 Iterable<Statement> stmts = (Iterable<Statement>) statements;
                 final Stream<Statement> stream = Stream.create(stmts).track(count, eof);
                 final long ts = System.currentTimeMillis();
-                super.remove(stream);
-                LOGGER.debug("{} - {} statements removed in {} ms{}", this, count,
+                super.add(stream);
+                LOGGER.debug("{} - {} statements added in {} ms{}", this, count,
                         System.currentTimeMillis() - ts, eof.get() ? ", EOF" : "");
             } else {
                 super.add(statements);

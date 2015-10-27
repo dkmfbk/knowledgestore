@@ -995,6 +995,65 @@ public abstract class Operation {
 
     // TODO: add missing namespaces based on available namespaces
 
+    public abstract static class SparqlUpdate extends Operation {
+
+        @Nullable
+        private Stream<? extends Statement> statements;
+
+        protected SparqlUpdate(final Map<String, String> namespaces) throws ParseException {
+            super(namespaces);
+        }
+
+        public final synchronized SparqlUpdate statements(@Nullable final Statement... statements) {
+            this.statements = statements == null ? null : Stream.create(statements);
+            return this;
+        }
+
+        public final synchronized SparqlUpdate statements(//
+                                                 @Nullable final Iterable<? extends Statement> statements) {
+            this.statements = statements == null ? null : Stream.create(statements);
+            return this;
+        }
+
+        public final synchronized Outcome exec() throws OperationException {
+            return doExec(this.timeout, this.statements);
+        }
+
+        protected abstract Outcome doExec(@Nullable Long timeout,
+                                          @Nullable final Stream<? extends Statement> statements) throws OperationException;
+
+    }
+
+
+    public abstract static class SparqlDelete extends Operation {
+
+        @Nullable
+        private Stream<? extends Statement> statements;
+
+        protected SparqlDelete(final Map<String, String> namespaces) throws ParseException {
+            super(namespaces);
+        }
+
+        public final synchronized SparqlDelete statements(@Nullable final Statement... statements) {
+            this.statements = statements == null ? null : Stream.create(statements);
+            return this;
+        }
+
+        public final synchronized SparqlDelete statements(//
+                                                          @Nullable final Iterable<? extends Statement> statements) {
+            this.statements = statements == null ? null : Stream.create(statements);
+            return this;
+        }
+
+        public final synchronized Outcome exec() throws OperationException {
+            return doExec(this.timeout, this.statements);
+        }
+
+        protected abstract Outcome doExec(@Nullable Long timeout,
+                                          @Nullable final Stream<? extends Statement> statements) throws OperationException;
+
+    }
+
     /**
      * SPARQL query operation.
      * <p>

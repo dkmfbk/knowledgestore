@@ -9,7 +9,7 @@
     <parent>
         <groupId>eu.fbk.knowledgestore</groupId>
         <artifactId>ks</artifactId>
-        <version>1.7-SNAPSHOT</version>
+        <version>1.8-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -29,6 +29,11 @@
     </distributionManagement>
 
     <dependencies>
+        <dependency>
+            <groupId>eu.fbk.rdfpro</groupId>
+            <artifactId>rdfpro-tql</artifactId>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>eu.fbk.knowledgestore</groupId>
             <artifactId>ks-core</artifactId>
