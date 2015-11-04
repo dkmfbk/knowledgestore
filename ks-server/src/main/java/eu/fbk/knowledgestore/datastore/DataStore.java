@@ -48,5 +48,5 @@ public interface DataStore extends Component {
      */
     DataTransaction begin(boolean readOnly) throws DataCorruptedException, IOException,
             IllegalStateException;
-
+    
 }

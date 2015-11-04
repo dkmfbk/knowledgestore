@@ -1,5 +1,6 @@
 package eu.fbk.knowledgestore.populator.naf;
 
+import com.google.common.io.ByteStreams;
 import eu.fbk.knowledgestore.data.Data;
 import eu.fbk.knowledgestore.data.Record;
 import eu.fbk.knowledgestore.populator.naf.model.*;
@@ -101,15 +102,16 @@ public class processNAF {
     public static statistics readFile(String filepath, String disabled_Items, processNAFVariables vars) throws Exception {
     	vars.storePartialInforInCaseOfError = true;
     	vars.filePath = new File(filepath);
-        logDebug("Start working with (" + vars.filePath.getName() + ")",vars);
+        logDebug("Start working with (" + vars.filePath.getName() + ")", vars);
         String disabledItems = "";// Default empty so generate all layers of data
         if (disabled_Items != null
                 && (disabled_Items.matches("(?i)Entity") || disabled_Items.contains("(?i)Mention") || disabled_Items.contains("(?i)Resource"))) {
             disabledItems = disabled_Items;
             logDebug("Disable layer: " + disabledItems,vars);
         }
-        		readNAFFile(vars.filePath,vars);
-        		getNAFHEADERMentions(vars.doc.getNafHeader(),vars);
+        		readNAFFile(vars.filePath, vars);
+		NafHeader header = vars.doc.getNafHeader();
+        		getNAFHEADERMentions(header,vars);
             	vars.rawText = vars.doc.getRaw().getvalue();
             	vars.globalText = vars.doc.getText();
             	vars.globalTerms = vars.doc.getTerms();
@@ -177,10 +179,10 @@ public class processNAF {
 		    */
                     referencesElements++;
                     if (((References) generalEntObj).getSpan().size() < 1) {
-                        logWarn("Every entity must contain a 'span' element inside 'references'",vars);
+                        logDebug("Every entity must contain a 'span' element inside 'references'", vars);
                     }
                     if (((References) generalEntObj).getSpan().size() > 1) {
-                        logWarn("xpath(///NAF/entities/entity/references/span/), spanSize("
+						logDebug("xpath(///NAF/entities/entity/references/span/), spanSize("
                                 + ((References) generalEntObj).getSpan().size()
                                 + ") Every entity must contain a unique 'span' element inside 'references'",vars);
                     }
@@ -189,7 +191,7 @@ public class processNAF {
 
                         if (spansObj.getTarget().size() < 1) {
 			    addMentionFlag = false;
-                            logWarn("Every span in an entity must contain at least one target inside",vars);
+                            logDebug("Every span in an entity must contain at least one target inside", vars);
 			    continue;
                         }
                        
@@ -235,8 +237,8 @@ public class processNAF {
 					+ getCharSpanFromSpan(spansObj,vars) + "|, type " + vars.entityTypeMapper.get(type3charLC),vars);
 			    } else {
 				addMentionFlag = false;
-				logWarn("xpath(//NAF/entities/entity/@type),type(" + entObj.getType() + "), id(" 
-					+ entObj.getId() + ") NO mapping for it",vars);
+					logDebug("xpath(//NAF/entities/entity/@type),type(" + entObj.getType() + "), id("
+							+ entObj.getId() + ") NO mapping for it", vars);
 				vars.no_mapping++;
 			    }
 			}
@@ -307,7 +309,7 @@ public class processNAF {
 			for (ExternalRef exRObj : ((ExternalReferences) generalEntObj) .getExternalRef()) {
 				if(exRObj.getSource().equalsIgnoreCase("POCUS")){
 				if (referencesElements < 1) {
-				logWarn("Every entity must contain a 'references' element:not possible to add ExternalRef to null.",vars);
+					logDebug("Every entity must contain a 'references' element:not possible to add ExternalRef to null.", vars);
 				continue;
 			    }
 			   // String resourceValue = exRObj.getResource();
@@ -341,7 +343,7 @@ public class processNAF {
 				for (ExternalRef exRObj : ((ExternalReferences) generalEntObj) .getExternalRef()) {
 					
 					if (referencesElements < 1) {
-					logWarn("Every entity must contain a 'references' element:not possible to add ExternalRef to null.",vars);
+						logDebug("Every entity must contain a 'references' element:not possible to add ExternalRef to null.", vars);
 					continue;
 				    }
 				    String resourceValue = exRObj.getResource();
@@ -376,7 +378,7 @@ public class processNAF {
 
             logDebug(deg,vars);
             if (referencesElements < 1) {
-                logWarn("Every entity must contain a 'references' element",vars);
+				logDebug("Every entity must contain a 'references' element", vars);
             }
         }
     }
@@ -404,7 +406,7 @@ public class processNAF {
 					exrNl.addLast(exRObj);
 				}
 			}else{
-				logWarn("Every entity must contain a 'references' element with type or DBpedia reference: not possible to add ExternalRef to null.",vars);
+				logDebug("Every entity must contain a 'references' element with type or DBpedia reference: not possible to add ExternalRef to null.", vars);
 			}
 		}
 		
@@ -449,7 +451,7 @@ public class processNAF {
 
 	    // patch for timex3 without <span>
 	    if ((tmxSpan == null) || (tmxSpan.getTarget().size() < 1)) {
-		logWarn("skipping timex3 without span, id is " + tmxObj.getId(),vars);
+		logDebug("skipping timex3 without span, id is " + tmxObj.getId(), vars);
 		continue;
 	    }
 
@@ -476,8 +478,8 @@ public class processNAF {
 		    logDebug("ROL1: <timex3> STRANGE added new mention for id " + tmxObj.getId() 
 			    + ", type " + vars.timex3TypeMapper.get(tmxTypeUC),vars);
 		} else {
-		    logWarn("xpath(//NAF/timeExpressions/timex3/@type), type(" + tmxTypeUC
-			    + "), No mapping.",vars);
+			logDebug("xpath(//NAF/timeExpressions/timex3/@type), type(" + tmxTypeUC
+					+ "), No mapping.", vars);
 		}
 	    }
             if (false&&tmxObj.getBeginPoint() != null) { //TODO
@@ -729,7 +731,7 @@ public class processNAF {
 	        		if (returned==1)
 	        		vars.tlinkMentionsEnriched++;
 	        		else
-	        		logWarn("Tlink FROM -> tmx0, not found the target mention id:"+fvObj.getTo(), vars);
+	        		logDebug("Tlink FROM -> tmx0, not found the target mention id:" + fvObj.getTo(), vars);
 	        		continue;
 	         }
 	         if(fvObj.getTo().equalsIgnoreCase("tmx0")){
@@ -739,7 +741,7 @@ public class processNAF {
 					if (returned==1)
 					vars.tlinkMentionsEnriched++;
 					else
-		        		logWarn("Tlink TO -> tmx0, not found the source mention id:"+fvObj.getFrom(), vars);
+		        		logDebug("Tlink TO -> tmx0, not found the source mention id:" + fvObj.getFrom(), vars);
 					continue;
 	        	}
              if(allWFFrom.size()>0){
@@ -794,7 +796,7 @@ public class processNAF {
                 }
         
         if (found < list.size()) {
-            logWarn("reorderWFAscending method, inconsistency: returned list less than the input list",vars);
+			logDebug("reorderWFAscending method, inconsistency: returned list less than the input list", vars);
         }
     return tmp;
 	}
@@ -872,7 +874,7 @@ public class processNAF {
 	    */
             if (prdObj.getSpan() instanceof Span) {
                 if (firstSpanFound) {
-                    logWarn("Srl should have one span only! ",vars);
+                    logDebug("Srl should have one span only! ", vars);
                 }
                 if (!firstSpanFound) {
                     firstSpanFound = true;
@@ -951,8 +953,8 @@ public class processNAF {
                 if (prdGObj instanceof ExternalReferences) {
                     boolean eventTypeFound = false;
                     if (predicatExtRef > 1) {
-                        logWarn("more than one external ref for predicate:" + predicateID 
-				+ " size: " + predicatExtRef,vars);
+                        logDebug("more than one external ref for predicate:" + predicateID
+								+ " size: " + predicatExtRef, vars);
                     }
                     predicatExtRef++;
                     for (ExternalRef exrObj : ((ExternalReferences) prdGObj).getExternalRef()) {
@@ -1001,12 +1003,12 @@ public class processNAF {
 				}
 			    } else {
 				// resourceValue == null)
-                                logWarn("xpath(//NAF/srl/predicate/externalReferences/externalRef@Resource(NULL)): predicateID("
-                                        + predicateID + ")",vars);
+					logDebug("xpath(//NAF/srl/predicate/externalReferences/externalRef@Resource(NULL)): predicateID("
+							+ predicateID + ")", vars);
                             }
                         } else {
-                            logWarn("Mapping error - Mention null - xpath(NAF/srl/predicate/externalReferences/externalRef): predicateID("
-                                    + predicateID + ")",vars);
+							logDebug("Mapping error - Mention null - xpath(NAF/srl/predicate/externalReferences/externalRef): predicateID("
+									+ predicateID + ")", vars);
                         }
                     }
                     if (!eventTypeFound) {
@@ -1032,8 +1034,8 @@ public class processNAF {
                     } else {
                         // if eventType not found or no mapping for it
                         // write error and discard this mention
-                        logWarn("Mention discarded for predicateID(" + predicateID + ") - ID("
-                                + mtmp.getID().toString() + ")",vars);
+                        logDebug("Mention discarded for predicateID(" + predicateID + ") - ID("
+								+ mtmp.getID().toString() + ")", vars);
                     }
                 } else 
 		    /*
@@ -1118,8 +1120,8 @@ public class processNAF {
 				relationM.add(NWR.SOURCE, new URIImpl(eventMentionId));
 				deg2 += "|SOURCE:" + eventMentionId;
 			    } else {
-				logWarn("//NAF/srl/predicate/role/ - a Role without Predicate roleID("
-					+ ((Role) prdGObj).getId() + ")",vars);
+					logDebug("//NAF/srl/predicate/role/ - a Role without Predicate roleID("
+							+ ((Role) prdGObj).getId() + ")", vars);
 			    }
 
 			    /*
@@ -1220,8 +1222,8 @@ public class processNAF {
 					    deg2 += "|" + resourceMappedValue + ":" + valueURI;
 					}  else {
 					    // resourceValue == null)
-					    logWarn("xpath(//NAF/srl/predicate/role/externalReferences/externalRef@Resource(NULL)): RoleID("
-						    + ((Role) prdGObj).getId() + ")",vars);
+						logDebug("xpath(//NAF/srl/predicate/role/externalReferences/externalRef@Resource(NULL)): RoleID("
+								+ ((Role) prdGObj).getId() + ")", vars);
 					}
 				    }
 				
@@ -1365,8 +1367,8 @@ public class processNAF {
                     nafFile.add(NWR.LAYER, vars.nafLayerMapper.get(lpObj.getLayer()));
                     deg += "LAYER:" + vars.nafLayerMapper.get(lpObj.getLayer());
                 } else {
-                    logWarn("xpath(//NAF/nafHeader/linguisticProcessors/@layer["
-                            + lpObj.getLayer() + "]),  unknown layer.",vars);
+					logDebug("xpath(//NAF/nafHeader/linguisticProcessors/@layer["
+							+ lpObj.getLayer() + "]),  unknown layer.", vars);
                 }
             }
 
@@ -1410,7 +1412,7 @@ public class processNAF {
         for (Coref corefObj : ((Coreferences) obj).getCoref()) {
             deg = "";
             if (corefObj.getSpan().size() < 1) {
-                logWarn("Every coref must contain a 'span' element inside 'references'",vars);
+                logDebug("Every coref must contain a 'span' element inside 'references'", vars);
             }
 	    
 	    /*
@@ -1483,7 +1485,7 @@ public class processNAF {
 			    + corefCharSpan + "|, and type " + m.get(RDF.TYPE),vars);
 
 		    if (corefSpan.getTarget().size() < 1) {
-			logWarn("Every span in an entity must contain at least one target inside",vars);
+			logDebug("Every span in an entity must contain at least one target inside", vars);
 		    }
 		    for (Target spTar : corefSpan.getTarget()) {
 			if (eventM) {
@@ -1498,8 +1500,8 @@ public class processNAF {
 				m.add(NWR.POS, posVal);
 				deg += "|POS:" + posVal;
 			    } else {
-				logWarn("//NAF/coreferences/coref/span/target/@id/@getPOS[null], id("
-					+ eventTerm.getId() + ")",vars);
+					logDebug("//NAF/coreferences/coref/span/target/@id/@getPOS[null], id("
+							+ eventTerm.getId() + ")", vars);
 			    }
 			}
 			if (!eventM && spTar.getHead() != null && spTar.getHead().equals("yes")) {
@@ -1507,8 +1509,8 @@ public class processNAF {
 				m.add(NWR.SYNTACTIC_HEAD, spTar.getId());
 				deg += "|SYNTACTIC_HEAD:" + spTar.getId();
 			    } else {
-				logWarn("//NAF/coreferences/coref/span/target[@head='yes']/@id[null], id("
-					+ spTar.getId() + ")",vars);
+					logDebug("//NAF/coreferences/coref/span/target[@head='yes']/@id[null], id("
+							+ spTar.getId() + ")", vars);
 			    }
 			}
 		    }
@@ -1664,15 +1666,15 @@ public class processNAF {
 		if (checkMentionReplaceability(vars.mentionListHash.get(charS), m)){
 		    // replace the old mention with the new one
 			vars.mentionListHash.put(charS, m);
-		    logWarn("Replacement with Mention: " + m.getID()+", class("+getTypeasString(m.get(RDF.TYPE))+")",vars);
+		    logDebug("Replacement with Mention: " + m.getID() + ", class(" + getTypeasString(m.get(RDF.TYPE)) + ")", vars);
 		    return 0;
 		}
 
                 String types =getTypeasString(m.get(RDF.TYPE));
                 if(types.contains(NWR.PARTICIPATION.stringValue())){
-                    logWarn("Participation collision error, mentionID("+m.getID()+") class1("+getTypeasString(m.get(RDF.TYPE))+"), class-pre-xtracted("+getTypeasString(vars.mentionListHash.get(charS).get(RDF.TYPE))+")",vars);
+                    logDebug("Participation collision error, mentionID(" + m.getID() + ") class1(" + getTypeasString(m.get(RDF.TYPE)) + "), class-pre-xtracted(" + getTypeasString(vars.mentionListHash.get(charS).get(RDF.TYPE)) + ")", vars);
                 }else{
-                    logWarn("Generic collision error, mentionID("+m.getID()+") class1("+getTypeasString(m.get(RDF.TYPE))+"), class-pre-xtracted("+getTypeasString(vars.mentionListHash.get(charS).get(RDF.TYPE))+")",vars);
+                    logDebug("Generic collision error, mentionID(" + m.getID() + ") class1(" + getTypeasString(m.get(RDF.TYPE)) + "), class-pre-xtracted(" + getTypeasString(vars.mentionListHash.get(charS).get(RDF.TYPE)) + ")", vars);
                 }
                 return -1;
             } else {
@@ -1682,7 +1684,7 @@ public class processNAF {
 		*/
                 String types =getTypeasString(m.get(RDF.TYPE));
                 if(types.contains(NWR.PARTICIPATION.stringValue())){//Rule: no enrichment for participation
-                    logWarn("Refused enrichment with participation mention, mentionID("+m.getID()+")",vars);
+                    logDebug("Refused enrichment with participation mention, mentionID(" + m.getID() + ")", vars);
                     return -1;
                 }
 		// enrich mention
@@ -1694,7 +1696,7 @@ public class processNAF {
 		    	vars.mentionListHash.get(charS).add(mittmp, pit);
 		    }
 		}
-		logWarn("Mention enrichment: " + m.getID()+", class("+getTypeasString(m.get(RDF.TYPE))+")",vars);
+		logDebug("Mention enrichment: " + m.getID() + ", class(" + getTypeasString(m.get(RDF.TYPE)) + ")", vars);
 		return 0;
             }
             
@@ -2098,8 +2100,8 @@ public class processNAF {
         try {
             JAXBContext jc = JAXBContext.newInstance("eu.fbk.knowledgestore.populator.naf.model");
             Unmarshaller unmarshaller = jc.createUnmarshaller();
-            vars.doc = (NAF) unmarshaller.unmarshal(new InputStreamReader(IO.read(naf.getAbsolutePath()),
-                    "UTF-8"));
+			byte[] bytes = ByteStreams.toByteArray(IO.read(naf.getAbsolutePath()));
+			vars.doc = (NAF) unmarshaller.unmarshal(new ByteArrayInputStream(bytes));
         } catch (UnsupportedEncodingException e) {
             logError(e.getMessage(),vars);
         } catch (FileNotFoundException e) {

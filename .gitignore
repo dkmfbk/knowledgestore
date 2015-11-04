@@ -31,3 +31,5 @@ ks-server-virtuoso/target
 */.settings
 
 ks-tool/ks-tool.iml
+
+**/.DS_Store

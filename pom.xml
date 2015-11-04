@@ -7,7 +7,7 @@
     <groupId>eu.fbk.knowledgestore</groupId>
     <artifactId>ks</artifactId>
     <packaging>pom</packaging>
-    <version>1.7-SNAPSHOT</version>
+    <version>1.8-SNAPSHOT</version>
 
     <name>ks</name>
     <description>The KnowledgeStore</description>
@@ -16,7 +16,7 @@
     <parent>
         <groupId>eu.fbk.dkm</groupId>
         <artifactId>parent</artifactId>
-        <version>1.1</version>
+        <version>1.2</version>
     </parent>
 
     <developers>
@@ -86,6 +86,18 @@
             <timezone>+1</timezone>
             <properties>
                 <picUrl>https://knowledgestore.fbk.eu/images/team/any.jpg</picUrl>
+            </properties>
+        </developer>
+        <developer>
+            <id>corcoglio</id>
+            <name>Francesco Corcoglioniti</name>
+            <email>corcoglio@fbk.eu</email>
+            <roles>
+                <role>Developer</role>
+            </roles>
+            <timezone>+1</timezone>
+            <properties>
+                <picUrl>http://rdfpro.fbk.eu/images/team/corcoglio.jpg</picUrl>
             </properties>
         </developer>
         <developer>

@@ -1,11 +1,5 @@
 package eu.fbk.knowledgestore.internal.jaxrs;
 
-import javax.ws.rs.core.GenericType;
-
-import org.openrdf.model.Statement;
-import org.openrdf.model.URI;
-import org.openrdf.query.BindingSet;
-
 import eu.fbk.knowledgestore.Outcome;
 import eu.fbk.knowledgestore.data.Record;
 import eu.fbk.knowledgestore.data.Stream;
@@ -13,6 +7,11 @@ import eu.fbk.knowledgestore.internal.rdf.HtmlRDF;
 import eu.fbk.knowledgestore.internal.rdf.HtmlSparql;
 import eu.fbk.knowledgestore.vocabulary.KS;
 import eu.fbk.rdfpro.tql.TQL;
+import org.openrdf.model.Statement;
+import org.openrdf.model.URI;
+import org.openrdf.query.BindingSet;
+
+import javax.ws.rs.core.GenericType;
 
 public final class Protocol {
 
@@ -79,6 +78,11 @@ public final class Protocol {
     public static final String PATH_AXIOMS = "axioms";
 
     public static final String PATH_MATCH = "match";
+
+    public static final String PATH_UPDATE = "triplestoreupdate";
+    public static final String PATH_DELETE = "triplestoredelete";
+
+    public static final String PATH_CUSTOM = "custom";
 
     public static final String PATH_SPARQL = "sparql";
 

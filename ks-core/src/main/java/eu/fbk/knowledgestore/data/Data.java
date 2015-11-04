@@ -1,72 +1,35 @@
 package eu.fbk.knowledgestore.data;
 
+import com.google.common.base.*;
+import com.google.common.base.Objects;
+import com.google.common.collect.*;
+import com.google.common.hash.Hasher;
+import com.google.common.hash.Hashing;
+import com.google.common.io.Resources;
+import com.google.common.primitives.*;
+import com.google.common.util.concurrent.ListeningScheduledExecutorService;
+import eu.fbk.knowledgestore.internal.Util;
+import eu.fbk.knowledgestore.internal.rdf.CompactValueFactory;
+import eu.fbk.rdfpro.util.Namespaces;
+import org.openrdf.model.*;
+import org.openrdf.model.impl.ValueFactoryImpl;
+import org.openrdf.model.vocabulary.XMLSchema;
+
+import javax.annotation.Nullable;
+import javax.xml.datatype.DatatypeConstants;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
 import java.io.File;
 import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.net.URL;
 import java.nio.charset.Charset;
-import java.util.AbstractMap;
-import java.util.AbstractSet;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
-
-import javax.annotation.Nullable;
-import javax.xml.datatype.DatatypeConstants;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
-
-import com.google.common.base.Charsets;
-import com.google.common.base.Function;
-import com.google.common.base.MoreObjects;
-import com.google.common.base.Objects;
-import com.google.common.base.Preconditions;
-import com.google.common.base.Splitter;
-import com.google.common.collect.BiMap;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Iterators;
-import com.google.common.collect.Maps;
-import com.google.common.collect.Ordering;
-import com.google.common.collect.Sets;
-import com.google.common.hash.Hasher;
-import com.google.common.hash.Hashing;
-import com.google.common.io.Resources;
-import com.google.common.primitives.Booleans;
-import com.google.common.primitives.Chars;
-import com.google.common.primitives.Doubles;
-import com.google.common.primitives.Floats;
-import com.google.common.primitives.Ints;
-import com.google.common.primitives.Longs;
-import com.google.common.primitives.Shorts;
-import com.google.common.util.concurrent.ListeningScheduledExecutorService;
-
-import org.openrdf.model.BNode;
-import org.openrdf.model.Literal;
-import org.openrdf.model.Resource;
-import org.openrdf.model.Statement;
-import org.openrdf.model.URI;
-import org.openrdf.model.Value;
-import org.openrdf.model.ValueFactory;
-import org.openrdf.model.impl.ValueFactoryImpl;
-import org.openrdf.model.vocabulary.XMLSchema;
-
-import eu.fbk.knowledgestore.internal.Util;
-import eu.fbk.knowledgestore.internal.rdf.CompactValueFactory;
-import eu.fbk.rdfpro.util.Namespaces;
 
 // TODO: RDF conversion
 // TODO: bytes
@@ -1214,7 +1177,7 @@ public final class Data {
      * the corresponding cleaned {@code URI} object if successfull. A null result is returned for
      * a null input. Cleaning consists in (i) encode Unicode characters above U+0080 as UTF-8
      * octet sequences and (ii) percent-encode all resulting characters that are illegal as per
-     * RFC 3896 (i.e., characters that are not 'reserved' or 'unreserved' according to the RFC).
+     * RFC 3986 (i.e., characters that are not 'reserved' or 'unreserved' according to the RFC).
      * Note that relative URIs are rejected by this method.
      *
      * @param string
@@ -1437,7 +1400,7 @@ public final class Data {
 
         } else {
             final Literal literal = (Literal) value;
-            builder.append('\"').append(literal.getLabel()).append('\"');
+            builder.append('\"').append(literal.getLabel().replace("\"", "\\\"")).append('\"');
             final URI datatype = literal.getDatatype();
             if (datatype != null) {
                 builder.append('^').append('^');

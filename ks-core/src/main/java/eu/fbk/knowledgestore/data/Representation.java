@@ -176,7 +176,8 @@ public final class Representation implements Closeable {
             String name = file.getName();
             final Representation representation;
             if (autoDecompress) {
-                representation = new Representation(IO.buffer(IO.read(file.getAbsolutePath())));
+                byte[] bytes = ByteStreams.toByteArray(IO.read(file.getAbsolutePath()));
+                representation = new Representation(new ByteArrayInputStream(bytes));
                 if (name.endsWith(".gz") || name.endsWith(".xz") || name.endsWith(".7z")) {
                     name = name.substring(0, name.length() - 3);
                 } else if (name.endsWith(".bz2") || name.endsWith(".lz4")) {

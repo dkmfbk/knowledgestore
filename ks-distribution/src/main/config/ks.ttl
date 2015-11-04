@@ -60,11 +60,14 @@
         :delegate [
             a <java:eu.fbk.knowledgestore.datastore.LoggingDataStore> ;
             :delegate [
-                a <java:eu.fbk.knowledgestore.datastore.MySQLDataStore> ;
-                :host "localhost";
-                :username "root";
-                :password "pippo";
-                :databaseName "test"
+                a <java:eu.fbk.knowledgestore.datastore.MemoryDataStore> ;
+                :fileSystem <obj:fileSystem> ;
+                :path "data.tql"
+#                a <java:eu.fbk.knowledgestore.datastore.MySQLDataStore> ;
+#                :host "localhost";
+#                :username "root";
+#                :password "pippo";
+#                :databaseName "test"
 #                a <java:eu.fbk.knowledgestore.datastore.LuceneDataStore> ;
 #                :folder "/Users/alessio/lucene-ks"
             ]
@@ -73,34 +76,18 @@
 
 <obj:tripleStore>
     a <java:eu.fbk.knowledgestore.triplestore.SynchronizedTripleStore> ;
-    :synchronizerSpec "10:1" ;
+    :synchronizerSpec "72:1" ;
     :delegate [
         a <java:eu.fbk.knowledgestore.triplestore.LoggingTripleStore> ;
         :delegate [
-            a <java:eu.fbk.knowledgestore.triplestore.RewritingTripleStore> ;
-            :internalPrefix "http://www.newsreader-project.eu/data/cars/" ;
-            :externalPrefix "http://www.newsreader-project.eu/data/cars/" ;
-            :delegate [
-                a <java:eu.fbk.knowledgestore.triplestore.RepositoryTripleStore> ;
-                :repository [
-                    a <java:org.openrdf.repository.sparql.SPARQLRepository> ;
-                    :endpointUrl "http://hlt-services7:9890/sparql"
-                ]
-            ]
-#            :delegate [
-#                a <java:eu.fbk.knowledgestore.triplestore.virtuoso.VirtuosoTripleStore> ;
-#                :host "hlt-services7" ;
-#                :port "9111" ;
-#                :username "dba" ;
-#                :password "dba" ;
-#                :pooling "false" ;
-#                :batchSize 5000 ;
-#                :fetchSize 200 ;
-#                :fileSystem <obj:fileSystem> ;
-#                :markerFilename "virtuoso.marker" 
-#            ]
+            a <java:eu.fbk.knowledgestore.triplestore.virtuoso.VirtuosoJdbcTripleStore> ;
+            :host "hlt-services7" ;
+            :port "9041" ;
+            :username "dba" ;
+            :password "dba" ;
+            :fetchSize 200 ;
         ]
-    ] .       
+    ] .
             
 <obj:fileSystem>
     a <java:eu.fbk.knowledgestore.runtime.Files#getFileSystem> ;
