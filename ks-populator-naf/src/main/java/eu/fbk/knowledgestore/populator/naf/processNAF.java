@@ -7,6 +7,7 @@ import eu.fbk.knowledgestore.vocabulary.KS;
 import eu.fbk.knowledgestore.vocabulary.NIF;
 import eu.fbk.knowledgestore.vocabulary.NWR;
 import eu.fbk.rdfpro.util.IO;
+
 import org.openrdf.model.URI;
 import org.openrdf.model.impl.URIImpl;
 import org.openrdf.model.impl.ValueFactoryImpl;
@@ -17,6 +18,7 @@ import org.slf4j.Logger;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
+
 import java.io.*;
 import java.net.URL;
 import java.nio.file.Path;
@@ -26,7 +28,7 @@ import java.util.*;
 public class processNAF {
 
 
-    public static void main(String[] args) throws JAXBException, IOException {
+    public static void main(String[] args) throws Exception {
         // args[0] is the path, [args[1] is the disabled_Items]
         String disabled_Items = "", path = "";
         if (args.length > 0) {
@@ -36,7 +38,8 @@ public class processNAF {
         } else {
             System.err
                     .println("eu.fbk.knowledgestore.populator.naf.processNAF path disabled_items \ndisabled_items = [Entities|Mentions|Resources] ");
-            System.exit(-1);
+            throw new Exception();
+            // System.exit(-1);
         }
     	processNAFVariables vars = new processNAFVariables();
 
@@ -48,7 +51,10 @@ public class processNAF {
     	processNAFVariables vars = new processNAFVariables();
     	vars.storePartialInforInCaseOfError = store_partical_info;
     	vars.out = inout;
-        statistics stat = readFile(fPath, disabled_Items, vars);
+        statistics stat;
+		try {
+			stat = readFile(fPath, disabled_Items, vars);
+		
         KSPresentation returned = new KSPresentation();
         returned.setNaf_file_path(fPath);
         returned.setNews(vars.rawText);
@@ -57,11 +63,14 @@ public class processNAF {
         returned.setNewsResource(vars.newsFile2);
         returned.setStats(stat);
         return returned;
+		} catch (Exception e) {
+			return null;
+		}
     }
 
     
     private static void analyzePathAndRunSystem(String path, String disabled_Items,processNAFVariables vars)
-            throws JAXBException, IOException {
+            throws Exception {
     	vars.filePath = new File(path);
         if (vars.filePath.exists() && vars.filePath.isDirectory()) {
             // create report file in the same directory of running the system
@@ -89,8 +98,7 @@ public class processNAF {
         vars.out.close();
     }
 
-    public static statistics readFile(String filepath, String disabled_Items, processNAFVariables vars) throws JAXBException,
-            IOException {
+    public static statistics readFile(String filepath, String disabled_Items, processNAFVariables vars) throws Exception {
     	vars.storePartialInforInCaseOfError = true;
     	vars.filePath = new File(filepath);
         logDebug("Start working with (" + vars.filePath.getName() + ")",vars);
@@ -149,7 +157,7 @@ public class processNAF {
         return st;
     }
 
-    private static void getEntitiesMentions(Entities obj, String disabledItems,processNAFVariables vars) {
+    private static void getEntitiesMentions(Entities obj, String disabledItems,processNAFVariables vars) throws Exception {
         if (!checkHeaderTextTerms(vars)) {
             logError("Error: populating stopped",vars);
         } else {
@@ -427,7 +435,7 @@ public class processNAF {
 		return current.getReference();
 	}
 
-	private static void getTimeExpressionsMentions(TimeExpressions obj,processNAFVariables vars) {
+	private static void getTimeExpressionsMentions(TimeExpressions obj,processNAFVariables vars) throws Exception {
         if (!checkHeaderTextTerms(vars)) {
             logError("Error: populating interrupted",vars);
         } else {
@@ -523,7 +531,7 @@ public class processNAF {
         }
     }
 
-    private static void getFactualityMentions(Factualitylayer obj,processNAFVariables vars) {
+    private static void getFactualityMentions(Factualitylayer obj,processNAFVariables vars) throws Exception {
         if (!checkHeaderTextTerms(vars)) {
             logError("Error: populating interrupted",vars);
         } else {
@@ -564,7 +572,7 @@ public class processNAF {
     }
 
     
-    private static void getFactualityMentionsV3(Factualities factualities,processNAFVariables vars) {
+    private static void getFactualityMentionsV3(Factualities factualities,processNAFVariables vars) throws Exception {
         if (!checkHeaderTextTerms(vars)) {
             logError("Error: populating interrupted",vars);
         } else {
@@ -604,7 +612,7 @@ public class processNAF {
     }
 
   
-    private static void getCLinksMentions(CausalRelations causalRelations,processNAFVariables vars) {
+    private static void getCLinksMentions(CausalRelations causalRelations,processNAFVariables vars) throws Exception {
         if (!checkHeaderTextTerms(vars)) {
             logError("Error: populating interrupted",vars);
         } else {
@@ -652,7 +660,7 @@ public class processNAF {
     }
 
   
-    private static void getTLinksMentions(TemporalRelations temporalRelations,processNAFVariables vars) {
+    private static void getTLinksMentions(TemporalRelations temporalRelations,processNAFVariables vars) throws Exception {
         if (!checkHeaderTextTerms(vars)) {
             logError("Error: populating interrupted",vars);
         } else {
@@ -834,7 +842,7 @@ public class processNAF {
 	}
     }
 
-    private static void getSRLMentions(processNAFVariables vars) {
+    private static void getSRLMentions(processNAFVariables vars) throws Exception {
         Srl obj = vars.doc.getSrl();
         if (!checkHeaderTextTerms(vars)) {
             logError("Error: populating interrupted",vars);
@@ -1246,7 +1254,7 @@ public class processNAF {
 	}
 
 	
-	private static void getNAFHEADERMentions(NafHeader obj,processNAFVariables vars) {
+	private static void getNAFHEADERMentions(NafHeader obj,processNAFVariables vars) throws Exception {
         logDebug("Start reading the naf metadata:",vars);
         String deg = "";
         Public publicProp = ((NafHeader) obj).getPublic();
@@ -1388,7 +1396,7 @@ public class processNAF {
     }
 
 
-    private static void getCoreferencesMentions(Coreferences obj,processNAFVariables vars) {
+    private static void getCoreferencesMentions(Coreferences obj,processNAFVariables vars) throws Exception {
         if (!checkHeaderTextTerms(vars)) {
             logError("Error: populating interrupted",vars);
         } else {
@@ -1762,10 +1770,10 @@ public class processNAF {
 	}
     }
 
-    private static void initURIIDS(Public publicProp,processNAFVariables vars) {
+    private static void initURIIDS(Public publicProp,processNAFVariables vars) throws Exception {
         if (publicProp.getPublicId() == null) {
             logError("Corrupted Naf file: PublicId in the Naf header is missed",vars);
-            System.exit(0);
+            throw new Exception();
         }
         vars.nafPublicId = publicProp.getPublicId();
         String uri = publicProp.getUri();
@@ -1799,12 +1807,13 @@ public class processNAF {
         m.setID(mId);
     }
 
-    private static void logError(String error,processNAFVariables vars) {
+    private static void logError(String error,processNAFVariables vars) throws Exception {
         if (vars.logErrorActive) {
         	vars.logger.error(vars.filePath.getName() + " " + error);
         }
         if (!vars.storePartialInforInCaseOfError) {
-            System.exit(-1);
+            throw new Exception();
+        	// System.exit(-1);
         }
 
     }
@@ -2084,7 +2093,7 @@ public class processNAF {
         return corrispondingWf;
     }
 
-    public static void readNAFFile(File naf,processNAFVariables vars) {
+    public static void readNAFFile(File naf,processNAFVariables vars) throws Exception {
 
         try {
             JAXBContext jc = JAXBContext.newInstance("eu.fbk.knowledgestore.populator.naf.model");

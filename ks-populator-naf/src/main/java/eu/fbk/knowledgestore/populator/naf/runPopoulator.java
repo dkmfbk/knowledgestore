@@ -35,8 +35,8 @@ public class runPopoulator {
               //  "-u","http://maya:8080",
               //  "-n","/Users/qwaider/Desktop/NewsReader/testSet/58B2-1JT1-DYTM-916F.xml_09f6656a977d7216bde58d33a5c51921.naf"
                //  "-d","/Users/qwaider/Documents/Projects/NWR-August-v3/v3_test_dataset/test/"
-                 "-n","/Users/qwaider/Documents/Projects/NWR-August-v3/v3_test_dataset/out/5FN3-TY71-F11P-X2H4.xml"
-                 
+             //    "-n","/Users/qwaider/Documents/Projects/NWR-August-v3/v3_test_dataset/out/5FN3-TY71-F11P-X2H4.xml"
+               "-n","/Users/qwaider/Documents/Projects/NWR-September/knowledgestore/ks-distribution/target/knowledgestore/ks_test_files/10450-Apple_Computer_CEO.xml.naf"  
              //   "-d","/Users/qwaider/Desktop/NewsReader/testMTH/DATA/",
              //   "-d","/Users/qwaider/Desktop/NewsReader/test3/"
                // "-n","/Users/qwaider/Desktop/NewsReader/test3/test.naf"
