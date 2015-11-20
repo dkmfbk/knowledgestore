@@ -547,13 +547,13 @@ public final class VirtuosoJdbcTripleStore implements TripleStore {
 				insertStmt.clearBatch();
 				insertStmt.close();
 
-//				LOGGER.info("Starting checkpoint");
-//				try {
-//					VirtuosoTransaction.this.connection.prepareCall("checkpoint").execute();
-//				} catch (SQLException e) {
-//					e.printStackTrace();
-//				}
-//				LOGGER.info("Ending checkpoint");
+				LOGGER.info("Starting full text index update");
+				try {
+					VirtuosoTransaction.this.connection.prepareCall("DB.DBA.VT_INC_INDEX_DB_DBA_RDF_OBJ ()").execute();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				LOGGER.info("Ending full text index update");
 
 			} catch (final SQLException ex) {
 				throw new IOException(ex);
