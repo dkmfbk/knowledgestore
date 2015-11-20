@@ -404,7 +404,7 @@ public class NAFRunner {
             if (as != null) {
                 mentions.put(path, as);
             } else {
-                nafPopulator.out.append(path + " null is returned from processNAF procedure!");
+                nafPopulator.logger.error(path + " null is returned from processNAF procedure! -  Processing phase: file discarded!\n");
             }
         } catch (IllegalAccessException e) {
             e.printStackTrace();

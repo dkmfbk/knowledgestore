@@ -1177,7 +1177,7 @@ public final class Data {
      * the corresponding cleaned {@code URI} object if successfull. A null result is returned for
      * a null input. Cleaning consists in (i) encode Unicode characters above U+0080 as UTF-8
      * octet sequences and (ii) percent-encode all resulting characters that are illegal as per
-     * RFC 3896 (i.e., characters that are not 'reserved' or 'unreserved' according to the RFC).
+     * RFC 3986 (i.e., characters that are not 'reserved' or 'unreserved' according to the RFC).
      * Note that relative URIs are rejected by this method.
      *
      * @param string
