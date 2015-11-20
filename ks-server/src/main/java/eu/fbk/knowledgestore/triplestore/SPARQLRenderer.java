@@ -419,7 +419,8 @@ final class SPARQLRenderer implements QueryRenderer {
                 this.builder.append("\"");
                 escape(literal.getLabel(), this.builder);
                 this.builder.append("\"");
-                if (literal.getDatatype() != null) {
+                // Differences between string management in SPARQL 1.1 and RDF 1.1
+                if (literal.getDatatype() != null && !literal.getDatatype().equals(XMLSchema.STRING)) {
                     this.builder.append("^^");
                     emit(literal.getDatatype());
                 } else if (literal.getLanguage() != null) {
