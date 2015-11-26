@@ -130,7 +130,7 @@
 
     <custom>
         <reflowSkin>
-            <!--<absoluteResourceURL>${site-root}/</absoluteResourceURL>-->
+            <absoluteResourceURL>${site-root}/</absoluteResourceURL>
             <protocolRelativeURLs>true</protocolRelativeURLs>
 
             <endContent>
