@@ -47,9 +47,9 @@
 
     <body>
 
-        <!--<head>-->
-            <!--<link rel="stylesheet" href="$resourcePath/css/site.css"/>-->
-        <!--</head>-->
+        <head>
+            <link rel="icon" type="image/png" href="${site-root}/images/ks-favicon.png" />
+        </head>
 
         <!-- Currently not used; would end up in top navigation bar
         <links>

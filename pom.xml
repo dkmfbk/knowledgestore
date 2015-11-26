@@ -16,7 +16,7 @@
     <parent>
         <groupId>eu.fbk.dkm</groupId>
         <artifactId>parent</artifactId>
-        <version>1.2</version>
+        <version>1.3</version>
     </parent>
 
     <developers>
@@ -24,7 +24,7 @@
             <id>rospocher</id>
             <name>Marco Rospocher</name>
             <email>rospocher@fbk.eu</email>
-            <url>https://dkm.fbk.eu/rospocher</url>
+            <url>https://dkm.fbk.eu/people/profile/rospocher</url>
             <roles>
                 <role>Project Coordinator</role>
                 <role>Research Scientist</role>
@@ -39,7 +39,7 @@
             <id>serafini</id>
             <name>Luciano Serafini</name>
             <email>serafini@fbk.eu</email>
-            <url>https://dkm.fbk.eu/index.php/Luciano_Serafini</url>
+            <url>https://dkm.fbk.eu/people/profile/serafini</url>
             <roles>
                 <role>Senior Researcher</role>
             </roles>
@@ -104,6 +104,7 @@
             <id>aprosio</id>
             <name>Alessio Palmero Aprosio</name>
             <email>aprosio@fbk.eu</email>
+            <url>https://dkm.fbk.eu/people/profile/aprosio</url>
             <roles>
                 <role>Developer</role>
             </roles>
@@ -130,7 +131,6 @@
         <contributor>
             <name>Marco Amadori</name>
             <email>amadori@fbk.eu</email>
-            <url>http://wed.fbk.eu/people/profile/amadori</url>
             <roles>
                 <role>Developer</role>
             </roles>
