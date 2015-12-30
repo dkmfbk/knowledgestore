@@ -352,13 +352,13 @@ public class Root extends Resource {
         final String linkTemplate = "<a onclick=\"select('%s')\" href=\"#\">%s</a>";
         for (final Record mention : mentions) {
             final URI mentionID = mention.getID();
-            mentionLinks.add(String.format(linkTemplate, mentionID,
+            mentionLinks.add(String.format(linkTemplate, RenderUtils.escapeHtml(mentionID),
                     RenderUtils.shortenURI(mentionID)));
             if (mention.getID().equals(selection)) {
                 selectedMention = mention;
             }
             for (final URI entityID : mention.get(KS.REFERS_TO, URI.class)) {
-                entityLinks.add(String.format(linkTemplate, entityID,
+                entityLinks.add(String.format(linkTemplate, RenderUtils.escapeHtml(entityID),
                         RenderUtils.shortenURI(entityID)));
                 if (entityID.equals(selection)) {
                     selectedEntityID = selection;

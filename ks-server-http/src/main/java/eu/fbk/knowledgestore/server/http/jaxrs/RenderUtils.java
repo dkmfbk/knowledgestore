@@ -240,7 +240,7 @@ public final class RenderUtils {
                     anchorAdded = true;
                 }
                 if (canSelect) {
-                    out.append(" onclick=\"select('").append(mention.getID().toString())
+                    out.append(" onclick=\"select('").append(RenderUtils.escapeHtml(mention.getID()))
                             .append("')\"");
                 }
                 out.append(" class=\"mention").append(selected ? " selected" : "")
