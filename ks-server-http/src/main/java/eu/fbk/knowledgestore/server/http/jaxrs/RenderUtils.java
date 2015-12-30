@@ -240,7 +240,7 @@ public final class RenderUtils {
                     anchorAdded = true;
                 }
                 if (canSelect) {
-                    out.append(" onclick=\"select('").append(RenderUtils.escapeHtml(mention.getID()))
+                    out.append(" onclick=\"select('").append(RenderUtils.escapeJavaScriptString(mention.getID()))
                             .append("')\"");
                 }
                 out.append(" class=\"mention").append(selected ? " selected" : "")
@@ -513,6 +513,10 @@ public final class RenderUtils {
     @Nullable
     public static String escapeHtml(@Nullable final Object object) {
         return object == null ? null : HtmlEscapers.htmlEscaper().escape(object.toString());
+    }
+
+    public static String escapeJavaScriptString(@Nullable final Object object) {
+        return object == null ? null : object.toString().replaceAll("'", "\\\\'");
     }
 
     private RenderUtils() {

@@ -1,6 +1,12 @@
+String.prototype.endsWith = function(suffix) {
+    return this.indexOf(suffix, this.length - suffix.length) !== -1;
+};
 
 function select(id) {
 	var url = window.location.href;
+    if (url.endsWith("#")) {
+        url = url.substr(0, url.length - 1);
+    }
 	var start = url.indexOf("selection=");
 	if (start >= 0) {
 		start += 10;

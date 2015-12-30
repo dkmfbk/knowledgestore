@@ -272,7 +272,7 @@ public class Root extends Resource {
             int index = 0;
             for (final Example example : getUIConfig().getSparqlExamples()) {
                 links.add("<a href=\"#\" onclick=\"$('#query').val(sparqlExample(" + index
-                        + "))\">" + RenderUtils.escapeHtml(example.getLabel()) + "</a>");
+                        + "))\">" + RenderUtils.escapeJavaScriptString(example.getLabel()) + "</a>");
                 script.append("if (queryNum == ").append(index).append(") {\n");
                 script.append("  return \"")
                         .append(example.getValue().replace("\n", "\\n").replace("\"", "\\\""))
@@ -352,13 +352,13 @@ public class Root extends Resource {
         final String linkTemplate = "<a onclick=\"select('%s')\" href=\"#\">%s</a>";
         for (final Record mention : mentions) {
             final URI mentionID = mention.getID();
-            mentionLinks.add(String.format(linkTemplate, RenderUtils.escapeHtml(mentionID),
+            mentionLinks.add(String.format(linkTemplate, RenderUtils.escapeJavaScriptString(mentionID),
                     RenderUtils.shortenURI(mentionID)));
             if (mention.getID().equals(selection)) {
                 selectedMention = mention;
             }
             for (final URI entityID : mention.get(KS.REFERS_TO, URI.class)) {
-                entityLinks.add(String.format(linkTemplate, RenderUtils.escapeHtml(entityID),
+                entityLinks.add(String.format(linkTemplate, RenderUtils.escapeJavaScriptString(entityID),
                         RenderUtils.shortenURI(entityID)));
                 if (entityID.equals(selection)) {
                     selectedEntityID = selection;
@@ -422,7 +422,7 @@ public class Root extends Resource {
                     builder.append("&nbsp;&nbsp;<strong>");
                     RenderUtils.render(entityURI, builder);
                     builder.append("</strong> <a href=\"#\" onclick=\"select('")
-                            .append(RenderUtils.escapeHtml(entityURI)).append("')\">(select)</a>");
+                            .append(RenderUtils.escapeJavaScriptString(entityURI)).append("')\">(select)</a>");
                 }
             }
             model.put("resourceDetailsTitle", builder.toString());
