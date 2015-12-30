@@ -81,6 +81,11 @@
             <artifactId>ks-server-hbase</artifactId>
             <scope>runtime</scope>
         </dependency>
+        <dependency>
+            <groupId>eu.fbk.knowledgestore</groupId>
+            <artifactId>ks-server-elastic</artifactId>
+            <scope>runtime</scope>
+        </dependency>
 
         <!-- Runtime dependencies required by server & tools -->
         <dependency>

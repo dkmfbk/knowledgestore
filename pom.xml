@@ -16,7 +16,7 @@
     <parent>
         <groupId>eu.fbk.dkm</groupId>
         <artifactId>parent</artifactId>
-        <version>1.3</version>
+        <version>1.4-SNAPSHOT</version>
     </parent>
 
     <developers>
@@ -502,6 +502,7 @@
         <module>ks-populator-rdf</module>
         <module>ks-distribution</module>
         <module>ks-tool</module>
+        <module>ks-server-elastic</module>
     </modules>
 
 </project>

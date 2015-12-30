@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>ks</artifactId>
+        <groupId>eu.fbk.knowledgestore</groupId>
+        <version>1.8-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>ks-server-elastic</artifactId>
+    <packaging>jar</packaging>
+
+    <name>ks-server-elastic</name>
+    <description>ks server</description>
+    <url>http://knowledgestore.fbk.eu/ks-server-elastic/</url>
+
+    <distributionManagement>
+        <site>
+            <id>siteks</id>
+            <url>${site-path}/ks-server-elastic/</url>
+        </site>
+    </distributionManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.elasticsearch</groupId>
+            <artifactId>elasticsearch</artifactId>
+            <version>1.7.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.openrdf.sesame</groupId>
+            <artifactId>sesame-model</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>eu.fbk.knowledgestore</groupId>
+            <artifactId>ks-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>eu.fbk.knowledgestore</groupId>
+            <artifactId>ks-server</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+
+        <!-- Runtime -->
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-expressions</artifactId>
+            <version>${lucene-version}</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- Optional -->
+        <dependency>
+            <groupId>com.google.code.findbugs</groupId>
+            <artifactId>jsr305</artifactId>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <properties>
+        <lucene-version>4.10.4</lucene-version>
+    </properties>
+</project>
