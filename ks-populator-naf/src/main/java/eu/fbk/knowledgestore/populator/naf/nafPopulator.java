@@ -33,6 +33,7 @@ public class nafPopulator {
     static boolean FInFile=false; //to keep track if the input is a file containing paths of NAFs
     static boolean ZInFile=false; //to keep track if the input is a zip archive containing NAF files
     static boolean TInFile=false; //to keep track if the input is a compressed tar archive containing NAF files
+    static Integer timeout = null;
     static String INpath="";
     private static String SERVER_URL = "";
      static String USERNAME = "";
@@ -99,6 +100,8 @@ public class nafPopulator {
                 "the path to a zip archive containing NAF files to be processed.");
         options.addOption("t", "tgz", true,
                 "the path to a compressed tar archive (.tar.gz or .tgz) containing NAF files to be processed.");
+        options.addOption("T", "timeout", true,
+                "timeout (in seconds, default 10)");
 
         try {
             final CommandLine cmd = new GnuParser().parse(options, args);
@@ -124,6 +127,9 @@ public class nafPopulator {
                 SERVER_URL = cmd.getOptionValue('u');
             }
 
+            if (cmd.hasOption("T")) {
+                timeout=Integer.parseInt(cmd.getOptionValue("T")) * 1000 ;
+            }
             if (cmd.hasOption("ct")) {
                 consumer_threads=Integer.parseInt(cmd.getOptionValue("ct"))  ;
             }
@@ -359,7 +365,7 @@ public class nafPopulator {
 	logger.info("checkSession SERVER_URL |" + SERVER_URL + "|");
         if (store == null) {
             // Initialize a KnowledgeStore client
-            store = Client.builder(SERVER_URL).maxConnections(16).validateServer(false).build();
+            store = Client.builder(SERVER_URL).maxConnections(16).validateServer(false).socketTimeout(timeout).build();
         }
         if (store != null && (session == null || session.isClosed())) {
             // Acquire a session for a given username/password pair
