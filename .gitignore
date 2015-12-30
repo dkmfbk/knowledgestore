@@ -1,4 +1,4 @@
-ks.iml
+*.iml
 log
 target
 var
@@ -6,30 +6,7 @@ var
 
 **/pom.xml.versionsBackup
 
-ks-client/ks-client.iml
-ks-core/ks-core.iml
-ks-distribution/ks-distribution.iml
-ks-populator-naf/ks-populator-naf.iml
-ks-populator-rdf/ks-populator-rdf.iml
-ks-server/ks-server.iml
-ks-server-hbase/ks-server-hbase.iml
-ks-server-http/ks-server-http.iml
-ks-server-virtuoso/ks-server-virtuoso.iml
-
-ks-client/target
-ks-core/target
-ks-distribution/target
-ks-populator-naf/target
-ks-populator-rdf/target
-ks-server/target
-ks-server-hbase/target
-ks-server-http/target
-ks-server-virtuoso/target
-
 */.classpath
 *.project
 */.settings
-
-ks-tool/ks-tool.iml
-
 **/.DS_Store
