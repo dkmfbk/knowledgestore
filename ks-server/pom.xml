@@ -109,6 +109,10 @@
             <groupId>org.openrdf.sesame</groupId>
             <artifactId>sesame-repository-sail</artifactId>
         </dependency>
+        <dependency>
+            <groupId>eu.fbk.rdfpro</groupId>
+            <artifactId>rdfpro-core</artifactId>
+        </dependency>
 
         <!-- Optional dependencies -->
         <dependency>

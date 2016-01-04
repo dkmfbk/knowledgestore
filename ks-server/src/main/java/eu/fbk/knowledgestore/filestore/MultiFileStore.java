@@ -151,7 +151,7 @@ public class MultiFileStore extends ForwardingFileStore {
 
         try {
             // Lookup the bucket for the filename in the index; throw error if file not exist
-            final int bucket = this.index.getBucketForFilename(filename);
+            final int bucket = this.index.getBucketForFilename(filename, true);
 
             // Either read a singleton file (delegating) or read from bucket. In both cases, we
             // read all the data in advance so that there are no pending read operation to take
@@ -190,7 +190,10 @@ public class MultiFileStore extends ForwardingFileStore {
         // Check there is no file stored with the same filename
         this.lock.readLock().lock();
         try {
-            this.index.getBucketForFilename(filename); // throw error if file exists
+            final int bucket = this.index.getBucketForFilename(filename, false);
+            if (bucket != 0) {
+                throw new FileExistsException(filename, null);
+            }
         } finally {
             this.lock.readLock().unlock();
         }
@@ -255,7 +258,7 @@ public class MultiFileStore extends ForwardingFileStore {
 
         try {
             // Lookup the bucket for the filename in the index; throw error if file not exist
-            final int bucket = this.index.getBucketForFilename(filename);
+            final int bucket = this.index.getBucketForFilename(filename, true);
 
             // Drop index files and schedule their re-creation at close time
             markDirty();
@@ -393,7 +396,7 @@ public class MultiFileStore extends ForwardingFileStore {
             // Sort standalone filenames (balance mix of raw and annotation files in bucket)
             final List<String> sortedFilenames = Ordering.natural().sortedCopy(
                     this.index.getStandaloneFilenames());
-            LOGGER.debug("Merging started - {} files to merge", sortedFilenames.size());
+            LOGGER.debug("Merge started - {} files to merge", sortedFilenames.size());
 
             // Create a bucket for each chunk of bucketSize files
             for (int i = 0; i <= sortedFilenames.size() - this.bucketSize; i += this.bucketSize) {
@@ -444,7 +447,7 @@ public class MultiFileStore extends ForwardingFileStore {
             }
 
             // Log status
-            LOGGER.debug("Merging done - {} standalone files remaining", this.index
+            LOGGER.debug("Merge done - {} standalone files remaining", this.index
                     .getStandaloneFilenames().size());
 
         } finally {
@@ -540,7 +543,8 @@ public class MultiFileStore extends ForwardingFileStore {
             }
         }
 
-        public int getBucketForFilename(final String filename) throws FileMissingException {
+        public int getBucketForFilename(final String filename, final boolean mustExist)
+                throws FileMissingException {
 
             // Identify the table slot for the filename supplied; throw error if not found
             final Hash hash = hash(filename);
@@ -549,7 +553,11 @@ public class MultiFileStore extends ForwardingFileStore {
                 final long lo = this.tableHashes[slot * 2];
                 final long hi = this.tableHashes[slot * 2 + 1];
                 if (lo == 0L && hi == 0L) {
-                    throw new FileMissingException(filename, null);
+                    if (!mustExist) {
+                        return 0;
+                    } else {
+                        throw new FileMissingException(filename, null);
+                    }
                 } else if (lo == hash.getLow() && hi == hash.getHigh()) {
                     break;
                 }
@@ -700,7 +708,7 @@ public class MultiFileStore extends ForwardingFileStore {
             out.writeInt(this.standaloneFilenames.size());
             for (final String filename : this.standaloneFilenames) {
                 final byte[] bytes = filename.getBytes(Charsets.UTF_8);
-                out.write(bytes.length);
+                out.writeInt(bytes.length);
                 out.write(bytes);
             }
 
@@ -716,6 +724,9 @@ public class MultiFileStore extends ForwardingFileStore {
                 out.writeLong(hi);
                 out.writeInt(this.tableBuckets[slot]);
             }
+
+            // Flush
+            out.flush();
         }
 
         private void rehash() {
@@ -726,7 +737,7 @@ public class MultiFileStore extends ForwardingFileStore {
             final int[] newTableBuckets = new int[newCapacity];
 
             // Populate the new hash table
-            for (int slot = 1; slot < this.tableBuckets.length; ++slot) {
+            for (int slot = 0; slot < this.tableBuckets.length; ++slot) {
 
                 // Retrieve <lo, hi, bucket> triple, skipping null and deleted entries
                 final long lo = this.tableHashes[slot * 2];
@@ -754,6 +765,9 @@ public class MultiFileStore extends ForwardingFileStore {
             this.tableHashes = newTableHashes;
             this.tableBuckets = newTableBuckets;
             this.tableSize = this.size;
+
+            // Log operation
+            LOGGER.debug("Rehashed to {} entries", newCapacity);
         }
 
         private static Hash hash(final String filename) {
