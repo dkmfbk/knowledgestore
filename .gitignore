@@ -3,6 +3,7 @@ log
 target
 var
 .idea
+test/
 
 **/pom.xml.versionsBackup
 

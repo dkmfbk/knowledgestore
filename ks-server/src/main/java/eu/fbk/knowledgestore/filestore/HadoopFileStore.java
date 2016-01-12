@@ -109,6 +109,13 @@ public class HadoopFileStore implements FileStore {
         boolean deleted = false;
         try {
             deleted = this.fileSystem.delete(path, false);
+            if (deleted) {
+                final Path parent = path.getParent();
+                if (this.fileSystem.listStatus(parent).length == 0) {
+                    this.fileSystem.delete(parent, false);
+                }
+            }
+
         } finally {
             if (!deleted && !this.fileSystem.exists(path)) {
                 throw new FileMissingException(fileName, "Cannot delete non-existing file.");

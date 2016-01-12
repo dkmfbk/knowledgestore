@@ -28,13 +28,13 @@ public class FileMissingException extends IOException {
 
     /**
      * Creates a new instance with the filename and additional error message specified.
-     * 
+     *
      * @param filename
      *            the filename identifying the missing file
      * @param message
      *            an optional message providing additional information, which is concatenated to
      *            an auto-generated message reporting the filename of the missing file
-     * 
+     *
      * @see #FileMissingException(String, String, Throwable)
      */
     public FileMissingException(final String filename, @Nullable final String message) {
@@ -43,7 +43,7 @@ public class FileMissingException extends IOException {
 
     /**
      * Creates a new instance with the filename, additional error message and cause specified.
-     * 
+     *
      * @param filename
      *            the filename identifying the missing file
      * @param message
@@ -54,7 +54,8 @@ public class FileMissingException extends IOException {
      */
     public FileMissingException(final String filename, @Nullable final String message,
             @Nullable final Throwable cause) {
-        super("File " + filename + " does not exist. " + message, cause);
+        super("File " + filename + " does not exist." + (message == null ? "" : " " + message),
+                cause);
 
         Preconditions.checkNotNull(filename);
         this.filename = filename;
@@ -62,7 +63,7 @@ public class FileMissingException extends IOException {
 
     /**
      * Returns the filename identifying the missing file.
-     * 
+     *
      * @return the filename
      */
     public final String getFilename() {
