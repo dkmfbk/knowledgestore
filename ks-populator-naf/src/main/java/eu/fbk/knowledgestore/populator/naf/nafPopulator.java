@@ -19,6 +19,7 @@ import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
+import java.util.logging.Level;
 
 public class nafPopulator {
 
@@ -106,7 +107,11 @@ public class nafPopulator {
         try {
             final CommandLine cmd = new GnuParser().parse(options, args);
 	    {
-		//check if we have many inputs in the same call, error and exit
+
+            java.util.logging.Logger COM_SUN_JERSEY_LOGGER = java.util.logging.Logger.getLogger( "org.glassfish.jersey.message.internal.HeaderUtils" );
+            COM_SUN_JERSEY_LOGGER.setLevel(Level.SEVERE);
+
+            //check if we have many inputs in the same call, error and exit
 		int nafFileModalitiesCount = 0;
 		if (cmd.hasOption("ksm")) {
 			KSresourceReplacement=Integer.parseInt(cmd.getOptionValue("ksm")) ;
