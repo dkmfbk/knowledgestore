@@ -489,6 +489,7 @@
         <!-- Mustache template problem with jersey 2.19 and mustache 0.9 -->
         <jersey-version>2.17</jersey-version>
         <mustache-version>0.8.12</mustache-version>
+        <ks-version>${version}</ks-version>
     </properties>
 
     <modules>
