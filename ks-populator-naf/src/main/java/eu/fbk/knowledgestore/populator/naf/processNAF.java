@@ -113,20 +113,23 @@ public class processNAF {
         readNAFFile(vars.filePath, vars);
         NafHeader header = vars.doc.getNafHeader();
         getNAFHEADERMentions(header, vars);
-        vars.rawText = vars.doc.getRaw().getvalue();
-        vars.globalText = vars.doc.getText();
-        vars.globalTerms = vars.doc.getTerms();
-        getEntitiesMentions(vars.doc.getEntities(), disabledItems, vars);
-        getCoreferencesMentions(vars.doc.getCoreferences(), vars);
-        getTimeExpressionsMentions(vars.doc.getTimeExpressions(), vars);
-        //  getFactualityMentions(vars.doc.getFactualitylayer(),vars);
-        getFactualityMentionsV3(vars.doc.getFactualities(), vars);
-        getSRLMentions(vars);
-        getCLinksMentions(vars.doc.getCausalRelations(), vars);
-        getTLinksMentions(vars.doc.getTemporalRelations(), vars);
-        // logDebug("ROL1 before dumpStack()") ; Thread.currentThread().dumpStack();
+        Raw raw = vars.doc.getRaw();
+        if (raw != null) {
+            vars.rawText = raw.getvalue();
+            vars.globalText = vars.doc.getText();
+            vars.globalTerms = vars.doc.getTerms();
+            getEntitiesMentions(vars.doc.getEntities(), disabledItems, vars);
+            getCoreferencesMentions(vars.doc.getCoreferences(), vars);
+            getTimeExpressionsMentions(vars.doc.getTimeExpressions(), vars);
+            //  getFactualityMentions(vars.doc.getFactualitylayer(),vars);
+            getFactualityMentionsV3(vars.doc.getFactualities(), vars);
+            getSRLMentions(vars);
+            getCLinksMentions(vars.doc.getCausalRelations(), vars);
+            getTLinksMentions(vars.doc.getTemporalRelations(), vars);
+            // logDebug("ROL1 before dumpStack()") ; Thread.currentThread().dumpStack();
 
-        fixMentions(vars);
+            fixMentions(vars);
+        }
 
         logDebug("End of NAF populating.", vars);
         statistics st = new statistics();
