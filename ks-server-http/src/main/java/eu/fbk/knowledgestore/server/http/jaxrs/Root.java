@@ -1,42 +1,23 @@
 package eu.fbk.knowledgestore.server.http.jaxrs;
 
-import java.io.InputStream;
-import java.lang.management.GarbageCollectorMXBean;
-import java.lang.management.ManagementFactory;
-import java.lang.management.MemoryPoolMXBean;
-import java.lang.management.MemoryUsage;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import javax.annotation.Nullable;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.CacheControl;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
-
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
-import com.google.common.collect.HashMultiset;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Iterators;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-import com.google.common.collect.Multiset;
-import com.google.common.collect.Sets;
+import com.google.common.collect.*;
 import com.google.common.escape.Escaper;
 import com.google.common.net.UrlEscapers;
-
+import eu.fbk.knowledgestore.OperationException;
+import eu.fbk.knowledgestore.Outcome;
+import eu.fbk.knowledgestore.data.Data;
+import eu.fbk.knowledgestore.data.Record;
+import eu.fbk.knowledgestore.data.Representation;
+import eu.fbk.knowledgestore.data.Stream;
+import eu.fbk.knowledgestore.internal.Util;
+import eu.fbk.knowledgestore.internal.rdf.RDFUtil;
+import eu.fbk.knowledgestore.server.http.UIConfig.Example;
+import eu.fbk.knowledgestore.vocabulary.KS;
+import eu.fbk.knowledgestore.vocabulary.NIE;
+import eu.fbk.knowledgestore.vocabulary.NIF;
 import org.codehaus.enunciate.Facet;
 import org.glassfish.jersey.server.mvc.Viewable;
 import org.openrdf.model.Literal;
@@ -50,18 +31,17 @@ import org.openrdf.query.impl.ListBindingSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import eu.fbk.knowledgestore.OperationException;
-import eu.fbk.knowledgestore.Outcome;
-import eu.fbk.knowledgestore.data.Data;
-import eu.fbk.knowledgestore.data.Record;
-import eu.fbk.knowledgestore.data.Representation;
-import eu.fbk.knowledgestore.data.Stream;
-import eu.fbk.knowledgestore.internal.Util;
-import eu.fbk.knowledgestore.internal.rdf.RDFUtil;
-import eu.fbk.knowledgestore.server.http.UIConfig.Example;
-import eu.fbk.knowledgestore.vocabulary.KS;
-import eu.fbk.knowledgestore.vocabulary.NIE;
-import eu.fbk.knowledgestore.vocabulary.NIF;
+import javax.annotation.Nullable;
+import javax.ws.rs.*;
+import javax.ws.rs.core.CacheControl;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
+import java.io.InputStream;
+import java.lang.management.GarbageCollectorMXBean;
+import java.lang.management.ManagementFactory;
+import java.lang.management.MemoryPoolMXBean;
+import java.lang.management.MemoryUsage;
+import java.util.*;
 
 @Path("/")
 @Facet(name = "internal")
@@ -405,7 +385,7 @@ public class Root extends Resource {
             model.put("resourceDetailsBody",
                     String.join("", RenderUtils.renderSolutionTable(DESCRIBE_VARS, bindings)));
             model.put("resourceDetailsTitle", String.format("<strong> Entity %s "
-                    + "(%d triples out of %d)</strong>", RenderUtils.render(selection),
+                            + "(%d triples out of %d)</strong>", RenderUtils.render(selection),
                     bindings.size(), total));
 
         } else if (selectedMention != null) {
@@ -685,7 +665,7 @@ public class Root extends Resource {
         if (record != null && layer.equals(KS.MENTION)) {
             final String template = "SELECT ?e WHERE { ?e $$ $$ "
                     + (getUIConfig().isDenotedByAllowsGraphs() ? ""
-                            : "FILTER NOT EXISTS { GRAPH ?e { ?s ?p ?o } } ") + "}";
+                    : "FILTER NOT EXISTS { GRAPH ?e { ?s ?p ?o } } ") + "}";
             for (final URI entityID : getSession()
                     .sparql(template, getUIConfig().getDenotedByProperty(), id).execTuples()
                     .transform(URI.class, true, "e")) {
@@ -746,7 +726,11 @@ public class Root extends Resource {
             for (final BindingSet bindings : getSession().sparql(builder.toString()).execTuples()) {
                 final URI mentionID = (URI) bindings.getValue("m");
                 final URI entityID = (URI) bindings.getValue("e");
-                mentions.get(mentionID).add(KS.REFERS_TO, entityID);
+                Record record = mentions.get(mentionID);
+//                if (record == null) {
+//                    continue;
+//                }
+                record.add(KS.REFERS_TO, entityID);
                 entityIDs.add(entityID);
             }
         }
@@ -856,9 +840,9 @@ public class Root extends Resource {
             throws Throwable {
         return getSession()
                 .sparql("SELECT (COALESCE(?s, $$) AS ?subject) ?predicate "
-                        + "(COALESCE(?o, $$) AS ?object) ?graph "
-                        + "WHERE { { GRAPH ?graph { $$ ?predicate ?o } } UNION "
-                        + "{ GRAPH ?graph { ?s ?predicate $$ } } } LIMIT $$", entityID, entityID,
+                                + "(COALESCE(?o, $$) AS ?object) ?graph "
+                                + "WHERE { { GRAPH ?graph { $$ ?predicate ?o } } UNION "
+                                + "{ GRAPH ?graph { ?s ?predicate $$ } } } LIMIT $$", entityID, entityID,
                         entityID, entityID, limit).execTuples().toList();
     }
 
@@ -866,14 +850,14 @@ public class Root extends Resource {
             throws Throwable {
         return getSession()
                 .sparql("SELECT ?subject ?predicate ?object "
-                        + "WHERE { GRAPH $$ { ?subject ?predicate ?object } } LIMIT $$", entityID,
+                                + "WHERE { GRAPH $$ { ?subject ?predicate ?object } } LIMIT $$", entityID,
                         limit).execTuples().toList();
     }
 
     private int countEntityDescribeTriples(final URI entityID) throws Throwable {
         return getSession()
                 .sparql("SELECT (COUNT(*) AS ?n) "
-                        + "WHERE { { GRAPH ?g { $$ ?p ?o } } UNION { GRAPH ?g { ?s ?p $$ } } }",
+                                + "WHERE { { GRAPH ?g { $$ ?p ?o } } UNION { GRAPH ?g { ?s ?p $$ } } }",
                         entityID, entityID).execTuples().transform(Integer.class, true, "n")
                 .getUnique();
     }
@@ -887,7 +871,7 @@ public class Root extends Resource {
     private int[] countEntityResourcesAndMentions(final URI entityID) throws Throwable {
         final BindingSet tuple = getSession()
                 .sparql("SELECT (COUNT(DISTINCT ?r) AS ?nr) (COUNT(*) AS ?nm) "
-                        + "WHERE { $$ $$ ?m . BIND(IRI(STRBEFORE(STR(?m), \"#\")) AS ?r) }",
+                                + "WHERE { $$ $$ ?m . BIND(IRI(STRBEFORE(STR(?m), \"#\")) AS ?r) }",
                         entityID, getUIConfig().getDenotedByProperty()).execTuples().getUnique();
         return new int[] { ((Literal) tuple.getValue("nr")).intValue(),
                 ((Literal) tuple.getValue("nm")).intValue() };
