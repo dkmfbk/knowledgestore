@@ -2202,12 +2202,16 @@ public class processNAF {
             byte[] bytes = ByteStreams.toByteArray(IO.read(naf.getAbsolutePath()));
             vars.doc = (NAF) unmarshaller.unmarshal(new ByteArrayInputStream(bytes));
         } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
             logError(e.getMessage(), vars);
         } catch (FileNotFoundException e) {
+            e.printStackTrace();
             logError(e.getMessage(), vars);
         } catch (IOException e) {
+            e.printStackTrace();
             logError(e.getMessage(), vars);
         } catch (JAXBException e) {
+            e.printStackTrace();
             logError(e.getMessage(), vars);
         }
 

@@ -67,12 +67,8 @@ NewsReader components cooperate.
   * [KnowledgeStore instance](http://knowledgestore2.fbk.eu/nwr/wikinews/) using the WikiNews dataset
     (18K news, 2004-2014)
   * Access restricted to NewsReader consortium:
-    * [KnowledgeStore instance](https://knowledgestore2.fbk.eu/nwr/cars/) for the global automotive industry use case
-      (version 1, 65K news, 2003-2013)
-    * [KnowledgeStore instance](https://knowledgestore2.fbk.eu/nwr/worldcup/) for the FIFA World Cup use case (212K news,
-      2004-2014)
-    * [KnowledgeStore instance](https://knowledgestore2.fbk.eu/nwr/cars/) for the global automotive industry use case
-      (version 2, 1.2M news, 2003-2013)
+    * [KnowledgeStore instance](https://knowledgestore2.fbk.eu/nwr/cars3/) for the global automotive industry use case
+      (version 3, 2.3M news, 2003-2015)
 
 ##<h3>Publications</h3>
 ##
