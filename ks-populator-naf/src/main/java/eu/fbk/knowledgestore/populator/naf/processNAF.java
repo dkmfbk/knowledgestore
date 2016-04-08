@@ -588,7 +588,17 @@ public class processNAF {
                 deg += "|MOD:" + tmxObj.getMod();
             }
             if (tmxObj.getAnchorTimeID() != null) {
-                m.add(NWR.ANCHOR_TIME, tmxObj.getAnchorTimeID());
+
+                String value;
+                if (tmxObj.getAnchorTimeID() instanceof Timex3) {
+                    value = ((Timex3) tmxObj.getAnchorTimeID()).getValue();
+                }
+                else {
+                    value = tmxObj.getAnchorTimeID().toString();
+                }
+//                m.add(NWR.ANCHOR_TIME, tmxObj.getAnchorTimeID());
+                m.add(NWR.ANCHOR_TIME, value);
+
                 deg += "|ANCHOR_TIME:" + tmxObj.getAnchorTimeID();
             }
             logDebug(deg, vars);
