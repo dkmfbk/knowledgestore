@@ -11,4 +11,6 @@ news, and it provides a shared data space through which NewsReader components co
 
 ## Demo
 
-If you want to have more information about the project, watch the [demonstration video](http://youtu.be/YVOQaljLta4) showing accessing the KnowledgeStore through the UI
+If you want to have more information about the project, watch the following demonstration videos:
+ * [introducing the KnowledgeStore](https://youtu.be/NAbD_7uwVhA)
+ * [accessing the KnowledgeStore through the UI](http://youtu.be/YVOQaljLta4)
