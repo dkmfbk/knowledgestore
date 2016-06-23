@@ -48,11 +48,11 @@ The binary archives include all you need to run and populate a KnowledgeStore in
 </tbody>
 </table>
 <a style="display: block; width: 100%; text-align: right;" href="${site-root}files/release/">[browse old versions]</a>
-
+<br/>
 $H3 KnowledgeStore Docker
 
-<p>The [KnowledgeStore Docker](https://github.com/dkmfbk/knowledgestore-docker) provides an easy and quick way to have a KnowledgeStore instance running on your machine.</p>
-
+<p>The <a href="https://github.com/dkmfbk/knowledgestore-docker">KnowledgeStore Docker</a> provides an easy and quick way to have a KnowledgeStore instance running on your machine.</p>
+<br/>
 $H3 Background Knowledge
 
 We use the following RDF datasets as background knowledge in the KnowledgeStore, obtained by processing selected [DBpedia](http://dbpedia.org/) dump files using [RDFpro](https://github.com/dkmfbk/rdfpro).
