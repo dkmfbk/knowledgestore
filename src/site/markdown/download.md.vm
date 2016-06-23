@@ -49,6 +49,9 @@ The binary archives include all you need to run and populate a KnowledgeStore in
 </table>
 <a style="display: block; width: 100%; text-align: right;" href="${site-root}files/release/">[browse old versions]</a>
 
+$H3 KnowledgeStore Docker
+
+<p>The [KnowledgeStore Docker](https://github.com/dkmfbk/knowledgestore-docker) provides an easy and quick way to have a KnowledgeStore instance running on your machine.</p>
 
 $H3 Background Knowledge
 

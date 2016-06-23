@@ -55,6 +55,7 @@ NewsReader components cooperate.
     * [Fixed Part](${site-root}ontologies/knowledgestore.html)
     * [NewsReader Specialization](${site-root}ontologies/newsreader.html)
   * [Download the KnowledgeStore](${site-root}download.html) (source code, prebuilt JARs, background knowledge, and much more)
+  * NEW!! [Download the KnowledgeStore Docker](https://github.com/dkmfbk/knowledgestore-docker) to easily deploy a running KnowledgeStore instance on your machine
   * Have a look at the [project wiki](https://github.com/dkmfbk/knowledgestore/wiki)
   * List of [publications](${site-root}publications.html) related to the KnowledgeStore
 
@@ -63,9 +64,10 @@ NewsReader components cooperate.
 
 <h3>KnowledgeStore in action</h3>
 
+  * NEW!! [Demonstration video](https://youtu.be/NAbD_7uwVhA) introducing the KnowledgeStore
   * [Demonstration video](http://youtu.be/YVOQaljLta4) showing accessing the KnowledgeStore through the UI
   * [KnowledgeStore instance](http://knowledgestore2.fbk.eu/nwr/wikinews/) using the WikiNews dataset
-    (18K news, 2004-2014)
+    (19K news, 2004-2015)
   * Access restricted to NewsReader consortium:
     * [KnowledgeStore instance](https://knowledgestore2.fbk.eu/nwr/cars3/) for the global automotive industry use case
       (version 3, 2.3M news, 2003-2015)
